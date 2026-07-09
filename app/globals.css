@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Night prayer -> dawn palette */
+  --ink: #0c110e;
+  --forest: #122b22;
+  --moss: #1c4a38;
+  --bone: #f6f3ec;
+  --sand: #e5dfd2;
+  --brass: #a98a3e;
+  --brassL: #c9a85c;
+  --line: #ddd6c8;
+
+  /* ArcRevealHero reads these */
+  --background: #f6f3ec;
+  --foreground: #0c110e;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .amb, .amb * { animation: none !important; }
+}
+
+::selection { background: var(--moss); color: var(--bone); }
+
+:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Ambient motion (pure CSS = cheap, pausable) ── */
+@keyframes drift-a { 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(40px,-30px,0)} 100%{transform:translate3d(0,0,0)} }
+@keyframes drift-b { 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(-50px,24px,0)} 100%{transform:translate3d(0,0,0)} }
+@keyframes lattice-pan { 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-50px,-50px,0)} }
+@keyframes shimmer { 0%,86%{transform:translateX(-120%)} 100%{transform:translateX(220%)} }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+.orb-a { animation: drift-a 38s ease-in-out infinite; }
+.orb-b { animation: drift-b 46s ease-in-out infinite; }
+.lattice-pan { animation: lattice-pan 60s linear infinite; }
+.live-dot { animation: pulse-dot 2.2s ease-in-out infinite; }
+
+.shimmer-frame { position: relative; overflow: hidden; }
+.shimmer-frame::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 40%, rgba(201,168,92,.10) 50%, transparent 60%);
+  animation: shimmer 12s ease-in-out infinite;
+}
+
+/* Film grain on dark sections */
+.grain::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* Link underline draw */
+.u-draw { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .35s cubic-bezier(.22,1,.36,1); }
+.u-draw:hover { background-size: 100% 1px; }
