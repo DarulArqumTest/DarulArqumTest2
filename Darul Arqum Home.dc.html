@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #0e2419; scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    a { color: #c9a227; text-decoration: none; }
+    a:hover { color: #e3c56a; }
+    @keyframes kenburns { 0% { transform: scale(1) translate(0,0); } 100% { transform: scale(1.09) translate(-1%,-1%); } }
+    @keyframes driftGold { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-40px); } }
+    @keyframes driftGreen { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-40px,30px); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ribbonScroll { 0% { background-position: 0 0; } 100% { background-position: 0 128px; } }
+    @keyframes ribbonScrollRev { 0% { background-position: 0 0; } 100% { background-position: 0 -128px; } }
+    @keyframes ribbonGlow { 0%,100% { filter: brightness(1) saturate(1); } 50% { filter: brightness(1.18) saturate(1.15); } }
+    @keyframes floatSlow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes lanternSway { 0%,100% { transform: translateY(0px) rotate(-3deg); } 50% { transform: translateY(0px) rotate(3deg); } }
+    @keyframes lanternGlow { 0%,100% { opacity:0.75; filter: blur(14px); } 50% { opacity:1; filter: blur(18px); } }
+    @keyframes moonGlow { 0%,100% { opacity:0.5; } 50% { opacity:0.85; } }
+    @keyframes greetFade { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes twinkle { 0%,100% { opacity:0.25; } 50% { opacity:0.9; } }
+    @keyframes shootingStar { 0% { transform:translate(0,0); opacity:0; } 8% { opacity:1; } 100% { transform:translate(-260px,180px); opacity:0; } }
+    @keyframes lanternDrop {
+      0% { transform:translateY(-260px); }
+      100% { transform:translateY(0px); }
+    }
+    @keyframes lanternDropB {
+      0% { transform:translateY(-320px); }
+      100% { transform:translateY(0px); }
+    }
+    @keyframes sectionSpotlight {
+      0% { box-shadow: inset 0 0 0 3px rgba(201,162,39,0.9), 0 0 70px 14px rgba(201,162,39,0.4); background:rgba(201,162,39,0.1); }
+      65% { box-shadow: inset 0 0 0 3px rgba(201,162,39,0.5), 0 0 40px 8px rgba(201,162,39,0.2); background:rgba(201,162,39,0.04); }
+      100% { box-shadow: inset 0 0 0 3px rgba(201,162,39,0), 0 0 0 0 rgba(201,162,39,0); background:rgba(201,162,39,0); }
+    }
+    @keyframes lanternSwingAcross {
+      0%   { transform: translateX(-130vw) rotate(-55deg); }
+      50%  { transform: translateX(0) rotate(0deg) scale(1.06); }
+      100% { transform: translateX(130vw) rotate(55deg); }
+    }
+    @keyframes veilCoverIn { 0% { opacity:0; } 20% { opacity:0.95; } 100% { opacity:0.95; } }
+    @keyframes veilCoverOut { 0% { opacity:0.95; } 65% { opacity:0.95; } 100% { opacity:0; } }
+    @keyframes candleFlicker { 0%,100% { opacity:0.85; } 50% { opacity:1; } }
+    @keyframes spinSlow { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+  </style>
+</helmet>
+
+<div style="position:relative; width:100%; min-height:100vh; font-family:'Work Sans',sans-serif; background:#0e2419; overflow:hidden;" data-screen-label="Home">
+
+  <!-- WELCOME / GREETING SPLASH -->
+  <sc-if value="{{ introShow }}" hint-placeholder-val="{{ true }}">
+    <div style="{{ introOverlayStyle }}">
+      <!-- starfield -->
+      <div style="position:absolute; width:3px; height:3px; border-radius:999px; background:#f6f3ea; top:14%; left:18%; animation:twinkle 2.4s ease-in-out infinite;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:22%; left:32%; animation:twinkle 3.1s ease-in-out infinite 0.4s;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:10%; left:62%; animation:twinkle 2.8s ease-in-out infinite 0.8s;"></div>
+      <div style="position:absolute; width:3px; height:3px; border-radius:999px; background:#f6f3ea; top:30%; left:74%; animation:twinkle 2.2s ease-in-out infinite 1.1s;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:66%; left:12%; animation:twinkle 2.6s ease-in-out infinite 0.3s;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:74%; left:82%; animation:twinkle 3.4s ease-in-out infinite 0.6s;"></div>
+      <div style="position:absolute; width:3px; height:3px; border-radius:999px; background:#f6f3ea; top:46%; left:88%; animation:twinkle 2.9s ease-in-out infinite 0.2s;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:55%; left:6%; animation:twinkle 2.3s ease-in-out infinite 0.9s;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:38%; left:44%; animation:twinkle 3.2s ease-in-out infinite 1.4s;"></div>
+      <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:82%; left:48%; animation:twinkle 2.5s ease-in-out infinite 0.5s;"></div>
+
+      <!-- shooting stars -->
+      <div style="position:absolute; top:16%; left:78%; width:2px; height:2px; border-radius:999px; background:#f6f3ea; box-shadow:0 0 6px 1px rgba(246,243,234,0.8); animation:shootingStar 3.6s linear infinite 1.2s;"></div>
+      <div style="position:absolute; top:36%; left:88%; width:2px; height:2px; border-radius:999px; background:#f6f3ea; box-shadow:0 0 6px 1px rgba(246,243,234,0.8); animation:shootingStar 4.4s linear infinite 3s;"></div>
+
+      <!-- crescent moon glow, top center -->
+      <div style="position:absolute; top:8%; left:50%; transform:translateX(-50%); width:220px; height:220px; display:flex; align-items:center; justify-content:center;">
+        <div style="position:absolute; width:150px; height:150px; border-radius:999px; background:radial-gradient(circle, rgba(201,162,39,0.35), transparent 70%); animation:moonGlow 3.5s ease-in-out infinite;"></div>
+        <div style="position:relative; width:56px; height:56px; border-radius:999px; overflow:hidden; box-shadow:0 0 40px 6px rgba(227,197,106,0.4);">
+          <div style="position:absolute; inset:0; border-radius:999px; background:#e3c56a;"></div>
+          <div style="position:absolute; top:-6px; left:16px; width:56px; height:68px; border-radius:999px; background:#070f0b;"></div>
+        </div>
+      </div>
+
+      <!-- lanterns -->
+      <div style="position:absolute; left:8%; top:0; animation:lanternDrop 1.4s cubic-bezier(.25,.85,.35,1) 1 forwards;">
+        <div style="display:flex; flex-direction:column; align-items:center; animation:lanternSway 4.6s ease-in-out infinite; animation-delay:1.4s; transform-origin:top center;">
+          <div style="width:1.5px; height:120px; background:rgba(201,162,39,0.4);"></div>
+          <div style="position:absolute; top:110px; width:60px; height:60px; border-radius:999px; background:rgba(227,197,106,0.5); filter:blur(16px); animation:lanternGlow 2.4s ease-in-out infinite;"></div>
+          <div style="position:relative; width:38px; height:52px; margin-top:0;">
+            <div style="position:absolute; top:0; left:8px; width:22px; height:8px; background:#c9a227; border-radius:3px 3px 0 0;"></div>
+            <div style="position:absolute; top:7px; left:2px; width:34px; height:34px; border-radius:8px; background:linear-gradient(160deg, #e3c56a, #c9a227); box-shadow:0 0 18px 2px rgba(227,197,106,0.5);"></div>
+            <div style="position:absolute; top:14px; left:12px; width:14px; height:20px; background:#fff3c4; border-radius:3px; opacity:0.85;"></div>
+            <div style="position:absolute; bottom:0; left:14px; width:10px; height:6px; background:#8a6a1e; border-radius:0 0 3px 3px;"></div>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute; right:8%; top:0; animation:lanternDropB 1.6s cubic-bezier(.25,.85,.35,1) 1 forwards 0.15s;">
+        <div style="display:flex; flex-direction:column; align-items:center; animation:lanternSway 4s ease-in-out infinite; animation-delay:1.75s; transform-origin:top center;">
+          <div style="width:1.5px; height:170px; background:rgba(201,162,39,0.4);"></div>
+          <div style="position:absolute; top:160px; width:52px; height:52px; border-radius:999px; background:rgba(227,197,106,0.5); filter:blur(14px); animation:lanternGlow 2.8s ease-in-out infinite 0.4s;"></div>
+          <div style="position:relative; width:32px; height:44px;">
+            <div style="position:absolute; top:0; left:7px; width:18px; height:7px; background:#c9a227; border-radius:3px 3px 0 0;"></div>
+            <div style="position:absolute; top:6px; left:1px; width:30px; height:28px; border-radius:7px; background:linear-gradient(160deg, #e3c56a, #c9a227); box-shadow:0 0 16px 2px rgba(227,197,106,0.5);"></div>
+            <div style="position:absolute; top:11px; left:10px; width:12px; height:16px; background:#fff3c4; border-radius:3px; opacity:0.85;"></div>
+            <div style="position:absolute; bottom:0; left:12px; width:8px; height:5px; background:#8a6a1e; border-radius:0 0 3px 3px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- greeting text -->
+      <div key="{{ introGreetingText }}" dir="auto" style="position:relative; z-index:2; color:#f6f3ea; text-align:center; padding:0 24px; animation:greetFade 0.5s ease both; {{ introGreetingStyle }}">
+        {{ introGreetingText }}
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- gold motion ribbons, screen edges: woven greek-key meander pattern -->
+  <div style="position:fixed; top:0; left:0; width:34px; height:100vh; z-index:40; pointer-events:none; background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDM2IDY0Ij4KICA8cmVjdCB3aWR0aD0iMzYiIGhlaWdodD0iNjQiIGZpbGw9IiMxMjMzMWYiLz4KICA8cmVjdCB4PSIyIiB3aWR0aD0iMzIiIGhlaWdodD0iNjQiIGZpbGw9IiMwZTI0MTkiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNkOWI2NGEiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIj4KICAgIDxwYXRoIGQ9Ik0xOCAwIEwxOCA4IEwxMCA4IEwxMCAyMCBMMjYgMjAgTDI2IDMyIEwxMCAzMiBMMTAgNDQgTDI2IDQ0IEwyNiA1NiBMMTggNTYgTDE4IDY0IiAvPgogIDwvZz4KICA8cmVjdCB4PSIxIiB3aWR0aD0iMS42IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZDliNjRhIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHJlY3QgeD0iMzMuNCIgd2lkdGg9IjEuNiIgaGVpZ2h0PSI2NCIgZmlsbD0iI2Q5YjY0YSIgb3BhY2l0eT0iMC41NSIvPgo8L3N2Zz4='); background-repeat:repeat; background-size:34px 64px; box-shadow:2px 0 12px rgba(0,0,0,0.35), inset -2px 0 6px rgba(0,0,0,0.4); animation:ribbonScroll 4.5s linear infinite, ribbonGlow 5s ease-in-out infinite;"></div>
+  <div style="position:fixed; top:0; right:0; width:34px; height:100vh; z-index:40; pointer-events:none; background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDM2IDY0Ij4KICA8cmVjdCB3aWR0aD0iMzYiIGhlaWdodD0iNjQiIGZpbGw9IiMxMjMzMWYiLz4KICA8cmVjdCB4PSIyIiB3aWR0aD0iMzIiIGhlaWdodD0iNjQiIGZpbGw9IiMwZTI0MTkiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNkOWI2NGEiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIj4KICAgIDxwYXRoIGQ9Ik0xOCAwIEwxOCA4IEwxMCA4IEwxMCAyMCBMMjYgMjAgTDI2IDMyIEwxMCAzMiBMMTAgNDQgTDI2IDQ0IEwyNiA1NiBMMTggNTYgTDE4IDY0IiAvPgogIDwvZz4KICA8cmVjdCB4PSIxIiB3aWR0aD0iMS42IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZDliNjRhIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHJlY3QgeD0iMzMuNCIgd2lkdGg9IjEuNiIgaGVpZ2h0PSI2NCIgZmlsbD0iI2Q5YjY0YSIgb3BhY2l0eT0iMC41NSIvPgo8L3N2Zz4='); background-repeat:repeat; background-size:34px 64px; box-shadow:-2px 0 12px rgba(0,0,0,0.35), inset 2px 0 6px rgba(0,0,0,0.4); animation:ribbonScrollRev 4.5s linear infinite, ribbonGlow 5s ease-in-out infinite 1s;"></div>
+
+  <!-- NAV -->
+  <header style="position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(14,36,25,0.72); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid rgba(201,162,39,0.22);">
+    <div style="max-width:1320px; margin:0 auto; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:20px; padding:12px 24px;">
+      <div style="display:flex; align-items:center; gap:10px; overflow:hidden; {{ headerLogoStyle }}">
+        <div style="width:34px; height:34px; border-radius:9px; overflow:hidden; background:#f6f3ea; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+          <img src="assets/logo-icon.png" alt="Darul Arqum emblem" style="width:84%; height:84%; object-fit:contain; display:block;" />
+        </div>
+        <span style="font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:#f6f3ea; letter-spacing:0.01em; white-space:nowrap;">Darul Arqum</span>
+      </div>
+      <div style="display:flex; justify-content:center;">
+        <nav style="display:flex; align-items:center; gap:24px; padding:11px 34px 9px; border-radius:999px 999px 10px 10px; background:rgba(246,243,234,0.045); border:1px solid rgba(201,162,39,0.22); position:relative;">
+          <span style="position:absolute; top:5px; left:50%; transform:translateX(-50%); font-size:8px; color:rgba(201,162,39,0.55);">✦</span>
+          <a href="Prayer Times.dc.html" style="font-size:14px; color:rgba(246,243,234,0.82); font-weight:500; display:inline-block; transition:color .18s ease, transform .18s ease;" style-hover="color:#c9a227; transform:translateY(-2px);">Prayer times</a>
+          <a href="#programs-section" onclick="{{ onNavPrograms }}" style="font-size:14px; color:rgba(246,243,234,0.82); font-weight:500; display:inline-block; transition:color .18s ease, transform .18s ease;" style-hover="color:#c9a227; transform:translateY(-2px);">Programs</a>
+          <a href="Story.dc.html" style="font-size:14px; color:rgba(246,243,234,0.82); font-weight:500; display:inline-block; transition:color .18s ease, transform .18s ease;" style-hover="color:#c9a227; transform:translateY(-2px);">Story</a>
+          <a href="Gallery.dc.html" style="font-size:14px; color:rgba(246,243,234,0.82); font-weight:500; display:inline-block; transition:color .18s ease, transform .18s ease;" style-hover="color:#c9a227; transform:translateY(-2px);">Gallery</a>
+          <a href="#whatsapp-section" onclick="{{ onNavCommunity }}" style="font-size:14px; color:rgba(246,243,234,0.82); font-weight:500; display:inline-block; transition:color .18s ease, transform .18s ease;" style-hover="color:#c9a227; transform:translateY(-2px);">Community</a>
+          <a href="#contact-us" onclick="{{ onNavContact }}" style="font-size:14px; color:rgba(246,243,234,0.82); font-weight:500; display:inline-block; transition:color .18s ease, transform .18s ease;" style-hover="color:#c9a227; transform:translateY(-2px);">Contact us</a>
+        </nav>
+      </div>
+      <div data-donate-menu-root style="position:relative;">
+        <button onclick="{{ toggleDonateMenu }}" style="background:#c9a227; color:#0e2419; font-weight:600; font-size:13.5px; padding:10px 22px; border-radius:999px; white-space:nowrap; border:none; cursor:pointer; font-family:'Work Sans',sans-serif; transition:transform .18s ease, filter .18s ease;" style-hover="transform:translateY(-2px); filter:brightness(1.08);">Donate</button>
+        <div style="{{ donateMenuStyle }}">
+          <a href="Pledge.dc.html?method=paypal" style="display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:10px; color:#0e2419; font-size:13.5px; font-weight:600;">
+            <span style="width:30px; height:20px; border-radius:5px; background:#003087; color:#fff; font-size:9px; font-weight:800; letter-spacing:0.01em; display:flex; align-items:center; justify-content:center; font-family:'Work Sans',sans-serif;">Pay</span>
+            PayPal
+          </a>
+          <button onclick="{{ openEtransferOnly }}" style="display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:10px; color:#0e2419; font-size:13.5px; font-weight:600; background:none; border:none; width:100%; text-align:left; cursor:pointer; font-family:'Work Sans',sans-serif;">
+            <span style="width:30px; height:20px; flex-shrink:0; border-radius:5px; overflow:hidden; background:#fff;">
+              <img src="assets/interac-logo.png" alt="Interac" style="width:100%; height:100%; object-fit:cover;" />
+            </span>
+            Pay via e-Transfer
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section style="position:relative; width:100%; min-height:100vh; display:flex; align-items:center; overflow:hidden;">
+
+    <!-- background photo, ken burns -->
+    <div style="position:absolute; inset:0; overflow:hidden;">
+      <img src="assets/hero-house.jpg" alt="Darul Arqum masjid house" style="{{ heroImgStyle }}" />
+    </div>
+
+    <!-- color wash overlay -->
+    <div style="position:absolute; inset:0; background:rgba(10,26,18,0.45);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(9,24,17,0.93) 0%, rgba(13,34,24,0.88) 38%, rgba(14,40,27,0.95) 100%);"></div>
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 55% at 22% 30%, rgba(20,60,42,0.5), transparent 70%);"></div>
+
+    <!-- soft drifting light blooms (background motion) -->
+    <div style="position:absolute; width:520px; height:520px; border-radius:999px; top:-8%; right:6%; background:radial-gradient(circle, rgba(201,162,39,0.20), transparent 70%); filter:blur(10px); animation:driftGold 22s ease-in-out infinite; mix-blend-mode:screen;"></div>
+    <div style="position:absolute; width:640px; height:640px; border-radius:999px; bottom:-14%; left:-6%; background:radial-gradient(circle, rgba(60,140,100,0.28), transparent 72%); filter:blur(10px); animation:driftGreen 28s ease-in-out infinite; mix-blend-mode:screen;"></div>
+
+    <!-- persistent Islamic ambience: stars, crescent moon, lanterns, geometry -->
+    <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:12%; left:56%; animation:twinkle 2.6s ease-in-out infinite; z-index:1;"></div>
+    <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:20%; left:70%; animation:twinkle 3.1s ease-in-out infinite 0.4s; z-index:1;"></div>
+    <div style="position:absolute; width:3px; height:3px; border-radius:999px; background:#f6f3ea; top:9%; left:84%; animation:twinkle 2.4s ease-in-out infinite 0.8s; z-index:1;"></div>
+    <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:30%; left:92%; animation:twinkle 2.8s ease-in-out infinite 1.1s; z-index:1;"></div>
+    <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:6%; left:66%; animation:twinkle 3.4s ease-in-out infinite 0.3s; z-index:1;"></div>
+    <div style="position:absolute; width:2px; height:2px; border-radius:999px; background:#f6f3ea; top:40%; left:78%; animation:twinkle 2.9s ease-in-out infinite 0.6s; z-index:1;"></div>
+
+    <!-- shooting stars -->
+    <div style="position:absolute; top:14%; left:88%; width:2px; height:2px; border-radius:999px; background:#f6f3ea; box-shadow:0 0 6px 1px rgba(246,243,234,0.8); animation:shootingStar 5.5s linear infinite 1.5s; z-index:1;"></div>
+    <div style="position:absolute; top:32%; left:96%; width:2px; height:2px; border-radius:999px; background:#f6f3ea; box-shadow:0 0 6px 1px rgba(246,243,234,0.8); animation:shootingStar 6.5s linear infinite 4s; z-index:1;"></div>
+
+    <!-- crescent moon, upper right -->
+    <div style="position:absolute; top:6%; right:9%; width:180px; height:180px; display:flex; align-items:center; justify-content:center; z-index:1; pointer-events:none;">
+      <div style="position:absolute; width:120px; height:120px; border-radius:999px; background:radial-gradient(circle, rgba(201,162,39,0.3), transparent 70%); animation:moonGlow 4s ease-in-out infinite;"></div>
+      <div style="position:relative; width:46px; height:46px; border-radius:999px; overflow:hidden; box-shadow:0 0 34px 5px rgba(227,197,106,0.35);">
+        <div style="position:absolute; inset:0; border-radius:999px; background:#e3c56a;"></div>
+        <div style="position:absolute; top:-5px; left:13px; width:46px; height:56px; border-radius:999px; background:#0a1a12;"></div>
+      </div>
+    </div>
+
+    <!-- gentle hanging lanterns, right side, clear of the text column -->
+    <div style="position:absolute; right:5%; top:0; z-index:1; pointer-events:none;">
+      <div style="display:flex; flex-direction:column; align-items:center; animation:lanternSway 5s ease-in-out infinite; transform-origin:top center;">
+        <div style="width:1.5px; height:150px; background:rgba(201,162,39,0.32);"></div>
+        <div style="position:absolute; top:140px; width:52px; height:52px; border-radius:999px; background:rgba(227,197,106,0.4); filter:blur(15px); animation:lanternGlow 2.8s ease-in-out infinite;"></div>
+        <div style="position:relative; width:32px; height:44px;">
+          <div style="position:absolute; top:0; left:7px; width:18px; height:7px; background:#c9a227; border-radius:3px 3px 0 0;"></div>
+          <div style="position:absolute; top:6px; left:1px; width:30px; height:28px; border-radius:7px; background:linear-gradient(160deg, #e3c56a, #c9a227); box-shadow:0 0 15px 2px rgba(227,197,106,0.4);"></div>
+          <div style="position:absolute; top:11px; left:10px; width:12px; height:16px; background:#fff3c4; border-radius:3px; opacity:0.85;"></div>
+          <div style="position:absolute; bottom:0; left:12px; width:8px; height:5px; background:#8a6a1e; border-radius:0 0 3px 3px;"></div>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; right:16%; top:0; z-index:1; pointer-events:none;">
+      <div style="display:flex; flex-direction:column; align-items:center; animation:lanternSway 4.4s ease-in-out infinite 0.5s; transform-origin:top center;">
+        <div style="width:1.5px; height:210px; background:rgba(201,162,39,0.28);"></div>
+        <div style="position:absolute; top:200px; width:42px; height:42px; border-radius:999px; background:rgba(227,197,106,0.36); filter:blur(13px); animation:lanternGlow 3.2s ease-in-out infinite 0.4s;"></div>
+        <div style="position:relative; width:26px; height:36px;">
+          <div style="position:absolute; top:0; left:5.5px; width:15px; height:5px; background:#c9a227; border-radius:3px 3px 0 0;"></div>
+          <div style="position:absolute; top:4px; left:0.5px; width:25px; height:23px; border-radius:6px; background:linear-gradient(160deg, #e3c56a, #c9a227); box-shadow:0 0 12px 2px rgba(227,197,106,0.4);"></div>
+          <div style="position:absolute; top:8px; left:8px; width:9px; height:14px; background:#fff3c4; border-radius:3px; opacity:0.85;"></div>
+          <div style="position:absolute; bottom:0; left:9.5px; width:7px; height:4px; background:#8a6a1e; border-radius:0 0 3px 3px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- slow-turning geometric medallion, lower right -->
+    <div style="position:absolute; bottom:-8%; right:-6%; width:340px; height:340px; z-index:1; pointer-events:none; opacity:0.16; animation:spinSlow 90s linear infinite;">
+      <div style="position:absolute; inset:0; border:1.5px solid #e3c56a; border-radius:999px;"></div>
+      <div style="position:absolute; inset:44px; border:1.5px solid #e3c56a;"></div>
+      <div style="position:absolute; inset:44px; border:1.5px solid #e3c56a; transform:rotate(45deg);"></div>
+    </div>
+
+    <!-- content -->
+    <div style="position:relative; z-index:2; max-width:1320px; margin:0 auto; width:100%; padding:150px 28px 90px; {{ heroRevealStyle }}">
+    <div style="max-width:820px;">
+      <div id="hero-logo" style="display:flex; align-items:center; gap:12px; margin-bottom:22px; animation:fadeUp 0.8s ease both;">
+        <div style="width:46px; height:46px; border-radius:10px; overflow:hidden; background:#f6f3ea; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+          <img src="assets/logo-icon.png" alt="Darul Arqum emblem" style="width:84%; height:84%; object-fit:contain; display:block;" />
+        </div>
+        <span style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; color:#f6f3ea; letter-spacing:0.01em;">Darul Arqum</span>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:34px; animation:fadeUp 0.85s ease 0.03s both;">
+        <span style="width:26px; height:1px; background:rgba(201,162,39,0.6);"></span>
+        <span style="font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; color:#c9a227; font-weight:600;">Riverside South Muslim Community Association</span>
+      </div>
+
+      <p dir="rtl" lang="ar" style="font-family:'Amiri',serif; font-size:26px; text-align:left; color:rgba(246,243,234,0.85); margin:0 0 18px 0; animation:fadeUp 0.9s ease 0.05s both;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+
+      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(40px,6vw,74px); line-height:1.05; color:#f6f3ea; margin:0 0 26px 0; max-width:820px; animation:fadeUp 1s ease 0.1s both;">
+        A house of prayer rising in <span style="color:#c9a227; font-style:italic;">Riverside South.</span>
+      </h1>
+
+      <p style="font-size:17px; line-height:1.65; color:rgba(246,243,234,0.78); max-width:560px; margin:0 0 40px 0; animation:fadeUp 1s ease 0.16s both;">
+        The first masjid in the community — 4269 Limebank Rd, Ottawa. Acquired by its people in 2020, sustained by its people every month since. Let's build it together.
+      </p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:56px; animation:fadeUp 1s ease 0.22s both;">
+        <a href="#programs-section" onclick="{{ onNavPrograms }}" style="display:inline-flex; align-items:center; gap:9px; background:#c9a227; color:#0e2419; font-weight:600; font-size:15px; padding:15px 28px; border-radius:999px; transition:transform .18s ease, filter .18s ease;" style-hover="transform:translateY(-2px); filter:brightness(1.08);">
+          Programs &amp; news
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:14px; animation:fadeUp 1s ease 0.28s both;">
+        <div style="flex:1 1 220px; display:flex; align-items:center; gap:13px; padding:16px 18px; border-radius:12px; background:rgba(246,243,234,0.045); border:1px solid rgba(246,243,234,0.12);">
+          <div style="width:34px; height:34px; flex-shrink:0; border-radius:999px; background:rgba(201,162,39,0.16); border:1px solid rgba(201,162,39,0.4); display:flex; align-items:center; justify-content:center;">
+            <div style="position:relative; width:16px; height:18px;">
+              <div style="position:absolute; top:-3px; left:6px; width:4px; height:4px; border:1px solid #e3c56a; border-radius:999px;"></div>
+              <div style="position:absolute; top:0; left:3px; width:10px; height:3px; background:#c9a227; border-radius:2px 2px 0 0;"></div>
+              <div style="position:absolute; top:3px; left:0; width:16px; height:15px; background:linear-gradient(160deg,#e3c56a,#a9832a); border-radius:4px; box-shadow:0 0 6px 1px rgba(227,197,106,0.4);"></div>
+              <div style="position:absolute; top:5px; left:5px; width:1px; height:11px; background:rgba(46,26,13,0.45);"></div>
+              <div style="position:absolute; top:5px; left:10px; width:1px; height:11px; background:rgba(46,26,13,0.45);"></div>
+              <div style="position:absolute; top:6px; left:6px; width:5px; height:8px; background:#fff3c4; opacity:0.85; border-radius:2px;"></div>
+              <div style="position:absolute; bottom:-2px; left:5px; width:0; height:0; border-left:3px solid transparent; border-right:3px solid transparent; border-top:4px solid #8a6a1e;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#f6f3ea; margin-bottom:2px;">Jumu'ah</div>
+            <div style="font-size:12.5px; color:rgba(246,243,234,0.62);">1:30 PM &amp; 2:30 PM</div>
+          </div>
+        </div>
+        <div style="flex:1 1 220px; display:flex; align-items:center; gap:13px; padding:16px 18px; border-radius:12px; background:rgba(246,243,234,0.045); border:1px solid rgba(246,243,234,0.12);">
+          <div style="width:34px; height:34px; flex-shrink:0; border-radius:999px; background:rgba(80,160,120,0.18); border:1px solid rgba(120,190,150,0.5); display:flex; align-items:center; justify-content:center;">
+            <div style="position:relative; width:20px; height:13px;">
+              <div style="position:absolute; bottom:0; left:0; width:20px; height:1.5px; background:#a9e0c0; border-radius:1px; opacity:0.55;"></div>
+              <div style="position:absolute; bottom:1.5px; left:6px; width:13px; height:8.5px; background:#a9e0c0; border-radius:0 100% 35% 60% / 0 100% 70% 100%;"></div>
+              <div style="position:absolute; bottom:1.5px; left:0; width:6.5px; height:2px; background:#a9e0c0; border-radius:1px;"></div>
+              <div style="position:absolute; bottom:2.6px; left:0; width:5px; height:5px; background:#a9e0c0; border-radius:999px;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#f6f3ea; margin-bottom:2px;">Daily prayers</div>
+            <div style="font-size:12.5px; color:rgba(246,243,234,0.62);">In congregation, every day</div>
+          </div>
+        </div>
+        <div style="flex:1 1 220px; display:flex; align-items:center; gap:13px; padding:16px 18px; border-radius:12px; background:rgba(246,243,234,0.045); border:1px solid rgba(246,243,234,0.12);">
+          <div style="width:34px; height:34px; flex-shrink:0; border-radius:999px; background:rgba(246,243,234,0.08); border:1px solid rgba(246,243,234,0.35); display:flex; align-items:center; justify-content:center; color:#f6f3ea; font-size:14px;">✦</div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#f6f3ea; margin-bottom:2px;">CRA charity</div>
+            <div style="font-size:12.5px; color:rgba(246,243,234,0.62); font-family:monospace;">709549687RR0001</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SADAQAH JARIYAH / GIVING SECTION -->
+  <section id="giving-section" style="position:relative; width:100%; padding:120px 28px; overflow:hidden; background:#0a1f15; scroll-margin-top:80px;">
+    <div style="position:absolute; width:460px; height:460px; border-radius:999px; top:10%; right:-10%; background:radial-gradient(circle, rgba(201,162,39,0.14), transparent 72%); filter:blur(6px); animation:floatSlow 14s ease-in-out infinite;"></div>
+    <div style="position:absolute; width:380px; height:380px; border-radius:999px; bottom:-10%; left:-6%; background:radial-gradient(circle, rgba(60,140,100,0.18), transparent 72%); filter:blur(6px); animation:floatSlow 18s ease-in-out infinite 2s;"></div>
+
+    <div style="position:relative; z-index:2; max-width:1320px; margin:0 auto; display:flex; gap:56px; flex-wrap:wrap; align-items:center;">
+      <div style="flex:1 1 420px; min-width:0;">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px; {{ revealOverline }}">
+          <span style="width:26px; height:1px; background:rgba(201,162,39,0.6);"></span>
+          <span style="font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; color:#c9a227; font-weight:600;">Sadaqah Jariyah</span>
+        </div>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(32px,4vw,48px); line-height:1.12; color:#f6f3ea; margin:0 0 22px 0; max-width:520px; {{ revealHeading }}">
+          Sixty dollars, one family, <span style="color:#c9a227; font-style:italic;">every month.</span>
+        </h2>
+        <p style="font-size:16px; line-height:1.7; color:rgba(246,243,234,0.72); max-width:480px; margin:0 0 36px 0; {{ revealParagraph }}">
+          The community purchased this property outright in 2020 and carries a Qard-e-Hasan.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; {{ revealButtons }}">
+          <button onclick="{{ openGiveOnce }}" style="display:inline-flex; align-items:center; gap:9px; background:#c9a227; color:#0e2419; font-weight:600; font-size:15px; padding:15px 28px; border-radius:999px; border:none; cursor:pointer; font-family:'Work Sans',sans-serif; transition:transform .18s ease, filter .18s ease;" style-hover="transform:translateY(-2px); filter:brightness(1.08);">
+            Donate now
+            <span aria-hidden="true">↗</span>
+          </button>
+          <button onclick="{{ openGiveMonthly }}" style="display:inline-flex; align-items:center; gap:9px; background:transparent; color:#f6f3ea; font-weight:500; font-size:15px; padding:15px 28px; border-radius:999px; border:1px solid rgba(246,243,234,0.3); cursor:pointer; font-family:'Work Sans',sans-serif; transition:transform .18s ease, background .18s ease;" style-hover="transform:translateY(-2px); background:rgba(246,243,234,0.08);">
+            Set up a monthly pledge
+          </button>
+        </div>
+      </div>
+
+      <div style="flex:1 1 320px; min-width:280px; display:flex; flex-direction:column; gap:1px; background:rgba(246,243,234,0.12); border:1px solid rgba(201,162,39,0.28); border-radius:16px; overflow:hidden; {{ revealGrid }}">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(246,243,234,0.12);">
+          <div style="background:#0e2419; padding:32px 28px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,2.6vw,34px); color:#c9a227; margin-bottom:8px; font-variant-numeric:tabular-nums;">{{ fmtParking }}</div>
+            <div style="font-size:12.5px; color:rgba(246,243,234,0.6);">Parking lot renovation</div>
+          </div>
+          <div style="background:#0e2419; padding:32px 28px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,2.6vw,34px); color:#c9a227; margin-bottom:8px; font-variant-numeric:tabular-nums;">{{ fmtQard }}</div>
+            <div style="font-size:12.5px; color:rgba(246,243,234,0.6);">Qard-e-Hasan remaining</div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(120deg, rgba(201,162,39,0.22), rgba(201,162,39,0.1)); padding:26px 28px; display:flex; flex-direction:column; gap:10px;">
+          <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#c9a227; font-weight:700;">Fun fact</div>
+          <div style="display:flex; align-items:center; gap:18px;">
+            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3vw,38px); color:#f6f3ea; white-space:nowrap;">$60</div>
+            <div style="width:1px; align-self:stretch; background:rgba(201,162,39,0.35);"></div>
+            <div style="font-size:13.5px; line-height:1.5; color:rgba(246,243,234,0.85); font-weight:500;">If every family gave just $60 a month, it would cover the loan and running costs — together.</div>
+          </div>
+          <button onclick="{{ openGiveMonthly60 }}" style="align-self:flex-start; background:#0e2419; color:#f6f3ea; border:1px solid rgba(201,162,39,0.4); font-size:12.5px; font-weight:600; padding:9px 18px; border-radius:999px; cursor:pointer; font-family:'Work Sans',sans-serif; transition:transform .18s ease, filter .18s ease;" style-hover="transform:translateY(-2px); filter:brightness(1.3);">I can do that — give $60/month</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIVE MODAL: one-time or monthly, native methods -->
+  <div style="{{ giveOverlayStyle }}" onclick="{{ closeGiveModal }}">
+    <div style="{{ giveModalStyle }}" onclick="{{ stopProp }}">
+      <button onclick="{{ closeGiveModal }}" style="position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:999px; background:rgba(246,243,234,0.08); border:1px solid rgba(246,243,234,0.2); color:#f6f3ea; font-size:16px; cursor:pointer; line-height:1;">✕</button>
+
+      <div style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#c9a227; font-weight:600; margin-bottom:10px;">{{ giveModalTitle }}</div>
+      <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:26px; color:#f6f3ea; margin:0 0 22px 0;">Choose how you'd like to give.</h3>
+
+      <div style="display:flex; gap:4px; padding:4px; border-radius:999px; background:rgba(246,243,234,0.06); border:1px solid rgba(246,243,234,0.14); margin-bottom:16px;">
+        <div onclick="{{ setFreqOnce }}" style="{{ freqOnceStyle }}">One-time</div>
+        <div onclick="{{ setFreqMonthly }}" style="{{ freqMonthlyStyle }}">Monthly</div>
+      </div>
+
+      <label style="display:block; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(246,243,234,0.55); margin-bottom:8px;">Amount</label>
+      <div style="display:flex; align-items:center; gap:2px; margin-bottom:24px; background:rgba(246,243,234,0.06); border:1px solid rgba(246,243,234,0.2); border-radius:12px; padding:4px 16px;">
+        <span style="font-size:20px; color:#c9a227; font-weight:600; font-family:'Cormorant Garamond',serif;">$</span>
+        <input value="{{ giveAmount }}" oninput="{{ onGiveAmount }}" inputmode="numeric" min="{{ giveAmountMin }}" placeholder="{{ giveAmountPlaceholder }}" style="border:none; background:transparent; color:#f6f3ea; font-size:20px; font-weight:600; font-family:'Cormorant Garamond',serif; padding:10px 6px; width:100%; outline:none;" />
+      </div>
+      <sc-if value="{{ giveAmountTooLow }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:-16px 0 20px 4px; font-size:12px; color:#e08a8a;">Minimum amount is ${{ giveAmountMin }} or higher{{ giveFreqMinNote }}.</div>
+      </sc-if>
+
+      <div style="display:flex; flex-direction:column; gap:12px;">
+
+        <!-- PayPal -->
+        <sc-if value="{{ showAllGiveMethods }}" hint-placeholder-val="{{ true }}">
+        <div style="border-radius:14px; background:rgba(246,243,234,0.05); border:1px solid rgba(246,243,234,0.14); overflow:hidden;">
+          <div onclick="{{ setMethodPaypal }}" style="display:flex; align-items:center; gap:16px; padding:16px 18px; cursor:pointer;">
+            <span style="width:40px; height:26px; flex-shrink:0; border-radius:6px; background:#003087; color:#fff; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; font-family:'Work Sans',sans-serif;">Pay</span>
+            <span style="flex:1; font-size:14.5px; font-weight:600; color:#f6f3ea;">Credit card via PayPal</span>
+            <span style="color:rgba(246,243,234,0.5); font-size:13px;">＋</span>
+          </div>
+          <div style="{{ paypalPanelStyle }}">
+            <div style="padding:0 18px 18px;">
+              <p style="font-size:13px; line-height:1.6; color:rgba(246,243,234,0.65); margin:0 0 14px 0;">Opens the secure PayPal donate form in a new tab. For monthly giving, check "Make this monthly donation" once you're there.</p>
+              <a href="{{ paypalContinueUrl }}" style="display:inline-flex; align-items:center; gap:8px; background:#c9a227; color:#0e2419; font-weight:600; font-size:13.5px; padding:11px 20px; border-radius:999px;">Continue to PayPal ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank / PAD -->
+        <div style="border-radius:14px; background:rgba(246,243,234,0.05); border:1px solid rgba(246,243,234,0.14); overflow:hidden;">
+          <div onclick="{{ setMethodBank }}" style="display:flex; align-items:center; gap:16px; padding:16px 18px; cursor:pointer;">
+            <span style="width:40px; height:28px; flex-shrink:0; border-radius:6px; background:#2b2b2b; position:relative; overflow:hidden;">
+              <span style="position:absolute; top:6px; left:0; right:0; height:5px; background:#e8e8e8;"></span>
+              <span style="position:absolute; bottom:5px; left:5px; width:12px; height:8px; border-radius:2px; background:linear-gradient(135deg,#c9a227,#e3c56a);"></span>
+            </span>
+            <span style="flex:1; font-size:14.5px; font-weight:600; color:#f6f3ea;">Pre-authorized bank debit</span>
+            <span style="color:rgba(246,243,234,0.5); font-size:13px;">＋</span>
+          </div>
+          <div style="{{ bankPanelStyle }}">
+            <div style="padding:0 18px 18px; display:flex; flex-direction:column; gap:12px;">
+              <p style="font-size:13px; line-height:1.6; color:rgba(246,243,234,0.65); margin:0;">Pre-authorized bank debit needs your banking details and a void cheque photo — you'll fill that out on the pledge page next.</p>
+              <a href="{{ padContinueUrl }}" style="display:inline-flex; align-items:center; gap:8px; background:#c9a227; color:#0e2419; font-weight:600; font-size:13.5px; padding:11px 20px; border-radius:999px;">Continue to pledge page ↗</a>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- e-Transfer -->
+        <div style="border-radius:14px; background:rgba(246,243,234,0.05); border:1px solid rgba(246,243,234,0.14); overflow:hidden;">
+          <div onclick="{{ setMethodEtransfer }}" style="display:flex; align-items:center; gap:16px; padding:16px 18px; cursor:pointer;">
+            <span style="width:40px; height:26px; flex-shrink:0; border-radius:6px; overflow:hidden; background:#fff; display:flex; align-items:center; justify-content:center;">
+              <img src="assets/interac-logo.png" alt="Interac" style="width:100%; height:100%; object-fit:cover;" />
+            </span>
+            <span style="flex:1; font-size:14.5px; font-weight:600; color:#f6f3ea;">Interac e-Transfer</span>
+            <span style="color:rgba(246,243,234,0.5); font-size:13px;">＋</span>
+          </div>
+          <div style="{{ etransferPanelStyle }}">
+            <div style="padding:0 18px 18px; display:flex; flex-direction:column; gap:12px;">
+              <p style="font-size:12.5px; line-height:1.65; color:rgba(246,243,234,0.65); margin:0;">Open your banking app and send an Interac e-Transfer for <strong style="color:#c9a227;">${{ giveAmount }}</strong> to the email below. Autodeposit is enabled, so no security question is needed — just add your name in the message so we can match your donation to a tax receipt.</p>
+              <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                <span style="font-size:13.5px; color:rgba(246,243,234,0.8); font-family:monospace; background:rgba(246,243,234,0.06); padding:8px 12px; border-radius:8px;">admin@darularqum.org</span>
+                <button onclick="{{ copyEmail }}" style="background:transparent; color:#a9e0c0; border:1px solid rgba(120,190,150,0.4); font-size:13px; font-weight:600; padding:8px 16px; border-radius:999px; cursor:pointer; font-family:'Work Sans',sans-serif;">{{ copyEmailLabel }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAM INFO MODAL -->
+  <div style="{{ programOverlayStyle }}" onclick="{{ closeProgramModal }}">
+    <div style="position:relative; width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:{{ programModalBg }}; border:1px solid {{ programAccent }}55; border-radius:20px; box-shadow:0 30px 60px -12px rgba(0,0,0,0.5); transform:translateY({{ programModalOffset }}) scale({{ programModalScale }}); transition:transform 0.25s ease;" onclick="{{ stopProp }}">
+      <button onclick="{{ closeProgramModal }}" style="position:absolute; top:18px; right:18px; z-index:2; width:32px; height:32px; border-radius:999px; background:rgba(0,0,0,0.25); border:1px solid rgba(246,243,234,0.3); color:#f6f3ea; font-size:16px; cursor:pointer; line-height:1;">✕</button>
+
+      <!-- hero band with icon: structurally distinct per program -->
+      <div style="{{ programHeroStyle }}">
+
+        <!-- Aalim: scholarly medallion frame -->
+        <sc-if value="{{ programIsAalim }}">
+          <div style="position:absolute; inset:0; opacity:0.5; background-image:repeating-linear-gradient(45deg, rgba(227,197,106,0.1) 0 1px, transparent 1px 14px), repeating-linear-gradient(-45deg, rgba(227,197,106,0.1) 0 1px, transparent 1px 14px);"></div>
+          <div style="position:relative; width:78px; height:78px; border-radius:999px; border:1.5px solid rgba(227,197,106,0.45); display:flex; align-items:center; justify-content:center;">
+            <div style="position:absolute; inset:6px; border-radius:999px; border:1px solid rgba(227,197,106,0.3);"></div>
+            <div style="position:relative; width:52px; height:52px; z-index:1;">
+              <div style="position:absolute; left:0; top:9px; width:28px; height:28px; border-radius:999px; background:#e3c56a;"></div>
+              <div style="position:absolute; left:8px; top:2px; width:30px; height:30px; border-radius:999px; background:#0e2419;"></div>
+              <div style="position:absolute; right:2px; top:4px; width:2px; height:13px; background:#c9a227;"></div>
+              <div style="position:absolute; right:-3px; top:17px; width:15px; height:18px; border-radius:5px; background:linear-gradient(160deg, #e3c56a, #c9a227); box-shadow:0 0 14px 2px rgba(227,197,106,0.35);"></div>
+              <div style="position:absolute; right:2.5px; top:21.5px; width:8px; height:10px; background:#fff3c4; border-radius:2px; opacity:0.85;"></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- Hifz: ruled manuscript lines + large open-book watermark -->
+        <sc-if value="{{ programIsHifz }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; opacity:0.4; background-image:repeating-linear-gradient(0deg, rgba(217,143,74,0.18) 0 1px, transparent 1px 12px);"></div>
+          <div style="position:absolute; bottom:-30px; left:50%; transform:translateX(-50%); width:200px; height:100px; opacity:0.14;">
+            <div style="position:absolute; left:0; width:96px; height:90px; border:2px solid #d98f4a; border-right:none; border-radius:6px 0 0 0; transform:skewY(3deg);"></div>
+            <div style="position:absolute; right:0; width:96px; height:90px; border:2px solid #d98f4a; border-left:none; border-radius:0 6px 0 0; transform:skewY(-3deg);"></div>
+          </div>
+          <div style="position:relative; width:42px; height:56px; z-index:1; perspective:340px;">
+            <div style="position:relative; width:100%; height:100%; transform:rotateY(-22deg) rotateX(4deg) rotate(-3deg); transform-style:preserve-3d; filter:drop-shadow(4px 10px 10px rgba(0,0,0,0.55));">
+              <div style="position:absolute; top:1px; right:-4px; width:4px; height:54px; background:linear-gradient(90deg,#e8e2d0,#cfc8b2); border-radius:0 2px 2px 0; transform:translateZ(-1px);"></div>
+              <div style="position:absolute; top:1.5px; right:-3px; width:3px; height:53px; background:linear-gradient(90deg,#f3efe2,#ddd6c0);"></div>
+              <div style="position:relative; width:100%; height:100%; border-radius:2px 3px 3px 2px; overflow:hidden; box-shadow:0 1px 0 rgba(255,255,255,0.15) inset;">
+                <img src="assets/quran-cover.jpg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <div style="position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.06) 22%, transparent 45%); pointer-events:none;"></div>
+                <div style="position:absolute; top:0; left:0; width:5px; height:100%; background:linear-gradient(90deg, rgba(0,0,0,0.5), transparent);"></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <!-- Weekday Quran classes: photographic classroom hero, chalk-tag label -->
+        <sc-if value="{{ programIsQuran }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#f3d6a8; font-weight:700; background:rgba(8,16,12,0.55); padding:4px 12px; border-radius:999px; border:1px solid rgba(217,143,74,0.4);">Evenings · in person</div>
+          <div style="position:relative; width:42px; height:56px; z-index:1; perspective:340px;">
+            <div style="position:relative; width:100%; height:100%; transform:rotateY(-22deg) rotateX(4deg) rotate(-3deg); transform-style:preserve-3d; filter:drop-shadow(4px 10px 10px rgba(0,0,0,0.55));">
+              <div style="position:absolute; top:1px; right:-4px; width:4px; height:54px; background:linear-gradient(90deg,#e8e2d0,#cfc8b2); border-radius:0 2px 2px 0; transform:translateZ(-1px);"></div>
+              <div style="position:absolute; top:1.5px; right:-3px; width:3px; height:53px; background:linear-gradient(90deg,#f3efe2,#ddd6c0);"></div>
+              <div style="position:relative; width:100%; height:100%; border-radius:2px 3px 3px 2px; overflow:hidden; box-shadow:0 1px 0 rgba(255,255,255,0.15) inset;">
+                <img src="assets/quran-cover.jpg" alt="" style="width:100%; height:100%; object-fit:cover; display:block;" />
+                <div style="position:absolute; inset:0; background:linear-gradient(115deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.06) 22%, transparent 45%); pointer-events:none;"></div>
+                <div style="position:absolute; top:0; left:0; width:5px; height:100%; background:linear-gradient(90deg, rgba(0,0,0,0.5), transparent);"></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- KidsLearnArabic: playful scalloped hero, confetti dots -->
+        <sc-if value="{{ programIsKids }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:18px; left:36px; width:9px; height:9px; border-radius:999px; background:rgba(124,201,154,0.5);"></div>
+          <div style="position:absolute; top:64px; left:70px; width:6px; height:6px; border-radius:999px; background:rgba(227,197,106,0.5);"></div>
+          <div style="position:absolute; top:26px; right:52px; width:7px; height:7px; border-radius:999px; background:rgba(124,201,154,0.4);"></div>
+          <div style="position:absolute; bottom:20px; right:84px; width:10px; height:10px; border-radius:999px; background:rgba(227,197,106,0.4);"></div>
+          <div style="position:absolute; bottom:30px; left:90px; width:6px; height:6px; border-radius:999px; background:rgba(124,201,154,0.4);"></div>
+          <div style="position:absolute; top:44px; left:120px; width:5px; height:5px; border-radius:999px; background:rgba(124,201,154,0.5);"></div>
+          <div style="position:relative; width:64px; height:64px; border-radius:999px; background:rgba(124,201,154,0.18); border:2px dashed rgba(124,201,154,0.6); z-index:1; display:flex; align-items:center; justify-content:center; animation:floatSlow 3.5s ease-in-out infinite;">
+            <span dir="rtl" lang="ar" style="font-family:'Amiri',serif; font-weight:700; font-size:20px; color:#7cc99a; line-height:1; letter-spacing:-1px; white-space:nowrap;">ا ب ت</span>
+          </div>
+        </sc-if>
+        <!-- welearn: browser/video-call window chrome -->
+        <sc-if value="{{ programIsWelearn }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; opacity:0.35; background-image:linear-gradient(rgba(143,180,201,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(143,180,201,0.18) 1px, transparent 1px); background-size:18px 18px;"></div>
+          <div style="position:relative; width:130px; height:88px; border-radius:10px; background:#0d1f2a; border:1px solid rgba(143,180,201,0.35); box-shadow:0 14px 30px -10px rgba(0,0,0,0.5); overflow:hidden;">
+            <div style="height:16px; background:rgba(255,255,255,0.06); display:flex; align-items:center; gap:4px; padding:0 8px;">
+              <span style="width:5px; height:5px; border-radius:999px; background:#e35c5c;"></span>
+              <span style="width:5px; height:5px; border-radius:999px; background:#e3c56a;"></span>
+              <span style="width:5px; height:5px; border-radius:999px; background:#7cc99a;"></span>
+            </div>
+            <div style="position:absolute; top:16px; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center;">
+              <div style="width:26px; height:26px; border-radius:999px; background:#2D8CFF; display:flex; align-items:center; justify-content:center;">
+                <div style="width:0; height:0; border-top:6px solid transparent; border-bottom:6px solid transparent; border-left:9px solid #fff; margin-left:2px;"></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="position:relative; padding:28px 32px 32px; overflow:hidden;">
+        <!-- decorative geometric watermark, per-program accent -->
+        <div style="position:absolute; top:-40px; right:-50px; width:180px; height:180px; opacity:0.08; pointer-events:none;">
+          <div style="position:absolute; inset:0; border:1.5px solid {{ programAccent }}; border-radius:999px;"></div>
+          <div style="position:absolute; inset:30px; border:1.5px solid {{ programAccent }};"></div>
+          <div style="position:absolute; inset:30px; border:1.5px solid {{ programAccent }}; transform:rotate(45deg);"></div>
+        </div>
+
+        <div style="position:relative; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:{{ programAccent }}; font-weight:700; margin-bottom:12px;">{{ programEyebrow }}</div>
+        <h3 style="position:relative; font-family:'Cormorant Garamond',serif; font-weight:600; font-size:30px; color:#f6f3ea; margin:0 0 20px 0;">{{ programTitle }}</h3>
+
+        <!-- lede as an accented pull-quote -->
+        <div style="position:relative; padding:2px 0 2px 18px; margin-bottom:22px; border-left:2.5px solid {{ programAccent }};">
+          <p style="font-size:16px; line-height:1.65; font-family:'Cormorant Garamond',serif; font-weight:500; font-style:italic; color:#f6f3ea; margin:0;">{{ programLede }}</p>
+        </div>
+
+        <!-- logistics, front and center -->
+        <div style="position:relative; display:flex; align-items:center; gap:14px; padding:16px 20px; border-radius:14px; background:{{ programAccentSoft }}; border:1px solid {{ programAccent }}33; margin-bottom:22px;">
+          <span style="width:34px; height:34px; flex-shrink:0; border-radius:999px; background:rgba(0,0,0,0.22); display:flex; align-items:center; justify-content:center;">
+            <span style="position:relative; width:14px; height:14px; border-radius:999px; border:1.6px solid {{ programAccent }}; display:block;">
+              <span style="position:absolute; top:1px; left:6px; width:1.4px; height:5px; background:{{ programAccent }};"></span>
+              <span style="position:absolute; top:5.5px; left:6px; width:4px; height:1.4px; background:{{ programAccent }};"></span>
+            </span>
+          </span>
+          <span style="font-size:13.5px; color:#f6f3ea; font-weight:600; line-height:1.5;">{{ programLogistics }}</span>
+        </div>
+
+        <div style="position:relative; border-radius:14px; background:rgba(0,0,0,0.16); border:1px solid rgba(246,243,234,0.08); padding:18px 20px; margin-bottom:26px;">
+          <div style="display:flex; align-items:center; gap:8px; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:{{ programAccent }}; font-weight:700; margin-bottom:10px;">
+            <span style="width:14px; height:1.5px; background:{{ programAccent }}; display:inline-block;"></span>
+            About the program
+          </div>
+          <p style="font-size:14.5px; line-height:1.75; color:rgba(246,243,234,0.72); margin:0;">{{ programBody }}</p>
+        </div>
+
+        <sc-if value="{{ programIsWelearn }}">
+          <a href="{{ programZoomUrl }}" target="_blank" rel="noopener noreferrer" style-hover="transform:translateY(-2px); box-shadow:0 16px 30px -10px rgba(45,140,255,0.55);" style="position:relative; overflow:hidden; display:flex; align-items:center; gap:14px; width:100%; background:#2D8CFF; color:#ffffff; padding:14px 20px; border-radius:16px; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 10px 22px -10px rgba(45,140,255,0.6); box-sizing:border-box;">
+            <span style="position:absolute; top:-20px; right:-20px; width:90px; height:90px; border-radius:999px; background:rgba(255,255,255,0.08);"></span>
+            <span style="position:relative; width:38px; height:38px; flex-shrink:0; border-radius:10px; background:rgba(255,255,255,0.16); display:flex; align-items:center; justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="14" height="12" rx="3" fill="#ffffff"/><path d="M17 9.5L22 6.5V17.5L17 14.5V9.5Z" fill="#ffffff"/></svg>
+            </span>
+            <span style="position:relative; text-align:left; line-height:1.3;">
+              <span style="display:block; font-size:14.5px; font-weight:700;">Join the live class</span>
+              <span style="display:block; font-size:11.5px; font-weight:500; color:rgba(255,255,255,0.8);">via Zoom ↗</span>
+            </span>
+          </a>
+        </sc-if>
+        <sc-if value="{{ programIsQuran }}" hint-placeholder-val="{{ false }}">
+          <a href="Quran Class Registration.dc.html" style-hover="transform:translateY(-2px); box-shadow:0 16px 30px -10px {{ programAccent }}80;" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; background:linear-gradient(135deg, {{ programAccent }}, {{ programAccent }}cc); color:#1c1206; font-weight:700; font-size:14.5px; padding:16px 0; border-radius:16px; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 10px 22px -10px {{ programAccent }}80; box-sizing:border-box;">Go to registration page <span aria-hidden="true">→</span></a>
+        </sc-if>
+        <sc-if value="{{ programNeedsRegisterCta }}" hint-placeholder-val="{{ false }}">
+          <a href="{{ programRegisterHref }}" style-hover="transform:translateY(-2px); box-shadow:0 16px 30px -10px {{ programAccent }}80;" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; background:linear-gradient(135deg, {{ programAccent }}, {{ programAccent }}cc); color:#1c1206; font-weight:700; font-size:14.5px; padding:16px 0; border-radius:16px; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 10px 22px -10px {{ programAccent }}80; box-sizing:border-box;">{{ programRegisterLabel }}</a>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAMS & NEWS -->
+  <section id="programs-section" style="position:relative; width:100%; padding:120px 28px; overflow:hidden; background:#0e2419; scroll-margin-top:80px;">
+    <div style="position:absolute; width:520px; height:520px; border-radius:999px; top:-14%; left:-8%; background:radial-gradient(circle, rgba(201,162,39,0.12), transparent 72%); filter:blur(6px); animation:floatSlow 16s ease-in-out infinite;"></div>
+
+    <div style="position:relative; z-index:2; max-width:1320px; margin:0 auto;">
+      <div style="position:relative;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px; {{ revealProgOverline }}">
+        <span style="width:26px; height:1px; background:rgba(201,162,39,0.6);"></span>
+        <span style="font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; color:#c9a227; font-weight:600;">Programs &amp; news</span>
+      </div>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(32px,4vw,48px); line-height:1.12; color:#f6f3ea; margin:0 0 52px 0; max-width:640px; {{ revealProgHeading }}">
+        We offer learning for every age, <span style="color:#c9a227; font-style:italic;">every week.</span>
+      </h2>
+
+      <!-- ALL PROGRAMS — one shared institute frame -->
+      <div style="position:relative; border-radius:24px; overflow:hidden; border:1px solid rgba(201,162,39,0.3); background:#0e2419; padding:8px; {{ revealCard0 }}">
+
+        <div style="position:relative; padding:26px 30px 24px;">
+          <div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#c9a227; font-weight:600; margin-bottom:10px;">Al-Arif Islamic Institute</div>
+          <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:30px; color:#f6f3ea; margin:0 0 4px 0;">Five programs, one madrasa</h3>
+          <p style="font-size:13.5px; color:rgba(246,243,234,0.55); margin:0;">Led by Mufti Taqi and our teaching team — choose the track that fits, at any age.</p>
+        </div>
+
+        <div style="padding:0 6px 6px; display:flex; flex-direction:column; gap:16px;">
+
+          <!-- Aalim program — flagship, full width, solo row -->
+          <div onclick="{{ openAalim }}" style-hover="background-position:center 24%;" style="cursor:pointer; position:relative; display:flex; flex-direction:column; justify-content:flex-end; min-height:220px; padding:28px 34px; overflow:hidden; border-radius:16px; transition:background-position .3s ease; background-image:linear-gradient(100deg, rgba(8,18,13,0.92) 0%, rgba(9,18,13,0.6) 45%, rgba(9,18,13,0.25) 100%), url('assets/program-aalim.jpg'); background-size:cover; background-position:center 30%;">
+            <div style="position:absolute; top:26px; right:30px; width:48px; height:48px; border-radius:999px; background:rgba(14,36,25,0.6); border:1.5px solid rgba(201,162,39,0.55); display:flex; align-items:center; justify-content:center;">
+              <div style="position:relative; width:22px; height:22px;">
+                <div style="position:absolute; left:0; top:3px; width:12px; height:12px; border-radius:999px; background:#e3c56a;"></div>
+                <div style="position:absolute; left:3.5px; top:0.5px; width:13px; height:13px; border-radius:999px; background:#0e2419;"></div>
+                <div style="position:absolute; right:1px; top:1.5px; width:1px; height:5.5px; background:#c9a227;"></div>
+                <div style="position:absolute; right:-1px; top:7px; width:6.5px; height:7.5px; border-radius:2px; background:linear-gradient(160deg, #e3c56a, #c9a227);"></div>
+                <div style="position:absolute; right:1.4px; top:9.2px; width:3.7px; height:4.3px; background:#fff3c4; border-radius:1px; opacity:0.85;"></div>
+              </div>
+            </div>
+            <div style="position:relative; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#c9a227; font-weight:700; margin-bottom:8px;">Al-Arif Islamic Institute · flagship</div>
+            <h4 style="position:relative; font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:#f6f3ea; margin:0 0 6px 0;">Aalim program</h4>
+            <p style="position:relative; font-size:13.5px; line-height:1.6; color:rgba(246,243,234,0.75); margin:0 0 10px; max-width:520px;">Classical studies — Sarf &amp; Nahw, Quran, Hadith, Fiqh and Aqa'id — a full academic path toward becoming a scholar.</p>
+            <div style="position:relative; display:inline-flex; align-items:center; gap:8px; font-size:12px; color:#e3c56a; font-weight:600; background:rgba(201,162,39,0.16); border:1px solid rgba(201,162,39,0.35); padding:6px 14px; border-radius:999px; width:fit-content;">Monday–Friday <span style="opacity:0.5;">·</span> $150/mo</div>
+          </div>
+
+          <!-- Quran Studies — one hero, splits into two options on hover -->
+          <div style="position:relative; border-radius:16px; overflow:hidden; min-height:260px; background-image:linear-gradient(190deg, rgba(8,18,13,0.45) 0%, rgba(9,18,13,0.8) 65%, #0e2419 95%), url('assets/program-quran.jpg'); background-size:cover; background-position:center 26%; {{ revealCard1 }}">
+            <div style="position:absolute; top:24px; left:0; right:0; text-align:center; z-index:2; pointer-events:none;">
+              <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#d98f4a; font-weight:700; margin-bottom:6px;">Al-Arif Islamic Institute</div>
+              <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:#f6f3ea; margin:0;">Quran studies</h3>
+            </div>
+            <div style="position:absolute; inset:0; display:flex; z-index:1; padding-top:78px;">
+              <div onclick="{{ openHifz }}" style-hover="background:rgba(0,0,0,0.06);" style="flex:1; cursor:pointer; display:flex; flex-direction:column; justify-content:flex-end; padding:22px 24px; transition:background .25s ease; background:rgba(0,0,0,0.22); border-right:1px solid rgba(255,255,255,0.14); box-shadow:inset 3px 0 0 rgba(217,143,74,0.5);">
+                <div style="font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:#d98f4a; font-weight:700; margin-bottom:6px;">Full-time · flagship</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; color:#f6f3ea; margin-bottom:6px;">Hifz program</div>
+                <p style="font-size:12px; line-height:1.5; color:rgba(246,243,234,0.75); margin:0 0 8px 0;">Full-time memorization of the Qur'an with tajweed and Islamic studies.</p>
+                <div style="font-size:11px; color:#f3d6a8; font-weight:600; margin-bottom:10px;">Monday–Friday · $75/mo</div>
+                <span style-hover="gap:10px;" style="display:inline-flex; align-items:center; gap:6px; transition:gap .25s ease; color:#f6f3ea; font-size:12.5px; font-weight:700;">Learn more →</span>
+              </div>
+              <div onclick="{{ openQuran }}" style-hover="background:rgba(0,0,0,0.06);" style="flex:1; cursor:pointer; display:flex; flex-direction:column; justify-content:flex-end; padding:22px 24px; transition:background .25s ease; background:rgba(0,0,0,0.36);">
+                <div style="font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(246,243,234,0.6); font-weight:700; margin-bottom:6px;">Weekends</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; color:#f6f3ea; margin-bottom:6px;">Weekend classes</div>
+                <p style="font-size:12px; line-height:1.5; color:rgba(246,243,234,0.7); margin:0 0 8px 0;">Quran reading &amp; tajweed for all ages.</p>
+                <div style="font-size:11px; color:rgba(246,243,234,0.65); font-weight:600; margin-bottom:10px;">Saturday &amp; Sunday · $50/mo</div>
+                <span style-hover="gap:10px;" style="display:inline-flex; align-items:center; gap:6px; transition:gap .25s ease; color:#f6f3ea; font-size:12.5px; font-weight:600;">Learn more →</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kids + welearn -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+          <!-- KidsLearnArabic -->
+          <div onclick="{{ openKids }}" style="cursor:pointer; position:relative; min-height:220px; padding:22px; border-radius:16px; overflow:hidden; background-image:linear-gradient(160deg, rgba(10,20,15,0.5) 0%, rgba(9,18,13,0.8) 40%, rgba(8,16,12,0.98) 65%, rgba(8,16,12,0.98) 100%), url('assets/program-kids.jpg'); background-size:cover; background-position:center 20%; border:1px solid rgba(120,190,150,0.25); display:flex; flex-direction:column; justify-content:flex-end; {{ revealCard2 }}">
+            <div style="font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#a9e0c0; font-weight:700; margin-bottom:4px;">Ages 5–10</div>
+            <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:19px; color:#ffffff; margin:0 0 4px 0;">KidsLearnArabic</h3>
+            <p style="font-size:12.5px; color:rgba(255,255,255,0.8); margin:0;">Playful, structured Arabic for young learners.</p>
+          </div>
+
+          <!-- welearn: desk scene — notebook, pen, glasses, and a tablet standing in for a blackboard -->
+          <div onclick="{{ openWelearn }}" style-hover="transform:translateY(-5px); box-shadow:0 16px 32px rgba(0,0,0,0.35);" style="cursor:pointer; position:relative; min-height:220px; padding:0; border-radius:16px; overflow:hidden; transition:transform .22s ease, box-shadow .22s ease; background:linear-gradient(100deg, #8a6a44 0%, #6b4f30 50%, #55391f 100%); border:1px solid rgba(201,162,39,0.3); display:flex; flex-direction:column; justify-content:space-between;">
+            <!-- wood plank lines -->
+            <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(100deg, rgba(0,0,0,0.08) 0px, transparent 2px, transparent 34px, rgba(0,0,0,0.08) 36px); pointer-events:none;"></div>
+
+            <!-- notebook, top-left -->
+            <div style="position:absolute; top:20px; left:20px; width:64px; height:80px; border-radius:3px; background:linear-gradient(115deg, #8a2020, #6b1414); box-shadow:0 6px 14px rgba(0,0,0,0.35); transform:rotate(-6deg);">
+              <div style="position:absolute; inset:4px; border:1px solid rgba(227,197,106,0.6);"></div>
+              <div style="position:absolute; left:6px; top:6px; right:6px; height:1px; background:repeating-linear-gradient(90deg, #e3c56a 0 4px, transparent 4px 8px); opacity:0.7;"></div>
+            </div>
+            <!-- pen resting on notebook -->
+            <div style="position:absolute; top:34px; left:14px; width:58px; height:5px; border-radius:3px; background:linear-gradient(90deg, #1c2126, #3a4048); transform:rotate(-6deg); box-shadow:0 2px 4px rgba(0,0,0,0.3);"></div>
+            <div style="position:absolute; top:32px; left:10px; width:9px; height:9px; border-radius:999px; background:#cfd4d8; transform:rotate(-6deg);"></div>
+
+            <!-- glasses, bottom-left -->
+            <div style="position:absolute; bottom:18px; left:16px; width:70px; height:26px;">
+              <div style="position:absolute; left:0; top:4px; width:26px; height:20px; border-radius:999px; border:2.5px solid #1c2126; opacity:0.85;"></div>
+              <div style="position:absolute; right:0; top:4px; width:26px; height:20px; border-radius:999px; border:2.5px solid #1c2126; opacity:0.85;"></div>
+              <div style="position:absolute; left:24px; top:10px; width:22px; height:2.5px; background:#1c2126; opacity:0.85;"></div>
+            </div>
+
+            <!-- tablet, standing in for the blackboard -->
+            <div style="position:absolute; top:16px; right:18px; width:132px; height:96px; border-radius:12px; background:#15181c; box-shadow:0 14px 30px -8px rgba(0,0,0,0.5); transform:rotate(3deg); border:1px solid rgba(255,255,255,0.08);">
+              <div style="position:absolute; inset:6px; border-radius:8px; background:linear-gradient(160deg, #1a3c2a, #0e2419); overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+                <div style="width:26px; height:26px; border-radius:999px; background:rgba(227,197,106,0.18); border:1px solid rgba(227,197,106,0.5); display:flex; align-items:center; justify-content:center;">
+                  <div style="width:0; height:0; border-top:6px solid transparent; border-bottom:6px solid transparent; border-left:9px solid #e3c56a; margin-left:2px;"></div>
+                </div>
+                <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:13px; color:#f6f3ea; letter-spacing:0.01em;">welearn</span>
+              </div>
+              <div style="position:absolute; bottom:-3px; left:50%; transform:translateX(-50%); width:26px; height:3px; border-radius:2px; background:rgba(255,255,255,0.12);"></div>
+            </div>
+            <!-- stylus resting on the tablet -->
+            <div style="position:absolute; top:70px; right:24px; width:44px; height:4px; border-radius:2px; background:linear-gradient(90deg, #c9a227, #8a6a1e); transform:rotate(18deg); box-shadow:0 2px 4px rgba(0,0,0,0.3);"></div>
+
+            <div style="position:relative; background:rgba(20,14,8,0.55); backdrop-filter:blur(4px); margin-top:auto; padding:16px 24px 20px;">
+              <div style="font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#e3c56a; font-weight:700; margin-bottom:4px;">Online · Zoom</div>
+              <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:19px; color:#ffffff; margin:0 0 4px 0;">welearn</h3>
+              <p style="font-size:12.5px; color:rgba(255,255,255,0.85); margin:0;">Live classes with Sheikh Saud Hasan.</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div id="whatsapp-section" style="position:relative; margin-top:20px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; padding:26px 30px; border-radius:20px; background:linear-gradient(120deg, rgba(80,160,120,0.14), rgba(80,160,120,0.04)); border:1px solid rgba(120,190,150,0.25); {{ revealCard3 }}">
+        <div style="width:52px; height:52px; flex-shrink:0; border-radius:999px; overflow:hidden;">
+          <img src="assets/whatsapp-icon.png" alt="WhatsApp" style="width:100%; height:100%; object-fit:cover; transform:scale(1.16);" />
+        </div>
+        <div style="flex:1; min-width:240px;">
+          <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:19px; color:#f6f3ea; margin:0 0 4px 0;">New to the community?</h3>
+          <p style="font-size:13.5px; color:rgba(246,243,234,0.68); margin:0;">Join the WhatsApp group for Iqama alerts and announcements — or come see the masjid. Everyone is welcome.</p>
+        </div>
+        <a href="https://chat.whatsapp.com/F7LaeeNTGIlBPxJndDpEny" target="_blank" rel="noopener noreferrer" style-hover="transform:translateY(-2px); filter:brightness(1.1);" style="flex-shrink:0; transition:transform .18s ease, filter .18s ease; background:#25D366; color:#0e2419; font-weight:600; font-size:13.5px; padding:12px 22px; border-radius:999px;">Join the group ↗</a>
+        <sc-if value="{{ whatsappHighlighted }}" hint-placeholder-val="{{ false }}">
+          <div key="{{ highlightKey }}" style="position:absolute; top:-20px; left:-20px; right:-20px; bottom:-20px; z-index:6; pointer-events:none; border-radius:24px; animation:sectionSpotlight 1.8s ease-out forwards;"></div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ programsHighlighted }}" hint-placeholder-val="{{ false }}">
+        <div key="{{ highlightKey }}" style="position:absolute; top:-20px; left:-20px; right:-20px; bottom:-20px; z-index:6; pointer-events:none; border-radius:24px; animation:sectionSpotlight 1.8s ease-out forwards;"></div>
+      </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT US — HERO -->
+  <section id="contact-us" style="position:relative; width:100%; padding:120px 28px; overflow:hidden; background:#0a1f15; scroll-margin-top:80px;">
+    <div style="position:absolute; width:460px; height:460px; border-radius:999px; top:-12%; right:-8%; background:radial-gradient(circle, rgba(201,162,39,0.14), transparent 72%); filter:blur(6px); animation:floatSlow 15s ease-in-out infinite;"></div>
+    <div style="position:absolute; width:380px; height:380px; border-radius:999px; bottom:-14%; left:-8%; background:radial-gradient(circle, rgba(60,140,100,0.18), transparent 72%); filter:blur(6px); animation:floatSlow 19s ease-in-out infinite 2s;"></div>
+
+    <div style="position:relative; z-index:2; max-width:1320px; margin:0 auto;">
+      <div style="position:relative;">
+        <sc-if value="{{ contactHighlighted }}" hint-placeholder-val="{{ false }}">
+          <div key="{{ highlightKey }}" style="position:absolute; top:-20px; left:-20px; right:-20px; bottom:-20px; z-index:6; pointer-events:none; border-radius:24px; animation:sectionSpotlight 1.8s ease-out forwards;"></div>
+        </sc-if>
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+          <span style="width:26px; height:1px; background:rgba(201,162,39,0.6);"></span>
+          <span style="font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase; color:#c9a227; font-weight:600;">Contact us</span>
+        </div>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(32px,4vw,48px); line-height:1.12; color:#f6f3ea; margin:0 0 52px 0; max-width:640px;">
+          Come <span style="color:#c9a227; font-style:italic;">visit us,</span> or reach out anytime.
+        </h2>
+
+        <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:20px;">
+
+          <!-- Address + map -->
+          <div style="border-radius:20px; overflow:hidden; background:rgba(246,243,234,0.04); border:1px solid rgba(246,243,234,0.12); display:flex; flex-direction:column; height:100%;">
+            <iframe title="Darul Arqum location" src="https://www.google.com/maps?q=Darul+Arqum+Markaz+of+Ottawa,+4269+Limebank+Rd,+Ottawa,+ON+K1V+1G5&output=embed" style="width:100%; flex:1; min-height:180px; border:0; display:block;" loading="lazy"></iframe>
+            <div style="padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; flex-shrink:0;">
+              <div>
+                <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#c9a227; font-weight:700; margin-bottom:6px;">Visit the masjid</div>
+                <div style="font-size:16px; color:#f6f3ea; font-weight:600;">4269 Limebank Rd, Ottawa, ON K1V 1G5</div>
+              </div>
+              <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" style-hover="transform:translateY(-2px); filter:brightness(1.08);" style="flex-shrink:0; transition:transform .18s ease, filter .18s ease; background:#c9a227; color:#0e2419; font-weight:700; font-size:13px; padding:11px 20px; border-radius:999px;">Get directions ↗</a>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr; gap:20px;">
+            <!-- Phone -->
+            <div style="border-radius:20px; padding:22px; background:linear-gradient(150deg, rgba(80,160,120,0.22), rgba(80,160,120,0.06)); border:1px solid rgba(120,190,150,0.35); display:flex; align-items:center; gap:16px;">
+              <div style="width:46px; height:46px; flex-shrink:0; border-radius:999px; overflow:hidden;">
+                <img src="assets/phone-icon.png" alt="" style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#a9e0c0; font-weight:700; margin-bottom:6px;">Call us</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                  <span style="font-size:15px; color:#f6f3ea; font-weight:700;">613-709-2329</span>
+                  <div style="display:flex; align-items:center; gap:5px; flex-shrink:0;">
+                    <button onclick="{{ copyPhone1 }}" style="background:transparent; color:#a9e0c0; border:1px solid rgba(120,190,150,0.4); font-size:11px; font-weight:600; padding:5px 10px; border-radius:999px; cursor:pointer; font-family:'Work Sans',sans-serif; white-space:nowrap;">{{ copyPhone1Label }}</button>
+                    <a href="tel:+16137092329" style-hover="filter:brightness(1.1);" style="display:inline-flex; align-items:center; background:#7cc99a; color:#0e2419; font-weight:700; font-size:11px; padding:6px 12px; border-radius:999px; white-space:nowrap; transition:filter .18s ease;">Call ↗</a>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px;">
+                  <span style="font-size:13px; color:rgba(246,243,234,0.75); font-weight:600;">819-360-5936</span>
+                  <div style="display:flex; align-items:center; gap:5px; flex-shrink:0;">
+                    <button onclick="{{ copyPhone2 }}" style="background:transparent; color:#a9e0c0; border:1px solid rgba(120,190,150,0.4); font-size:11px; font-weight:600; padding:5px 10px; border-radius:999px; cursor:pointer; font-family:'Work Sans',sans-serif; white-space:nowrap;">{{ copyPhone2Label }}</button>
+                    <a href="tel:+18193605936" style-hover="filter:brightness(1.1);" style="display:inline-flex; align-items:center; background:#7cc99a; color:#0e2419; font-weight:700; font-size:11px; padding:6px 12px; border-radius:999px; white-space:nowrap; transition:filter .18s ease;">Call ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <a href="mailto:admin@darularqum.org" style="border-radius:20px; padding:22px; background:linear-gradient(150deg, rgba(201,162,39,0.22), rgba(201,162,39,0.06)); border:1px solid rgba(227,197,106,0.35); display:flex; align-items:center; gap:16px; transition:transform .18s ease, box-shadow .18s ease;" style-hover="transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+              <div style="width:46px; height:46px; flex-shrink:0; border-radius:999px; overflow:hidden;">
+                <img src="assets/email-icon.png" alt="" style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+              <div style="min-width:0;">
+                <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#e3c56a; font-weight:700; margin-bottom:4px;">Email us</div>
+                <div style="font-size:16px; color:#f6f3ea; font-weight:700; white-space:nowrap;">admin@darularqum.org</div>
+              </div>
+            </a>
+
+            <!-- Charity registration -->
+            <div style="border-radius:20px; padding:24px 26px; background:linear-gradient(120deg, #2b210c, #1a1508); border:1px solid rgba(201,162,39,0.45); display:flex; align-items:center; justify-content:space-between; gap:16px;">
+              <div style="display:flex; align-items:center; gap:16px;">
+                <div style="width:46px; height:46px; flex-shrink:0; border-radius:999px; background:rgba(201,162,39,0.25); border:1.5px solid rgba(227,197,106,0.6); display:flex; align-items:center; justify-content:center; color:#e3c56a; font-size:18px;">✦</div>
+                <div>
+                  <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#e3c56a; font-weight:700; margin-bottom:3px;">CRA registered charity</div>
+                  <span style="font-size:19px; color:#f6f3ea; font-family:monospace; font-weight:700; letter-spacing:0.02em;">709549687RR0001</span>
+                </div>
+              </div>
+              <div style="font-size:11px; color:rgba(246,243,234,0.5); text-align:right; max-width:140px; line-height:1.5; display:none; ; @media"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440},&quot;heroMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero background&quot;},&quot;zoomAmount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.2,&quot;min&quot;:1.02,&quot;max&quot;:1.2,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;unit&quot;:&quot;×&quot;,&quot;section&quot;:&quot;Hero background&quot;}}">
+class Component extends DCLogic {
+  state = {
+    counted: [0, 0],
+    showHeaderLogo: false,
+    givingVisible: false,
+    programsVisible: false,
+    donateMenuOpen: false,
+    giveModalOpen: false,
+    giveFrequency: "monthly",
+    giveMethod: null,
+    giveEtransferOnly: false,
+    programModalKey: null,
+    copiedEmail: false,
+    copiedPhone1: false,
+    copiedPhone2: false,
+    pad: { name: "", email: "", phone: "", bankName: "", institution: "", transit: "", account: "", day: "1", address: "", signature: "", comments: "" },
+    giveAmount: "",
+    introPhase: sessionStorage.getItem("da-intro-seen") ? "done" : "intro",
+    introIndex: 0,
+    highlightTarget: null,
+    highlightNonce: 0,
+  };
+
+  GREETINGS = [
+    { text: "السَّلَامُ عَلَيْكُمْ", lang: "ar" },
+    { text: "Assalamu Alaikum" },
+    { text: "Peace be upon you" },
+    { text: "أَهْلًا وَسَهْلًا", lang: "ar" },
+    { text: "Welcome to Darul Arqum" },
+  ];
+
+  PROGRAM_INFO = {
+    aalim: {
+      eyebrow: "Al-Arif Islamic Institute",
+      title: "Aalim program",
+      lede: "Led by Mufti Taqi — trained in jurisprudence, Hadith, Tafsir and Arabic — Al-Arif Madrasa pairs academic excellence with spiritual grounding.",
+      body: "Structured classical studies: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id — a full academic path toward becoming a scholar of Islamic sciences.",
+      logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $150/month.",
+    },
+    hifz: {
+      eyebrow: "Al-Arif Islamic Institute",
+      title: "Quran Hifz",
+      lede: "A dedicated, full-time track for students pursuing memorization of the Quran as their primary focus, under Mufti Taqi.",
+      body: "Structured daily hours for revision and new memorization, paired with tajweed correction and continuous assessment, until the Quran is completed and preserved by heart.",
+      logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $75/month.",
+    },
+    quran: {
+      eyebrow: "Weekend madrasa · ages 6+",
+      title: "Weekend Quran classes",
+      lede: "Building recitation, memorization, and character — one structured track at a time.",
+      body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
+      logistics: "Saturday & Sunday, at the masjid · $50/month.",
+    },
+    kids: {
+      eyebrow: "Ages 5–10",
+      title: "KidsLearnArabic",
+      lede: "A dedicated Arabic track for young learners — playful, structured, and rooted in the language of the Quran.",
+      body: "Children aged 5–10 build letters, sounds, vocabulary and confidence in a nurturing environment at the masjid, taught by teachers experienced with young learners.",
+      logistics: "Ages 5–10, on site at Darul Arqum.",
+    },
+    welearn: {
+      eyebrow: "Online · Zoom",
+      title: "welearn",
+      lede: "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan — join the class over Zoom from anywhere.",
+      body: "Sessions run live — no software beyond Zoom needed. Class announcements, schedule changes and recordings are shared through the community WhatsApp group.",
+      logistics: "Live over Zoom — link shared with registered students.",
+      zoomUrl: "https://zoom.us/j/93194466159",
+    },
+  };
+
+  targets = [20000, 144000];
+
+  scrollToSection = (e, id, offset) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    clearTimeout(this._highlightTimer);
+    this.setState((s) => ({ highlightTarget: id, highlightNonce: s.highlightNonce + 1 }));
+    this._highlightTimer = window.setTimeout(() => this.setState({ highlightTarget: null }), 1800);
+  };
+
+  onNavPrograms = (e) => this.scrollToSection(e, "programs-section", 70);
+  onNavContact = (e) => this.scrollToSection(e, "contact-us", 90);
+  onNavCommunity = (e) => this.scrollToSection(e, "whatsapp-section", 90);
+
+  componentDidMount() {
+    this._introTimers = [];
+    if (this.state.introPhase === "intro") {
+      sessionStorage.setItem("da-intro-seen", "1");
+      const hold = 1050;
+      this.GREETINGS.forEach((_, i) => {
+        this._introTimers.push(window.setTimeout(() => this.setState({ introIndex: i }), i * hold));
+      });
+      this._introTimers.push(window.setTimeout(() => this.setState({ introPhase: "reveal" }), this.GREETINGS.length * hold));
+      this._introTimers.push(window.setTimeout(() => this.setState({ introPhase: "done" }), this.GREETINGS.length * hold + 900));
+    }
+
+    this._onScroll = () => {
+      const el = document.getElementById("hero-logo");
+      if (!el) return;
+      const past = el.getBoundingClientRect().bottom < 0;
+      if (past !== this.state.showHeaderLogo) this.setState({ showHeaderLogo: past });
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    this._onScroll();
+
+    this._onDocClick = (e) => {
+      if (this.state.donateMenuOpen && !e.target.closest("[data-donate-menu-root]")) {
+        this.setState({ donateMenuOpen: false });
+      }
+    };
+    document.addEventListener("click", this._onDocClick, true);
+
+    const givingEl = document.getElementById("giving-section");
+    if (givingEl) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.state.givingVisible) {
+            this.setState({ givingVisible: true });
+            this.runCount();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.25 });
+      io.observe(givingEl);
+    }
+
+    const programsEl = document.getElementById("programs-section");
+    if (programsEl) {
+      const io2 = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.state.programsVisible) {
+            this.setState({ programsVisible: true });
+            io2.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      io2.observe(programsEl);
+    }
+
+    // arriving from another page with a #section hash — scroll + highlight once layout settles
+    const hash = window.location.hash.replace("#", "");
+    if (hash === "programs-section" || hash === "contact-us" || hash === "whatsapp-section") {
+      window.setTimeout(() => {
+        const offset = hash === "programs-section" ? 70 : 90;
+        const el = document.getElementById(hash);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+        clearTimeout(this._highlightTimer);
+        this.setState((s) => ({ highlightTarget: hash, highlightNonce: s.highlightNonce + 1 }));
+        this._highlightTimer = window.setTimeout(() => this.setState({ highlightTarget: null }), 1800);
+      }, 260);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._onScroll) window.removeEventListener("scroll", this._onScroll);
+    if (this._onDocClick) document.removeEventListener("click", this._onDocClick, true);
+    if (this._introTimers) this._introTimers.forEach((t) => window.clearTimeout(t));
+  }
+
+  toggleDonateMenu = (e) => {
+    e.stopPropagation();
+    this.setState((s) => ({ donateMenuOpen: !s.donateMenuOpen }));
+  };
+
+  openGiveModal = (freq, amount) => this.setState({ giveModalOpen: true, giveFrequency: freq, giveMethod: null, giveEtransferOnly: false, giveAmount: amount != null ? String(amount) : this.state.giveAmount });
+  openEtransferOnly = () => this.setState({ giveModalOpen: true, giveMethod: "etransfer", giveEtransferOnly: true });
+  closeGiveModal = () => this.setState({ giveModalOpen: false, giveMethod: null, giveEtransferOnly: false });
+  stopProp = (e) => e.stopPropagation();
+
+  setGiveMethod = (m) => this.setState((s) => ({ giveMethod: s.giveMethod === m ? null : m }));
+  setGiveFrequency = (f) => this.setState({ giveFrequency: f });
+
+  setPadField = (field) => (e) => {
+    const val = e.target.value;
+    this.setState((s) => ({ pad: { ...s.pad, [field]: val } }));
+  };
+
+  setGiveAmount = (e) => {
+    let val = e.target.value.replace(/[^0-9]/g, "");
+    this.setState({ giveAmount: val });
+  };
+
+  copyPhone1 = (e) => {
+    e.preventDefault();
+    navigator.clipboard?.writeText("613-709-2329").catch(() => {});
+    this.setState({ copiedPhone1: true });
+    setTimeout(() => this.setState({ copiedPhone1: false }), 2000);
+  };
+  copyPhone2 = (e) => {
+    e.preventDefault();
+    navigator.clipboard?.writeText("819-360-5936").catch(() => {});
+    this.setState({ copiedPhone2: true });
+    setTimeout(() => this.setState({ copiedPhone2: false }), 2000);
+  };
+
+  copyEmail = () => {
+    navigator.clipboard?.writeText("admin@darularqum.org").catch(() => {});
+    this.setState({ copiedEmail: true });
+    setTimeout(() => this.setState({ copiedEmail: false }), 2000);
+  };
+
+  submitPad = () => {
+    const p = this.state.pad;
+    const lines = [
+      `Name: ${p.name}`,
+      `Email: ${p.email}`,
+      `Phone: ${p.phone}`,
+      `Bank: ${p.bankName}`,
+      `Institution #: ${p.institution}`,
+      `Transit #: ${p.transit}`,
+      `Account #: ${p.account}`,
+      `Charge day of month: ${p.day}`,
+      `Address: ${p.address}`,
+      `Frequency: ${this.state.giveFrequency}`,
+      `Amount: $${this.state.giveAmount || "0"}`,
+      `Signature: ${p.signature}`,
+      `Comments: ${p.comments}`,
+      "",
+      "(Please attach a photo of a VOID cheque to this email before sending.)",
+    ].join("\n");
+    const url = `mailto:admin@darularqum.org?subject=${encodeURIComponent("Void cheque for donation \u2014 Darul Arqum")}&body=${encodeURIComponent(lines)}`;
+    window.location.href = url;
+  };
+
+  openProgramModal = (key) => this.setState({ programModalKey: key });
+  closeProgramModal = () => this.setState({ programModalKey: null });
+
+  runCount() {
+    const duration = 1500;
+    const startTime = performance.now();
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const step = (now) => {
+      const t = Math.min(1, (now - startTime) / duration);
+      const e = ease(t);
+      this.setState({ counted: this.targets.map((target) => Math.round(target * e)) });
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  renderVals() {
+    const motionOn = this.props.heroMotion ?? true;
+    const scale = this.props.zoomAmount ?? 1.09;
+    const fmt = (n) => "$" + n.toLocaleString("en-US");
+    const v = this.state.givingVisible;
+    const reveal = (delay) => `opacity:${v ? 1 : 0}; transform:translateY(${v ? 0 : 26}px); transition:opacity 0.8s cubic-bezier(.16,.8,.4,1) ${delay}s, transform 0.8s cubic-bezier(.16,.8,.4,1) ${delay}s;`;
+    const vp = this.state.programsVisible;
+    const revealP = (delay) => `opacity:${vp ? 1 : 0}; transform:translateY(${vp ? 0 : 26}px); transition:opacity 0.8s cubic-bezier(.16,.8,.4,1) ${delay}s, transform 0.8s cubic-bezier(.16,.8,.4,1) ${delay}s;`;
+    return {
+      heroImgStyle: `width:100%; height:100%; object-fit:cover; transform-origin:center; ${motionOn ? `animation:kenburns ${28 / (scale - 1 > 0.15 ? 1.3 : 1)}s ease-in-out infinite alternate;` : ""} filter:saturate(0.75) brightness(0.78) blur(2.5px);`,
+      fmtParking: fmt(this.state.counted[0]),
+      fmtQard: fmt(this.state.counted[1]),
+      headerLogoStyle: `opacity:${this.state.showHeaderLogo ? 1 : 0}; width:${this.state.showHeaderLogo ? "160px" : "0px"}; transform:translateY(${this.state.showHeaderLogo ? 0 : -6}px); transition:opacity 0.4s ease, width 0.4s ease, transform 0.4s ease; pointer-events:${this.state.showHeaderLogo ? "auto" : "none"};`,
+      revealOverline: reveal(0),
+      revealHeading: reveal(0.1),
+      revealParagraph: reveal(0.2),
+      revealButtons: reveal(0.3),
+      revealGrid: reveal(0.15),
+      revealProgOverline: revealP(0),
+      revealProgHeading: revealP(0.1),
+      revealCard0: revealP(0.18),
+      revealCard1: revealP(0.26),
+      revealCard2: revealP(0.32),
+      revealCard3: revealP(0.38),
+      toggleDonateMenu: this.toggleDonateMenu,
+      onNavPrograms: this.onNavPrograms,
+      onNavContact: this.onNavContact,
+      onNavCommunity: this.onNavCommunity,
+      programsHighlighted: this.state.highlightTarget === "programs-section",
+      contactHighlighted: this.state.highlightTarget === "contact-us",
+      whatsappHighlighted: this.state.highlightTarget === "whatsapp-section",
+      highlightKey: this.state.highlightNonce,
+      donateMenuStyle: `position:absolute; top:calc(100% + 10px); right:0; width:230px; background:#f6f3ea; border-radius:14px; padding:8px; box-shadow:0 20px 40px -12px rgba(0,0,0,0.45); opacity:${this.state.donateMenuOpen ? 1 : 0}; transform:translateY(${this.state.donateMenuOpen ? 0 : -8}px) scale(${this.state.donateMenuOpen ? 1 : 0.97}); transition:opacity 0.2s ease, transform 0.2s ease; pointer-events:${this.state.donateMenuOpen ? "auto" : "none"};`,
+
+      openGiveOnce: () => this.openGiveModal("once"),
+      openGiveMonthly: () => this.openGiveModal("monthly"),
+      openGiveMonthly60: () => this.openGiveModal("monthly", 60),
+      openEtransferOnly: this.openEtransferOnly,
+      closeGiveModal: this.closeGiveModal,
+      giveEtransferOnly: this.state.giveEtransferOnly,
+      showAllGiveMethods: !this.state.giveEtransferOnly,
+      giveModalTitle: this.state.giveEtransferOnly ? "Pay via Interac e-Transfer" : "Give to Darul Arqum",
+      stopProp: this.stopProp,
+      giveOverlayStyle: `position:fixed; inset:0; z-index:100; background:rgba(6,16,11,0.7); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:24px; opacity:${this.state.giveModalOpen ? 1 : 0}; pointer-events:${this.state.giveModalOpen ? "auto" : "none"}; transition:opacity 0.25s ease;`,
+      giveModalStyle: `position:relative; width:100%; max-width:520px; max-height:88vh; overflow-y:auto; background:#122d20; border:1px solid rgba(201,162,39,0.3); border-radius:20px; padding:32px; box-shadow:0 30px 60px -12px rgba(0,0,0,0.5); transform:translateY(${this.state.giveModalOpen ? 0 : 16}px) scale(${this.state.giveModalOpen ? 1 : 0.96}); transition:transform 0.25s ease;`,
+
+      freqOnceStyle: `flex:1; text-align:center; padding:10px 0; border-radius:999px; font-size:13.5px; font-weight:600; cursor:pointer; background:${this.state.giveFrequency === "once" ? "#c9a227" : "transparent"}; color:${this.state.giveFrequency === "once" ? "#0e2419" : "#f6f3ea"};`,
+      freqMonthlyStyle: `flex:1; text-align:center; padding:10px 0; border-radius:999px; font-size:13.5px; font-weight:600; cursor:pointer; background:${this.state.giveFrequency === "monthly" ? "#c9a227" : "transparent"}; color:${this.state.giveFrequency === "monthly" ? "#0e2419" : "#f6f3ea"};`,
+      setFreqOnce: () => this.setGiveFrequency("once"),
+      setFreqMonthly: () => this.setGiveFrequency("monthly"),
+
+      giveAmount: this.state.giveAmount,
+      onGiveAmount: this.setGiveAmount,
+      giveAmountTooLow: this.state.giveAmount !== "" && Number(this.state.giveAmount) < (this.state.giveFrequency === "monthly" ? 20 : 1),
+      giveAmountMin: this.state.giveFrequency === "monthly" ? "20" : "1",
+      giveFreqMinNote: this.state.giveFrequency === "monthly" ? " for monthly giving" : "",
+      giveAmountPlaceholder: this.state.giveFrequency === "monthly" ? "20.00" : "1.00",
+      introShow: this.state.introPhase !== "done",
+      introOverlayStyle: `position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#070f0b; opacity:${this.state.introPhase === "reveal" ? 0 : 1}; transition:opacity 0.85s ease; pointer-events:${this.state.introPhase === "reveal" ? "none" : "auto"};`,
+      introGreetingText: this.GREETINGS[this.state.introIndex].text,
+      introGreetingLang: this.GREETINGS[this.state.introIndex].lang || "en",
+      introGreetingStyle: this.GREETINGS[this.state.introIndex].lang === "ar"
+        ? "font-family:'Amiri',serif; font-size:clamp(38px,6vw,64px);"
+        : "font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(30px,4.4vw,48px);",
+      heroRevealStyle: this.state.introPhase === "intro" ? "opacity:0; transform:translateY(18px);" : "opacity:1; transform:translateY(0); transition:opacity 1s ease 0.1s, transform 1s ease 0.1s;",
+      paypalContinueUrl: `Pledge.dc.html?method=paypal&amount=${encodeURIComponent(this.state.giveAmount || "0")}&freq=${this.state.giveFrequency === "monthly" ? "monthly" : "once"}`,
+      padContinueUrl: `Pledge.dc.html?method=bank&amount=${encodeURIComponent(this.state.giveAmount || "0")}&freq=${this.state.giveFrequency === "monthly" ? "monthly" : "once"}`,
+      setMethodPaypal: () => this.setGiveMethod("paypal"),
+      setMethodBank: () => this.setGiveMethod("bank"),
+      setMethodEtransfer: () => this.setGiveMethod("etransfer"),
+      paypalPanelStyle: `display:${this.state.giveMethod === "paypal" ? "block" : "none"}; padding:16px 4px 4px;`,
+      bankPanelStyle: `display:${this.state.giveMethod === "bank" ? "block" : "none"}; padding:16px 4px 4px;`,
+      etransferPanelStyle: `display:${this.state.giveMethod === "etransfer" ? "block" : "none"}; padding:16px 4px 4px;`,
+
+      padName: this.state.pad.name, padEmail: this.state.pad.email, padPhone: this.state.pad.phone,
+      padBankName: this.state.pad.bankName, padInstitution: this.state.pad.institution, padTransit: this.state.pad.transit,
+      padAccount: this.state.pad.account, padDay: this.state.pad.day, padAddress: this.state.pad.address,
+      padSignature: this.state.pad.signature, padComments: this.state.pad.comments,
+      onPadName: this.setPadField("name"), onPadEmail: this.setPadField("email"), onPadPhone: this.setPadField("phone"),
+      onPadBankName: this.setPadField("bankName"), onPadInstitution: this.setPadField("institution"), onPadTransit: this.setPadField("transit"),
+      onPadAccount: this.setPadField("account"), onPadDay: this.setPadField("day"), onPadAddress: this.setPadField("address"),
+      onPadSignature: this.setPadField("signature"), onPadComments: this.setPadField("comments"),
+      submitPad: this.submitPad,
+      copyEmail: this.copyEmail,
+      copyEmailLabel: this.state.copiedEmail ? "Copied ✓" : "Copy email",
+      copyPhone1: this.copyPhone1,
+      copyPhone2: this.copyPhone2,
+      copyPhone1Label: this.state.copiedPhone1 ? "Copied ✓" : "Copy",
+      copyPhone2Label: this.state.copiedPhone2 ? "Copied ✓" : "Copy",
+
+      programModalKey: this.state.programModalKey,
+      closeProgramModal: this.closeProgramModal,
+      openAalim: () => this.openProgramModal("aalim"),
+      openHifz: () => this.openProgramModal("hifz"),
+      openQuran: () => this.openProgramModal("quran"),
+      openKids: () => this.openProgramModal("kids"),
+      openWelearn: () => this.openProgramModal("welearn"),
+      programOverlayStyle: `position:fixed; inset:0; z-index:100; background:rgba(6,16,11,0.7); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:24px; opacity:${this.state.programModalKey ? 1 : 0}; pointer-events:${this.state.programModalKey ? "auto" : "none"}; transition:opacity 0.25s ease;`,
+      programModalOffset: this.state.programModalKey ? "0px" : "16px",
+      programModalScale: this.state.programModalKey ? 1 : 0.96,
+      programEyebrow: this.state.programModalKey ? this.PROGRAM_INFO[this.state.programModalKey].eyebrow : "",
+      programTitle: this.state.programModalKey ? this.PROGRAM_INFO[this.state.programModalKey].title : "",
+      programLede: this.state.programModalKey ? this.PROGRAM_INFO[this.state.programModalKey].lede : "",
+      programBody: this.state.programModalKey ? this.PROGRAM_INFO[this.state.programModalKey].body : "",
+      programLogistics: this.state.programModalKey ? this.PROGRAM_INFO[this.state.programModalKey].logistics : "",
+      programIsWelearn: this.state.programModalKey === "welearn",
+      programIsNotWelearn: !!this.state.programModalKey && this.state.programModalKey !== "welearn",
+      programIsAalim: this.state.programModalKey === "aalim",
+      programIsHifz: this.state.programModalKey === "hifz",
+      programIsQuran: this.state.programModalKey === "quran",
+      programIsKids: this.state.programModalKey === "kids",
+      programNeedsRegisterCta: this.state.programModalKey === "aalim" || this.state.programModalKey === "hifz" || this.state.programModalKey === "kids",
+      programRegisterLabel: this.state.programModalKey === "aalim" ? "Register for Aalim Program →" : this.state.programModalKey === "hifz" ? "Register for Quran Hifz →" : "Register for KidsLearnArabic →",
+      programRegisterHref: this.state.programModalKey === "aalim" ? "Aalim Registration.dc.html" : this.state.programModalKey === "hifz" ? "Hifz Registration.dc.html" : this.state.programModalKey === "kids" ? "Kids Registration.dc.html" : "#",
+      programAccent: this.state.programModalKey === "aalim" ? "#c9a227" : this.state.programModalKey === "hifz" ? "#d98f4a" : this.state.programModalKey === "quran" ? "#d98f4a" : this.state.programModalKey === "kids" ? "#7cc99a" : "#8fb4c9",
+      programAccentSoft: this.state.programModalKey === "aalim" ? "rgba(201,162,39,0.16)" : this.state.programModalKey === "hifz" ? "rgba(217,143,74,0.16)" : this.state.programModalKey === "quran" ? "rgba(217,143,74,0.16)" : this.state.programModalKey === "kids" ? "rgba(124,201,154,0.16)" : "rgba(143,180,201,0.16)",
+      programModalBg: this.state.programModalKey === "aalim" ? "linear-gradient(165deg, #1a2e1c, #122d20)" : this.state.programModalKey === "hifz" ? "linear-gradient(165deg, #2e2216, #122d20)" : this.state.programModalKey === "quran" ? "linear-gradient(165deg, #2a2116, #122d20)" : this.state.programModalKey === "kids" ? "linear-gradient(165deg, #16302a, #122d20)" : "linear-gradient(165deg, #16222e, #122d20)",
+      programZoomUrl: this.state.programModalKey === "welearn" ? this.PROGRAM_INFO.welearn.zoomUrl : "",
+      programHeroStyle: (() => {
+        const k = this.state.programModalKey;
+        const base = "position:relative; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-bottom:1px solid rgba(246,243,234,0.1);";
+        if (k === "aalim") return base + " background:radial-gradient(circle at 50% 40%, rgba(227,197,106,0.28), transparent 65%), #0e2419;";
+        if (k === "hifz") return base + " background:linear-gradient(180deg, rgba(217,143,74,0.3), rgba(14,36,25,0.85) 80%), #0e2419;";
+        if (k === "quran") return base + " background-image:linear-gradient(180deg, rgba(8,16,12,0.3), rgba(8,16,12,0.94)), url('assets/program-quran.jpg'); background-size:cover; background-position:center 28%;";
+        if (k === "kids") return base + " background:radial-gradient(circle at 30% 30%, rgba(124,201,154,0.3), transparent 60%), #0e2419; border-radius:0 0 40% 40% / 0 0 24px 24px;";
+        if (k === "welearn") return base + " background:linear-gradient(160deg, rgba(45,140,255,0.24), transparent 72%), #0e2419;";
+        return base + " background:#0e2419;";
+      })(),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
