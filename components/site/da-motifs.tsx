@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 /**
  * Decorative Islamic-motif primitives for the 2026 redesign: crescent+lantern,
  * rotating star medallion, twinkles, and a themed ambient background layer.
@@ -6,6 +8,47 @@
  * `amb`-style classnames defined in globals.css (da-* animation classes are
  * already gated there).
  */
+
+/**
+ * A static, non-animated version of the two edge <div>s from Darul Arqum
+ * Home.dc.html's "gold motion ribbons" markup: same position:fixed/34px/
+ * 100vh/pointer-events:none shell and the same dark tile background, but the
+ * meander pattern, box-shadow bezel, and scroll/glow animation are
+ * deliberately dropped — just a plain dark margin with a thin gold accent
+ * line down the inner edge. Used site-wide (mounted once in the root
+ * layout), so z-index is kept low (10) to stay under every page's own
+ * sticky/fixed header regardless of that header's own z-index.
+ */
+const EDGE_MARGIN_TILE = `data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="64" viewBox="0 0 36 64">` +
+    `<rect width="36" height="64" fill="#12331f"/>` +
+    `<rect x="2" width="32" height="64" fill="#0e2419"/>` +
+    `<rect x="1" width="1.6" height="64" fill="#d9b64a" opacity="0.55"/>` +
+    `<rect x="33.4" width="1.6" height="64" fill="#d9b64a" opacity="0.55"/>` +
+    `</svg>`,
+)}`;
+
+export function EdgeMargin({ side }: { side: "left" | "right" }) {
+  return (
+    <div
+      aria-hidden
+      style={
+        {
+          position: "fixed",
+          top: 0,
+          [side]: 0,
+          width: 34,
+          height: "100vh",
+          zIndex: 10,
+          pointerEvents: "none",
+          backgroundImage: `url("${EDGE_MARGIN_TILE}")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "34px 64px",
+        } as CSSProperties
+      }
+    />
+  );
+}
 
 /** Crescent moon carved from two overlapping circles, with an optional hanging lantern. */
 export function CrescentLantern({
