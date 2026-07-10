@@ -102,6 +102,7 @@ body { overflow-x: hidden; }
 @keyframes da-lantern-drop-b { 0%{transform:translateY(-320px)} 100%{transform:translateY(0px)} }
 @keyframes da-greet-fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 @keyframes handRaise { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-6px) rotate(-4deg); } }
+@keyframes stampIn { 0% { transform: scale(1.6) rotate(-14deg); opacity: 0; } 70% { transform: scale(0.94) rotate(-6deg); opacity: 1; } 100% { transform: scale(1) rotate(-8deg); opacity: 1; } }
 
 .da-kenburns { animation: da-kenburns 28s ease-in-out infinite alternate; }
 .da-drift-gold { animation: da-drift-gold 22s ease-in-out infinite; }

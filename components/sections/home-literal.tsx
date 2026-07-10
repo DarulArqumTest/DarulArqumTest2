@@ -194,21 +194,22 @@ const SPLASH_TWINKLES = [
 
 export type IntroPhase = "intro" | "reveal" | "done";
 
-export function useIntroPhase() {
-  // Always start at "intro" on both server and client — reading sessionStorage
-  // during the initial render would make the very first client render differ
-  // from the server-rendered HTML and trigger a hydration error. The
-  // already-seen-this-session check instead happens in a layout effect,
-  // which runs client-only, before the browser paints.
-  const [phase, setPhase] = React.useState<IntroPhase>("intro");
+/**
+ * `skipIntro` comes from the server (a cookie check in app/page.tsx), so the
+ * very first paint already reflects the right answer — no flash of the
+ * splash on refresh for a visitor who already saw it this session. A
+ * client-only sessionStorage check can't do this: the server-rendered HTML
+ * (and therefore the browser's first paint) is always produced before any
+ * client JS runs, so it would show the splash for a frame every time
+ * regardless of what a layout effect decides afterward.
+ */
+export function useIntroPhase(skipIntro: boolean) {
+  const [phase, setPhase] = React.useState<IntroPhase>(skipIntro ? "done" : "intro");
   const [index, setIndex] = React.useState(0);
 
-  React.useLayoutEffect(() => {
-    if (sessionStorage.getItem("da-intro-seen")) {
-      setPhase("done");
-      return;
-    }
-    sessionStorage.setItem("da-intro-seen", "1");
+  React.useEffect(() => {
+    if (skipIntro) return;
+    document.cookie = "da-intro-seen=1; path=/; SameSite=Lax";
     const hold = 1050;
     const timers = GREETINGS.map((_, i) => window.setTimeout(() => setIndex(i), i * hold));
     timers.push(window.setTimeout(() => setPhase("reveal"), GREETINGS.length * hold));

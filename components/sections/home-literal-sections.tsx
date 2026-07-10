@@ -450,6 +450,7 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
   const inView = useInView(ref, { once: true, amount: 0.25 });
   const [parking, qard] = useCountUp([20000, 144000], inView);
   const ease = [0.16, 0.8, 0.4, 1] as const;
+  const ctx = React.useContext(HomeHighlightContext);
 
   return (
     <section ref={ref} id="giving-section" style={{ position: "relative", width: "100%", padding: "120px 28px", overflow: "hidden", background: "#0a1f15", scrollMarginTop: 80 }}>
@@ -457,6 +458,7 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
       <div className="da-float-slow" style={{ position: "absolute", width: 380, height: 380, borderRadius: 999, bottom: "-10%", left: "-6%", background: "radial-gradient(circle, rgba(60,140,100,0.18), transparent 72%)", filter: "blur(6px)", animationDelay: "2s" }} />
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 1320, margin: "0 auto", display: "flex", gap: 56, flexWrap: "wrap", alignItems: "center" }}>
+        {ctx && <SectionSpotlight id="giving-section" nonce={ctx.nonce} active={ctx.isHighlighted("giving-section")} />}
         <div style={{ flex: "1 1 420px", minWidth: 0 }}>
           <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease }} style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
             <span style={{ width: 26, height: 1, background: "rgba(201,162,39,0.6)" }} />

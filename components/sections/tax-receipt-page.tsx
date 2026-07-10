@@ -109,7 +109,7 @@ export function TaxReceiptPage() {
               <line x1={16} y1={40} x2={40} y2={40} stroke="#c9a227" strokeWidth={1.4} opacity={0.6} />
               <path d="M18 55 L28 63 L52 42" fill="none" stroke="#7cc99a" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <div style={{ position: "absolute", top: -14, right: -26, width: 46, height: 46, borderRadius: 999, background: "#16302a", border: "2px solid #e35c5c", boxShadow: "0 4px 14px rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center", transform: "rotate(-8deg)", color: "#f0a3a3", fontSize: 7, fontWeight: 800, letterSpacing: "0.04em", textAlign: "center", lineHeight: 1.25 }}>
+            <div style={{ position: "absolute", top: -14, right: -26, width: 46, height: 46, borderRadius: 999, background: "#16302a", border: "2px solid #e35c5c", boxShadow: "0 4px 14px rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center", animation: "stampIn 0.8s ease 0.3s both", color: "#f0a3a3", fontSize: 7, fontWeight: 800, letterSpacing: "0.04em", textAlign: "center", lineHeight: 1.25 }}>
               CRA
               <br />
               APPROVED

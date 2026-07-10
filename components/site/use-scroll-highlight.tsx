@@ -13,6 +13,7 @@
 import * as React from "react";
 
 export const SCROLL_TARGETS = {
+  "giving-section": 70,
   "programs-section": 70,
   "contact-us": 90,
   "whatsapp-section": 90,

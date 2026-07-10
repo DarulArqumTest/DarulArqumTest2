@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { EXT, ORG, R } from "@/lib/links";
 import { Reveal, DrawnRule } from "@/components/site/reveal";
 import { DaAmbient } from "@/components/site/da-motifs";
+import { requestSectionScroll, type ScrollTargetId } from "@/components/site/use-scroll-highlight";
 
 const COLUMNS = [
   {
@@ -11,7 +14,7 @@ const COLUMNS = [
     items: [
       { label: "Live prayer times", href: R.prayer },
       { label: "WhatsApp iqama alerts", href: EXT.whatsapp },
-      { label: "Visit the masjid", href: `${R.home}#contact-us` },
+      { label: "Visit the masjid", href: `${R.home}#contact-us`, sectionId: "contact-us" as ScrollTargetId },
     ],
   },
   {
@@ -20,13 +23,13 @@ const COLUMNS = [
       { label: "Weekdays Quran classes", href: R.quran + "/register" },
       { label: "Aalim program & Hifz", href: R.aalim + "/register" },
       { label: "KidsLearnArabic", href: R.kidsArabic + "/register" },
-      { label: "welearn (online)", href: `${R.home}#programs-section` },
+      { label: "welearn (online)", href: `${R.home}#programs-section`, sectionId: "programs-section" as ScrollTargetId },
     ],
   },
   {
     heading: "Give",
     items: [
-      { label: "Donate", href: `${R.home}#giving-section` },
+      { label: "Donate", href: `${R.home}#giving-section`, sectionId: "giving-section" as ScrollTargetId },
       { label: "Monthly pledge (PAD)", href: R.pledge },
       { label: "Tax receipt", href: R.taxReceipt },
       { label: "PAD form", href: R.padForm },
@@ -85,8 +88,27 @@ export function Footer() {
               <nav key={col.heading} aria-label={col.heading}>
                 <p className="text-xs uppercase tracking-[0.2em] text-da-goldL">{col.heading}</p>
                 <ul className="mt-4 space-y-2.5 text-sm">
-                  {col.items.map((item) =>
-                    item.href.startsWith("/") ? (
+                  {col.items.map((item) => {
+                    const sectionId = "sectionId" in item ? item.sectionId : undefined;
+                    if (sectionId) {
+                      return (
+                        <li key={item.label}>
+                          <a
+                            href={item.href}
+                            className="u-draw text-da-cream/65 hover:text-da-cream"
+                            onClick={(e) => {
+                              if (window.location.pathname === "/") {
+                                e.preventDefault();
+                                requestSectionScroll(sectionId);
+                              }
+                            }}
+                          >
+                            {item.label}
+                          </a>
+                        </li>
+                      );
+                    }
+                    return item.href.startsWith("/") ? (
                       <li key={item.label}>
                         <Link href={item.href} className="u-draw text-da-cream/65 hover:text-da-cream">
                           {item.label}
@@ -98,8 +120,8 @@ export function Footer() {
                           {item.label}
                         </a>
                       </li>
-                    ),
-                  )}
+                    );
+                  })}
                 </ul>
               </nav>
             ))}

@@ -5,8 +5,8 @@ import { Hero, GreetingSplash, useIntroPhase, type ProgramKey } from "@/componen
 import { GivingSection, GiveModal, useGiveModal, ProgramModal, ProgramsSection, ContactSection } from "@/components/sections/home-literal-sections";
 import { HomeHighlightProvider } from "@/components/site/use-scroll-highlight";
 
-export function HomePage() {
-  const { phase, index } = useIntroPhase();
+export function HomePage({ skipIntro }: { skipIntro: boolean }) {
+  const { phase, index } = useIntroPhase(skipIntro);
   const give = useGiveModal();
   const [openProgram, setOpenProgram] = React.useState<ProgramKey | null>(null);
 
