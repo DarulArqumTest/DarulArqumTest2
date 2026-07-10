@@ -1,12 +1,10 @@
 "use client";
 
 /**
- * Faithful port of `Kids Registration.dc.html` — a dedicated, literal
- * implementation (not the shared program/registration abstraction) so this
- * page matches the design source exactly: same colors, spacing, copy,
- * decorative elements. Only the submit mechanism is real (the source's
- * static mailto: link can't actually carry the entered field data), wired
- * to the site's shared submitForm() action instead.
+ * Faithful, dedicated port of `Aalim Registration.dc.html` (not the shared
+ * program/registration abstraction). Only the submit mechanism is real (the
+ * source's static mailto: link can't carry entered field data), wired to the
+ * site's shared submitForm() action instead.
  */
 
 import * as React from "react";
@@ -36,7 +34,7 @@ const labelStyle: React.CSSProperties = {
 
 function GenderSelect() {
   const chevron =
-    "url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22%3E%3Cpath d=%22M1 1l4 4 4-4%22 stroke=%22%23a9e0c0%22 stroke-width=%221.6%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
+    "url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22%3E%3Cpath d=%22M1 1l4 4 4-4%22 stroke=%22%23e3c56a%22 stroke-width=%221.6%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
   return (
     <select
       name="gender"
@@ -63,14 +61,6 @@ function GenderSelect() {
     </select>
   );
 }
-
-const LETTERS: { top: number; side: "left" | "right"; pos: string; size: number; color: string; delay: number; ch: string }[] = [
-  { top: 360, side: "left", pos: "6%", size: 46, color: "rgba(124,201,154,0.16)", delay: 0, ch: "ا" },
-  { top: 520, side: "right", pos: "8%", size: 36, color: "rgba(201,162,39,0.16)", delay: 0.6, ch: "ب" },
-  { top: 900, side: "left", pos: "9%", size: 40, color: "rgba(124,201,154,0.15)", delay: 1.1, ch: "ت" },
-  { top: 1220, side: "right", pos: "10%", size: 34, color: "rgba(201,162,39,0.15)", delay: 0.4, ch: "ث" },
-  { top: 1500, side: "left", pos: "7%", size: 38, color: "rgba(124,201,154,0.14)", delay: 0.8, ch: "ج" },
-];
 
 const LANTERNS = [
   { top: 420, side: "left" as const, pos: "calc(50% - 380px)", stringH: 60, bodyW: 24, bodyH: 34, delay: 0.3, sway: 4.2 },
@@ -111,7 +101,9 @@ function Lantern({ l }: { l: (typeof LANTERNS)[number] }) {
   );
 }
 
-export function KidsRegister() {
+const CURRICULUM = ["Sarf & Nahw", "Quran", "Hadith", "Fiqh", "Aqa'id"];
+
+export function AalimRegister() {
   const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
   const [delivered, setDelivered] = React.useState(false);
   const [values, setValues] = React.useState<Record<string, string>>({});
@@ -123,7 +115,7 @@ export function KidsRegister() {
     const data: Record<string, string> = {};
     fd.forEach((v, k) => (data[k] = String(v)));
     setValues(data);
-    const res = await submitForm("kids-arabic", data);
+    const res = await submitForm("aalim", data);
     if (res.ok) {
       setDelivered(res.delivered);
       setState("done");
@@ -136,14 +128,14 @@ export function KidsRegister() {
       .map(([k, v]) => `${k}: ${v}`)
       .join("\n"),
   );
-  const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("KidsLearnArabic registration")}&body=${mailtoBody}`;
+  const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("Aalim program registration")}&body=${mailtoBody}`;
 
   return (
     <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       {/* ambient background */}
       <div
         className="da-drift-gold pointer-events-none fixed z-0 rounded-full blur-[8px]"
-        style={{ width: 460, height: 460, top: "-12%", right: "-10%", background: "radial-gradient(circle, rgba(124,201,154,0.18), transparent 70%)" }}
+        style={{ width: 460, height: 460, top: "-12%", right: "-10%", background: "radial-gradient(circle, rgba(201,162,39,0.16), transparent 70%)" }}
         aria-hidden
       />
       <div
@@ -151,15 +143,21 @@ export function KidsRegister() {
         style={{ width: 400, height: 400, bottom: "-14%", left: "-10%", background: "radial-gradient(circle, rgba(60,140,100,0.18), transparent 72%)" }}
         aria-hidden
       />
+      {/* scholarly crosshatch grain */}
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-50"
-        style={{ backgroundImage: "radial-gradient(rgba(246,243,234,0.05) 1px, transparent 1px)", backgroundSize: "22px 22px" }}
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          opacity: 0.3,
+          backgroundImage:
+            "repeating-linear-gradient(45deg, rgba(201,162,39,0.07) 0 1px, transparent 1px 16px), repeating-linear-gradient(-45deg, rgba(201,162,39,0.07) 0 1px, transparent 1px 16px)",
+        }}
         aria-hidden
       />
+
       {[
-        { top: 40, side: "right" as const, pos: -70, size: 240, opacity: 0.4, twinkle: false },
-        { top: 640, side: "left" as const, pos: -90, size: 200, opacity: 0.35, twinkle: true },
-        { top: 1020, side: "right" as const, pos: -80, size: 220, opacity: 0.32, twinkle: false },
+        { top: 40, side: "right" as const, pos: -70, size: 240, opacity: 0.4, twinkle: false, color: "rgba(201,162,39,0.18)" },
+        { top: 640, side: "left" as const, pos: -90, size: 200, opacity: 0.35, twinkle: true, color: "rgba(120,190,150,0.18)" },
+        { top: 1060, side: "right" as const, pos: -80, size: 220, opacity: 0.3, twinkle: false, color: "rgba(201,162,39,0.18)" },
       ].map((sq, i) => (
         <div
           key={i}
@@ -167,120 +165,50 @@ export function KidsRegister() {
           style={{ top: sq.top, [sq.side]: sq.pos, width: sq.size, height: sq.size, opacity: sq.opacity } as React.CSSProperties}
           aria-hidden
         >
-          <div className="absolute inset-0" style={{ border: "1.5px solid rgba(124,201,154,0.2)" }} />
-          <div className="absolute inset-0 rotate-45" style={{ border: "1.5px solid rgba(124,201,154,0.2)" }} />
+          <div className="absolute inset-0" style={{ border: `1.5px solid ${sq.color}` }} />
+          <div className="absolute inset-0 rotate-45" style={{ border: `1.5px solid ${sq.color}` }} />
         </div>
       ))}
 
-      {LETTERS.map((l, i) => (
-        <div
-          key={i}
-          dir="rtl"
-          lang="ar"
-          aria-hidden
-          className="da-float-slow pointer-events-none absolute z-0 font-arabic"
-          style={{ top: l.top, [l.side]: l.pos, fontSize: l.size, color: l.color, animationDelay: `${l.delay}s` } as React.CSSProperties}
-        >
-          {l.ch}
-        </div>
-      ))}
+      {/* large faint scholarly medallion, centered behind the form */}
+      <div style={{ position: "absolute", top: 920, left: "50%", transform: "translate(-50%,-50%)", width: 420, height: 420, opacity: 0.06, zIndex: 0, pointerEvents: "none" }} aria-hidden>
+        <div style={{ position: "absolute", inset: 0, border: "2px solid #e3c56a", borderRadius: 999 }} />
+        <div style={{ position: "absolute", inset: 56, border: "2px solid #e3c56a" }} />
+        <div style={{ position: "absolute", inset: 56, border: "2px solid #e3c56a", transform: "rotate(45deg)" }} />
+      </div>
 
-      {[
-        { top: 300, side: "right" as const, pos: "16%", size: 10, color: "#e35c5c", opacity: 0.45 },
-        { top: 760, side: "left" as const, pos: "14%", size: 8, color: "#5cb8e3", opacity: 0.4 },
-        { top: 1360, side: "right" as const, pos: "20%", size: 9, color: "#e3c25c", opacity: 0.4 },
-      ].map((d, i) => (
-        <div
-          key={i}
-          aria-hidden
-          className="pointer-events-none absolute z-0 rounded-full"
-          style={{ top: d.top, [d.side]: d.pos, width: d.size, height: d.size, background: d.color, opacity: d.opacity } as React.CSSProperties}
-        />
-      ))}
+      {/* floating quill accents */}
+      <div className="da-float-slow pointer-events-none absolute z-0" style={{ top: 360, left: "8%", opacity: 0.28, animationDuration: "5.2s" }} aria-hidden>
+        <div style={{ width: 3, height: 56, background: "linear-gradient(180deg, #e3c56a, #c9a227)", borderRadius: 2, transform: "rotate(24deg)" }} />
+      </div>
+      <div className="da-float-slow pointer-events-none absolute z-0" style={{ top: 1320, right: "10%", opacity: 0.24, animationDuration: "4.8s", animationDelay: "0.4s" }} aria-hidden>
+        <div style={{ width: 3, height: 48, background: "linear-gradient(180deg, #e3c56a, #c9a227)", borderRadius: 2, transform: "rotate(-20deg)" }} />
+      </div>
 
       {LANTERNS.map((l, i) => (
         <Lantern key={i} l={l} />
       ))}
 
-      {/* chalkboard hero */}
-      <div style={{ position: "relative", width: "100%", height: 280, overflow: "hidden", background: "linear-gradient(180deg, #4a3320, #2e2013)", padding: 14 }}>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            borderRadius: 6,
-            background: "radial-gradient(ellipse 120% 100% at 30% 20%, #24382c, #16241c 70%)",
-            boxShadow: "inset 0 0 60px rgba(0,0,0,0.55), inset 0 2px 0 rgba(255,255,255,0.04)",
-          }}
-        >
-          <div
-            className="absolute inset-0 rounded-[6px] opacity-50"
-            style={{ backgroundImage: "radial-gradient(rgba(246,243,234,0.06) 1px, transparent 1px)", backgroundSize: "5px 5px" }}
-            aria-hidden
-          />
-          <div
-            className="absolute bottom-0 left-0 right-0"
-            style={{ height: 10, background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.35))" }}
-            aria-hidden
-          />
-
-          <Link
-            href="/"
-            style={{ position: "absolute", top: 14, left: 18, zIndex: 3, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500 }}
-          >
+      {/* HERO PHOTO BAND */}
+      <div style={{ position: "relative", width: "100%", height: 280, overflow: "hidden" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/program-aalim.jpg"
+          alt=""
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", filter: "saturate(0.8) brightness(0.75)" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(9,20,15,0.55) 0%, rgba(9,20,15,0.75) 55%, #0e2419 100%)" }} />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "24px 24px 0" }}>
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "rgba(246,243,234,0.8)", fontWeight: 500 }}>
             ← Back to Darul Arqum
           </Link>
-
-          <div
-            aria-hidden
-            className="da-twinkle absolute"
-            style={{ top: 36, right: 52, fontSize: 22, color: "rgba(246,243,234,0.55)", fontFamily: "'Amiri',serif", transform: "rotate(-8deg)" }}
-          >
-            ✦
-          </div>
-          <div
-            aria-hidden
-            className="absolute"
-            style={{ bottom: 44, left: 60, fontSize: 16, color: "rgba(246,243,234,0.4)", fontFamily: "'Amiri',serif", transform: "rotate(10deg)" }}
-          >
-            ✦
-          </div>
-
-          <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
-            <div
-              dir="rtl"
-              lang="ar"
-              style={{
-                fontFamily: "'Amiri',serif",
-                fontWeight: 700,
-                fontSize: "clamp(48px,8vw,72px)",
-                color: "rgba(246,243,234,0.92)",
-                textShadow: "0 0 1px rgba(246,243,234,0.5), 0 0 14px rgba(246,243,234,0.12)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              العربية
-            </div>
-            <svg width="220" height="14" viewBox="0 0 220 14" style={{ opacity: 0.55 }} aria-hidden>
-              <path d="M4 8 Q 60 2, 110 7 T 216 6" stroke="#f6f3ea" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-            </svg>
-            <div style={{ fontSize: 12.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(246,243,234,0.5)", fontWeight: 600 }}>
-              Arabic, for children
-            </div>
-          </div>
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "32px 24px 64px" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}
-        >
-          <span style={{ width: 22, height: 1, background: "rgba(124,201,154,0.6)" }} />
-          <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Ages 5–10</span>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "-108px auto 0", padding: "0 24px 64px" }}>
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+          <span style={{ width: 22, height: 1, background: "rgba(201,162,39,0.6)" }} />
+          <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Al-Arif Islamic Institute · flagship</span>
         </motion.div>
 
         <motion.h1
@@ -289,7 +217,7 @@ export function KidsRegister() {
           transition={{ duration: 0.8, delay: 0.05 }}
           style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,42px)", lineHeight: 1.1, color: "#f6f3ea", margin: "0 0 20px 0" }}
         >
-          Register for KidsLearnArabic
+          Register for the Aalim program
         </motion.h1>
 
         <motion.div
@@ -298,15 +226,15 @@ export function KidsRegister() {
           transition={{ duration: 0.8, delay: 0.1 }}
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 24 }}
         >
-          <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(124,201,154,0.16), rgba(124,201,154,0.04))", border: "1px solid rgba(124,201,154,0.4)" }}>
+          <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(201,162,39,0.16), rgba(201,162,39,0.04))", border: "1px solid rgba(201,162,39,0.4)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-              <div className="da-float-slow" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#a9e0c0", fontSize: 14 }}>
+              <div className="da-float-slow" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a", fontSize: 14 }}>
                 ◷
               </div>
-              <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Age group</span>
+              <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700 }}>Schedule</span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Ages 5–10</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>On site at Darul Arqum</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Monday–Friday</div>
+            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Full-time, on site at Darul Arqum</div>
           </div>
           <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(80,160,120,0.18), rgba(80,160,120,0.04))", border: "1px solid rgba(120,190,150,0.4)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
@@ -315,8 +243,8 @@ export function KidsRegister() {
               </div>
               <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Tuition</span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", marginBottom: 4 }}>Contact us for tuition</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Our team will confirm fees when you register</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>$150 / month</div>
+            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Monthly tuition, due at the start of each month</div>
           </div>
         </motion.div>
 
@@ -324,14 +252,14 @@ export function KidsRegister() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.14 }}
-          style={{ padding: "20px 22px", borderRadius: 16, background: "linear-gradient(135deg, rgba(124,201,154,0.12), rgba(124,201,154,0.03))", border: "1px solid rgba(124,201,154,0.28)", marginBottom: 16 }}
+          style={{ padding: "20px 22px", borderRadius: 16, background: "linear-gradient(135deg, rgba(201,162,39,0.12), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.28)", marginBottom: 16 }}
         >
-          <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700, marginBottom: 14 }}>How your child learns</div>
+          <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>The curriculum</div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
-            <div style={{ position: "absolute", top: 8, left: 8, right: 8, height: 1.5, background: "rgba(124,201,154,0.3)" }} />
-            {["Letters", "Sounds", "Vocabulary", "Confidence"].map((label) => (
+            <div style={{ position: "absolute", top: 8, left: 8, right: 8, height: 1.5, background: "rgba(201,162,39,0.3)" }} />
+            {CURRICULUM.map((label) => (
               <div key={label} style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flex: 1 }}>
-                <span style={{ width: 16, height: 16, borderRadius: 999, background: "#7cc99a", border: "2px solid #0e2419" }} />
+                <span style={{ width: 16, height: 16, borderRadius: 999, background: "#c9a227", border: "2px solid #0e2419" }} />
                 <span style={{ fontSize: 11, color: "#f6f3ea", fontWeight: 600, textAlign: "center" }}>{label}</span>
               </div>
             ))}
@@ -344,7 +272,7 @@ export function KidsRegister() {
           transition={{ duration: 0.8, delay: 0.18 }}
           style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "14px 18px", borderRadius: 12, background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.1)", marginBottom: 36 }}
         >
-          <span style={{ color: "#a9e0c0", fontSize: 13, marginTop: 1 }}>✦</span>
+          <span style={{ color: "#c9a227", fontSize: 13, marginTop: 1 }}>✦</span>
           <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(246,243,234,0.65)", margin: 0 }}>
             Submitting this form starts registration. Our team will follow up by email or phone to confirm placement and fees.
           </p>
@@ -354,12 +282,10 @@ export function KidsRegister() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ borderRadius: 20, border: "1px solid rgba(124,201,154,0.25)", background: "rgba(124,201,154,0.07)", padding: 32 }}
+            style={{ borderRadius: 20, border: "1px solid rgba(201,162,39,0.25)", background: "rgba(201,162,39,0.07)", padding: 32 }}
           >
-            <CheckCircle2 className="h-6 w-6" style={{ color: "#a9e0c0" }} aria-hidden />
-            <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>
-              {delivered ? "Registration sent" : "Registration recorded"}
-            </p>
+            <CheckCircle2 className="h-6 w-6" style={{ color: "#e3c56a" }} aria-hidden />
+            <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>{delivered ? "Registration sent" : "Registration recorded"}</p>
             <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>
               {delivered
                 ? "The Darul Arqum team has received the registration and will follow up."
@@ -395,32 +321,28 @@ export function KidsRegister() {
             <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
             {/* Student */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(124,201,154,0.1), rgba(124,201,154,0.03))", border: "1px solid rgba(124,201,154,0.2)", padding: 22 }}>
+            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(201,162,39,0.1), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.2)", padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-float-slow" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="da-float-slow" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 13, height: 13 }}>
-                    <div style={{ position: "absolute", top: 0, left: 3.5, width: 6, height: 6, borderRadius: 999, background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", bottom: 0, left: 0, width: 13, height: 6.5, borderRadius: "6px 6px 0 0", background: "#a9e0c0" }} />
+                    <div style={{ position: "absolute", top: 0, left: 3.5, width: 6, height: 6, borderRadius: 999, background: "#e3c56a" }} />
+                    <div style={{ position: "absolute", bottom: 0, left: 0, width: 13, height: 6.5, borderRadius: "6px 6px 0 0", background: "#e3c56a" }} />
                   </div>
                 </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Student</span>
+                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700 }}>Student</span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
-                  <span style={labelStyle}>Child&apos;s full name</span>
+                  <span style={labelStyle}>Student&apos;s full name</span>
                   <input name="studentName" required style={inputStyle} />
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Age</span>
-                  <input name="age" type="number" min={5} max={10} required placeholder="5–10" style={inputStyle} />
+                  <input name="age" type="number" min={13} max={60} placeholder="e.g. 17" style={inputStyle} />
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Gender</span>
                   <GenderSelect />
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
-                  <span style={labelStyle}>Student health card number</span>
-                  <input name="healthCard" style={inputStyle} />
                 </label>
               </div>
             </div>
@@ -440,7 +362,7 @@ export function KidsRegister() {
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Parent / guardian name</span>
+                  <span style={labelStyle}>Parent / guardian name (if applicable)</span>
                   <input name="parentName" style={inputStyle} />
                 </label>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
@@ -456,31 +378,7 @@ export function KidsRegister() {
               </div>
             </div>
 
-            {/* Medical condition */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(217,143,74,0.1), rgba(217,143,74,0.03))", border: "1px solid rgba(217,143,74,0.22)", padding: 22 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(217,143,74,0.2)", border: "1px solid rgba(217,143,74,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ color: "#e8b06a", fontSize: 14, fontWeight: 700 }}>+</span>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700 }}>Student medical condition (if any)</span>
-              </div>
-              <p style={{ fontSize: 12.5, lineHeight: 1.65, color: "rgba(246,243,234,0.65)", margin: "0 0 16px 0" }}>
-                It is very important that we are made aware of any medical conditions your child may have, and what needs to
-                be done in the event of an emergency other than a call to 911 (please include any allergies and first aid
-                remedies as known). We regret that we are unable to accommodate any special needs at this time.
-              </p>
-              <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={labelStyle}>Medical conditions, allergies &amp; emergency care instructions (if any)</span>
-                <textarea
-                  name="medical"
-                  rows={3}
-                  placeholder="e.g. peanut allergy – carries EpiPen; asthma – inhaler in backpack; none"
-                  style={{ ...inputStyle, resize: "vertical" }}
-                />
-              </label>
-            </div>
-
-            {/* Learning background */}
+            {/* Academic background */}
             <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(143,180,201,0.1), rgba(143,180,201,0.03))", border: "1px solid rgba(143,180,201,0.22)", padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-float-slow" style={{ animationDelay: "0.6s", width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -490,14 +388,14 @@ export function KidsRegister() {
                     <div style={{ position: "absolute", top: 0, left: 6.5, width: 1, height: 11, background: "#0e2419" }} />
                   </div>
                 </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8fb4c9", fontWeight: 700 }}>Learning background</span>
+                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8fb4c9", fontWeight: 700 }}>Academic background</span>
               </div>
               <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={labelStyle}>Has your child attended Arabic or Quran classes before? (optional)</span>
+                <span style={labelStyle}>Prior Arabic or Islamic studies background (optional)</span>
                 <textarea
                   name="background"
                   rows={3}
-                  placeholder="e.g. knows some letters, attended a class before, complete beginner..."
+                  placeholder="e.g. completed Hifz, studied Nazira, prior madrasa experience..."
                   style={{ ...inputStyle, resize: "vertical" }}
                 />
               </label>
@@ -512,14 +410,14 @@ export function KidsRegister() {
                 justifyContent: "center",
                 gap: 9,
                 textAlign: "center",
-                background: "linear-gradient(135deg,#a9e0c0,#7cc99a)",
-                color: "#0e2419",
+                background: "linear-gradient(135deg,#e3c56a,#c9a227)",
+                color: "#2e1a0d",
                 fontWeight: 800,
                 fontSize: 15.5,
                 padding: "17px 0",
                 borderRadius: 999,
                 margin: "6px 8px 8px",
-                boxShadow: "0 12px 28px -8px rgba(124,201,154,0.5)",
+                boxShadow: "0 12px 28px -8px rgba(201,162,39,0.5)",
                 border: "none",
                 cursor: state === "busy" ? "default" : "pointer",
                 opacity: state === "busy" ? 0.7 : 1,
@@ -530,9 +428,7 @@ export function KidsRegister() {
               {state !== "busy" && <span aria-hidden="true">→</span>}
             </button>
             {state === "error" && (
-              <p style={{ textAlign: "center", fontSize: 13, color: "#e08a8a", margin: 0 }}>
-                Something needs attention — check the fields and try again.
-              </p>
+              <p style={{ textAlign: "center", fontSize: 13, color: "#e08a8a", margin: 0 }}>Something needs attention — check the fields and try again.</p>
             )}
           </motion.form>
         )}
