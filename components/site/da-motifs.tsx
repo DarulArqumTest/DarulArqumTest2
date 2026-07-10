@@ -1,12 +1,10 @@
-import type { CSSProperties } from "react";
-
 /**
  * Decorative Islamic-motif primitives for the 2026 redesign: crescent+lantern,
- * gold edge ribbon, rotating star medallion, twinkles, and a themed ambient
- * background layer. Pure CSS/SVG (no rasters), matching the hand-built motifs
- * from the .dc.html prototypes. All motion respects prefers-reduced-motion via
- * the `amb`-style classnames defined in globals.css (da-* animation classes
- * are already gated there).
+ * rotating star medallion, twinkles, and a themed ambient background layer.
+ * Pure CSS/SVG (no rasters), matching the hand-built motifs from the
+ * .dc.html prototypes. All motion respects prefers-reduced-motion via the
+ * `amb`-style classnames defined in globals.css (da-* animation classes are
+ * already gated there).
  */
 
 /** Crescent moon carved from two overlapping circles, with an optional hanging lantern. */
@@ -125,48 +123,6 @@ export function Twinkles({ className = "" }: { className?: string }) {
         />
       ))}
     </div>
-  );
-}
-
-/** The literal ribbon tile from the .dc.html sources: a 36×64 SVG (woven
- * Greek-key meander, base64-encoded) tiled down the screen edges. */
-const RIBBON_TILE_B64 =
-  "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDM2IDY0Ij4KICA8cmVjdCB3aWR0aD0iMzYiIGhlaWdodD0iNjQiIGZpbGw9IiMxMjMzMWYiLz4KICA8cmVjdCB4PSIyIiB3aWR0aD0iMzIiIGhlaWdodD0iNjQiIGZpbGw9IiMwZTI0MTkiLz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNkOWI2NGEiIHN0cm9rZS13aWR0aD0iMy4yIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIj4KICAgIDxwYXRoIGQ9Ik0xOCAwIEwxOCA4IEwxMCA4IEwxMCAyMCBMMjYgMjAgTDI2IDMyIEwxMCAzMiBMMTAgNDQgTDI2IDQ0IEwyNiA1NiBMMTggNTYgTDE4IDY0IiAvPgogIDwvZz4KICA8cmVjdCB4PSIxIiB3aWR0aD0iMS42IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZDliNjRhIiBvcGFjaXR5PSIwLjU1Ii8+CiAgPHJlY3QgeD0iMzMuNCIgd2lkdGg9IjEuNiIgaGVpZ2h0PSI2NCIgZmlsbD0iI2Q5YjY0YSIgb3BhY2l0eT0iMC41NSIvPgo8L3N2Zz4=";
-
-/**
- * Fixed-to-viewport gold ribbon running down a screen edge. Two literal
- * variants from the source, not one generic style:
- *  - "home": 34px wide, full opacity, a raised bezel (outer drop shadow +
- *    inset shadow) and sits above most page content (z-40).
- *  - "subpage" (default): 26px wide, flattened to 70% opacity, no bezel,
- *    sits low in the stack (z-15).
- */
-export function GoldRibbon({ side, variant = "subpage" }: { side: "left" | "right"; variant?: "home" | "subpage" }) {
-  const isHome = variant === "home";
-  const width = isHome ? 34 : 26;
-  const tileHeight = isHome ? 64 : 48;
-  const isRight = side === "right";
-  return (
-    <div
-      aria-hidden
-      className="da-ribbon-motif pointer-events-none fixed top-0"
-      style={{
-        [side]: 0,
-        width,
-        height: "100vh",
-        zIndex: isHome ? 40 : 15,
-        backgroundImage: `url('data:image/svg+xml;base64,${RIBBON_TILE_B64}')`,
-        backgroundRepeat: "repeat",
-        backgroundSize: `${width}px ${tileHeight}px`,
-        opacity: isHome ? undefined : 0.7,
-        boxShadow: isHome
-          ? isRight
-            ? "-2px 0 12px rgba(0,0,0,0.35), inset 2px 0 6px rgba(0,0,0,0.4)"
-            : "2px 0 12px rgba(0,0,0,0.35), inset -2px 0 6px rgba(0,0,0,0.4)"
-          : undefined,
-        animation: `${isRight ? "da-ribbon-scroll-rev" : "da-ribbon-scroll"} 4.5s linear infinite, da-ribbon-glow 5s ease-in-out infinite${isRight ? " 1s" : ""}`,
-      } as CSSProperties}
-    />
   );
 }
 
