@@ -14,7 +14,7 @@ const COLUMNS = [
     items: [
       { label: "Live prayer times", href: R.prayer },
       { label: "WhatsApp iqama alerts", href: EXT.whatsapp },
-      { label: "Visit the masjid", href: `${R.home}#contact-us`, sectionId: "contact-us" as ScrollTargetId },
+      { label: "Visit the masjid", href: `${R.home}#map-section`, sectionId: "map-section" as ScrollTargetId },
     ],
   },
   {
@@ -23,7 +23,7 @@ const COLUMNS = [
       { label: "Weekdays Quran classes", href: R.quran + "/register" },
       { label: "Aalim program & Hifz", href: R.aalim + "/register" },
       { label: "KidsLearnArabic", href: R.kidsArabic + "/register" },
-      { label: "welearn (online)", href: `${R.home}#programs-section`, sectionId: "programs-section" as ScrollTargetId },
+      { label: "welearn (online)", href: `${R.home}#welearn-card`, sectionId: "welearn-card" as ScrollTargetId },
     ],
   },
   {

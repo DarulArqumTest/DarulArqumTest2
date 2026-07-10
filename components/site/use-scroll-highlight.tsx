@@ -17,6 +17,8 @@ export const SCROLL_TARGETS = {
   "programs-section": 70,
   "contact-us": 90,
   "whatsapp-section": 90,
+  "map-section": 100,
+  "welearn-card": 100,
 } as const;
 
 export type ScrollTargetId = keyof typeof SCROLL_TARGETS;
@@ -58,7 +60,13 @@ export function useSectionHighlightController() {
 
     const hash = window.location.hash.replace("#", "");
     if (hash && hash in SCROLL_TARGETS) {
-      const t = setTimeout(() => scrollToSection(hash), 260);
+      const t = setTimeout(() => {
+        scrollToSection(hash);
+        // Strip the hash once consumed so a later refresh, or navigating
+        // back to "/" while it's still sitting in the address bar, doesn't
+        // silently re-trigger the same scroll-and-highlight every time.
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      }, 260);
       return () => {
         clearTimeout(t);
         window.removeEventListener(EVENT_NAME, onEvent);

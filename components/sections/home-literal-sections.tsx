@@ -520,6 +520,14 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
   const inView = useInView(ref, { once: true, amount: 0.15 });
   const ease = [0.16, 0.8, 0.4, 1] as const;
   const ctx = React.useContext(HomeHighlightContext);
+  const welearnHighlighted = ctx?.isHighlighted("welearn-card") ?? false;
+
+  // The footer's "welearn" link scrolls straight to this card and should
+  // also open its program modal, rather than just landing on the section.
+  React.useEffect(() => {
+    if (welearnHighlighted) onOpen("welearn");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [welearnHighlighted]);
 
   return (
     <section ref={ref} id="programs-section" style={{ position: "relative", width: "100%", padding: "120px 28px", overflow: "hidden", background: "#0e2419", scrollMarginTop: 80 }}>
@@ -596,7 +604,10 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
                   <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#fff", margin: "0 0 4px 0" }}>KidsLearnArabic</h3>
                   <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.8)", margin: 0 }}>Playful, structured Arabic for young learners.</p>
                 </div>
-                <WelearnDesk onClick={() => onOpen("welearn")} />
+                <div id="welearn-card" style={{ position: "relative" }}>
+                  {ctx && <SectionSpotlight id="welearn-card" nonce={ctx.nonce} active={ctx.isHighlighted("welearn-card")} />}
+                  <WelearnDesk onClick={() => onOpen("welearn")} />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -660,21 +671,24 @@ export function ContactSection() {
           </h2>
 
           <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 20 }} className="da-contact-grid">
-            <div style={{ borderRadius: 20, overflow: "hidden", background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.12)", display: "flex", flexDirection: "column", height: "100%" }}>
-              <iframe
-                title="Darul Arqum location"
-                src="https://www.google.com/maps?q=Darul+Arqum+Markaz+of+Ottawa,+4269+Limebank+Rd,+Ottawa,+ON+K1V+1G5&output=embed"
-                style={{ width: "100%", flex: 1, minHeight: 180, border: 0, display: "block" }}
-                loading="lazy"
-              />
-              <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap", flexShrink: 0 }}>
-                <div>
-                  <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the masjid</div>
-                  <div style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 600 }}>4269 Limebank Rd, Ottawa, ON K1V 1G5</div>
+            <div id="map-section" style={{ position: "relative", height: "100%" }}>
+              {ctx && <SectionSpotlight id="map-section" nonce={ctx.nonce} active={ctx.isHighlighted("map-section")} />}
+              <div style={{ borderRadius: 20, overflow: "hidden", background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.12)", display: "flex", flexDirection: "column", height: "100%" }}>
+                <iframe
+                  title="Darul Arqum location"
+                  src="https://www.google.com/maps?q=Darul+Arqum+Markaz+of+Ottawa,+4269+Limebank+Rd,+Ottawa,+ON+K1V+1G5&output=embed"
+                  style={{ width: "100%", flex: 1, minHeight: 180, border: 0, display: "block" }}
+                  loading="lazy"
+                />
+                <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap", flexShrink: 0 }}>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the masjid</div>
+                    <div style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 600 }}>4269 Limebank Rd, Ottawa, ON K1V 1G5</div>
+                  </div>
+                  <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0, background: "#c9a227", color: "#0e2419", fontWeight: 700, fontSize: 13, padding: "11px 20px", borderRadius: 999 }}>
+                    Get directions ↗
+                  </a>
                 </div>
-                <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0, background: "#c9a227", color: "#0e2419", fontWeight: 700, fontSize: 13, padding: "11px 20px", borderRadius: 999 }}>
-                  Get directions ↗
-                </a>
               </div>
             </div>
 
