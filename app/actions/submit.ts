@@ -21,6 +21,7 @@ const DESTINATIONS: Record<string, string> = {
   contact: "admin@darularqum.org",
   "quran-classes": "admin@darularqum.org",
   aalim: "admin@darularqum.org",
+  hifz: "admin@darularqum.org",
   "kids-arabic": "admin@darularqum.org",
   pledge: "admin@darularqum.org",
   "tax-receipt": "admin@darularqum.org",

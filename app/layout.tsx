@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
-import { Fraunces, Figtree, Amiri } from "next/font/google";
+import { Fraunces, Figtree, Amiri, Cormorant_Garamond, Work_Sans } from "next/font/google";
 import "./globals.css";
 
 const display = Fraunces({ subsets: ["latin"], variable: "--font-display", axes: ["opsz"] });
 const body = Figtree({ subsets: ["latin"], variable: "--font-body" });
 const arabic = Amiri({ subsets: ["arabic"], weight: ["400", "700"], variable: "--font-arabic" });
+
+// Redesign (2026) typeface pair — used by rebuilt pages + shared chrome only.
+const daDisplay = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-da-display",
+});
+const daBody = Work_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-da-body" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.darularqum.org"),
@@ -20,7 +29,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${arabic.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${arabic.variable} ${daDisplay.variable} ${daBody.variable}`}
+    >
       <body className="bg-bone font-body text-ink antialiased">{children}</body>
     </html>
   );
