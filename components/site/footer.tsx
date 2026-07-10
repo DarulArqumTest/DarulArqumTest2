@@ -10,7 +10,6 @@ const COLUMNS = [
     heading: "Worship",
     items: [
       { label: "Live prayer times", href: R.prayer },
-      { label: "Jumu'ah — 1:30 & 2:30 PM", href: R.prayer },
       { label: "WhatsApp iqama alerts", href: EXT.whatsapp },
       { label: "Visit the masjid", href: `${R.home}#contact-us` },
     ],
@@ -30,7 +29,7 @@ const COLUMNS = [
       { label: "Donate", href: `${R.home}#giving-section` },
       { label: "Monthly pledge (PAD)", href: R.pledge },
       { label: "Tax receipt", href: R.taxReceipt },
-      { label: "PAD form (PDF)", href: EXT.padFormPdf },
+      { label: "PAD form", href: R.padForm },
     ],
   },
   {

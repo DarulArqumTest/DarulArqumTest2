@@ -86,6 +86,7 @@ export const R = {
   give: "/give",
   pledge: "/give/pledge",
   taxReceipt: "/give/tax-receipt",
+  padForm: "/give/pad-form",
   story: "/story",
   gallery: "/gallery",
   community: "/community",
