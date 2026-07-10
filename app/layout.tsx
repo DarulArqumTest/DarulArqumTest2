@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Figtree, Amiri, Cormorant_Garamond, Work_Sans } from "next/font/google";
+import { Navbar } from "@/components/site/navbar";
+import { Footer } from "@/components/site/footer";
 import "./globals.css";
 
 const display = Fraunces({ subsets: ["latin"], variable: "--font-display", axes: ["opsz"] });
@@ -33,7 +35,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${display.variable} ${body.variable} ${arabic.variable} ${daDisplay.variable} ${daBody.variable}`}
     >
-      <body className="bg-bone font-body text-ink antialiased">{children}</body>
+      <body className="bg-bone font-body text-ink antialiased">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

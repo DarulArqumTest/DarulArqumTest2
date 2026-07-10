@@ -12,22 +12,22 @@ const COLUMNS = [
       { label: "Live prayer times", href: R.prayer },
       { label: "Jumu'ah — 1:30 & 2:30 PM", href: R.prayer },
       { label: "WhatsApp iqama alerts", href: EXT.whatsapp },
-      { label: "Visit the masjid", href: R.contact },
+      { label: "Visit the masjid", href: `${R.home}#contact-us` },
     ],
   },
   {
     heading: "Programs",
     items: [
-      { label: "Weekdays Quran classes", href: R.quran },
-      { label: "Aalim program & Hifz", href: R.aalim },
-      { label: "KidsLearnArabic", href: R.kidsArabic },
-      { label: "welearn (online)", href: R.welearn },
+      { label: "Weekdays Quran classes", href: R.quran + "/register" },
+      { label: "Aalim program & Hifz", href: R.aalim + "/register" },
+      { label: "KidsLearnArabic", href: R.kidsArabic + "/register" },
+      { label: "welearn (online)", href: `${R.home}#programs-section` },
     ],
   },
   {
     heading: "Give",
     items: [
-      { label: "Donate", href: R.give },
+      { label: "Donate", href: `${R.home}#giving-section` },
       { label: "Monthly pledge (PAD)", href: R.pledge },
       { label: "Tax receipt", href: R.taxReceipt },
       { label: "PAD form (PDF)", href: EXT.padFormPdf },

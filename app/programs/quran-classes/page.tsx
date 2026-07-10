@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
 import { ORG } from "@/lib/links";
@@ -13,9 +11,7 @@ export const metadata: Metadata = {
 
 export default function QuranClassesPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Programs · weekday madrasa"
           title="Weekdays Quran classes"
@@ -53,8 +49,6 @@ export default function QuranClassesPage() {
             { name: "Notes", label: "Anything we should know", type: "textarea", placeholder: "Prior Quran experience, scheduling constraints…" },
           ]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

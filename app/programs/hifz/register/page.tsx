@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { HifzRegister } from "@/components/sections/hifz-register";
 
 export const metadata: Metadata = {
@@ -10,12 +8,8 @@ export const metadata: Metadata = {
 
 export default function HifzRegisterRoute() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <HifzRegister />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <HifzRegister />
+    </main>
   );
 }

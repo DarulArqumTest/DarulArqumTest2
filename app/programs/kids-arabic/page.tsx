@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
 
@@ -12,9 +10,7 @@ export const metadata: Metadata = {
 
 export default function KidsArabicPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Programs · ages 5–10"
           title="KidsLearnArabic"
@@ -44,8 +40,6 @@ export default function KidsArabicPage() {
             { name: "Health card", label: "Health card number (optional)", half: true },
           ]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

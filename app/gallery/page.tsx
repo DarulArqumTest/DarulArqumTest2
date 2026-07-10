@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { GalleryPage } from "@/components/sections/gallery-page";
 
 export const metadata: Metadata = {
@@ -11,12 +9,8 @@ export const metadata: Metadata = {
 
 export default function GalleryRoute() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <GalleryPage />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <GalleryPage />
+    </main>
   );
 }

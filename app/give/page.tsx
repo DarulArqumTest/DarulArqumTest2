@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { GivingSection } from "@/components/sections/home-sections";
 import { QuoteBlock } from "@/components/site/quote-block";
@@ -66,9 +64,7 @@ const CHANNELS = [
 
 export default function GivePage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Sadaqah Jariyah"
           title="Carry the first masjid in Riverside South"
@@ -141,8 +137,6 @@ export default function GivePage() {
           text="The believer's shade on the Day of Resurrection will be their charity."
           source="Al-Tirmidhi"
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

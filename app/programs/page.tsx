@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramsSection } from "@/components/sections/home-sections";
 import { QuoteBlock } from "@/components/site/quote-block";
@@ -16,9 +14,7 @@ export const metadata: Metadata = {
 
 export default function ProgramsPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Education"
           title="Programs at Darul Arqum"
@@ -45,8 +41,6 @@ export default function ProgramsPage() {
             { label: "WhatsApp group", href: EXT.whatsapp },
           ]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

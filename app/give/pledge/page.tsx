@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PledgePage } from "@/components/sections/pledge-page";
 
 export const metadata: Metadata = {
@@ -11,12 +9,8 @@ export const metadata: Metadata = {
 
 export default function PledgeRoute() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <PledgePage />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <PledgePage />
+    </main>
   );
 }

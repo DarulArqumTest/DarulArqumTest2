@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { AalimRegister } from "@/components/sections/aalim-register";
 
 export const metadata: Metadata = {
@@ -10,12 +8,8 @@ export const metadata: Metadata = {
 
 export default function AalimRegisterRoute() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <AalimRegister />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <AalimRegister />
+    </main>
   );
 }

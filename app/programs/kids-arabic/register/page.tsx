@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { KidsRegister } from "@/components/sections/kids-register";
 
 export const metadata: Metadata = {
@@ -10,12 +8,8 @@ export const metadata: Metadata = {
 
 export default function KidsArabicRegisterPage() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <KidsRegister />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <KidsRegister />
+    </main>
   );
 }

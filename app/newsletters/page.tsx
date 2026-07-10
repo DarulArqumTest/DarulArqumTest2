@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { SectionIntro } from "@/components/site/section-intro";
 import { Reveal } from "@/components/site/reveal";
@@ -24,9 +22,7 @@ const ISSUES: { title: string; date: string; href: string }[] = [];
 
 export default function NewslettersPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Community"
           title="Newsletters"
@@ -88,8 +84,6 @@ export default function NewslettersPage() {
           body="Community members can submit announcements for review by the board."
           actions={[{ label: "Contact the team", href: R.contact, primary: true }]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { QuoteBlock } from "@/components/site/quote-block";
 import { CTABand } from "@/components/site/cta-band";
@@ -17,9 +15,7 @@ export const metadata: Metadata = {
 
 export default function WelearnPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Programs · online"
           title="welearn"
@@ -58,8 +54,6 @@ export default function WelearnPage() {
           body="The masjid runs weekday Quran classes, the Aalim program, Hifz and kids' Arabic on site."
           actions={[{ label: "See all programs", href: R.programs, primary: true }]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

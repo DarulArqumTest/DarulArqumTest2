@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { SectionIntro } from "@/components/site/section-intro";
 import { Reveal } from "@/components/site/reveal";
@@ -17,9 +15,7 @@ export const metadata: Metadata = {
 
 export default function CommunityPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Community"
           title="This masjid runs on its people"
@@ -103,8 +99,6 @@ export default function CommunityPage() {
           text="The most beloved of people to Allah are those who are most beneficial to people."
           source="Al-Mu'jam al-Awsat"
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

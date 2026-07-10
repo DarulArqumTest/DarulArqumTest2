@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { QuranRegister } from "@/components/sections/quran-register";
 
 export const metadata: Metadata = {
@@ -10,12 +8,8 @@ export const metadata: Metadata = {
 
 export default function QuranClassRegisterRoute() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <QuranRegister />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <QuranRegister />
+    </main>
   );
 }

@@ -126,32 +126,34 @@ export function Twinkles({ className = "" }: { className?: string }) {
   );
 }
 
+/** One 36×64 ribbon tile, encoded as a data-URI so it can be used as a real
+ * CSS `background-image` (an SVG `<pattern>` fill does not respond to CSS
+ * `background-position`, which silently no-ops the scroll animation). */
+const RIBBON_TILE = `data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="64" viewBox="0 0 36 64">` +
+    `<rect width="36" height="64" fill="#12331f"/>` +
+    `<rect x="2" width="32" height="64" fill="#0e2419"/>` +
+    `<path d="M18 0 L18 8 L10 8 L10 20 L26 20 L26 32 L10 32 L10 44 L26 44 L26 56 L18 56 L18 64" fill="none" stroke="#d9b64a" stroke-width="3.2" stroke-linecap="square" opacity="0.85"/>` +
+    `</svg>`,
+)}`;
+
 /** Fixed-to-viewport gold Greek-key ribbon along a screen edge. */
 export function GoldRibbon({ side = "left", width = 26 }: { side?: "left" | "right"; width?: number }) {
+  const tileHeight = Math.round((width * 64) / 36);
   return (
-    <svg
+    <div
       aria-hidden
       className={`da-ribbon${side === "right" ? "-rev" : ""} pointer-events-none fixed top-0 z-[15] hidden h-screen lg:block`}
-      style={{ [side]: 0, width } as React.CSSProperties}
-      viewBox="0 0 36 64"
-      preserveAspectRatio="xMidYMid slice"
-    >
-      <defs>
-        <pattern id={`da-ribbon-${side}`} width="36" height="64" patternUnits="userSpaceOnUse">
-          <rect width="36" height="64" fill="#12331f" />
-          <rect x="2" width="32" height="64" fill="#0e2419" />
-          <path
-            d="M18 0 L18 8 L10 8 L10 20 L26 20 L26 32 L10 32 L10 44 L26 44 L26 56 L18 56 L18 64"
-            fill="none"
-            stroke="#d9b64a"
-            strokeWidth="3.2"
-            strokeLinecap="square"
-            opacity="0.85"
-          />
-        </pattern>
-      </defs>
-      <rect width="36" height="64" fill={`url(#da-ribbon-${side})`} />
-    </svg>
+      style={
+        {
+          [side]: 0,
+          width,
+          backgroundImage: `url("${RIBBON_TILE}")`,
+          backgroundRepeat: "repeat-y",
+          backgroundSize: `${width}px ${tileHeight}px`,
+        } as React.CSSProperties
+      }
+    />
   );
 }
 

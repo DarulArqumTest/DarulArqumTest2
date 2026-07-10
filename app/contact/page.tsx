@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { SectionIntro } from "@/components/site/section-intro";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/reveal";
@@ -17,9 +15,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Contact & visit"
           title="The door is open"
@@ -97,8 +93,6 @@ export default function ContactPage() {
             { label: "WhatsApp alerts", href: EXT.whatsapp },
           ]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

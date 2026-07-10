@@ -6,6 +6,7 @@
  * interpolated live into the instructions copy. */
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { X, Copy, Check } from "lucide-react";
 import { ORG } from "@/lib/links";
@@ -13,6 +14,9 @@ import { ORG } from "@/lib/links";
 export function EtransferModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [copied, setCopied] = React.useState(false);
   const [amount, setAmount] = React.useState("");
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (!open) {
@@ -31,7 +35,12 @@ export function EtransferModal({ open, onClose }: { open: boolean; onClose: () =
     });
   }
 
-  return (
+  // Rendered via a portal straight to <body> so the fixed/centered overlay is
+  // never constrained by an ancestor's stacking/containing-block context
+  // (e.g. the sticky nav header it's triggered from).
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -112,6 +121,7 @@ export function EtransferModal({ open, onClose }: { open: boolean; onClose: () =
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }

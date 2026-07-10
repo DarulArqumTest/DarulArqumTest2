@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PrayerTimesPage } from "@/components/sections/prayer-times-page";
 
 export const metadata: Metadata = {
@@ -11,12 +9,8 @@ export const metadata: Metadata = {
 
 export default function PrayerTimesRoute() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <PrayerTimesPage />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <PrayerTimesPage />
+    </main>
   );
 }

@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
 import { QuoteBlock } from "@/components/site/quote-block";
@@ -14,9 +12,7 @@ export const metadata: Metadata = {
 
 export default function AalimPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Programs · Al-Arif Islamic Institute"
           title="Aalim program & Quran Hifz"
@@ -54,8 +50,6 @@ export default function AalimPage() {
           text="Whoever travels a path in search of knowledge, Allah makes easy for him a path to Paradise."
           source="Sahih Muslim"
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }

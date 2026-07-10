@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
 import { ORG } from "@/lib/links";
@@ -13,9 +11,7 @@ export const metadata: Metadata = {
 
 export default function TaxReceiptPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-bone">
+    <main className="bg-bone">
         <PageHero
           eyebrow="Give · receipts"
           title="Your donations come back at tax time"
@@ -41,8 +37,6 @@ export default function TaxReceiptPage() {
             { name: "Donation details", label: "Donation method, dates & amounts (approx.)", type: "textarea", required: true, placeholder: "e.g. Monthly e-transfer $60, Jan–Dec 2025" },
           ]}
         />
-      </main>
-      <Footer />
-    </>
+    </main>
   );
 }
