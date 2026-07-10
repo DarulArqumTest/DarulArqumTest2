@@ -88,3 +88,13 @@ export function SectionSpotlight({
     />
   );
 }
+
+/** Shared context so any section on Home can read the controller's highlight state
+ * without prop-drilling. HomeHighlightProvider wraps Home's <main>. */
+export const HomeHighlightContext = React.createContext<{ isHighlighted: (id: string) => boolean; nonce: number } | null>(null);
+
+export function HomeHighlightProvider({ children }: { children: React.ReactNode }) {
+  const { target, nonce, isHighlighted } = useSectionHighlightController();
+  const value = React.useMemo(() => ({ isHighlighted, nonce }), [isHighlighted, nonce, target]);
+  return <HomeHighlightContext.Provider value={value}>{children}</HomeHighlightContext.Provider>;
+}
