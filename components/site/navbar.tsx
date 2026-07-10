@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { EXT, ORG, R } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 import { DonateMenu } from "@/components/site/donate-menu";
 import { requestSectionScroll, type ScrollTargetId } from "@/components/site/use-scroll-highlight";
 
@@ -60,6 +60,7 @@ export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
   const reduce = useReducedMotion();
+  const onHome = pathname === "/";
 
   React.useEffect(() => setOpen(false), [pathname]);
 
@@ -68,12 +69,15 @@ export function Navbar() {
       initial={reduce ? false : { y: -70, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-da-gold/[0.22] bg-da-bg/[0.72] font-daBody backdrop-blur-md backdrop-saturate-150"
+      className={cn(
+        "inset-x-0 top-0 border-b border-da-gold/[0.22] font-daBody backdrop-blur-md backdrop-saturate-150",
+        onHome ? "fixed z-40 bg-da-bg/[0.72]" : "sticky z-20 bg-da-bg/[0.85]",
+      )}
     >
       <div className="mx-auto grid h-16 max-w-wide grid-cols-[auto_1fr_auto] items-center gap-5 px-5 md:h-[76px]">
         <Link href={R.home} className="flex items-center gap-2.5">
           <span className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-da-cream">
-            <Image src={EXT.logo} alt="Darul Arqum logo" width={28} height={28} className="h-[84%] w-[84%] rounded-[6px] object-cover" priority />
+            <Image src="/assets/logo-icon.png" alt="Darul Arqum emblem" width={28} height={28} className="h-[84%] w-[84%] object-contain" priority />
           </span>
           <span className="font-daDisplay text-lg font-semibold text-da-cream">Darul Arqum</span>
         </Link>
