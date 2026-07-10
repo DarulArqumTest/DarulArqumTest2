@@ -71,7 +71,7 @@ export function Navbar() {
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       className={cn(
         "inset-x-0 top-0 border-b border-da-gold/[0.22] font-daBody backdrop-blur-md backdrop-saturate-150",
-        onHome ? "fixed z-40 bg-da-bg/[0.72]" : "sticky z-20 bg-da-bg/[0.85]",
+        onHome ? "fixed z-50 bg-da-bg/[0.72]" : "sticky z-20 bg-da-bg/[0.85]",
       )}
     >
       <div className="mx-auto grid h-16 max-w-wide grid-cols-[auto_1fr_auto] items-center gap-5 px-5 md:h-[76px]">

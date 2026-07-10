@@ -3,6 +3,7 @@
 /** Literal, line-for-line port of `Prayer Times.dc.html`. */
 
 import * as React from "react";
+import { GoldRibbon } from "@/components/site/da-motifs";
 import { Twinkle, Lantern, GeoMedallion } from "@/components/sections/home-literal";
 import { PRAYERS, SHURUQ, nextPrayer, activePrayerKey } from "@/lib/prayer";
 
@@ -161,6 +162,9 @@ export function PrayerTimesPage() {
 
   return (
     <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+      <GoldRibbon side="left" />
+      <GoldRibbon side="right" />
+
       <div className="da-drift-gold" style={{ position: "fixed", width: 480, height: 480, borderRadius: 999, top: "-10%", right: "-8%", background: "radial-gradient(circle, rgba(201,162,39,0.16), transparent 70%)", filter: "blur(10px)", mixBlendMode: "screen", zIndex: 1, pointerEvents: "none" }} />
       <div className="da-drift-green" style={{ position: "fixed", width: 560, height: 560, borderRadius: 999, bottom: "-14%", left: "-10%", background: "radial-gradient(circle, rgba(60,140,100,0.2), transparent 72%)", filter: "blur(10px)", mixBlendMode: "screen", zIndex: 1, pointerEvents: "none" }} />
 
