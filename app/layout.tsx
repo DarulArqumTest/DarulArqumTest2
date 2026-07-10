@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${display.variable} ${body.variable} ${arabic.variable} ${daDisplay.variable} ${daBody.variable}`}
     >
-      <body className="bg-bone font-body text-ink antialiased">
+      <body className="bg-da-bg font-body text-ink antialiased">
         <Navbar />
         {children}
         <Footer />

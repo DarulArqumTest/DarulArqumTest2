@@ -8,7 +8,6 @@
  */
 
 import * as React from "react";
-import { GoldRibbon } from "@/components/site/da-motifs";
 import { ORG } from "@/lib/links";
 import { submitForm } from "@/app/actions/submit";
 
@@ -234,9 +233,6 @@ export function PledgePage() {
 
   return (
     <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
-      <GoldRibbon side="left" width={26} />
-      <GoldRibbon side="right" width={26} />
-
       {/* decorative field: crescent moon, glowing lanterns, stars */}
       <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }} aria-hidden>
         <div style={{ position: "absolute", top: -130, right: -90, width: 440, height: 440, borderRadius: 999, background: "radial-gradient(circle, rgba(201,162,39,0.2), transparent 70%)" }} />

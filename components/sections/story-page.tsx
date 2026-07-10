@@ -5,7 +5,6 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { GoldRibbon } from "@/components/site/da-motifs";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
 
 const MILESTONES = [
@@ -230,9 +229,6 @@ export function StoryPage() {
 
   return (
     <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
-      <GoldRibbon side="left" width={26} />
-      <GoldRibbon side="right" width={26} />
-
       <div className="da-drift-gold" style={{ position: "fixed", width: 480, height: 480, borderRadius: 999, top: "-10%", right: "-8%", background: "radial-gradient(circle, rgba(201,162,39,0.16), transparent 70%)", filter: "blur(10px)", mixBlendMode: "screen", zIndex: 1, pointerEvents: "none" }} />
       <div className="da-drift-green" style={{ position: "fixed", width: 560, height: 560, borderRadius: 999, bottom: "-14%", left: "-10%", background: "radial-gradient(circle, rgba(60,140,100,0.2), transparent 72%)", filter: "blur(10px)", mixBlendMode: "screen", zIndex: 1, pointerEvents: "none" }} />
 
