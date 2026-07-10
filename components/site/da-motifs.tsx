@@ -10,25 +10,15 @@ import type { CSSProperties } from "react";
  */
 
 /**
- * A static, non-animated version of the two edge <div>s from Darul Arqum
- * Home.dc.html's "gold motion ribbons" markup: same position:fixed/34px/
- * 100vh/pointer-events:none shell and the same dark tile background, but the
- * meander pattern, box-shadow bezel, and scroll/glow animation are
- * deliberately dropped — just a plain dark margin with a thin gold accent
- * line down the inner edge. Used site-wide (mounted once in the root
- * layout), so z-index is kept low (10) to stay under every page's own
- * sticky/fixed header regardless of that header's own z-index.
+ * A soft dark vertical margin/indent along a screen edge — a plain CSS
+ * gradient, not a tiled background-image (which produced visible seams
+ * every ~64px and read as a harsh thin gold line). No repeat, no pattern,
+ * no animation. The gradient direction and inset shadow are mirrored for
+ * the right edge so both read as darkening toward the outer edge of the
+ * screen and fading to transparent toward the page content.
  */
-const EDGE_MARGIN_TILE = `data:image/svg+xml,${encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="64" viewBox="0 0 36 64">` +
-    `<rect width="36" height="64" fill="#12331f"/>` +
-    `<rect x="2" width="32" height="64" fill="#0e2419"/>` +
-    `<rect x="1" width="1.6" height="64" fill="#d9b64a" opacity="0.55"/>` +
-    `<rect x="33.4" width="1.6" height="64" fill="#d9b64a" opacity="0.55"/>` +
-    `</svg>`,
-)}`;
-
 export function EdgeMargin({ side }: { side: "left" | "right" }) {
+  const isRight = side === "right";
   return (
     <div
       aria-hidden
@@ -39,11 +29,10 @@ export function EdgeMargin({ side }: { side: "left" | "right" }) {
           [side]: 0,
           width: 34,
           height: "100vh",
-          zIndex: 10,
+          zIndex: 40,
           pointerEvents: "none",
-          backgroundImage: `url("${EDGE_MARGIN_TILE}")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "34px 64px",
+          background: `linear-gradient(${isRight ? 270 : 90}deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 45%, transparent 100%), #0e2419`,
+          boxShadow: isRight ? "inset 6px 0 10px rgba(0,0,0,0.3)" : "inset -6px 0 10px rgba(0,0,0,0.3)",
         } as CSSProperties
       }
     />
