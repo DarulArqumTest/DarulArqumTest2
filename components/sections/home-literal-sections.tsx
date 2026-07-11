@@ -571,20 +571,20 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
               </div>
 
               {/* Quran Studies split hero */}
-              <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", minHeight: 260, backgroundImage: "linear-gradient(190deg, rgba(8,18,13,0.45) 0%, rgba(9,18,13,0.8) 65%, #0e2419 95%), url('/assets/program-quran.jpg')", backgroundSize: "cover", backgroundPosition: "center 26%" }}>
-                <div style={{ position: "absolute", top: 24, left: 0, right: 0, textAlign: "center", zIndex: 2, pointerEvents: "none" }}>
+              <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", minHeight: 260, display: "flex", flexDirection: "column", backgroundImage: "linear-gradient(190deg, rgba(8,18,13,0.45) 0%, rgba(9,18,13,0.8) 65%, #0e2419 95%), url('/assets/program-quran.jpg')", backgroundSize: "cover", backgroundPosition: "center 26%" }}>
+                <div style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "24px 16px 0", pointerEvents: "none" }}>
                   <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d98f4a", fontWeight: 700, marginBottom: 6 }}>Al-Arif Islamic Institute</div>
                   <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 24, color: "#f6f3ea", margin: 0 }}>Quran studies</h3>
                 </div>
-                <div style={{ position: "absolute", inset: 0, display: "flex", zIndex: 1, paddingTop: 78 }}>
-                  <div onClick={() => onOpen("hifz")} style={{ flex: 1, cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.22)", borderRight: "1px solid rgba(255,255,255,0.14)", boxShadow: "inset 3px 0 0 rgba(217,143,74,0.5)" }}>
+                <div style={{ position: "relative", zIndex: 1, display: "flex", flexWrap: "wrap", flex: 1, marginTop: 20 }}>
+                  <div onClick={() => onOpen("hifz")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.22)", borderRight: "1px solid rgba(255,255,255,0.14)", boxShadow: "inset 3px 0 0 rgba(217,143,74,0.5)" }}>
                     <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d98f4a", fontWeight: 700, marginBottom: 6 }}>Full-time · flagship</div>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Hifz program</div>
                     <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.75)", margin: "0 0 8px 0" }}>Full-time memorization of the Qur&apos;an with tajweed and Islamic studies.</p>
                     <div style={{ fontSize: 11, color: "#f3d6a8", fontWeight: 600, marginBottom: 10 }}>Monday–Friday · $75/mo</div>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#f6f3ea", fontSize: 12.5, fontWeight: 700 }}>Learn more →</span>
                   </div>
-                  <div onClick={() => onOpen("quran")} style={{ flex: 1, cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.36)" }}>
+                  <div onClick={() => onOpen("quran")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.36)" }}>
                     <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(246,243,234,0.6)", fontWeight: 700, marginBottom: 6 }}>Weekends</div>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Weekend classes</div>
                     <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.7)", margin: "0 0 8px 0" }}>Quran reading &amp; tajweed for all ages.</p>
@@ -670,7 +670,7 @@ export function ContactSection() {
             Come <span style={{ color: "#c9a227", fontStyle: "italic" }}>visit us,</span> or reach out anytime.
           </h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 20 }} className="da-contact-grid">
+          <div style={{ display: "grid", gap: 20 }} className="da-contact-grid">
             <div id="map-section" style={{ position: "relative", height: "100%" }}>
               {ctx && <SectionSpotlight id="map-section" nonce={ctx.nonce} active={ctx.isHighlighted("map-section")} />}
               <div style={{ borderRadius: 20, overflow: "hidden", background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.12)", display: "flex", flexDirection: "column", height: "100%" }}>

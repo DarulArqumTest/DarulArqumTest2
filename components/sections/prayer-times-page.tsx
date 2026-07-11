@@ -237,10 +237,10 @@ export function PrayerTimesPage() {
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 26, color: "#f6f3ea" }}>Today&apos;s board, straight off the screen</div>
           </div>
 
-          <div style={{ position: "relative", zIndex: 2, width: "fit-content", margin: "0 auto -1px", borderRadius: "14px 14px 0 0", padding: "14px 28px", background: "linear-gradient(135deg, #7a2020, #4d1414)", border: "1px solid rgba(227,197,106,0.35)", borderBottom: "none", boxShadow: "0 -6px 24px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "center", gap: 14, whiteSpace: "nowrap" }}>
+          <div style={{ position: "relative", zIndex: 2, maxWidth: "calc(100% - 32px)", width: "fit-content", margin: "0 auto -1px", borderRadius: "14px 14px 0 0", padding: "14px 20px", background: "linear-gradient(135deg, #7a2020, #4d1414)", border: "1px solid rgba(227,197,106,0.35)", borderBottom: "none", boxShadow: "0 -6px 24px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "6px 14px" }}>
             <span className="da-live-pulse" style={{ width: 8, height: 8, borderRadius: 999, background: "#ffd7d7", flexShrink: 0 }} />
             <span style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.65)", fontWeight: 700 }}>Jumu&apos;ah</span>
-            <span style={{ fontSize: 14.5, color: "#fff", fontWeight: 700 }}>1st Khutbah 1:30 PM &amp; 2nd Khutbah 2:30 PM</span>
+            <span style={{ fontSize: 14.5, color: "#fff", fontWeight: 700, textAlign: "center" }}>1st Khutbah 1:30 PM &amp; 2nd Khutbah 2:30 PM</span>
           </div>
 
           <div style={{ borderRadius: 30, padding: "20px 20px 16px", background: "linear-gradient(155deg, #333029, #171512)", border: "1px solid rgba(0,0,0,0.5)", boxShadow: "0 40px 90px -30px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06)" }}>

@@ -239,8 +239,8 @@ export function PledgePage() {
     return { ...base, opacity: 1, maxHeight: 1400, order: isThis ? -1 : 0 };
   };
 
-  const inputStyle: React.CSSProperties = { background: "rgba(246,243,234,0.06)", border: "1px solid rgba(246,243,234,0.2)", borderRadius: 8, padding: "11px 13px", color: "#f6f3ea", fontSize: 14, fontFamily: "inherit" };
-  const padInputStyle: React.CSSProperties = { background: "rgba(246,243,234,0.06)", border: "1px solid rgba(246,243,234,0.2)", borderRadius: 8, padding: "10px 12px", color: "#f6f3ea", fontSize: 13, fontFamily: "inherit" };
+  const inputStyle: React.CSSProperties = { background: "rgba(246,243,234,0.06)", border: "1px solid rgba(246,243,234,0.2)", borderRadius: 8, padding: "11px 13px", color: "#f6f3ea", fontSize: 14, fontFamily: "inherit", width: "100%", boxSizing: "border-box" };
+  const padInputStyle: React.CSSProperties = { background: "rgba(246,243,234,0.06)", border: "1px solid rgba(246,243,234,0.2)", borderRadius: 8, padding: "10px 12px", color: "#f6f3ea", fontSize: 13, fontFamily: "inherit", width: "100%", boxSizing: "border-box" };
   const labelStyle: React.CSSProperties = { fontSize: 11.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(246,243,234,0.55)" };
 
   return (

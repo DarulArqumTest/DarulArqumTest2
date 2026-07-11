@@ -35,6 +35,20 @@
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body { overflow-x: hidden; }
+
+/* Contact section: map + info cards side by side on desktop, stacked on narrow screens. */
+.da-contact-grid { grid-template-columns: 1.3fr 1fr; }
+@media (max-width: 760px) {
+  .da-contact-grid { grid-template-columns: 1fr; }
+}
+
+/* Story page year tracker: fixed to the right edge, only room for it on wider screens
+   where timeline cards stay narrower than the viewport. Below that it just sits on
+   top of the (now near-full-width) milestone cards, so hide it entirely. */
+.da-year-indicator { display: flex; }
+@media (max-width: 760px) {
+  .da-year-indicator { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .amb, .amb * { animation: none !important; }

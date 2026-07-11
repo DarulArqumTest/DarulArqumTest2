@@ -168,13 +168,13 @@ function YearIndicator({ timelineRef }: { timelineRef: React.RefObject<HTMLDivEl
 
   return (
       <div
+        className="da-year-indicator"
         style={{
           position: "fixed",
           top: "50%",
           right: 28,
           transform: "translateY(-50%)",
           zIndex: 25,
-          display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: 6,
