@@ -11,7 +11,10 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { submitForm } from "@/app/actions/submit";
-import { ORG } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
+import { isValidEmail } from "@/lib/validate";
+
+const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
 const inputStyle: React.CSSProperties = {
   background: "rgba(246,243,234,0.06)",
@@ -40,13 +43,21 @@ export function NewsletterPage() {
   const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
   const [delivered, setDelivered] = React.useState(false);
   const [values, setValues] = React.useState<Record<string, string>>({});
+  const [emailError, setEmailError] = React.useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setState("busy");
     const fd = new FormData(e.currentTarget);
     const data: Record<string, string> = {};
     fd.forEach((v, k) => (data[k] = String(v)));
+
+    if (!isValidEmail(data.email ?? "")) {
+      setEmailError("Enter a valid email address.");
+      return;
+    }
+    setEmailError("");
+
+    setState("busy");
     setValues(data);
     const res = await submitForm("mailing-list", data);
     if (res.ok) {
@@ -184,7 +195,16 @@ export function NewsletterPage() {
               </label>
               <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                 <span style={labelStyle}>Email</span>
-                <input name="email" type="email" required placeholder="you@example.com" style={inputStyle} />
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  style={inputStyle}
+                  onBlur={(e) => setEmailError(isValidEmail(e.currentTarget.value) ? "" : "Enter a valid email address.")}
+                  onChange={() => emailError && setEmailError("")}
+                />
+                {emailError && <span style={errorStyle}>{emailError}</span>}
               </label>
             </div>
             <button
@@ -221,10 +241,8 @@ export function NewsletterPage() {
         )}
 
         <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 14 }}>Past editions</div>
-        <a
-          href="https://shoutout.wix.com/so/71NOH4zSW"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={R.newsletterDec2020}
           style={{ display: "flex", alignItems: "center", gap: 16, padding: "18px 20px", borderRadius: 14, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.35)", textDecoration: "none", boxShadow: "0 16px 34px -18px rgba(201,162,39,0.5)" }}
         >
           <div style={{ width: 44, height: 44, flexShrink: 0, borderRadius: 10, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a", fontSize: 19 }}>✉</div>
@@ -233,7 +251,7 @@ export function NewsletterPage() {
             <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Read the archived newsletter</div>
           </div>
           <span style={{ color: "#e3c56a", fontSize: 16 }}>→</span>
-        </a>
+        </Link>
       </div>
     </div>
   );

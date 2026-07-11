@@ -8,8 +8,12 @@
  */
 
 import * as React from "react";
-import { ORG } from "@/lib/links";
+import Link from "next/link";
+import { ORG, R } from "@/lib/links";
 import { submitForm } from "@/app/actions/submit";
+import { isValidEmail, isValidPhone } from "@/lib/validate";
+
+const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
 type Method = "paypal" | "bank" | "etransfer" | null;
 type Freq = "once" | "monthly";
@@ -103,6 +107,8 @@ export function PledgePage() {
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [phone, setPhone] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
+  const [phoneError, setPhoneError] = React.useState("");
   const [amount, setAmount] = React.useState("");
   const [amountFocused, setAmountFocused] = React.useState(false);
   const [freq, setFreq] = React.useState<Freq>("once");
@@ -178,6 +184,12 @@ export function PledgePage() {
   };
 
   const submitPad = async () => {
+    const emailOk = isValidEmail(email);
+    const phoneOk = isValidPhone(phone);
+    setEmailError(emailOk ? "" : "Enter a valid email address.");
+    setPhoneError(phoneOk ? "" : "Enter a valid phone number.");
+    if (!emailOk || !phoneOk) return;
+
     setPadState("busy");
     const res = await submitForm("pledge", {
       "First name": firstName,
@@ -318,6 +330,57 @@ export function PledgePage() {
           </div>
         </div>
 
+        {/* TAX RECEIPT CTA */}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 20,
+            borderRadius: 18,
+            padding: "24px 28px",
+            marginBottom: 32,
+            background: "linear-gradient(120deg, rgba(214,74,64,0.28), rgba(214,74,64,0.1))",
+            border: "1.5px solid rgba(224,110,100,0.55)",
+            boxShadow: "0 18px 40px -18px rgba(214,74,64,0.4)",
+          }}
+        >
+          <span
+            style={{
+              flexShrink: 0,
+              width: 50,
+              height: 50,
+              borderRadius: 999,
+              background: "rgba(214,74,64,0.22)",
+              border: "1.5px solid rgba(240,140,130,0.6)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            aria-hidden
+          >
+            <svg width={22} height={24} viewBox="0 0 20 22" fill="none">
+              <path d="M2 2 H14 L18 6 V20 H2 Z" stroke="#f0a89f" strokeWidth={1.6} strokeLinejoin="round" />
+              <path d="M14 2 V6 H18" stroke="#f0a89f" strokeWidth={1.6} strokeLinejoin="round" />
+              <path d="M5.5 11.5 L8.5 14.5 L14.5 8" stroke="#f6f3ea" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <div style={{ fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#f0a89f", fontWeight: 800, marginBottom: 5 }}>Reminder</div>
+            <p style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", margin: "0 0 3px 0" }}>Already gave, or need a receipt for last year?</p>
+            <p style={{ fontSize: 13, lineHeight: 1.55, color: "rgba(246,243,234,0.75)", margin: 0 }}>
+              Request or update the mailing address on file so your official CRA tax receipt reaches you — issued every February.
+            </p>
+          </div>
+          <Link
+            href={R.taxReceipt}
+            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#e56b60,#c94c42)", color: "#fff", fontWeight: 700, fontSize: 13.5, padding: "13px 24px", borderRadius: 999, boxShadow: "0 12px 26px -8px rgba(201,76,66,0.6)" }}
+          >
+            Get your tax receipt <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+
         {/* FORM */}
         <div style={{ borderRadius: 24, padding: 40, background: "rgba(246,243,234,0.05)", border: "1px solid rgba(201,162,39,0.3)", boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)" }}>
           <div style={{ fontSize: 11.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 8 }}>Donation authorization form</div>
@@ -380,11 +443,31 @@ export function PledgePage() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Email</span>
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={inputStyle} />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (emailError) setEmailError("");
+                    }}
+                    onBlur={(e) => setEmailError(isValidEmail(e.currentTarget.value) ? "" : "Enter a valid email address.")}
+                    style={inputStyle}
+                  />
+                  {emailError && <span style={errorStyle}>{emailError}</span>}
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Phone</span>
-                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} style={inputStyle} />
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (phoneError) setPhoneError("");
+                    }}
+                    onBlur={(e) => setPhoneError(isValidPhone(e.currentTarget.value) ? "" : "Enter a valid phone number.")}
+                    style={inputStyle}
+                  />
+                  {phoneError && <span style={errorStyle}>{phoneError}</span>}
                 </label>
               </div>
             </>
@@ -455,7 +538,8 @@ export function PledgePage() {
               <div style={panelStyle(method === "bank")}>
                 <div style={{ padding: "0 18px 18px", display: "flex", flexDirection: "column", gap: 10 }}>
                   <p style={{ fontSize: 12.5, lineHeight: 1.6, color: "rgba(246,243,234,0.65)", margin: 0, padding: "10px 12px", background: "rgba(201,162,39,0.1)", borderRadius: 8, border: "1px solid rgba(201,162,39,0.25)" }}>
-                    Fill in your banking details below, then attach a photo of a VOID cheque to the email that opens when you submit.
+                    Fill in your banking details below, then attach a photo of a VOID cheque to the email that opens when you submit. Prefer a
+                    printable, paper copy instead? <Link href={R.padForm} style={{ color: "#8fb4c9", textDecoration: "underline" }}>Get the PAD form</Link>.
                   </p>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                     <input value={padBankName} onChange={(e) => setPadBankName(e.target.value)} placeholder="Bank name" style={{ ...padInputStyle, gridColumn: "span 2" }} />

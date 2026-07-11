@@ -3,8 +3,9 @@
 /** Literal, line-for-line port of `Gallery.dc.html`. */
 
 import * as React from "react";
+import Link from "next/link";
 import { Twinkle, CrescentMoon } from "@/components/sections/home-literal";
-import { EXT } from "@/lib/links";
+import { EXT, R } from "@/lib/links";
 
 const HOUSE_IMG = "/assets/hero-house.jpg";
 const FUND1_IMG = EXT.galleryFundraising1;
@@ -86,6 +87,86 @@ export function GalleryPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* VOLUNTEER CTA */}
+      <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "0 24px 80px" }}>
+        <div
+          style={{
+            maxWidth: 1080,
+            margin: "0 auto",
+            position: "relative",
+            overflow: "hidden",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 24,
+            borderRadius: 22,
+            padding: "34px 36px",
+            background: "radial-gradient(ellipse 90% 130% at 0% 0%, rgba(217,143,74,0.16), transparent 65%), linear-gradient(155deg, rgba(22,56,38,0.72), rgba(13,35,24,0.55))",
+            border: "1px solid rgba(217,143,74,0.32)",
+            boxShadow: "0 24px 60px -28px rgba(0,0,0,0.55)",
+          }}
+        >
+          <span
+            style={{
+              flexShrink: 0,
+              width: 54,
+              height: 54,
+              borderRadius: 999,
+              background: "rgba(217,143,74,0.16)",
+              border: "1.5px solid rgba(232,176,106,0.5)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            aria-hidden
+          >
+            <svg width={26} height={26} viewBox="0 0 26 26" fill="none">
+              <path
+                d="M13 14 C13 14 8.3 10.2 8.3 7.1 C8.3 4.8 10.5 3.3 12.6 4.5 C12.8 4.6 13 4.8 13 4.8 C13 4.8 13.2 4.6 13.4 4.5 C15.5 3.3 17.7 4.8 17.7 7.1 C17.7 10.2 13 14 13 14 Z"
+                stroke="#e8b06a"
+                strokeWidth={1.6}
+                strokeLinejoin="round"
+              />
+              <path
+                d="M4 24 C4 18.5 7.2 16.3 13 16.3 C18.8 16.3 22 18.5 22 24"
+                stroke="#e8b06a"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700, marginBottom: 6 }}>
+              Every moment here took a volunteer
+            </div>
+            <p style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 22, color: "#f6f3ea", margin: 0 }}>
+              Want to be part of the next photo?
+            </p>
+            <p style={{ marginTop: 6, fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.65)", maxWidth: 460 }}>
+              From event setup to teaching, hospitality, and upkeep — Darul Arqum runs on people who show up. Tell us where you&apos;d like to help.
+            </p>
+          </div>
+          <Link
+            href={R.community}
+            style={{
+              flexShrink: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 9,
+              background: "linear-gradient(135deg,#f3c98a,#e8b06a)",
+              color: "#0e2419",
+              fontWeight: 700,
+              fontSize: 14,
+              padding: "13px 26px",
+              borderRadius: 999,
+              boxShadow: "0 14px 30px -8px rgba(217,143,74,0.5)",
+            }}
+          >
+            Join as a volunteer <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </section>
 

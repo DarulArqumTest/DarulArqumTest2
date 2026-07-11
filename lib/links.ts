@@ -4,8 +4,6 @@
  * ADMIN-ACCESS FOLLOW-UPS are marked inline.
  */
 
-export const SITE = "https://www.darularqum.org";
-
 export const EXT = {
   // Prayer (Mawaqit — powers the TV screen at the masjid)
   mawaqitLive:
@@ -20,27 +18,19 @@ export const EXT = {
   welearnZoom: "https://zoom.us/j/93194466159",
 
   // Giving — live public endpoints (interim source of truth).
-  // ADMIN-ACCESS FOLLOW-UP: swap `paypalPledgeLegacy` for the exact hosted
-  // PayPal button URL (https://www.paypal.com/donate?hosted_button_id=XXXX)
-  // once Wix admin access is available. Until then the pledge flow routes to
-  // the live public pledge page + e-transfer + PAD PDF, all working today.
-  paypalPledgeLegacy: `${SITE}/pledge`,
   ircMatchingCampaign:
     "https://donate.islamicreliefcanada.org/campaign/darul-arqum-mosque-922",
   ircCrowdfunding:
     "https://fundraise.islamicreliefcanada.org/campaign/support-darularqum-2311",
-  padFormPdf: `${SITE}/_files/ugd/c7abce_35ff88cd1e7f4c78830da9979172ff7b.pdf`,
+  padFormPdf: "/assets/forms/pad-form.pdf",
 
-  // Gallery photos (public Wix-hosted originals)
-  galleryFundraising1:
-    "https://static.wixstatic.com/media/62a910_4557449cc48148cda1ec71b6a8a095c8~mv2.jpg",
-  galleryFundraising2:
-    "https://static.wixstatic.com/media/62a910_e3b2cb41c35e4bd0a109189fc58ccd95~mv2.jpg",
+  // Gallery photos (self-hosted)
+  galleryFundraising1: "/assets/gallery/fundraising-1.jpg",
+  galleryFundraising2: "/assets/gallery/fundraising-2.jpg",
 
-  // Brand (public Wix-hosted original — the real logo, not a placeholder)
-  logo: "https://static.wixstatic.com/media/62a910_dce8cdcf2540405b990112ba6e712e73~mv2.jpg/v1/fill/w_328,h_328,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Logo%20-new%20-L.jpg",
-  logoFull:
-    "https://static.wixstatic.com/media/62a910_dce8cdcf2540405b990112ba6e712e73~mv2.jpg",
+  // Brand (self-hosted)
+  logo: "/assets/logo-icon.png",
+  logoFull: "/assets/logo-icon.png",
 } as const;
 
 export const ORG = {
@@ -91,5 +81,6 @@ export const R = {
   gallery: "/gallery",
   community: "/community",
   newsletters: "/newsletters",
+  newsletterDec2020: "/newsletters/december-2020",
   contact: "/contact",
 } as const;

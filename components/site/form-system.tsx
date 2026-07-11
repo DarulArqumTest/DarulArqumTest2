@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { CheckCircle2, Loader2, Mail, TriangleAlert } from "lucide-react";
 import { submitForm } from "@/app/actions/submit";
 import { ORG } from "@/lib/links";
+import { isValidEmail, isValidPhone } from "@/lib/validate";
 
 export type Field = {
   name: string;
@@ -39,13 +40,34 @@ export function FormSystem({
   const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
   const [delivered, setDelivered] = React.useState(false);
   const [values, setValues] = React.useState<Record<string, string>>({});
+  const [fieldErrors, setFieldErrors] = React.useState<Record<string, string>>({});
+
+  function checkField(f: Field, value: string) {
+    if (f.type === "email" && !isValidEmail(value)) return "Enter a valid email address.";
+    if (f.type === "tel" && !isValidPhone(value)) return "Enter a valid phone number.";
+    return "";
+  }
+
+  function onFieldBlur(f: Field, value: string) {
+    const msg = checkField(f, value);
+    setFieldErrors((prev) => ({ ...prev, [f.name]: msg }));
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setState("busy");
     const fd = new FormData(e.currentTarget);
     const data: Record<string, string> = {};
     fd.forEach((v, k) => (data[k] = String(v)));
+
+    const errors: Record<string, string> = {};
+    for (const f of fields) {
+      const msg = checkField(f, data[f.name] ?? "");
+      if (msg) errors[f.name] = msg;
+    }
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
+    setState("busy");
     setValues(data);
     const res = await submitForm(formName, data);
     if (res.ok) {
@@ -125,7 +147,12 @@ export function FormSystem({
                     required={f.required}
                     placeholder={f.placeholder}
                     className={input}
+                    onBlur={(e) => onFieldBlur(f, e.currentTarget.value)}
+                    onChange={() => fieldErrors[f.name] && setFieldErrors((prev) => ({ ...prev, [f.name]: "" }))}
                   />
+                )}
+                {fieldErrors[f.name] && (
+                  <span className="mt-1.5 block text-xs text-red-700">{fieldErrors[f.name]}</span>
                 )}
               </label>
             ))}

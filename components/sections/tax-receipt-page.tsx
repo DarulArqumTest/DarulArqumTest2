@@ -12,6 +12,9 @@ import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { submitForm } from "@/app/actions/submit";
 import { ORG } from "@/lib/links";
+import { isValidEmail, isValidPhone } from "@/lib/validate";
+
+const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
 const inputStyle: React.CSSProperties = {
   background: "rgba(246,243,234,0.06)",
@@ -41,13 +44,22 @@ export function TaxReceiptPage() {
   const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
   const [delivered, setDelivered] = React.useState(false);
   const [values, setValues] = React.useState<Record<string, string>>({});
+  const [emailError, setEmailError] = React.useState("");
+  const [phoneError, setPhoneError] = React.useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setState("busy");
     const fd = new FormData(e.currentTarget);
     const data: Record<string, string> = {};
     fd.forEach((v, k) => (data[k] = String(v)));
+
+    const emailOk = isValidEmail(data.email ?? "");
+    const phoneOk = isValidPhone(data.Phone ?? "");
+    setEmailError(emailOk ? "" : "Enter a valid email address.");
+    setPhoneError(phoneOk ? "" : "Enter a valid phone number.");
+    if (!emailOk || !phoneOk) return;
+
+    setState("busy");
     setValues(data);
     const res = await submitForm("tax-receipt", data);
     if (res.ok) {
@@ -167,11 +179,29 @@ export function TaxReceiptPage() {
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Email</span>
-                  <input name="email" type="email" required placeholder="you@example.com" style={inputStyle} />
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    style={inputStyle}
+                    onBlur={(e) => setEmailError(isValidEmail(e.currentTarget.value) ? "" : "Enter a valid email address.")}
+                    onChange={() => emailError && setEmailError("")}
+                  />
+                  {emailError && <span style={errorStyle}>{emailError}</span>}
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
                   <span style={labelStyle}>Phone number</span>
-                  <input name="Phone" type="tel" pattern="[0-9+()\-\s]{7,15}" placeholder="(613) 555-0123" style={inputStyle} />
+                  <input
+                    name="Phone"
+                    type="tel"
+                    pattern="[0-9+()\-\s]{7,15}"
+                    placeholder="(613) 555-0123"
+                    style={inputStyle}
+                    onBlur={(e) => setPhoneError(isValidPhone(e.currentTarget.value) ? "" : "Enter a valid phone number.")}
+                    onChange={() => phoneError && setPhoneError("")}
+                  />
+                  {phoneError && <span style={errorStyle}>{phoneError}</span>}
                 </label>
               </div>
             </div>

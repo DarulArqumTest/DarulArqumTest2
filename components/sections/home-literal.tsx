@@ -10,6 +10,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
+import { R } from "@/lib/links";
 
 const GREETINGS: { text: string; lang?: "ar" }[] = [
   { text: "السَّلَامُ عَلَيْكُمْ", lang: "ar" },
@@ -403,6 +404,27 @@ function Hero({ revealed }: { revealed: boolean }) {
                 </div>
               </div>
             ))}
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.34 }} style={{ marginTop: 14 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 13, padding: "16px 18px", borderRadius: 12, background: "rgba(201,162,39,0.07)", border: "1px solid rgba(201,162,39,0.25)" }}>
+              <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width={16} height={13} viewBox="0 0 26 18" aria-hidden>
+                  <rect x={1} y={1} width={24} height={16} rx={2.5} fill="none" stroke="#e3c56a" strokeWidth={1.8} />
+                  <path d="M1.5 2.5 L13 11 L24.5 2.5" fill="none" stroke="#e3c56a" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div style={{ flex: "1 1 240px" }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>Don&apos;t miss what&apos;s next</div>
+                <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)" }}>Programs, fundraising milestones &amp; masjid news — a few times a year.</div>
+              </div>
+              <Link
+                href={R.newsletters}
+                style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 600, color: "#e3c56a", padding: "8px 6px", whiteSpace: "nowrap" }}
+              >
+                Subscribe →
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>

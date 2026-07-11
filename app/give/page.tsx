@@ -121,12 +121,33 @@ export default function GivePage() {
                 </StaggerItem>
               ))}
             </Stagger>
-            <Reveal delay={0.15} className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
-              <a href={EXT.padFormPdf} className="inline-flex items-center gap-2 text-forest">
-                <FileDown className="h-4 w-4" aria-hidden /> Download the PAD form (PDF)
-              </a>
-              <Link href={R.taxReceipt} className="inline-flex items-center gap-2 text-forest">
-                <Receipt className="h-4 w-4" aria-hidden /> Request / update your tax receipt details
+          </div>
+        </section>
+
+        <section className="px-5 pb-6">
+          <div className="mx-auto max-w-wide">
+            <Reveal>
+              <div className="flex flex-col items-center gap-6 rounded-2xl border border-brass/30 bg-forest px-7 py-9 text-center text-bone sm:flex-row sm:text-left">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brass/15 text-brassL">
+                  <Receipt className="h-6 w-6" aria-hidden />
+                </span>
+                <div className="flex-1">
+                  <p className="font-display text-xl tracking-tight">Already gave, or need a receipt for last year?</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-bone/65">
+                    Request or update the mailing address on file so your official CRA tax receipt reaches you — issued every February.
+                  </p>
+                </div>
+                <Link
+                  href={R.taxReceipt}
+                  className="inline-flex shrink-0 items-center gap-2 rounded-full bg-brass px-6 py-3 text-sm font-medium text-ink transition-transform hover:scale-[1.03]"
+                >
+                  Get your tax receipt <ArrowUpRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1} className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
+              <Link href={R.padForm} className="inline-flex items-center gap-2 text-forest">
+                <FileDown className="h-4 w-4" aria-hidden /> Printable PAD form &amp; instructions
               </Link>
             </Reveal>
           </div>

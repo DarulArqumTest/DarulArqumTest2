@@ -62,7 +62,7 @@ export function DonateMenu() {
               className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm text-da-bg transition-colors hover:bg-da-bg/[0.06]"
             >
               <span className="flex h-5 w-[30px] items-center justify-center overflow-hidden rounded-[3px] bg-white ring-1 ring-black/10">
-                <img src="/assets/interac-logo.png" alt="" className="h-4 w-4 object-contain" />
+                <img src="/assets/interac-logo.png" alt="" className="h-full w-full object-cover" />
               </span>
               Pay via e-Transfer
             </button>
