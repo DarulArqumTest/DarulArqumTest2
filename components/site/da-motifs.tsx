@@ -15,6 +15,14 @@ import type { CSSProperties } from "react";
  * background color) shows through, tinted darker toward the edge instead of
  * being painted over by a flat color/gradient. Mirrored for the right edge.
  * Static, no animation.
+ *
+ * position:fixed + height:100vh is intentional and correct here — a fixed
+ * element is always exactly viewport-sized regardless of document length,
+ * so it doesn't need to track page height. The earlier hard seam partway
+ * down the strip wasn't a sizing bug; it was Chromium's box-shadow renderer
+ * visibly tiling the shadow on a very tall element once blur/spread got
+ * large (24px blur / -6px spread). Smaller values render as one continuous
+ * gradient with no seam.
  */
 export function EdgeMargin({ side }: { side: "left" | "right" }) {
   const isRight = side === "right";
@@ -31,7 +39,7 @@ export function EdgeMargin({ side }: { side: "left" | "right" }) {
           zIndex: 40,
           pointerEvents: "none",
           background: "transparent",
-          boxShadow: isRight ? "inset 18px 0 24px -6px rgba(0,0,0,0.55)" : "inset -18px 0 24px -6px rgba(0,0,0,0.55)",
+          boxShadow: isRight ? "inset 10px 0 16px -8px rgba(0,0,0,0.35)" : "inset -10px 0 16px -8px rgba(0,0,0,0.35)",
         } as CSSProperties
       }
     />
