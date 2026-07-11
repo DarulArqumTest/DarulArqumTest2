@@ -8,9 +8,10 @@ import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { R } from "@/lib/links";
+import { cn } from "@/lib/utils";
 import { EtransferModal } from "@/components/site/etransfer-modal";
 
-export function DonateMenu() {
+export function DonateMenu({ align = "right" }: { align?: "left" | "right" }) {
   const [open, setOpen] = React.useState(false);
   const [etransferOpen, setEtransferOpen] = React.useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
@@ -41,7 +42,10 @@ export function DonateMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.18 }}
-            className="absolute right-0 top-[calc(100%+10px)] z-30 w-[230px] rounded-2xl bg-da-cream p-2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.45)]"
+            className={cn(
+              "absolute top-[calc(100%+10px)] z-30 w-[230px] rounded-2xl bg-da-cream p-2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.45)]",
+              align === "right" ? "right-0" : "left-0",
+            )}
           >
             <Link
               href={`${R.pledge}?method=paypal`}

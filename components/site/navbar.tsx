@@ -145,7 +145,7 @@ export function Navbar() {
                 variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
                 className="flex flex-wrap items-center gap-3 pt-3"
               >
-                <DonateMenu />
+                <DonateMenu align="left" />
                 <a
                   href={ORG.phoneHref}
                   className="flex items-center gap-2 rounded-full border border-da-gold/25 px-5 py-3 text-sm text-da-cream"
