@@ -49,6 +49,16 @@ body { overflow-x: hidden; }
 @media (max-width: 760px) {
   .da-year-indicator { display: none; }
 }
+
+/* Hero stat row: the "Daily prayers" card is a real link to /prayer-times;
+   give it a visible hover/press state so it reads as clickable. */
+.da-stat-card-link { cursor: pointer; }
+.da-stat-card-link:hover {
+  background: rgba(201,162,39,0.1);
+  border-color: rgba(201,162,39,0.4);
+  transform: translateY(-2px);
+}
+.da-stat-card-link:active { transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .amb, .amb * { animation: none !important; }

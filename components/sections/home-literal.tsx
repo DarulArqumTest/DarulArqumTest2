@@ -391,19 +391,54 @@ function Hero({ revealed }: { revealed: boolean }) {
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
             {[
               { title: "Jumu'ah", sub: "1:30 PM & 2:30 PM" },
-              { title: "Daily prayers", sub: "In congregation, every day" },
+              { title: "Daily prayers", sub: "In congregation, every day", href: R.prayer },
               { title: "CRA charity", sub: "709549687RR0001", mono: true },
-            ].map((c) => (
-              <div key={c.title} style={{ flex: "1 1 220px", display: "flex", alignItems: "center", gap: 13, padding: "16px 18px", borderRadius: 12, background: "rgba(246,243,234,0.045)", border: "1px solid rgba(246,243,234,0.12)" }}>
-                <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "#f6f3ea", fontSize: 14 }}>
-                  ✦
+            ].map((c) => {
+              const cardStyle: React.CSSProperties = {
+                flex: "1 1 220px",
+                display: "flex",
+                alignItems: "center",
+                gap: 13,
+                padding: "16px 18px",
+                borderRadius: 12,
+                background: "rgba(246,243,234,0.045)",
+                border: "1px solid rgba(246,243,234,0.12)",
+                transition: "background 0.2s ease, border-color 0.2s ease, transform 0.2s ease",
+              };
+              const inner = (
+                <>
+                  <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "#f6f3ea", fontSize: 14 }}>
+                    ✦
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>{c.title}</div>
+                    <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)", fontFamily: c.mono ? "monospace" : undefined }}>{c.sub}</div>
+                  </div>
+                  {"href" in c && c.href && (
+                    <span style={{ marginLeft: "auto", color: "#e3c56a", fontSize: 15, flexShrink: 0 }} aria-hidden="true">
+                      →
+                    </span>
+                  )}
+                </>
+              );
+              if ("href" in c && c.href) {
+                return (
+                  <Link
+                    key={c.title}
+                    href={c.href}
+                    className="da-stat-card-link"
+                    style={cardStyle}
+                  >
+                    {inner}
+                  </Link>
+                );
+              }
+              return (
+                <div key={c.title} style={cardStyle}>
+                  {inner}
                 </div>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>{c.title}</div>
-                  <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)", fontFamily: c.mono ? "monospace" : undefined }}>{c.sub}</div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.34 }} style={{ marginTop: 14 }}>
