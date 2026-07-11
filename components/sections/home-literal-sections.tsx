@@ -577,14 +577,14 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
                   <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 24, color: "#f6f3ea", margin: 0 }}>Quran studies</h3>
                 </div>
                 <div style={{ position: "relative", zIndex: 1, display: "flex", flexWrap: "wrap", flex: 1, marginTop: 20 }}>
-                  <div onClick={() => onOpen("hifz")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.22)", borderRight: "1px solid rgba(255,255,255,0.14)", boxShadow: "inset 3px 0 0 rgba(217,143,74,0.5)" }}>
+                  <div onClick={() => onOpen("hifz")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.22)", borderTop: "3px solid rgba(217,143,74,0.6)" }}>
                     <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d98f4a", fontWeight: 700, marginBottom: 6 }}>Full-time · flagship</div>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Hifz program</div>
                     <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.75)", margin: "0 0 8px 0" }}>Full-time memorization of the Qur&apos;an with tajweed and Islamic studies.</p>
                     <div style={{ fontSize: 11, color: "#f3d6a8", fontWeight: 600, marginBottom: 10 }}>Monday–Friday · $75/mo</div>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#f6f3ea", fontSize: 12.5, fontWeight: 700 }}>Learn more →</span>
                   </div>
-                  <div onClick={() => onOpen("quran")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.36)" }}>
+                  <div onClick={() => onOpen("quran")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.36)", borderTop: "3px solid rgba(246,243,234,0.3)" }}>
                     <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(246,243,234,0.6)", fontWeight: 700, marginBottom: 6 }}>Weekends</div>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Weekend classes</div>
                     <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.7)", margin: "0 0 8px 0" }}>Quran reading &amp; tajweed for all ages.</p>
@@ -595,7 +595,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
               </div>
 
               {/* Kids + welearn */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
                 <div
                   onClick={() => onOpen("kids")}
                   style={{ cursor: "pointer", position: "relative", minHeight: 220, padding: 22, borderRadius: 16, overflow: "hidden", backgroundImage: "linear-gradient(160deg, rgba(10,20,15,0.5) 0%, rgba(9,18,13,0.8) 40%, rgba(8,16,12,0.98) 65%, rgba(8,16,12,0.98) 100%), url('/assets/program-kids.jpg')", backgroundSize: "cover", backgroundPosition: "center 20%", border: "1px solid rgba(120,190,150,0.25)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}

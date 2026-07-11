@@ -35,6 +35,8 @@ const labelStyle: React.CSSProperties = {
   textTransform: "uppercase",
   letterSpacing: "0.06em",
   color: "rgba(246,243,234,0.55)",
+  minHeight: "2.6em",
+  display: "block",
 };
 
 function GenderSelect() {
