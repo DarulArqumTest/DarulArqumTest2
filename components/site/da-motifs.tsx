@@ -10,12 +10,11 @@ import type { CSSProperties } from "react";
  */
 
 /**
- * A soft dark vertical margin/indent along a screen edge — a plain CSS
- * gradient, not a tiled background-image (which produced visible seams
- * every ~64px and read as a harsh thin gold line). No repeat, no pattern,
- * no animation. The gradient direction and inset shadow are mirrored for
- * the right edge so both read as darkening toward the outer edge of the
- * screen and fading to transparent toward the page content.
+ * A soft dark vignette along a screen edge — no fill at all, just an inset
+ * shadow, so whatever's actually behind it (a hero photo, a section's own
+ * background color) shows through, tinted darker toward the edge instead of
+ * being painted over by a flat color/gradient. Mirrored for the right edge.
+ * Static, no animation.
  */
 export function EdgeMargin({ side }: { side: "left" | "right" }) {
   const isRight = side === "right";
@@ -31,8 +30,8 @@ export function EdgeMargin({ side }: { side: "left" | "right" }) {
           height: "100vh",
           zIndex: 40,
           pointerEvents: "none",
-          background: `linear-gradient(${isRight ? 270 : 90}deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 45%, transparent 100%), #0e2419`,
-          boxShadow: isRight ? "inset 6px 0 10px rgba(0,0,0,0.3)" : "inset -6px 0 10px rgba(0,0,0,0.3)",
+          background: "transparent",
+          boxShadow: isRight ? "inset 18px 0 24px -6px rgba(0,0,0,0.55)" : "inset -18px 0 24px -6px rgba(0,0,0,0.55)",
         } as CSSProperties
       }
     />
