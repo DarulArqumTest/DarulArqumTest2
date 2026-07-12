@@ -75,7 +75,7 @@ function IqamaTable() {
   const active = now ? activePrayerKey(now) : null;
   return (
     <div style={{ maxWidth: 980, margin: "60px auto 0" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", boxShadow: "0 20px 50px -25px rgba(0,0,0,0.5)" }}>
+      <div className="da-iqama-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", boxShadow: "0 20px 50px -25px rgba(0,0,0,0.5)" }}>
         {PRAYERS.map((p, i) => {
           const look = TIME_LOOK[p.key];
           const isActive = active === p.key;

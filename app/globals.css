@@ -75,6 +75,19 @@ body { overflow-x: hidden; }
   .da-pad-btn { font-size: 13px !important; padding: 10px 18px !important; }
 }
 
+/* Prayer times iqama table: 5 equal columns get crushed on narrow phones,
+   cramping the sun/moon graphic. Let cards keep their full width and scroll
+   horizontally instead. */
+@media (max-width: 700px) {
+  .da-iqama-grid {
+    grid-template-columns: repeat(5, minmax(108px, 1fr)) !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+  .da-iqama-grid > div { scroll-snap-align: start; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .amb, .amb * { animation: none !important; }
