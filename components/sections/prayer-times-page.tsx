@@ -87,6 +87,7 @@ function IqamaTable() {
           return (
             <div
               key={p.key}
+              className="da-iqama-cell"
               style={{
                 position: "relative",
                 padding: "30px 14px 26px",
@@ -102,25 +103,25 @@ function IqamaTable() {
               }}
             >
               {isActive && (
-                <div style={{ position: "absolute", top: -17, left: "50%", transform: "translateX(-50%)", zIndex: 8 }}>
+                <div className="da-iqama-now" style={{ position: "absolute", top: -17, left: "50%", transform: "translateX(-50%)", zIndex: 8 }}>
                   <div
                     className="da-live-pulse"
                     style={{ position: "absolute", top: "50%", left: "50%", width: 96, height: 44, transform: "translate(-50%,-50%)", borderRadius: 999, background: "radial-gradient(circle, rgba(227,197,106,0.85), transparent 72%)", filter: "blur(9px)" }}
                   />
-                  <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 6, padding: "7px 16px", borderRadius: 999, background: "linear-gradient(135deg, #f3d98a, #c9a227)", boxShadow: "0 8px 20px -4px rgba(227,197,106,0.7), 0 0 0 3px #0d2318", whiteSpace: "nowrap" }}>
+                  <div className="da-iqama-now-pill" style={{ position: "relative", display: "flex", alignItems: "center", gap: 6, padding: "7px 16px", borderRadius: 999, background: "linear-gradient(135deg, #f3d98a, #c9a227)", boxShadow: "0 8px 20px -4px rgba(227,197,106,0.7), 0 0 0 3px #0d2318", whiteSpace: "nowrap" }}>
                     <span className="da-live-pulse" style={{ width: 6, height: 6, borderRadius: 999, background: "#1c2b21" }} />
-                    <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#1c2b21", fontWeight: 800 }}>Now</span>
+                    <span className="da-iqama-now-text" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#1c2b21", fontWeight: 800 }}>Now</span>
                   </div>
                 </div>
               )}
-              <div style={{ position: "absolute", top: look.discTop, left: "50%", transform: "translate(-50%,-50%)", width: look.discSize, height: look.discSize, borderRadius: 999, background: look.disc, boxShadow: `0 0 22px 6px ${look.discGlow}`, zIndex: 0 }} />
+              <div className="da-iqama-disc" style={{ position: "absolute", top: look.discTop, left: "50%", transform: "translate(-50%,-50%)", width: look.discSize, height: look.discSize, borderRadius: 999, background: look.disc, boxShadow: `0 0 22px 6px ${look.discGlow}`, zIndex: 0 }} />
               <div style={{ position: "relative", zIndex: 1 }}>
-                <div dir="rtl" lang="ar" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.arabic}</div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.name}</div>
-                <div style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textMuted, marginBottom: 3 }}>Adhan</div>
-                <div style={{ fontSize: 13, color: look.textSecondary, marginBottom: 12, textShadow: "0 1px 6px rgba(0,0,0,0.3)" }}>{p.adhan}</div>
-                <div style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textMuted, marginBottom: 3 }}>Iqama</div>
-                <div style={{ fontSize: 16.5, fontWeight: 800, color: look.textAccent, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.iqama}</div>
+                <div dir="rtl" lang="ar" className="da-iqama-arabic" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.arabic}</div>
+                <div className="da-iqama-name" style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.name}</div>
+                <div className="da-iqama-label" style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textMuted, marginBottom: 3 }}>Adhan</div>
+                <div className="da-iqama-adhan" style={{ fontSize: 13, color: look.textSecondary, marginBottom: 12, textShadow: "0 1px 6px rgba(0,0,0,0.3)" }}>{p.adhan}</div>
+                <div className="da-iqama-label" style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textMuted, marginBottom: 3 }}>Iqama</div>
+                <div className="da-iqama-value" style={{ fontSize: 16.5, fontWeight: 800, color: look.textAccent, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.iqama}</div>
               </div>
             </div>
           );
