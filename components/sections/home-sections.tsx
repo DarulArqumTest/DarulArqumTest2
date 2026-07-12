@@ -658,20 +658,11 @@ export function ContactSection() {
               <ul className="mt-3 space-y-2.5 text-sm text-da-cream/85">
                 <li className="flex items-center justify-between gap-3">
                   <span className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-da-mint" aria-hidden /> {ORG.phone} (main)
+                    <Phone className="h-4 w-4 text-da-mint" aria-hidden /> {ORG.phone}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <CopyButton value={ORG.phone} />
                     <a href={ORG.phoneHref} className="rounded-full bg-da-mint/20 px-3 py-1.5 text-xs">Call ↗</a>
-                  </span>
-                </li>
-                <li className="flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-da-mint" aria-hidden /> {ORG.phoneAlt} (secondary)
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CopyButton value={ORG.phoneAlt} />
-                    <a href={`tel:${ORG.phoneAlt.replace(/[^0-9+]/g, "")}`} className="rounded-full bg-da-mint/20 px-3 py-1.5 text-xs">Call ↗</a>
                   </span>
                 </li>
               </ul>

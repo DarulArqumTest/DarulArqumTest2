@@ -709,15 +709,6 @@ export function ContactSection() {
                       </a>
                     </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginTop: 6 }}>
-                    <span style={{ fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 600 }}>819-360-5936</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
-                      <CopyBtn label="Copy" value="819-360-5936" />
-                      <a href="tel:+18193605936" style={{ display: "inline-flex", alignItems: "center", background: "#7cc99a", color: "#0e2419", fontWeight: 700, fontSize: 11, padding: "6px 12px", borderRadius: 999, whiteSpace: "nowrap" }}>
-                        Call ↗
-                      </a>
-                    </div>
-                  </div>
                 </div>
               </div>
 

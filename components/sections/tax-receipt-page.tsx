@@ -192,7 +192,7 @@ export function TaxReceiptPage() {
                   />
                   {emailError && <span style={errorStyle}>{emailError}</span>}
                 </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
+                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Phone number</span>
                   <input
                     name="Phone"
@@ -204,6 +204,10 @@ export function TaxReceiptPage() {
                     onChange={() => phoneError && setPhoneError("")}
                   />
                   {phoneError && <span style={errorStyle}>{phoneError}</span>}
+                </label>
+                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <span style={labelStyle}>Donation amount</span>
+                  <input name="Donation amount" type="text" inputMode="decimal" placeholder="$" style={inputStyle} />
                 </label>
               </div>
             </div>

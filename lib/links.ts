@@ -40,7 +40,6 @@ export const ORG = {
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=4269+Limebank+Rd+Ottawa+ON+K1V+1G5",
   phone: "613-709-2329",
-  phoneAlt: "(819) 360-5936",
   phoneHref: "tel:+16137092329",
   email: "admin@darularqum.org",
   emailHref: "mailto:admin@darularqum.org",
@@ -52,7 +51,7 @@ export const ORG = {
     propertyPrice: 665000,
     acquired: "July 30, 2020",
     loanRemaining: 144000,
-    monthlyExpenses: 6000,
+    monthlyExpenses: 10000,
     perFamily: 60,
     parkingLot: 20000,
   },

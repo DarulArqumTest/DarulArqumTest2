@@ -30,7 +30,7 @@ export function DonateMenu({ align = "right" }: { align?: "left" | "right" }) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="rounded-full bg-da-gold px-[22px] py-2.5 text-[13.5px] font-semibold text-da-bg transition-transform hover:-translate-y-0.5 hover:brightness-110"
+        className="da-donate-glow rounded-full bg-da-gold px-[22px] py-2.5 text-[13.5px] font-semibold text-da-bg transition-transform hover:-translate-y-0.5 hover:brightness-110"
       >
         Donate
       </button>

@@ -37,7 +37,6 @@ export default function ContactPage() {
                   <li className="flex items-center gap-2.5">
                     <Phone className="h-4 w-4 shrink-0 text-brass" aria-hidden />
                     <a href={ORG.phoneHref} className="u-draw hover:text-ink">{ORG.phone}</a>
-                    <span className="text-ink/45">· {ORG.phoneAlt}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <Mail className="h-4 w-4 shrink-0 text-brass" aria-hidden />

@@ -143,7 +143,7 @@ export function PadFormPage() {
           </div>
         </div>
 
-        <div style={{ borderRadius: 18, background: "linear-gradient(160deg, #1a3a29, #122d20)", border: "1px solid rgba(201,162,39,0.3)", padding: 26, display: "flex", alignItems: "center", gap: 22, boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)", position: "relative", overflow: "hidden", maxWidth: 440, margin: "0 auto" }}>
+        <div className="da-pad-card" style={{ borderRadius: 18, background: "linear-gradient(160deg, #1a3a29, #122d20)", border: "1px solid rgba(201,162,39,0.3)", padding: 26, display: "flex", alignItems: "center", gap: 22, boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)", position: "relative", overflow: "hidden", maxWidth: 440, margin: "0 auto" }}>
           <div style={{ position: "absolute", top: -30, right: -30, width: 110, height: 110, borderRadius: 999, background: "radial-gradient(circle, rgba(201,162,39,0.16), transparent 70%)", pointerEvents: "none" }} />
           <div style={{ width: 72, height: 92, flexShrink: 0, position: "relative" }}>
             <svg width={72} height={92} viewBox="0 0 60 76">
@@ -157,13 +157,14 @@ export function PadFormPage() {
               <span style={{ fontSize: 12, fontWeight: 800, color: "#fff", letterSpacing: "0.06em" }}>PDF</span>
             </div>
           </div>
-          <div style={{ flex: 1, position: "relative", marginLeft: 8 }}>
+          <div className="da-pad-card-body" style={{ flex: 1, position: "relative", marginLeft: 8, minWidth: 0 }}>
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", marginBottom: 4 }}>Monthly Donation PAD Form</div>
             <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)", marginBottom: 14 }}>Official downloadable form, fillable and printable.</div>
             <a
               href={EXT.padFormPdf}
               target="_blank"
               rel="noopener noreferrer"
+              className="da-pad-btn"
               style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#d7ebf3,#8fb4c9)", color: "#0e2419", fontWeight: 800, fontSize: 14, padding: "11px 22px", borderRadius: 999, boxShadow: "0 14px 30px -8px rgba(143,180,201,0.45)" }}
             >
               Open PAD form (PDF) <span aria-hidden="true">→</span>

@@ -368,7 +368,7 @@ function Hero({ revealed }: { revealed: boolean }) {
             transition={{ duration: 1, delay: 0.1 }}
             style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(40px,6vw,74px)", lineHeight: 1.05, color: "#f6f3ea", margin: "0 0 26px 0", maxWidth: 820 }}
           >
-            A house of prayer rising in <span style={{ color: "#c9a227", fontStyle: "italic" }}>Riverside South.</span>
+            A house of Allah rising in <span style={{ color: "#c9a227", fontStyle: "italic" }}>Riverside South.</span>
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.16 }} style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(246,243,234,0.78)", maxWidth: 560, margin: "0 0 40px 0" }}>

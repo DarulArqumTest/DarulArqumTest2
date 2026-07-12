@@ -59,9 +59,26 @@ body { overflow-x: hidden; }
   transform: translateY(-2px);
 }
 .da-stat-card-link:active { transform: translateY(0); }
+
+/* Navbar Donate button: gentle pulsing glow so it reads as the primary CTA. */
+@keyframes da-donate-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,39,0.55); }
+  50% { box-shadow: 0 0 0 7px rgba(201,162,39,0); }
+}
+.da-donate-glow { animation: da-donate-pulse 2.4s ease-out infinite; }
+
+/* PAD form download card: stack icon/text/button on narrow screens so the
+   pill button doesn't get squeezed into an oversized, off-balance shape. */
+@media (max-width: 480px) {
+  .da-pad-card { flex-direction: column; text-align: center; gap: 14px !important; }
+  .da-pad-card-body { margin-left: 0 !important; }
+  .da-pad-btn { font-size: 13px !important; padding: 10px 18px !important; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .amb, .amb * { animation: none !important; }
+  .da-donate-glow { animation: none !important; }
 }
 
 ::selection { background: var(--moss); color: var(--bone); }
