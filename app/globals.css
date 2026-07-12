@@ -50,6 +50,21 @@ body { overflow-x: hidden; }
   .da-year-indicator { display: none; }
 }
 
+/* Story timeline: the alternating left/right card layout has no room on
+   phones (each card is squeezed to ~50% width and overflows past the
+   viewport). Collapse to a single left-aligned column with the spine and
+   dots moved to the left edge instead of center. */
+@media (max-width: 760px) {
+  .da-story-spine { left: 7px !important; transform: none !important; }
+  .da-story-dot { left: 7px !important; }
+  .da-story-card-wrap {
+    width: 100% !important;
+    margin-left: 34px !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
+}
+
 /* Hero stat row: the "Daily prayers" card is a real link to /prayer-times;
    give it a visible hover/press state so it reads as clickable. */
 .da-stat-card-link { cursor: pointer; }
@@ -86,6 +101,17 @@ body { overflow-x: hidden; }
   .da-iqama-adhan { font-size: 8.5px !important; margin-bottom: 6px !important; }
   .da-iqama-value { font-size: 10.5px !important; }
   .da-iqama-now { transform: translateX(-50%) scale(0.7) !important; }
+}
+
+/* Prayer times "TV": the live masjid-screen embed is a portrait mobile
+   widget stuffed into a landscape 16:7.2 slot with a fixed minHeight, so on
+   phones it renders tiny and cramped with its own internal scrollbar.
+   Give it a taller ratio + more room on narrow screens instead. */
+@media (max-width: 700px) {
+  .da-tv-outer { padding: 10px 10px 12px !important; border-radius: 20px !important; }
+  .da-tv-iframe { aspect-ratio: unset !important; min-height: 560px !important; }
+  .da-tv-neck { width: 44px !important; height: 16px !important; }
+  .da-tv-base { width: 130px !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {

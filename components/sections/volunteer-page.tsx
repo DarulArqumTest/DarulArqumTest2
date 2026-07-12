@@ -204,7 +204,7 @@ export function VolunteerPage() {
             <span style={{ fontSize: 13.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#f3c98a", fontWeight: 700, textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>Serve your community</span>
             <span style={{ width: 26, height: 1, background: "linear-gradient(90deg, rgba(232,176,106,0.7), transparent)" }} />
           </div>
-          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, textAlign: "center", textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}>Join Darul Arqum</h1>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center", textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}>Join Darul Arqum</h1>
         </div>
       </div>
 

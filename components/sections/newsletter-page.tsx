@@ -144,7 +144,7 @@ export function NewsletterPage() {
             </div>
           </div>
           <div style={{ fontSize: 12.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Stay connected</div>
-          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, textAlign: "center" }}>The Darul Arqum Newsletter</h1>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center" }}>The Darul Arqum Newsletter</h1>
         </div>
       </div>
 

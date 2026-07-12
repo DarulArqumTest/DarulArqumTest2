@@ -130,7 +130,7 @@ export function TaxReceiptPage() {
             </div>
           </div>
           <div style={{ fontSize: 12.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Update your donor profile</div>
-          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(30px,5vw,42px)", color: "#f6f3ea", margin: 0, textAlign: "center" }}>Tax Receipt Information</h1>
+          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(30px,5vw,42px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center" }}>Tax Receipt Information</h1>
         </div>
       </div>
 

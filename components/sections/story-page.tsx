@@ -6,13 +6,14 @@ import * as React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
+import { ORG } from "@/lib/links";
 
 const MILESTONES = [
   { key: "founding", year: "2019", title: "A community organizes", body: "Darul Arqum incorporates (Feb 23, 2019) as a non-profit charitable organization — Riverside South families uniting to establish the area's first masjid, Islamic education, and community services." },
   { key: "home", year: "2020", title: "A home of our own", body: "On July 30, 2020 the community acquires 4269 Limebank Rd for CA$665,000 — an extraordinary act of collective giving through donations and an interest-free Qard-e-Hasan." },
   { key: "worship", year: "2021", title: "Doors open for worship", body: "Five daily prayers in congregation, Jumu'ah with two khutbahs, and the community's first Taraweeh at home in Ramadhan 1442." },
   { key: "knowledge", year: "2025", title: "A house of knowledge", body: "Al-Arif Islamic Institute launches the Aalim program and full-time Hifz under Mufti Taqi, joining the weekday madrasa, KidsLearnArabic and WeLearn online." },
-  { key: "today", year: "Today", title: "Building, together", body: "The masjid carries ~$6,000/month in running costs and a $144K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.", progressPct: 42 },
+  { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $144K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: 42 },
 ] as const;
 
 const THEMES: Record<string, { accent: string; accentSoft: string; tag: string }> = {
@@ -76,6 +77,7 @@ function MilestoneRow({ m, index, activeIdx }: { m: (typeof MILESTONES)[number];
   return (
     <div ref={ref} data-milestone-idx={index} style={{ position: "relative", minHeight: 150, marginBottom: 56 }}>
       <div
+        className="da-story-dot"
         style={{
           position: "absolute",
           top: 8,
@@ -91,7 +93,7 @@ function MilestoneRow({ m, index, activeIdx }: { m: (typeof MILESTONES)[number];
           transition: "background .3s ease, box-shadow .3s ease",
         }}
       />
-      <div style={{ width: "calc(50% - 40px)", marginRight: isLeft ? "calc(50% + 40px)" : undefined, marginLeft: !isLeft ? "calc(50% + 40px)" : undefined, textAlign: isLeft ? "right" : "left" }}>
+      <div className="da-story-card-wrap" style={{ width: "calc(50% - 40px)", marginRight: isLeft ? "calc(50% + 40px)" : undefined, marginLeft: !isLeft ? "calc(50% + 40px)" : undefined, textAlign: isLeft ? "right" : "left" }}>
         <motion.div
           initial={{ opacity: 0, y: 24, x: isLeft ? -16 : 16 }}
           whileInView={{ opacity: 1, y: 0, x: 0 }}
@@ -128,7 +130,7 @@ function MilestoneRow({ m, index, activeIdx }: { m: (typeof MILESTONES)[number];
               <div style={{ marginTop: 16, height: 6, borderRadius: 999, background: "rgba(246,243,234,0.12)", overflow: "hidden" }}>
                 <div style={{ height: "100%", width: `${m.progressPct}%`, borderRadius: 999, background: `linear-gradient(90deg, #c9a227, ${t.accent})` }} />
               </div>
-              <div style={{ marginTop: 8, fontSize: 11, color: "rgba(246,243,234,0.5)" }}>$144K community loan · $6,000/mo running costs</div>
+              <div style={{ marginTop: 8, fontSize: 11, color: "rgba(246,243,234,0.5)" }}>$144K community loan · ${ORG.finances.monthlyExpenses.toLocaleString()}/mo running costs</div>
             </>
           )}
         </motion.div>
@@ -279,7 +281,7 @@ export function StoryPage() {
       {/* TIMELINE */}
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "20px 24px 110px" }}>
         <div ref={timelineRef} style={{ position: "relative", maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: 2, background: "rgba(201,162,39,0.18)" }}>
+          <div className="da-story-spine" style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: 2, background: "rgba(201,162,39,0.18)" }}>
             <SpineFillTracked timelineRef={timelineRef} />
           </div>
           {MILESTONES.map((m, i) => (

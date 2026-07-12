@@ -244,9 +244,9 @@ export function PrayerTimesPage() {
             <span style={{ fontSize: 14.5, color: "#fff", fontWeight: 700, textAlign: "center" }}>1st Khutbah 1:30 PM &amp; 2nd Khutbah 2:30 PM</span>
           </div>
 
-          <div style={{ borderRadius: 30, padding: "20px 20px 16px", background: "linear-gradient(155deg, #333029, #171512)", border: "1px solid rgba(0,0,0,0.5)", boxShadow: "0 40px 90px -30px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06)" }}>
+          <div className="da-tv-outer" style={{ borderRadius: 30, padding: "20px 20px 16px", background: "linear-gradient(155deg, #333029, #171512)", border: "1px solid rgba(0,0,0,0.5)", boxShadow: "0 40px 90px -30px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06)" }}>
             <div style={{ borderRadius: 16, overflow: "hidden", border: "2px solid rgba(201,162,39,0.4)", background: "#08150f", boxShadow: "inset 0 0 50px rgba(0,0,0,0.6)" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 18px", borderBottom: "1px solid rgba(246,243,234,0.1)", flexWrap: "wrap" }}>
+              <div className="da-tv-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 18px", borderBottom: "1px solid rgba(246,243,234,0.1)", flexWrap: "wrap" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(246,243,234,0.6)", fontWeight: 600 }}>
                   <span className="da-live-pulse" style={{ width: 8, height: 8, borderRadius: 999, background: "#e35c5c" }} />
                   Live · masjid screen
@@ -269,6 +269,7 @@ export function PrayerTimesPage() {
                   onLoad={() => setLoaded(true)}
                   loading="lazy"
                   allow="fullscreen"
+                  className="da-tv-iframe"
                   style={{ position: "relative", width: "100%", aspectRatio: "16/7.2", minHeight: 340, border: 0, display: "block" }}
                 />
               </div>
@@ -279,8 +280,8 @@ export function PrayerTimesPage() {
               <span style={{ width: 5, height: 5, borderRadius: 999, background: "rgba(201,162,39,0.4)" }} />
             </div>
           </div>
-          <div style={{ width: 64, height: 24, margin: "0 auto", background: "linear-gradient(180deg, #2f2c26, #171512)", clipPath: "polygon(20% 0, 80% 0, 100% 100%, 0 100%)" }} />
-          <div style={{ width: 180, height: 10, margin: "0 auto", borderRadius: 6, background: "linear-gradient(180deg, #2f2c26, #171512)", boxShadow: "0 14px 26px -8px rgba(0,0,0,0.6)" }} />
+          <div className="da-tv-neck" style={{ width: 64, height: 24, margin: "0 auto", background: "linear-gradient(180deg, #2f2c26, #171512)", clipPath: "polygon(20% 0, 80% 0, 100% 100%, 0 100%)" }} />
+          <div className="da-tv-base" style={{ width: 180, height: 10, margin: "0 auto", borderRadius: 6, background: "linear-gradient(180deg, #2f2c26, #171512)", boxShadow: "0 14px 26px -8px rgba(0,0,0,0.6)" }} />
 
           <IqamaTable />
 
