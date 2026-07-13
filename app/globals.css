@@ -103,6 +103,12 @@ body { overflow-x: hidden; }
   .da-iqama-now { transform: translateX(-50%) scale(0.7) !important; }
 }
 
+/* Home giving section: 3 stat columns (added a 3rd for the $10k target)
+   overflow past the viewport on phones. Stack to one column instead. */
+@media (max-width: 480px) {
+  .da-giving-stats-grid { grid-template-columns: 1fr !important; }
+}
+
 /* Prayer times "TV": the masjid-screen embed is rendered at a fixed
    desktop-like width (so it keeps its horizontal landscape layout) and then
    visually scaled down to fit via MawaqitScreen — same technique as the

@@ -486,7 +486,7 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
           transition={{ duration: 0.8, delay: 0.15, ease }}
           style={{ flex: "1 1 320px", minWidth: 280, display: "flex", flexDirection: "column", gap: 1, background: "rgba(246,243,234,0.12)", border: "1px solid rgba(201,162,39,0.28)", borderRadius: 16, overflow: "hidden" }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
+          <div className="da-giving-stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
             <div style={{ background: "#0e2419", padding: "32px 20px" }}>
               <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(monthly)}</div>
               <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Monthly maintenance target</div>
