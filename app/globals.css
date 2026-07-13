@@ -103,13 +103,12 @@ body { overflow-x: hidden; }
   .da-iqama-now { transform: translateX(-50%) scale(0.7) !important; }
 }
 
-/* Prayer times "TV": the live masjid-screen embed is a portrait mobile
-   widget stuffed into a landscape 16:7.2 slot with a fixed minHeight, so on
-   phones it renders tiny and cramped with its own internal scrollbar.
-   Give it a taller ratio + more room on narrow screens instead. */
+/* Prayer times "TV": the masjid-screen embed is rendered at a fixed
+   desktop-like width (so it keeps its horizontal landscape layout) and then
+   visually scaled down to fit via MawaqitScreen — same technique as the
+   iqama sun/moon disc. Just shrink the surrounding chrome on phones. */
 @media (max-width: 700px) {
   .da-tv-outer { padding: 10px 10px 12px !important; border-radius: 20px !important; }
-  .da-tv-iframe { aspect-ratio: unset !important; min-height: 560px !important; }
   .da-tv-neck { width: 44px !important; height: 16px !important; }
   .da-tv-base { width: 130px !important; }
 }

@@ -448,7 +448,7 @@ function WelearnDesk({ onClick }: { onClick: () => void }) {
 export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { onOpenOnce: () => void; onOpenMonthly: () => void; onOpenMonthly60: () => void }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.25 });
-  const [parking, qard] = useCountUp([20000, 144000], inView);
+  const [monthly, parking, qard] = useCountUp([ORG.finances.monthlyExpenses, 20000, 144000], inView);
   const ease = [0.16, 0.8, 0.4, 1] as const;
   const ctx = React.useContext(HomeHighlightContext);
 
@@ -486,13 +486,17 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
           transition={{ duration: 0.8, delay: 0.15, ease }}
           style={{ flex: "1 1 320px", minWidth: 280, display: "flex", flexDirection: "column", gap: 1, background: "rgba(246,243,234,0.12)", border: "1px solid rgba(201,162,39,0.28)", borderRadius: 16, overflow: "hidden" }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
-            <div style={{ background: "#0e2419", padding: "32px 28px" }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(26px,2.6vw,34px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(parking)}</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
+            <div style={{ background: "#0e2419", padding: "32px 20px" }}>
+              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(monthly)}</div>
+              <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Monthly maintenance target</div>
+            </div>
+            <div style={{ background: "#0e2419", padding: "32px 20px" }}>
+              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(parking)}</div>
               <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Parking lot renovation</div>
             </div>
-            <div style={{ background: "#0e2419", padding: "32px 28px" }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(26px,2.6vw,34px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(qard)}</div>
+            <div style={{ background: "#0e2419", padding: "32px 20px" }}>
+              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(qard)}</div>
               <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Qard-e-Hasan remaining</div>
             </div>
           </div>

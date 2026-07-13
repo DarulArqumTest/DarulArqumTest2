@@ -134,6 +134,37 @@ function IqamaTable() {
   );
 }
 
+const TV_BASE_W = 860;
+const TV_BASE_H = Math.round((TV_BASE_W * 7.2) / 16);
+
+function MawaqitScreen({ onLoad }: { onLoad: () => void }) {
+  const wrapRef = React.useRef<HTMLDivElement>(null);
+  const [scale, setScale] = React.useState(1);
+
+  React.useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const update = () => setScale(el.offsetWidth / TV_BASE_W);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div ref={wrapRef} style={{ position: "relative", width: "100%", height: TV_BASE_H * scale, overflow: "hidden" }}>
+      <iframe
+        src="https://mawaqit.net/en/m/darul-arqum-ottawa-canada-ottawa-k1v-1g5-canada"
+        title="Darul Arqum live prayer times (Mawaqit)"
+        onLoad={onLoad}
+        loading="lazy"
+        allow="fullscreen"
+        style={{ position: "absolute", top: 0, left: 0, width: TV_BASE_W, height: TV_BASE_H, border: 0, display: "block", transform: `scale(${scale})`, transformOrigin: "top left" }}
+      />
+    </div>
+  );
+}
+
 function IqamaPill() {
   const now = useNow();
   if (!now) return null;
@@ -263,15 +294,7 @@ export function PrayerTimesPage() {
                     <p style={{ fontSize: 12, maxWidth: 340, margin: 0, color: "rgba(246,243,234,0.4)" }}>If it doesn&apos;t load, use &quot;Open full screen&quot; above — the timings below stay available either way.</p>
                   </div>
                 )}
-                <iframe
-                  src="https://mawaqit.net/en/m/darul-arqum-ottawa-canada-ottawa-k1v-1g5-canada"
-                  title="Darul Arqum live prayer times (Mawaqit)"
-                  onLoad={() => setLoaded(true)}
-                  loading="lazy"
-                  allow="fullscreen"
-                  className="da-tv-iframe"
-                  style={{ position: "relative", width: "100%", aspectRatio: "16/7.2", minHeight: 340, border: 0, display: "block" }}
-                />
+                <MawaqitScreen onLoad={() => setLoaded(true)} />
               </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, paddingTop: 14 }}>
