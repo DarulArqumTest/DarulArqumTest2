@@ -290,48 +290,60 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
  * The flap is one SVG rather than CSS triangles so the crease lines, the
  * shading and the gold edge stay in register at any width.
  */
+/**
+ * Newsletter sign-up, drawn in the flat cartoon style of the reference:
+ * a white envelope with its flap open, a paper aeroplane leaving on a dashed
+ * loop, and speed ticks behind it — all on a red field, with the wordmark in
+ * its own ruled box. The envelope's interior carries the red chevron of the
+ * familiar mail mark so it reads as "mail" instantly.
+ *
+ * The whole card is the link; there is no separate button.
+ */
 function NewsletterEnvelope() {
   return (
     <Link href={R.newsletters} className="da-env" aria-label="Subscribe to our newsletter">
-      {/* Red shell: back panel, side flaps and the deep front flap. Drawn as
-          one SVG so the folds meet exactly and the whole thing scales. */}
-      <svg className="da-env-shell" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden>
-        <defs>
-          <linearGradient id="da-env-body" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#d4462f" />
-            <stop offset="100%" stopColor="#a92e1e" />
-          </linearGradient>
-          <linearGradient id="da-env-flap" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ee6047" />
-            <stop offset="100%" stopColor="#c53a26" />
-          </linearGradient>
-          <linearGradient id="da-env-label" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#fdfbf3" />
-            <stop offset="100%" stopColor="#eee7d5" />
-          </linearGradient>
-        </defs>
+      <svg className="da-env-art" viewBox="0 0 300 250" aria-hidden>
+        {/* speed ticks trailing the envelope */}
+        <g stroke="#fff" strokeWidth="9" strokeLinecap="round" opacity="0.9">
+          <path d="M10 150 L40 150" />
+          <path d="M4 186 L34 186" />
+          <path d="M20 116 L44 116" />
+        </g>
 
-        {/* envelope body */}
-        <rect width="400" height="200" fill="url(#da-env-body)" />
-        {/* paper texture: faint laid lines */}
-        <rect width="400" height="200" fill="url(#da-env-body)" opacity="0" />
+        {/* dashed flight path out of the envelope, up to the aeroplane */}
+        <path
+          d="M150 150 C 176 120 196 104 232 92"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="5.5"
+          strokeLinecap="round"
+          strokeDasharray="2 15"
+        />
 
-        {/* the front flap, folded down — deep enough to carry the headline */}
-        <path d="M0 0 H400 V26 L200 124 L0 26 Z" fill="url(#da-env-flap)" />
-        {/* fold shadow beneath the flap's edge */}
-        <path d="M0 26 L200 124 L400 26 L400 40 L200 138 L0 40 Z" fill="#7f2114" opacity="0.4" />
-        {/* crease highlight along the flap edge */}
-        <path d="M0 26 L200 124 L400 26" fill="none" stroke="#ffc2b2" strokeWidth="2.6" strokeOpacity="0.6" strokeLinejoin="round" />
+        {/* aeroplane */}
+        <g transform="rotate(-18 258 60)">
+          <path d="M292 20 L232 78 L262 86 Z" fill="#fff" />
+          <path d="M292 20 L262 86 L280 108 Z" fill="#f0bcb5" />
+        </g>
 
-        {/* address panel — the note sits here */}
-        <rect x="66" y="140" width="268" height="44" rx="5" fill="url(#da-env-label)" />
-        <rect x="66" y="140" width="268" height="44" rx="5" fill="none" stroke="#8f2a1d" strokeWidth="1.2" strokeOpacity="0.28" />
+        {/* envelope, flap open */}
+        <g transform="rotate(-7 150 176)">
+          {/* body */}
+          <rect x="58" y="118" width="184" height="118" rx="12" fill="#fff" />
+          {/* open interior — chevron of the mail mark */}
+          <path d="M58 128 L150 200 L242 128 V150 L150 222 L58 150 Z" fill="#c8281c" />
+          {/* raised front panel */}
+          <path d="M58 236 L150 164 L242 236 Z" fill="#fff" />
+          <path d="M58 236 L150 164 L242 236" fill="none" stroke="#efb8b1" strokeWidth="3.5" strokeLinejoin="round" />
+        </g>
       </svg>
 
-      {/* headline rides on the red flap */}
-      <span className="da-env-head">Subscribe to our newsletter</span>
-      {/* detail line sits on the exposed paper below the fold */}
-      <span className="da-env-note">For programs, fundraising milestones and masjid news.</span>
+      <span className="da-env-words">
+        <span className="da-env-sub">Subscribe</span>
+        <span className="da-env-rule" aria-hidden />
+        <span className="da-env-lead">to our newsletter</span>
+        <span className="da-env-note">Programs, fundraising milestones &amp; masjid news.</span>
+      </span>
     </Link>
   );
 }

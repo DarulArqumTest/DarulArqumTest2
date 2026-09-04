@@ -10,9 +10,20 @@
  * the same object at two sizes.
  */
 
-export function Megaphone({ size = 72 }: { size?: number }) {
+export function Megaphone({ size = 72, facing = "left" }: { size?: number; facing?: "left" | "right" }) {
   return (
-    <span className="da-mega" style={{ width: size, height: size, display: "inline-block", flexShrink: 0 }} aria-hidden>
+    <span
+      className="da-mega"
+      style={{
+        width: size,
+        height: size,
+        display: "inline-block",
+        flexShrink: 0,
+        // drawn pointing right; flip the whole mark to aim it at the bubble
+        transform: facing === "left" ? "scaleX(-1)" : undefined,
+      }}
+      aria-hidden
+    >
       <svg viewBox="0 0 96 96" width={size} height={size} style={{ display: "block", overflow: "visible" }}>
         <defs>
           <linearGradient id="da-mg-cone" x1="0.1" y1="0" x2="0.9" y2="1">
