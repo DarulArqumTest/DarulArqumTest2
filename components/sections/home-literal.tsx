@@ -11,6 +11,7 @@ import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { R } from "@/lib/links";
+import { HeroAnnouncement } from "@/components/site/west-announce-banner";
 
 const GREETINGS: { text: string; lang?: "ar" }[] = [
   { text: "السَّلَامُ عَلَيْكُمْ", lang: "ar" },
@@ -291,37 +292,47 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
  */
 function NewsletterEnvelope() {
   return (
-    <div className="da-env">
-      <svg className="da-env-flap" viewBox="0 0 400 96" preserveAspectRatio="none" aria-hidden>
+    <Link href={R.newsletters} className="da-env" aria-label="Subscribe to our newsletter">
+      {/* Red shell: back panel, side flaps and the deep front flap. Drawn as
+          one SVG so the folds meet exactly and the whole thing scales. */}
+      <svg className="da-env-shell" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden>
         <defs>
-          <linearGradient id="da-env-red" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#e05a45" />
-            <stop offset="100%" stopColor="#c2402f" />
+          <linearGradient id="da-env-body" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#d4462f" />
+            <stop offset="100%" stopColor="#a92e1e" />
           </linearGradient>
-          <linearGradient id="da-env-shade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#000" stopOpacity="0" />
-            <stop offset="100%" stopColor="#000" stopOpacity="0.22" />
+          <linearGradient id="da-env-flap" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#ee6047" />
+            <stop offset="100%" stopColor="#c53a26" />
+          </linearGradient>
+          <linearGradient id="da-env-label" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fdfbf3" />
+            <stop offset="100%" stopColor="#eee7d5" />
           </linearGradient>
         </defs>
-        {/* the folded-down flap */}
-        <path d="M0 0h400v18L200 92 0 18Z" fill="url(#da-env-red)" />
-        <path d="M0 0h400v18L200 92 0 18Z" fill="url(#da-env-shade)" />
-        {/* side creases catching the light */}
-        <path d="M0 18 200 92 400 18" fill="none" stroke="#ffd9cf" strokeWidth="2" strokeOpacity="0.55" strokeLinejoin="round" />
-        <path d="M0 0 200 74 400 0" fill="none" stroke="#8f2a1d" strokeWidth="1.5" strokeOpacity="0.4" strokeLinejoin="round" />
+
+        {/* envelope body */}
+        <rect width="400" height="200" fill="url(#da-env-body)" />
+        {/* paper texture: faint laid lines */}
+        <rect width="400" height="200" fill="url(#da-env-body)" opacity="0" />
+
+        {/* the front flap, folded down — deep enough to carry the headline */}
+        <path d="M0 0 H400 V26 L200 124 L0 26 Z" fill="url(#da-env-flap)" />
+        {/* fold shadow beneath the flap's edge */}
+        <path d="M0 26 L200 124 L400 26 L400 40 L200 138 L0 40 Z" fill="#7f2114" opacity="0.4" />
+        {/* crease highlight along the flap edge */}
+        <path d="M0 26 L200 124 L400 26" fill="none" stroke="#ffc2b2" strokeWidth="2.6" strokeOpacity="0.6" strokeLinejoin="round" />
+
+        {/* address panel — the note sits here */}
+        <rect x="66" y="140" width="268" height="44" rx="5" fill="url(#da-env-label)" />
+        <rect x="66" y="140" width="268" height="44" rx="5" fill="none" stroke="#8f2a1d" strokeWidth="1.2" strokeOpacity="0.28" />
       </svg>
 
-      <div className="da-env-body">
-        <div className="da-env-stamp" aria-hidden>
-          <span>✦</span>
-        </div>
-        <h3 className="da-env-title">Subscribe to our newsletter</h3>
-        <p className="da-env-sub">For programs, fundraising milestones and masjid news.</p>
-        <Link href={R.newsletters} className="da-btn da-btn-gold da-btn-sm da-env-cta">
-          Subscribe <span aria-hidden="true">→</span>
-        </Link>
-      </div>
-    </div>
+      {/* headline rides on the red flap */}
+      <span className="da-env-head">Subscribe to our newsletter</span>
+      {/* detail line sits on the exposed paper below the fold */}
+      <span className="da-env-note">For programs, fundraising milestones and masjid news.</span>
+    </Link>
   );
 }
 
@@ -420,7 +431,7 @@ function Hero({ revealed }: { revealed: boolean }) {
             The first masjid in the community — 4269 Limebank Rd, Ottawa. Acquired by its people in 2020, sustained by its people every month since. Let&apos;s build it together.
           </motion.p>
 
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.22 }} style={{ display: "flex", flexWrap: "wrap", gap: 14, marginBottom: 56 }}>
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.22 }} className="da-hero-cta" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 48 }}>
             <a
               href="#programs-section"
               onClick={(e) => {
@@ -436,7 +447,7 @@ function Hero({ revealed }: { revealed: boolean }) {
             </Link>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} className="da-hero-stats" style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
             {[
               { title: "Jumu'ah", sub: "1:30 PM & 2:30 PM" },
               { title: "Daily prayers", sub: "In congregation, every day", href: R.prayer },
@@ -494,6 +505,8 @@ function Hero({ revealed }: { revealed: boolean }) {
           </motion.div>
         </div>
       </div>
+
+      <HeroAnnouncement />
     </section>
   );
 }
