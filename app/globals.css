@@ -322,10 +322,10 @@ body { overflow-x: hidden; }
 }
 .da-cb-tail {
   position: absolute;
-  right: -52px;
-  bottom: 30px;
-  width: 62px;
-  height: 64px;
+  right: -36px;
+  bottom: 24px;
+  width: 54px;
+  height: 56px;
   overflow: visible;
   /* same offset shadow as the body so the two read as one inked shape */
   filter: drop-shadow(7px 9px 0 rgba(11, 26, 18, 0.5));
@@ -406,15 +406,15 @@ body { overflow-x: hidden; }
    at ~1440. These steps keep the bubble inside the gutter at every size. */
 .da-hero-announce {
   position: absolute;
-  right: clamp(64px, 7vw, 160px);
+  right: clamp(70px, 12vw, 210px);
   top: 18vh;
   z-index: 3;
-  width: 360px;
+  width: 320px;
   display: block;
 }
-@media (min-width: 1400px) { .da-hero-announce { width: 410px; } }
-@media (min-width: 1660px) { .da-hero-announce { width: 470px; } }
-@media (min-width: 1900px) { .da-hero-announce { width: 520px; } }
+@media (min-width: 1400px) { .da-hero-announce { width: 345px; } }
+@media (min-width: 1660px) { .da-hero-announce { width: 400px; } }
+@media (min-width: 1900px) { .da-hero-announce { width: 450px; } }
 .da-hero-bubble { width: 100%; min-width: 0; }
 /* The horn hangs off the bubble's lower-right, where the tail actually
    points — not level with it. Positioned absolutely so its size never
@@ -424,8 +424,12 @@ body { overflow-x: hidden; }
    overwrite a CSS scale. */
 .da-hero-mega {
   position: absolute;
-  left: calc(100% - 138px);
-  bottom: -104px;
+  /* The horn's MOUTH sits ~31% across its own box (the cone faces left once
+     flipped), not at the box's edge. These offsets put that point on the
+     tail's tip; anchoring the box edge instead is what left the tail
+     overshooting into the horn's body. */
+  left: calc(100% - 20px);
+  bottom: -56px;
   pointer-events: none;
 }
 
@@ -434,7 +438,7 @@ body { overflow-x: hidden; }
   .da-hero-announce .da-cb-body { padding: 18px 20px; border-radius: 28px; }
   .da-hero-announce .da-comic-title { font-size: 26px; }
   .da-hero-announce .da-comic-copy { font-size: 12.5px; }
-  .da-hero-mega { left: calc(100% - 110px); bottom: -84px; transform: scale(0.82); transform-origin: left top; }
+  .da-hero-mega { left: calc(100% - 26px); bottom: -46px; transform: scale(0.8); transform-origin: left top; }
 }
 
 /* ── phone dock ── */
@@ -487,8 +491,8 @@ body { overflow-x: hidden; }
     cursor: pointer;
   }
   /* bubble lifted clear of the horn rather than sitting behind it */
-  .da-dock-bubble { display: block; margin-bottom: 26px; }
-  .da-dock .da-mega-swing { margin-left: 2px; margin-bottom: -8px; }
+  .da-dock-bubble { display: block; margin-bottom: 30px; margin-right: 14px; }
+  .da-dock .da-mega-swing { margin-left: 0; margin-bottom: -8px; }
 
   .da-dock-scrim {
     display: flex;
@@ -504,16 +508,21 @@ body { overflow-x: hidden; }
   .da-dock-sheet {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     max-height: 88vh;
-    overflow-y: auto;
-    padding-bottom: 34px;
+    /* room for the horn hanging off the lower-right */
+    /* right padding = horn offset + 0.6875*hornWidth + tail reach, which is
+       what puts the horn's mouth exactly on the tail's tip */
+    padding: 0 86px 74px 0;
   }
-  .da-dock-sheet .da-cb-body { padding: 24px 22px; }
+  .da-dock-sheet .da-cb-body { padding: 22px 20px; }
+  .da-dock-sheet .da-comic-title { font-size: 27px; }
+  .da-dock-sheet .da-comic-copy { font-size: 13px; }
   .da-dock-sheet .da-comic-actions { flex-direction: column; align-items: stretch; }
   .da-dock-sheet .da-comic-cta { justify-content: center; }
-  /* horn tucked into the sheet's lower-left corner */
-  .da-sheet-mega { position: absolute; left: -6px; bottom: -6px; }
+  .da-dock-sheet .da-cb-tail { right: -14px; bottom: 14px; width: 42px; height: 44px; }
+  /* horn at the tail's tip, mirroring the desktop arrangement */
+  .da-sheet-mega { position: absolute; right: 0; bottom: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

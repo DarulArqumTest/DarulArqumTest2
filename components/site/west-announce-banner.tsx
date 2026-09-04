@@ -109,7 +109,7 @@ export function HeroAnnouncement() {
         </ComicBubble>
       </motion.div>
       <div className="da-hero-mega">
-        <SwingInMegaphone size={206} delay={0.9} />
+        <SwingInMegaphone size={172} delay={0.9} />
       </div>
     </aside>
   );
@@ -184,11 +184,13 @@ export function WestAnnounceDock() {
               <button type="button" onClick={() => setExpanded(false)} aria-label="Close" className="da-sheet-x">
                 ✕
               </button>
-              <ComicBubble tail="none">
+              {/* same composition as the desktop hero — bubble with its tail
+                  running into the horn at the lower right — just scaled down */}
+              <ComicBubble tail="right">
                 <AnnounceBody onClose={close} />
               </ComicBubble>
               <div className="da-sheet-mega">
-                <Megaphone size={78} facing="left" />
+                <Megaphone size={104} facing="left" />
               </div>
             </motion.div>
           </motion.div>

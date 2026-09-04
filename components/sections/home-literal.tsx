@@ -302,60 +302,52 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
 function NewsletterEnvelope() {
   return (
     <Link href={R.newsletters} className="da-env" aria-label="Subscribe to our newsletter">
-      <svg className="da-env-art" viewBox="0 0 320 250" aria-hidden>
-        {/* speed ticks — drawn slightly unequal so they read as struck by hand */}
+      <svg className="da-env-art" viewBox="0 0 320 270" aria-hidden>
+        {/* speed ticks */}
         <g stroke="#fff" strokeWidth="7" strokeLinecap="round">
-          <path d="M12 96 L40 68" />
-          <path d="M40 44 L58 26" />
-          <path d="M6 140 L26 122" />
+          <path d="M12 138 L40 110" />
+          <path d="M42 88 L60 70" />
+          <path d="M6 182 L26 164" />
         </g>
 
-        {/* dashed flight path, looping up out of the envelope */}
+        {/* dotted flight path — round caps make real dots, not dashes */}
         <path
-          d="M168 138 C 196 132 214 112 210 92 C 207 76 188 74 184 90 C 179 110 202 122 226 116 C 250 110 262 92 264 70"
+          d="M170 132 C 200 124 216 104 212 84 C 209 66 188 64 184 82 C 179 104 204 116 228 108 C 252 100 264 80 266 58"
           fill="none"
           stroke="#fff"
-          strokeWidth="4.5"
+          strokeWidth="6.5"
           strokeLinecap="round"
-          strokeDasharray="1.5 13"
+          strokeDasharray="0.5 15"
         />
 
         {/* paper aeroplane */}
-        <g transform="rotate(-12 274 46)">
-          <path d="M308 12 L250 62 L278 70 Z" fill="#fff" />
-          <path d="M308 12 L278 70 L294 90 Z" fill="#e5b3ac" />
+        <g transform="rotate(-12 276 34)">
+          <path d="M310 2 L252 52 L280 60 Z" fill="#fff" />
+          <path d="M310 2 L280 60 L296 80 Z" fill="#e5b3ac" />
         </g>
 
-        {/* ── envelope, drawn with organic curves rather than a rectangle ── */}
-        <g transform="rotate(-6 150 176)">
+        <g transform="rotate(-6 150 190)">
+          {/* flap flung open, hinged behind the body — red inner face */}
+          <path d="M58 146 C 96 136 206 136 244 146 L 158 52 Z" fill="#d1281c" />
+          <path d="M58 146 L 158 52 L 244 146" fill="none" stroke="#f2a79d" strokeWidth="3.4" strokeLinejoin="round" strokeLinecap="round" />
+
           {/* pillowy white body */}
           <path
-            d="M56 116 C 94 107 208 107 246 116 C 255 154 253 200 243 228
-               C 202 243 100 243 59 228 C 49 200 47 154 56 116 Z"
+            d="M56 146 C 94 137 208 137 246 146 C 255 184 253 230 243 258
+               C 202 273 100 273 59 258 C 49 230 47 184 56 146 Z"
             fill="#fff"
           />
-          {/* the flap, standing open — red interior */}
-          <path
-            d="M56 116 C 94 107 208 107 246 116 L 152 192 Z"
-            fill="#d1281c"
-          />
-          {/* front panel, its peak tucked up under the flap */}
-          <path
-            d="M59 228 C 100 243 202 243 243 228 L 152 158 Z"
-            fill="#fff"
-          />
-          <path
-            d="M59 228 L 152 158 L 243 228"
-            fill="none"
-            stroke="#e08076"
-            strokeWidth="3"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-          />
-          {/* hand-drawn creases along the bottom */}
+          {/* shadow of the open flap falling inside the mouth */}
+          <path d="M60 148 C 96 140 206 140 242 148 C 206 158 96 158 60 148 Z" fill="#e7ded6" />
+
+          {/* front panel, peak tucked up under the flap */}
+          <path d="M59 258 C 100 273 202 273 243 258 L 158 186 Z" fill="#fff" />
+          <path d="M59 258 L 158 186 L 243 258" fill="none" stroke="#e08076" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
+
+          {/* hand-drawn creases */}
           <g stroke="#e08076" strokeWidth="2.6" strokeLinecap="round" fill="none">
-            <path d="M74 224 C 104 232 150 234 176 230" />
-            <path d="M96 236 C 118 240 146 241 164 239" />
+            <path d="M74 254 C 104 262 150 264 176 260" />
+            <path d="M96 266 C 118 270 146 271 164 269" />
           </g>
         </g>
       </svg>
