@@ -133,81 +133,83 @@ body { overflow-x: hidden; }
 @media (max-width: 760px)  { .da-edge-margin { display: none !important; } }
 
 /* ── Hero newsletter card ──
-   Flat cartoon illustration on a red field: an open envelope, an aeroplane
-   leaving on a dashed loop, speed ticks. The wordmark sits in its own ruled
-   box to the right. The whole card is the link, so there is no button to
-   fight the red with a second colour. */
+   No red field: the envelope itself carries the colour, sitting on the same
+   faint panel the hero's fact cards use so it belongs to that row rather
+   than shouting over it. */
 .da-env {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
-  max-width: 540px;
-  padding: 14px 18px 14px 6px;
-  border-radius: 16px;
-  background: linear-gradient(150deg, #e5372a 0%, #d0281c 60%, #b81f14 100%);
-  box-shadow: 0 24px 52px -20px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  gap: 14px;
+  max-width: 520px;
+  padding: 12px 22px 12px 6px;
+  border-radius: 18px;
+  background: rgba(246, 243, 234, 0.05);
+  border: 1px solid rgba(246, 243, 234, 0.14);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, border-color 0.3s ease;
 }
 .da-env:hover {
   transform: translateY(-3px);
-  box-shadow: 0 34px 64px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: rgba(246, 243, 234, 0.08);
+  border-color: rgba(224, 128, 118, 0.5);
 }
-.da-env-art { display: block; width: 100%; height: auto; overflow: visible; }
+.da-env-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5));
+}
 
-/* the wordmark, ruled off in its own box */
-.da-env-words {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 14px 16px;
-  border: 2.5px solid rgba(255, 255, 255, 0.85);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-}
+.da-env-words { display: flex; flex-direction: column; align-items: flex-start; }
 .da-env-sub {
   font-family: "Work Sans", sans-serif;
   font-weight: 700;
-  font-size: clamp(24px, 3.4vw, 36px);
-  line-height: 0.95;
-  letter-spacing: 0.02em;
+  font-size: clamp(22px, 2.6vw, 31px);
+  line-height: 1;
+  letter-spacing: 0.055em;
   text-transform: uppercase;
   color: #fff;
 }
-.da-env-rule {
-  width: 46px;
-  height: 2.5px;
-  margin: 8px 0 7px;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 2px;
-}
 .da-env-lead {
-  font-family: "Work Sans", sans-serif;
-  font-weight: 300;
-  font-size: clamp(13px, 1.5vw, 17px);
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(17px, 1.9vw, 24px);
   line-height: 1.15;
-  color: #fff;
+  color: rgba(246, 243, 234, 0.92);
+  margin-top: 3px;
 }
+.da-env-lead em { font-style: italic; color: #ef7d70; }
 .da-env-note {
-  margin-top: 9px;
-  font-size: clamp(10px, 1vw, 11.5px);
+  margin-top: 8px;
+  font-size: clamp(10.5px, 1vw, 12px);
   line-height: 1.45;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(246, 243, 234, 0.6);
 }
+.da-env-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 11px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #ef7d70;
+}
+.da-env-go span { transition: transform 0.25s ease; }
+.da-env:hover .da-env-go span { transform: translateX(4px); }
 
 @media (max-width: 520px) {
   .da-env {
     max-width: none;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    padding: 12px 12px 12px 2px;
-    gap: 6px;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    padding: 10px 14px 10px 2px;
+    gap: 8px;
   }
-  .da-env-words { padding: 11px 12px; }
-  .da-env-sub { font-size: 22px; }
-  .da-env-lead { font-size: 12.5px; }
-  .da-env-note { font-size: 10px; margin-top: 7px; }
+  .da-env-sub { font-size: 20px; }
+  .da-env-lead { font-size: 16px; }
+  .da-env-note { font-size: 10px; margin-top: 6px; }
+  .da-env-go { font-size: 11.5px; margin-top: 8px; }
 }
 
 /* ── Global overflow guard ──
@@ -404,27 +406,35 @@ body { overflow-x: hidden; }
    at ~1440. These steps keep the bubble inside the gutter at every size. */
 .da-hero-announce {
   position: absolute;
-  right: clamp(20px, 3vw, 56px);
-  top: 20vh;
+  right: clamp(64px, 7vw, 160px);
+  top: 18vh;
   z-index: 3;
-  width: 400px;
-  display: flex;
-  align-items: center;
-  gap: 0;
+  width: 360px;
+  display: block;
 }
-@media (min-width: 1400px) { .da-hero-announce { width: 470px; } }
-@media (min-width: 1660px) { .da-hero-announce { width: 560px; } }
-@media (min-width: 1900px) { .da-hero-announce { width: 620px; } }
-.da-hero-bubble { flex: 1; min-width: 0; }
-/* the horn overlaps the bubble's tail so the tail visibly points into it */
-.da-hero-announce .da-mega-swing { margin-left: -18px; margin-top: 42px; }
+@media (min-width: 1400px) { .da-hero-announce { width: 410px; } }
+@media (min-width: 1660px) { .da-hero-announce { width: 470px; } }
+@media (min-width: 1900px) { .da-hero-announce { width: 520px; } }
+.da-hero-bubble { width: 100%; min-width: 0; }
+/* The horn hangs off the bubble's lower-right, where the tail actually
+   points — not level with it. Positioned absolutely so its size never
+   competes with the bubble for the gutter's width.
+   NOTE: the horn is sized with the `size` prop, never a CSS transform —
+   Motion owns `transform` on that element for the swing-in and would
+   overwrite a CSS scale. */
+.da-hero-mega {
+  position: absolute;
+  left: calc(100% - 138px);
+  bottom: -104px;
+  pointer-events: none;
+}
 
 @media (max-width: 1240px) {
-  .da-hero-announce { width: 350px; top: 18vh; }
+  .da-hero-announce { width: 340px; top: 17vh; }
   .da-hero-announce .da-cb-body { padding: 18px 20px; border-radius: 28px; }
   .da-hero-announce .da-comic-title { font-size: 26px; }
   .da-hero-announce .da-comic-copy { font-size: 12.5px; }
-  .da-hero-announce .da-mega-swing { margin-top: 26px; transform: scale(0.82); }
+  .da-hero-mega { left: calc(100% - 110px); bottom: -84px; transform: scale(0.82); transform-origin: left top; }
 }
 
 /* ── phone dock ── */
@@ -437,7 +447,10 @@ body { overflow-x: hidden; }
   color: #12291b;
   white-space: nowrap;
 }
-.da-cb-mini .da-cb-tail { right: -34px; bottom: 8px; width: 42px; height: 44px; }
+/* At mini size the body's corner radius curves away from the tail's base,
+   which is what left it floating detached. Anchor the tail higher up the
+   straight part of the edge and overlap further into the body. */
+.da-cb-mini .da-cb-tail { right: -24px; bottom: 2px; width: 38px; height: 40px; }
 
 .da-sheet-x {
   position: absolute;
@@ -462,19 +475,20 @@ body { overflow-x: hidden; }
 
   .da-dock {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 0;
     position: fixed;
-    right: 10px;
-    bottom: 12px;
+    right: 8px;
+    bottom: 10px;
     z-index: 46;
     padding: 0;
     background: transparent;
     border: 0;
     cursor: pointer;
   }
-  .da-dock-bubble { display: block; }
-  .da-dock .da-mega-swing { margin-left: -14px; margin-top: 14px; }
+  /* bubble lifted clear of the horn rather than sitting behind it */
+  .da-dock-bubble { display: block; margin-bottom: 26px; }
+  .da-dock .da-mega-swing { margin-left: 2px; margin-bottom: -8px; }
 
   .da-dock-scrim {
     display: flex;

@@ -1,5 +1,7 @@
 "use client";
 
+import { useId } from "react";
+
 /**
  * Megaphone, coloured from the emoji reference: red grip and rear body, a
  * pale grey/white cone with a dark teal throat, pointing right. The sound
@@ -11,6 +13,17 @@
  */
 
 export function Megaphone({ size = 72, facing = "left" }: { size?: number; facing?: "left" | "right" }) {
+  /**
+   * The horn is rendered up to three times on one page (hero, phone dock,
+   * phone sheet). Gradient ids must therefore be unique per instance: with
+   * a shared id, `url(#id)` resolves to the FIRST definition in the
+   * document, and when that copy is `display:none` the visible one loses
+   * its fills and renders as bare flat shapes.
+   */
+  const uid = useId().replace(/:/g, "");
+  const cone = `mg-cone-${uid}`;
+  const mouth = `mg-mouth-${uid}`;
+  const red = `mg-red-${uid}`;
   return (
     <span
       className="da-mega"
@@ -26,16 +39,16 @@ export function Megaphone({ size = 72, facing = "left" }: { size?: number; facin
     >
       <svg viewBox="0 0 96 96" width={size} height={size} style={{ display: "block", overflow: "visible" }}>
         <defs>
-          <linearGradient id="da-mg-cone" x1="0.1" y1="0" x2="0.9" y2="1">
+          <linearGradient id={cone} x1="0.1" y1="0" x2="0.9" y2="1">
             <stop offset="0%" stopColor="#ffffff" />
             <stop offset="55%" stopColor="#eceff1" />
             <stop offset="100%" stopColor="#c9d0d4" />
           </linearGradient>
-          <linearGradient id="da-mg-mouth" x1="0" y1="0" x2="1" y2="1">
+          <linearGradient id={mouth} x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#2f5c6e" />
             <stop offset="100%" stopColor="#16303c" />
           </linearGradient>
-          <linearGradient id="da-mg-red" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={red} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#f2564a" />
             <stop offset="100%" stopColor="#d63a2e" />
           </linearGradient>
@@ -53,15 +66,15 @@ export function Megaphone({ size = 72, facing = "left" }: { size?: number; facin
         <rect x="27" y="61" width="9" height="12" rx="3" fill="#4a5157" transform="rotate(22 31 67)" />
 
         {/* ── rear body (red) ── */}
-        <path d="M14 36 H40 V62 H14 A 5 5 0 0 1 14 36 Z" fill="url(#da-mg-red)" />
+        <path d="M14 36 H40 V62 H14 A 5 5 0 0 1 14 36 Z" fill={`url(#${red})`} />
         <path d="M14 36 H40 V45 H14 Z" fill="#ff7a6b" opacity="0.55" />
 
         {/* ── cone ── */}
-        <path d="M40 30 C 52 32 58 22 66 18 L66 78 C 58 74 52 64 40 66 Z" fill="url(#da-mg-cone)" />
+        <path d="M40 30 C 52 32 58 22 66 18 L66 78 C 58 74 52 64 40 66 Z" fill={`url(#${cone})`} />
         <path d="M40 30 C 52 32 58 22 66 18 L66 78 C 58 74 52 64 40 66 Z" fill="none" stroke="#b6bfc4" strokeWidth="1.6" strokeLinejoin="round" />
 
         {/* ── mouth ── */}
-        <ellipse cx="66" cy="48" rx="7" ry="30" fill="url(#da-mg-mouth)" />
+        <ellipse cx="66" cy="48" rx="7" ry="30" fill={`url(#${mouth})`} />
         <ellipse cx="67.5" cy="48" rx="3.4" ry="15" fill="#dfe5e8" opacity="0.85" />
 
         {/* highlight down the cone */}

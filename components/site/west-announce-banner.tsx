@@ -108,7 +108,9 @@ export function HeroAnnouncement() {
           <AnnounceBody />
         </ComicBubble>
       </motion.div>
-      <SwingInMegaphone size={132} delay={0.9} />
+      <div className="da-hero-mega">
+        <SwingInMegaphone size={206} delay={0.9} />
+      </div>
     </aside>
   );
 }

@@ -302,47 +302,73 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
 function NewsletterEnvelope() {
   return (
     <Link href={R.newsletters} className="da-env" aria-label="Subscribe to our newsletter">
-      <svg className="da-env-art" viewBox="0 0 300 250" aria-hidden>
-        {/* speed ticks trailing the envelope */}
-        <g stroke="#fff" strokeWidth="9" strokeLinecap="round" opacity="0.9">
-          <path d="M10 150 L40 150" />
-          <path d="M4 186 L34 186" />
-          <path d="M20 116 L44 116" />
+      <svg className="da-env-art" viewBox="0 0 320 250" aria-hidden>
+        {/* speed ticks — drawn slightly unequal so they read as struck by hand */}
+        <g stroke="#fff" strokeWidth="7" strokeLinecap="round">
+          <path d="M12 96 L40 68" />
+          <path d="M40 44 L58 26" />
+          <path d="M6 140 L26 122" />
         </g>
 
-        {/* dashed flight path out of the envelope, up to the aeroplane */}
+        {/* dashed flight path, looping up out of the envelope */}
         <path
-          d="M150 150 C 176 120 196 104 232 92"
+          d="M168 138 C 196 132 214 112 210 92 C 207 76 188 74 184 90 C 179 110 202 122 226 116 C 250 110 262 92 264 70"
           fill="none"
           stroke="#fff"
-          strokeWidth="5.5"
+          strokeWidth="4.5"
           strokeLinecap="round"
-          strokeDasharray="2 15"
+          strokeDasharray="1.5 13"
         />
 
-        {/* aeroplane */}
-        <g transform="rotate(-18 258 60)">
-          <path d="M292 20 L232 78 L262 86 Z" fill="#fff" />
-          <path d="M292 20 L262 86 L280 108 Z" fill="#f0bcb5" />
+        {/* paper aeroplane */}
+        <g transform="rotate(-12 274 46)">
+          <path d="M308 12 L250 62 L278 70 Z" fill="#fff" />
+          <path d="M308 12 L278 70 L294 90 Z" fill="#e5b3ac" />
         </g>
 
-        {/* envelope, flap open */}
-        <g transform="rotate(-7 150 176)">
-          {/* body */}
-          <rect x="58" y="118" width="184" height="118" rx="12" fill="#fff" />
-          {/* open interior — chevron of the mail mark */}
-          <path d="M58 128 L150 200 L242 128 V150 L150 222 L58 150 Z" fill="#c8281c" />
-          {/* raised front panel */}
-          <path d="M58 236 L150 164 L242 236 Z" fill="#fff" />
-          <path d="M58 236 L150 164 L242 236" fill="none" stroke="#efb8b1" strokeWidth="3.5" strokeLinejoin="round" />
+        {/* ── envelope, drawn with organic curves rather than a rectangle ── */}
+        <g transform="rotate(-6 150 176)">
+          {/* pillowy white body */}
+          <path
+            d="M56 116 C 94 107 208 107 246 116 C 255 154 253 200 243 228
+               C 202 243 100 243 59 228 C 49 200 47 154 56 116 Z"
+            fill="#fff"
+          />
+          {/* the flap, standing open — red interior */}
+          <path
+            d="M56 116 C 94 107 208 107 246 116 L 152 192 Z"
+            fill="#d1281c"
+          />
+          {/* front panel, its peak tucked up under the flap */}
+          <path
+            d="M59 228 C 100 243 202 243 243 228 L 152 158 Z"
+            fill="#fff"
+          />
+          <path
+            d="M59 228 L 152 158 L 243 228"
+            fill="none"
+            stroke="#e08076"
+            strokeWidth="3"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+          {/* hand-drawn creases along the bottom */}
+          <g stroke="#e08076" strokeWidth="2.6" strokeLinecap="round" fill="none">
+            <path d="M74 224 C 104 232 150 234 176 230" />
+            <path d="M96 236 C 118 240 146 241 164 239" />
+          </g>
         </g>
       </svg>
 
       <span className="da-env-words">
         <span className="da-env-sub">Subscribe</span>
-        <span className="da-env-rule" aria-hidden />
-        <span className="da-env-lead">to our newsletter</span>
-        <span className="da-env-note">Programs, fundraising milestones &amp; masjid news.</span>
+        <span className="da-env-lead">
+          to our <em>newsletter</em>
+        </span>
+        <span className="da-env-note">Programs, fundraising milestones &amp; masjid news</span>
+        <span className="da-env-go">
+          Sign me up <span aria-hidden="true">→</span>
+        </span>
       </span>
     </Link>
   );
