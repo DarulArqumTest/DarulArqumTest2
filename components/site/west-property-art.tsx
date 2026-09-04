@@ -11,13 +11,21 @@
  * replace the WestPropertyArt call sites with a plain image tag.
  */
 
-export function WestPropertyArt({ className, rounded = 18 }: { className?: string; rounded?: number }) {
+export function WestPropertyArt({
+  className,
+  rounded = 18,
+  label = "Illustration of a Darul Arqum property: a red-brick bungalow with a double garage.",
+}: {
+  className?: string;
+  rounded?: number;
+  label?: string;
+}) {
   return (
     <svg
       viewBox="0 0 800 500"
       className={className}
       role="img"
-      aria-label="Illustration of the Darul Arqum West property: a red-brick bungalow with a double garage on Old Richmond Road."
+      aria-label={label}
       style={{ display: "block", width: "100%", height: "100%", borderRadius: rounded }}
       preserveAspectRatio="xMidYMid slice"
     >

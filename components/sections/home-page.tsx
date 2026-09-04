@@ -4,6 +4,7 @@ import * as React from "react";
 import { Hero, GreetingSplash, useIntroPhase, type ProgramKey } from "@/components/sections/home-literal";
 import { GivingSection, GiveModal, useGiveModal, ProgramModal, ProgramsSection, ContactSection } from "@/components/sections/home-literal-sections";
 import { WestAnnouncement } from "@/components/sections/west-announcement";
+import { WestAnnounceBanner } from "@/components/site/west-announce-banner";
 import { HomeHighlightProvider } from "@/components/site/use-scroll-highlight";
 
 export function HomePage({ skipIntro }: { skipIntro: boolean }) {
@@ -21,6 +22,7 @@ export function HomePage({ skipIntro }: { skipIntro: boolean }) {
         <ProgramsSection onOpen={setOpenProgram} />
         <ContactSection />
       </main>
+      <WestAnnounceBanner />
       <GiveModal state={give.state} setState={give.setState} close={give.close} />
       <ProgramModal program={openProgram} onClose={() => setOpenProgram(null)} />
     </HomeHighlightProvider>

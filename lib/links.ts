@@ -70,10 +70,9 @@ export const ORG = {
  * The two masjids. The original Limebank property is now "Darul Arqum East";
  * the newly acquired Old Richmond Rd property is "Darul Arqum West".
  *
- * ADMIN-ACCESS FOLLOW-UP: `west.postal` and `west.mapsShort` are blank until
- * the West property has its own Google Business listing — the address search
- * URL below works in the meantime. `west.opens` is placeholder copy pending
- * a confirmed opening date.
+ * ADMIN-ACCESS FOLLOW-UP: West has no Google Business listing yet, so its
+ * `mapsUrl` is an address search rather than a place link. Opening date and
+ * prayer timings are still pending.
  */
 export type LocationKey = "east" | "west";
 
@@ -86,6 +85,8 @@ export type Location = {
   postal: string;
   /** Full one-line address for display. */
   address: string;
+  /** Photograph of the property. Falls back to drawn art if the file is absent. */
+  photo: string;
   mapsUrl: string;
   embedQuery: string;
   status: "open" | "coming-soon";
@@ -103,6 +104,7 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     city: "Ottawa, ON",
     postal: "K1V 1G5",
     address: "4269 Limebank Rd, Ottawa, ON K1V 1G5",
+    photo: "/assets/location-east.jpg",
     mapsUrl: "https://maps.app.goo.gl/7WWyowUrajYGgNv16",
     embedQuery: "Darul Arqum Markaz of Ottawa, 4269 Limebank Rd, Ottawa, ON K1V 1G5",
     status: "open",
@@ -117,10 +119,11 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     short: "West",
     street: "6050 Old Richmond Rd",
     city: "Ottawa, ON",
-    postal: "",
-    address: "6050 Old Richmond Rd, Ottawa, ON",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=6050+Old+Richmond+Rd+Ottawa+ON",
-    embedQuery: "6050 Old Richmond Rd, Ottawa, ON",
+    postal: "K0A 2Z0",
+    address: "6050 Old Richmond Rd, Ottawa, ON K0A 2Z0",
+    photo: "/assets/location-west.jpg",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=6050+Old+Richmond+Rd+Ottawa+ON+K0A+2Z0",
+    embedQuery: "6050 Old Richmond Rd, Ottawa, ON K0A 2Z0",
     status: "coming-soon",
     statusLabel: "Opening soon",
     blurb:

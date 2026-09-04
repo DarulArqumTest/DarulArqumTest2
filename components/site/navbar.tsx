@@ -83,20 +83,23 @@ export function Navbar() {
           <span className="font-daDisplay text-lg font-semibold text-da-cream">Darul Arqum</span>
         </Link>
 
-        <nav
-          className="relative mx-auto hidden items-center gap-6 rounded-t-[10px] rounded-b-full border border-da-gold/[0.22] bg-da-cream/[0.045] px-8 py-2.5 xl:flex"
-          aria-label="Primary"
-        >
-          <span className="absolute left-1/2 top-[5px] -translate-x-1/2 text-[8px] text-da-gold/55">✦</span>
+        <div className="mx-auto hidden items-center gap-3.5 xl:flex">
           <LocationsMenu />
-          {NAV.map((item) => (
-            <NavLink
-              key={item.label}
-              item={item}
-              className="u-draw text-sm font-medium text-da-cream/[0.82] transition-all hover:-translate-y-0.5 hover:text-da-goldL"
-            />
-          ))}
-        </nav>
+          <span aria-hidden className="h-5 w-px bg-da-gold/25" />
+          <nav
+            className="relative flex items-center gap-6 rounded-t-[10px] rounded-b-full border border-da-gold/[0.22] bg-da-cream/[0.045] px-8 py-2.5"
+            aria-label="Primary"
+          >
+            <span className="absolute left-1/2 top-[5px] -translate-x-1/2 text-[8px] text-da-gold/55">✦</span>
+            {NAV.map((item) => (
+              <NavLink
+                key={item.label}
+                item={item}
+                className="u-draw text-sm font-medium text-da-cream/[0.82] transition-all hover:-translate-y-0.5 hover:text-da-goldL"
+              />
+            ))}
+          </nav>
+        </div>
 
         <div className="flex items-center gap-3 justify-self-end">
           <div className="hidden xl:block">

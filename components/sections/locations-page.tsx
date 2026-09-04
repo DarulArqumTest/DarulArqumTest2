@@ -10,7 +10,7 @@ import * as React from "react";
 import Link from "next/link";
 import { motion, useInView } from "motion/react";
 import { LOCATION_LIST, ORG, R, type Location } from "@/lib/links";
-import { WestPropertyArt } from "@/components/site/west-property-art";
+import { LocationPhoto } from "@/components/site/location-photo";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
 
 const ease = [0.16, 0.8, 0.4, 1] as const;
@@ -39,18 +39,9 @@ function LocationPanel({ loc, index }: { loc: Location; index: number }) {
       }}
     >
       <div className="da-loc-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        {/* ── visual ── */}
-        <div style={{ position: "relative", minHeight: 260, background: "#0a1f15" }}>
-          {loc.key === "west" ? (
-            <WestPropertyArt rounded={0} />
-          ) : (
-            <iframe
-              title={`${loc.name} map`}
-              src={`https://www.google.com/maps?q=${encodeURIComponent(loc.embedQuery)}&output=embed`}
-              loading="lazy"
-              style={{ width: "100%", height: "100%", minHeight: 260, border: 0, display: "block" }}
-            />
-          )}
+        {/* ── the building itself ── */}
+        <div style={{ position: "relative", minHeight: 300, background: "#0a1f15" }}>
+          <LocationPhoto loc={loc} />
           <span
             style={{
               position: "absolute",
@@ -89,34 +80,36 @@ function LocationPanel({ loc, index }: { loc: Location; index: number }) {
             {loc.blurb}
           </p>
 
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "15px 17px", borderRadius: 13, background: "rgba(246,243,234,0.05)", border: "1px solid rgba(246,243,234,0.13)", marginBottom: 22 }}>
-            <svg width="15" height="18" viewBox="0 0 15 18" aria-hidden style={{ flexShrink: 0, marginTop: 2 }}>
-              <path d="M7.5 1C4.46 1 2 3.46 2 6.5c0 4.1 5.5 10 5.5 10S13 10.6 13 6.5C13 3.46 10.54 1 7.5 1Z" fill="none" stroke={loc.accent} strokeWidth="1.6" strokeLinejoin="round" />
-              <circle cx="7.5" cy="6.4" r="2.1" fill={loc.accent} />
-            </svg>
-            <div style={{ minWidth: 0 }}>
-              <div className="da-wrap-any" style={{ fontSize: "clamp(14px,1.5vw,16px)", color: "#f6f3ea", fontWeight: 700, lineHeight: 1.4 }}>
-                {loc.street}
+          {/* Map card — same construction as the homepage "Visit the masjid"
+              panel: live map on top, address and actions banded underneath. */}
+          <div style={{ borderRadius: 18, overflow: "hidden", background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.14)" }}>
+            <iframe
+              title={`${loc.name} map`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(loc.embedQuery)}&output=embed`}
+              loading="lazy"
+              style={{ width: "100%", height: 190, border: 0, display: "block" }}
+            />
+            <div style={{ padding: "18px 20px", background: "rgba(8,22,15,0.5)" }}>
+              <div style={{ fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: loc.accent, fontWeight: 800, marginBottom: 6 }}>
+                {isOpen ? "Visit the masjid" : "Find the property"}
               </div>
-              <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>
-                {loc.city}
-                {loc.postal ? ` ${loc.postal}` : ""}
+              <div className="da-wrap-any" style={{ fontSize: "clamp(14px,1.5vw,16px)", color: "#f6f3ea", fontWeight: 700, lineHeight: 1.4, marginBottom: 14 }}>
+                {loc.address}
+              </div>
+              <div className="da-loc-cta" style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
+                <a href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm">
+                  Get directions <span aria-hidden="true">↗</span>
+                </a>
+                {isOpen && (
+                  <Link href={R.prayer} className="da-btn da-btn-ghost da-btn-sm">
+                    Prayer times <span aria-hidden="true">→</span>
+                  </Link>
+                )}
+                <a href={ORG.phoneHref} className="da-btn da-btn-ghost da-btn-sm">
+                  {ORG.phone}
+                </a>
               </div>
             </div>
-          </div>
-
-          <div className="da-loc-cta" style={{ display: "flex", flexWrap: "wrap", gap: 11 }}>
-            <a href={loc.mapsUrl} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm">
-              See on Google Maps <span aria-hidden="true">↗</span>
-            </a>
-            {isOpen && (
-              <Link href={R.prayer} className="da-btn da-btn-ghost da-btn-sm">
-                Prayer times <span aria-hidden="true">→</span>
-              </Link>
-            )}
-            <a href={ORG.phoneHref} className="da-btn da-btn-ghost da-btn-sm">
-              {ORG.phone}
-            </a>
           </div>
         </div>
       </div>

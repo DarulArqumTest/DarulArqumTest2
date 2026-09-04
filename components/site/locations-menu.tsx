@@ -44,7 +44,7 @@ export function LocationsMenu() {
 
   return (
     <div
-      style={{ position: "relative" }}
+      className="da-loc-menu"
       onMouseEnter={show}
       onMouseLeave={hide}
       onFocus={show}
@@ -56,35 +56,30 @@ export function LocationsMenu() {
         href={R.locations}
         aria-expanded={open}
         aria-haspopup="true"
-        className="u-draw inline-flex items-center gap-1.5 text-sm font-medium text-da-cream/[0.82] transition-all hover:-translate-y-0.5 hover:text-da-goldL"
+        className="da-loc-trigger"
+        data-open={open || undefined}
       >
+        <svg width="13" height="15" viewBox="0 0 15 18" aria-hidden style={{ flexShrink: 0 }}>
+          <path d="M7.5 1C4.46 1 2 3.46 2 6.5c0 4.1 5.5 10 5.5 10S13 10.6 13 6.5C13 3.46 10.54 1 7.5 1Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+          <circle cx="7.5" cy="6.4" r="2.1" fill="currentColor" />
+        </svg>
         Locations
-        <span aria-hidden style={{ fontSize: 9, opacity: 0.7, transform: open ? "rotate(180deg)" : undefined, transition: "transform 0.2s ease" }}>
-          ▾
-        </span>
+        <span className="da-loc-count" aria-hidden>2</span>
+        <span className="da-loc-caret" aria-hidden>▾</span>
       </Link>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            // `x: "-50%"` is the centring pull-back, and it MUST live here
+            // rather than in CSS: Motion writes the whole `transform` on this
+            // element every frame, so a CSS `translateX(-50%)` gets clobbered
+            // and the menu hangs half its width off to one side.
+            initial={{ opacity: 0, y: -6, scale: 0.98, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
+            exit={{ opacity: 0, y: -6, scale: 0.98, x: "-50%" }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              position: "absolute",
-              top: "calc(100% + 14px)",
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 60,
-              width: 288,
-              padding: 7,
-              borderRadius: 16,
-              background: "rgba(11,30,20,0.97)",
-              backdropFilter: "blur(14px) saturate(150%)",
-              border: "1px solid rgba(201,162,39,0.34)",
-              boxShadow: "0 26px 56px -20px rgba(0,0,0,0.75)",
-            }}
+            className="da-loc-dropdown"
           >
             {LOCATION_LIST.map((loc) => (
               <Link

@@ -281,29 +281,47 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
 }
 
 /**
- * Newsletter envelope mark. Drawn rather than bitmapped so it sits inside
- * its tile with real padding — the previous card cropped a square PNG into
- * a circle, which clipped the artwork and read as a mistake.
+ * Newsletter sign-up, built as an actual envelope rather than a generic card
+ * with an icon bolted on: a red flap folds down over cream paper, the "M"
+ * crease of the classic mail mark reads across the top, and the copy and
+ * button sit on the paper below like the letter inside.
+ *
+ * The flap is one SVG rather than CSS triangles so the crease lines, the
+ * shading and the gold edge stay in register at any width.
  */
-function MailGlyph() {
+function NewsletterEnvelope() {
   return (
-    <svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden style={{ display: "block" }}>
-      <defs>
-        <linearGradient id="da-mail-body" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="100%" stopColor="#e9e3d4" />
-        </linearGradient>
-      </defs>
-      {/* envelope back */}
-      <rect x="5" y="11" width="38" height="26" rx="4.5" fill="url(#da-mail-body)" />
-      {/* coloured inner chevrons — the "M" fold */}
-      <path d="M5 15.5 24 29 43 15.5v5.2L24 34 5 20.7Z" fill="#d94f3d" />
-      <path d="M5 15.5v5.2L14 27V19Z" fill="#e8b52e" />
-      <path d="M43 15.5v5.2L34 27V19Z" fill="#2f9e5c" />
-      <path d="M5 15.5 24 29 43 15.5" fill="none" stroke="#c9a227" strokeWidth="1.4" strokeLinejoin="round" />
-      {/* outline */}
-      <rect x="5" y="11" width="38" height="26" rx="4.5" fill="none" stroke="#b99a3c" strokeWidth="1.5" />
-    </svg>
+    <div className="da-env">
+      <svg className="da-env-flap" viewBox="0 0 400 96" preserveAspectRatio="none" aria-hidden>
+        <defs>
+          <linearGradient id="da-env-red" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#e05a45" />
+            <stop offset="100%" stopColor="#c2402f" />
+          </linearGradient>
+          <linearGradient id="da-env-shade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#000" stopOpacity="0" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0.22" />
+          </linearGradient>
+        </defs>
+        {/* the folded-down flap */}
+        <path d="M0 0h400v18L200 92 0 18Z" fill="url(#da-env-red)" />
+        <path d="M0 0h400v18L200 92 0 18Z" fill="url(#da-env-shade)" />
+        {/* side creases catching the light */}
+        <path d="M0 18 200 92 400 18" fill="none" stroke="#ffd9cf" strokeWidth="2" strokeOpacity="0.55" strokeLinejoin="round" />
+        <path d="M0 0 200 74 400 0" fill="none" stroke="#8f2a1d" strokeWidth="1.5" strokeOpacity="0.4" strokeLinejoin="round" />
+      </svg>
+
+      <div className="da-env-body">
+        <div className="da-env-stamp" aria-hidden>
+          <span>✦</span>
+        </div>
+        <h3 className="da-env-title">Subscribe to our newsletter</h3>
+        <p className="da-env-sub">For programs, fundraising milestones and masjid news.</p>
+        <Link href={R.newsletters} className="da-btn da-btn-gold da-btn-sm da-env-cta">
+          Subscribe <span aria-hidden="true">→</span>
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -471,36 +489,8 @@ function Hero({ revealed }: { revealed: boolean }) {
             })}
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.34 }} style={{ marginTop: 14 }}>
-            <div
-              className="da-news-card"
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: 16,
-                padding: "18px 20px",
-                borderRadius: 16,
-                background: "linear-gradient(125deg, rgba(201,162,39,0.14), rgba(201,162,39,0.05))",
-                border: "1px solid rgba(227,197,106,0.36)",
-                boxShadow: "0 22px 48px -26px rgba(0,0,0,0.7)",
-              }}
-            >
-              <span className="da-news-icon" aria-hidden>
-                <MailGlyph />
-              </span>
-              <div className="da-news-body" style={{ flex: "1 1 230px", minWidth: 0 }}>
-                <div style={{ fontSize: 14.5, fontWeight: 700, color: "#f6f3ea", marginBottom: 3, letterSpacing: "0.005em" }}>
-                  Don&apos;t miss what&apos;s next
-                </div>
-                <div style={{ fontSize: 12.8, lineHeight: 1.55, color: "rgba(246,243,234,0.68)" }}>
-                  Subscribe to our newsletter — for programs, fundraising milestones and masjid news.
-                </div>
-              </div>
-              <Link href={R.newsletters} className="da-btn da-btn-gold da-btn-sm" style={{ flexShrink: 0 }}>
-                Subscribe <span aria-hidden="true">→</span>
-              </Link>
-            </div>
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.34 }} style={{ marginTop: 18 }}>
+            <NewsletterEnvelope />
           </motion.div>
         </div>
       </div>

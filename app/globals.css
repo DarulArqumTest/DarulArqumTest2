@@ -132,26 +132,86 @@ body { overflow-x: hidden; }
 @media (max-width: 1024px) { .da-edge-margin { width: 18px !important; } }
 @media (max-width: 760px)  { .da-edge-margin { display: none !important; } }
 
-/* ── Hero newsletter card ──
-   The icon lives in a padded white tile with the glyph set to `contain`,
-   so nothing is cropped the way the old circle-masked PNG was. */
-.da-news-icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 13px;
-  padding: 7px;
-  background: linear-gradient(160deg, #fdfbf5, #ece5d3);
-  border: 1px solid rgba(227, 197, 106, 0.6);
-  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+/* ── Hero newsletter envelope ──
+   Cream paper against the dark hero, with a red flap folded over the top.
+   The paper is deliberately the brightest object in the hero: it is the
+   one thing on the page asking for an email address. */
+.da-env {
+  position: relative;
+  max-width: 470px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(168deg, #fdfbf4 0%, #f3eee0 55%, #e7e0cd 100%);
+  border: 1px solid rgba(140, 118, 60, 0.5);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.7) inset,
+    0 26px 54px -22px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.da-env:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.7) inset,
+    0 34px 66px -22px rgba(0, 0, 0, 0.85);
+}
+
+.da-env-flap {
+  display: block;
+  width: 100%;
+  height: 78px;
+  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.22));
+}
+
+.da-env-body {
+  position: relative;
+  /* pull the copy up under the flap's V so the paper doesn't feel empty */
+  margin-top: -26px;
+  padding: 0 24px 22px;
+  text-align: center;
+}
+
+/* a small "stamp" mark in the corner of the paper */
+.da-env-stamp {
+  position: absolute;
+  top: 2px;
+  right: 16px;
+  width: 30px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 3px;
+  color: #b0521f;
+  font-size: 13px;
+  background: repeating-linear-gradient(90deg, #e7d9a8 0 4px, transparent 4px 5px),
+    linear-gradient(160deg, #f6ecc9, #ecdca8);
+  border: 1px dashed rgba(160, 120, 40, 0.65);
 }
+
+.da-env-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 1.15;
+  color: #14301f;
+  margin: 0 0 6px;
+}
+.da-env-sub {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(20, 48, 31, 0.72);
+  margin: 0 auto 16px;
+  max-width: 310px;
+}
+.da-env-cta { min-width: 168px; }
+
 @media (max-width: 520px) {
-  .da-news-card { gap: 13px !important; padding: 16px !important; }
-  .da-news-body { flex: 1 1 100% !important; }
-  .da-news-card .da-btn { width: 100%; }
+  .da-env { max-width: none; }
+  .da-env-flap { height: 62px; }
+  .da-env-body { margin-top: -20px; padding: 0 18px 20px; }
+  .da-env-title { font-size: 21px; }
+  .da-env-stamp { width: 25px; height: 29px; right: 12px; }
+  .da-env-cta { width: 100%; }
 }
 
 /* ── Global overflow guard ──
@@ -190,9 +250,17 @@ body { overflow-x: hidden; }
 }
 
 /* ── Darul Arqum West announcement ── */
+.da-west-shout { display: flex; align-items: flex-start; gap: 18px; }
 @media (max-width: 900px) {
   .da-west-grid { grid-template-columns: 1fr !important; }
   .da-west-art { order: -1; }
+}
+@media (max-width: 620px) {
+  /* the horn stops fitting beside the bubble; stack it and drop the tail */
+  .da-west-shout { flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+  .da-west-shout .da-bubble { width: 100%; }
+  .da-west-shout .da-bubble::before { display: none; }
+  .da-west-shout .da-bubble p { margin-left: auto; margin-right: auto; }
 }
 @media (max-width: 480px) {
   .da-west-cta { flex-direction: column; align-items: stretch; }
@@ -435,6 +503,292 @@ body { overflow-x: hidden; }
   .da-btn, .da-btn::after { transition: none !important; }
   .da-btn:hover { transform: none; }
   .da-btn:hover::after { transform: translateX(-130%); }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Giving stat tiles
+   ──────────────────────────────────────────────────────────────────
+   Flat panels with left-aligned figures left a wide empty gutter on
+   every tile. Centring the content closes that gap, and an eight-point
+   girih star — two overlapping squares, the classic Islamic
+   construction — gives the surface something to be instead of a flat
+   fill. The pattern is a data URI so it costs no request.
+   ══════════════════════════════════════════════════════════════════ */
+.da-geo-tile {
+  position: relative;
+  background-color: #0e2419;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23c9a227' stroke-width='1.1' stroke-opacity='0.5'%3E%3Cpath d='M16 16h32v32H16z'/%3E%3Cpath d='M32 8l24 24-24 24L8 32z'/%3E%3Cpath d='M0 0l16 16M64 0L48 16M0 64l16-16M64 64L48 48'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 64px 64px;
+  background-position: center;
+  overflow: hidden;
+}
+/* fade the pattern out from the centre so the numerals stay legible */
+.da-geo-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 72% 68% at 50% 50%, #0e2419 32%, rgba(14, 36, 25, 0.72) 72%, rgba(14, 36, 25, 0.4) 100%);
+  pointer-events: none;
+}
+.da-geo-tile > * { position: relative; z-index: 1; }
+
+/* Fun-fact panel: its own banded surface, centred, sitting under the grid */
+.da-funfact {
+  position: relative;
+  overflow: hidden;
+  padding: 26px 24px 24px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 120% 100% at 50% 0%, rgba(227, 197, 106, 0.26), transparent 68%),
+    linear-gradient(160deg, rgba(201, 162, 39, 0.2), rgba(201, 162, 39, 0.07));
+  backdrop-filter: blur(10px) saturate(140%);
+  border-top: 1px solid rgba(227, 197, 106, 0.36);
+}
+.da-funfact-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 15px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: rgba(10, 26, 17, 0.55);
+  border: 1px solid rgba(227, 197, 106, 0.4);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f3e2ad;
+  font-weight: 800;
+}
+.da-funfact-rule {
+  width: 74px;
+  height: 1px;
+  margin: 0 auto 16px;
+  background: linear-gradient(90deg, transparent, rgba(227, 197, 106, 0.75), transparent);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Locations nav
+   ──────────────────────────────────────────────────────────────────
+   With two masjids, location is a top-level decision, so it sits
+   OUTSIDE the nav pill as its own mint capsule — visually its own
+   object rather than one more link in the row.
+
+   `inline-flex` on the wrapper is load-bearing: as a block it stretched
+   to the flex line, so the dropdown's translateX(-50%) centred on the
+   stretched box instead of on the button, which is what made the menu
+   hang off to one side of its trigger.
+   ══════════════════════════════════════════════════════════════════ */
+.da-loc-menu { position: relative; display: inline-flex; }
+
+.da-loc-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 15px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 650;
+  white-space: nowrap;
+  color: #a9e0c0;
+  background: linear-gradient(180deg, rgba(124, 201, 154, 0.16), rgba(124, 201, 154, 0.06));
+  border: 1px solid rgba(169, 224, 192, 0.42);
+  box-shadow: inset 0 1px 0 rgba(214, 245, 227, 0.22), 0 8px 20px -12px rgba(124, 201, 154, 0.7);
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.da-loc-trigger:hover,
+.da-loc-trigger[data-open] {
+  color: #cdf3de;
+  border-color: rgba(169, 224, 192, 0.85);
+  box-shadow: inset 0 1px 0 rgba(214, 245, 227, 0.32), 0 12px 26px -12px rgba(124, 201, 154, 0.9);
+  transform: translateY(-1px);
+}
+
+.da-loc-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(169, 224, 192, 0.9);
+  color: #0b2416;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+.da-loc-caret { font-size: 9px; opacity: 0.8; transition: transform 0.2s ease; }
+.da-loc-trigger[data-open] .da-loc-caret { transform: rotate(180deg); }
+
+/* Anchored to the trigger's own centre. NOTE: the -50% pull-back is applied
+   by Motion in locations-menu.tsx, not here — Motion owns `transform` on this
+   element and would overwrite anything CSS put there. */
+.da-loc-dropdown {
+  position: absolute;
+  top: calc(100% + 13px);
+  left: 50%;
+  z-index: 60;
+  width: 292px;
+  padding: 7px;
+  border-radius: 16px;
+  background: rgba(11, 30, 20, 0.97);
+  backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(169, 224, 192, 0.34);
+  box-shadow: 0 26px 56px -20px rgba(0, 0, 0, 0.75);
+}
+/* pointer tying the menu to the capsule */
+.da-loc-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  transform: rotate(45deg);
+  background: rgba(11, 30, 20, 0.97);
+  border-left: 1px solid rgba(169, 224, 192, 0.34);
+  border-top: 1px solid rgba(169, 224, 192, 0.34);
+}
+/* keeps hover alive while the cursor crosses the gap to the menu */
+.da-loc-dropdown::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  height: 15px;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   "New location" announcement — megaphone, speech bubble, phone dock
+   ══════════════════════════════════════════════════════════════════ */
+@keyframes da-wave {
+  0%, 100% { opacity: 0.15; transform: scale(0.72); }
+  50%      { opacity: 0.95; transform: scale(1); }
+}
+@keyframes da-mega-shout {
+  0%, 88%, 100% { transform: rotate(0deg); }
+  92%           { transform: rotate(-7deg); }
+  96%           { transform: rotate(4deg); }
+}
+.da-mega { animation: da-mega-shout 5.5s ease-in-out infinite; transform-origin: 20% 70%; }
+.da-wave-1 { animation: da-wave 1.9s ease-in-out infinite; }
+.da-wave-2 { animation: da-wave 1.9s ease-in-out infinite 0.22s; }
+.da-wave-3 { animation: da-wave 1.9s ease-in-out infinite 0.44s; }
+
+/* the bubble, with a tail pointing back at the horn */
+.da-bubble {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: linear-gradient(155deg, rgba(20, 48, 33, 0.96), rgba(11, 30, 20, 0.96));
+  backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  box-shadow: 0 34px 70px -28px rgba(0, 0, 0, 0.85);
+}
+.da-bubble::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 30px;
+  width: 18px;
+  height: 18px;
+  transform: rotate(45deg);
+  background: linear-gradient(155deg, rgba(20, 48, 33, 0.96), rgba(20, 48, 33, 0.96));
+  border-left: 1px solid rgba(201, 162, 39, 0.45);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.45);
+}
+
+/* desktop placement: the hero's empty right-hand column */
+.da-announce-desk {
+  position: fixed;
+  right: 30px;
+  bottom: 34px;
+  z-index: 45;
+  width: min(430px, calc(100vw - 60px));
+}
+
+/* phone dock + sheet, hidden on desktop */
+.da-announce-dock,
+.da-announce-scrim { display: none; }
+
+.da-dock-bubble {
+  position: relative;
+  padding: 9px 15px;
+  border-radius: 999px 999px 4px 999px;
+  background: linear-gradient(150deg, #e8c765, #c9a227);
+  color: #16210f;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -8px rgba(201, 162, 39, 0.8);
+}
+
+.da-sheet-x {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(246, 243, 234, 0.08);
+  border: 1px solid rgba(246, 243, 234, 0.2);
+  color: #f6f3ea;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .da-announce-desk { display: none; }
+
+  .da-announce-dock {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    position: fixed;
+    right: 14px;
+    bottom: 16px;
+    z-index: 46;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .da-announce-scrim {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    padding: 20px;
+    background: rgba(5, 14, 10, 0.62);
+    backdrop-filter: blur(9px) saturate(130%);
+  }
+
+  .da-announce-sheet {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: 86vh;
+    overflow-y: auto;
+    padding: 26px 22px 24px;
+    border-radius: 22px;
+    background: linear-gradient(160deg, #143021, #0b1e14);
+    border: 1px solid rgba(201, 162, 39, 0.45);
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9);
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .da-mega, .da-wave-1, .da-wave-2, .da-wave-3 { animation: none !important; }
+  .da-wave-1, .da-wave-2, .da-wave-3 { opacity: 0.6; }
 }
 
 /* ══════════════════════════════════════════════════════════════════

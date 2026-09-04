@@ -496,20 +496,24 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
               { v: monthly, label: "Monthly maintenance target" },
               { v: parking, label: "Parking lot renovation" },
             ].map((s) => (
-              <div key={s.label} style={{ background: "#0e2419", padding: "30px 20px" }}>
-                <div className="da-money" style={{ fontSize: "clamp(25px,2.5vw,33px)", marginBottom: 8 }}>{fmt(s.v)}</div>
-                <div style={{ fontSize: 12.5, lineHeight: 1.45, color: "rgba(246,243,234,0.6)" }}>{s.label}</div>
+              <div key={s.label} className="da-geo-tile" style={{ padding: "26px 16px", textAlign: "center" }}>
+                <div className="da-money" style={{ fontSize: "clamp(26px,2.6vw,34px)", marginBottom: 6 }}>{fmt(s.v)}</div>
+                <div style={{ fontSize: 12, lineHeight: 1.4, color: "rgba(246,243,234,0.62)" }}>{s.label}</div>
               </div>
             ))}
           </div>
-          <div style={{ background: "linear-gradient(120deg, rgba(201,162,39,0.22), rgba(201,162,39,0.1))", padding: "26px 28px", display: "flex", flexDirection: "column", gap: 10 }}>
-            <div style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Fun fact</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-              <div className="da-money da-money-cream" style={{ fontSize: "clamp(32px,3.2vw,42px)", whiteSpace: "nowrap" }}>$60</div>
-              <div style={{ width: 1, alignSelf: "stretch", background: "rgba(201,162,39,0.35)" }} />
-              <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "rgba(246,243,234,0.85)", fontWeight: 500 }}>If every family gave just $60 a month, it would cover the loan and running costs — together.</div>
-            </div>
-            <button onClick={onOpenMonthly60} className="da-btn da-btn-forest da-btn-sm" style={{ alignSelf: "flex-start" }}>
+
+          <div className="da-funfact">
+            <span className="da-funfact-label">
+              <span aria-hidden style={{ fontSize: 11 }}>✦</span>
+              Fun fact
+            </span>
+            <div className="da-money da-money-cream" style={{ fontSize: "clamp(44px,5vw,58px)", lineHeight: 1, marginBottom: 12 }}>$60</div>
+            <div className="da-funfact-rule" aria-hidden />
+            <p style={{ fontSize: 13.8, lineHeight: 1.6, color: "rgba(246,243,234,0.86)", fontWeight: 500, margin: "0 auto 20px", maxWidth: 340 }}>
+              If every family gave just $60 a month, it would cover the loan and running costs — together.
+            </p>
+            <button onClick={onOpenMonthly60} className="da-btn da-btn-forest da-btn-sm">
               I can do that — give $60/month
             </button>
           </div>
