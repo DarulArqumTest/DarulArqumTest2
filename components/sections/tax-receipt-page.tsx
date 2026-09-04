@@ -174,7 +174,7 @@ export function TaxReceiptPage() {
 
             <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(201,162,39,0.1), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.22)", padding: 22 }}>
               <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 16 }}>Donor details</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              <div className="da-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Full legal name</span>
                   <input name="Full legal name" required style={inputStyle} />
@@ -220,8 +220,8 @@ export function TaxReceiptPage() {
                   <span style={labelStyle}>Street address</span>
                   <input name="Street address" required style={inputStyle} />
                 </label>
-                <div style={{ display: "grid", gridTemplateColumns: "1.6fr 0.85fr 1fr", gap: 10 }}>
-                  <label style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
+                <div className="da-addr-grid" style={{ display: "grid", gridTemplateColumns: "1.6fr 0.85fr 1fr", gap: 10 }}>
+                  <label className="da-addr-city" style={{ display: "flex", flexDirection: "column", gap: 6, minWidth: 0 }}>
                     <span style={labelStyle}>City</span>
                     <input name="City" required style={{ ...inputStyle, padding: "11px 10px" }} />
                   </label>

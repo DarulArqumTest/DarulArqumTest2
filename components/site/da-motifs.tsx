@@ -29,6 +29,7 @@ export function EdgeMargin({ side }: { side: "left" | "right" }) {
   return (
     <div
       aria-hidden
+      className="da-edge-margin"
       style={
         {
           position: "fixed",

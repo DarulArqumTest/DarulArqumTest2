@@ -103,9 +103,9 @@ body { overflow-x: hidden; }
   .da-iqama-now { transform: translateX(-50%) scale(0.7) !important; }
 }
 
-/* Home giving section: 3 stat columns (added a 3rd for the $10k target)
-   overflow past the viewport on phones. Stack to one column instead. */
-@media (max-width: 480px) {
+/* Home giving section: a 2x2 stat block. Six-figure amounts need the full
+   card width on a phone, so collapse to a single column there. */
+@media (max-width: 440px) {
   .da-giving-stats-grid { grid-template-columns: 1fr !important; }
 }
 
@@ -119,10 +119,347 @@ body { overflow-x: hidden; }
   .da-tv-base { width: 130px !important; }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE SWEEP
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Edge vignette strips ──
+   Two fixed 34px shadow strips frame the page on desktop. On a 375px
+   phone that is 68px — 18% of the screen — of dead margin, which is
+   what made every section look indented and cramped. Taper them with
+   the viewport and drop them entirely on phones, where there is no
+   spare width to spend on decoration. */
+@media (max-width: 1024px) { .da-edge-margin { width: 18px !important; } }
+@media (max-width: 760px)  { .da-edge-margin { display: none !important; } }
+
+/* ── Hero newsletter card ──
+   The icon lives in a padded white tile with the glyph set to `contain`,
+   so nothing is cropped the way the old circle-masked PNG was. */
+.da-news-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  padding: 7px;
+  background: linear-gradient(160deg, #fdfbf5, #ece5d3);
+  border: 1px solid rgba(227, 197, 106, 0.6);
+  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 520px) {
+  .da-news-card { gap: 13px !important; padding: 16px !important; }
+  .da-news-body { flex: 1 1 100% !important; }
+  .da-news-card .da-btn { width: 100%; }
+}
+
+/* ── Global overflow guard ──
+   Nothing should be able to push the document wider than the screen. */
+@media (max-width: 760px) {
+  img, svg, video, iframe, canvas { max-width: 100%; }
+}
+
+/* ── Section rhythm ──
+   Sections hard-code `padding: 120px 28px`. On phones the 28px side
+   padding stacks on top of card padding and eats the line length, and
+   120px of vertical air makes the page feel endless. Tighten both. */
+@media (max-width: 760px) {
+  .da-section, section[id="giving-section"], section[id="programs-section"],
+  section[id="contact-us"], section[id="west-announcement"] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+}
+@media (max-width: 420px) {
+  .da-section, section[id="giving-section"], section[id="programs-section"],
+  section[id="contact-us"], section[id="west-announcement"] {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+  }
+}
+
+/* ── Long strings ──
+   Emails, addresses and account numbers are the usual culprits for
+   text escaping its card. Let them break rather than overflow. */
+.da-wrap-any { overflow-wrap: anywhere; word-break: break-word; }
+@media (max-width: 560px) {
+  .da-nowrap-desktop { white-space: normal !important; }
+}
+
+/* ── Darul Arqum West announcement ── */
+@media (max-width: 900px) {
+  .da-west-grid { grid-template-columns: 1fr !important; }
+  .da-west-art { order: -1; }
+}
+@media (max-width: 480px) {
+  .da-west-cta { flex-direction: column; align-items: stretch; }
+  .da-west-cta .da-btn { width: 100%; }
+}
+
+/* ── Locations page panels ── */
+@media (max-width: 860px) {
+  .da-loc-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  .da-loc-cta { flex-direction: column; align-items: stretch; }
+  .da-loc-cta .da-btn { width: 100%; }
+}
+
+/* ── Prayer times "next iqama" pill ──
+   Fixed, centred and `white-space: nowrap`, so its ~430px of content
+   overflowed both edges of a 375px phone and got sliced. Let it wrap
+   inside the viewport instead of spilling out of it. */
+@media (max-width: 620px) {
+  .da-iqama-pill {
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    white-space: normal !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 3px !important;
+    column-gap: 7px !important;
+    padding: 9px 14px !important;
+    text-align: center;
+  }
+  .da-iqama-pill > * { font-size: 11.5px !important; }
+}
+
+/* ── Home WhatsApp card ──
+   Icon + copy + button on one row leaves the paragraph ~120px of space
+   at phone width, so it spilled past the card edge. Stack it. */
+@media (max-width: 620px) {
+  .da-wa-card { flex-direction: column; align-items: flex-start; gap: 14px !important; padding: 20px 18px !important; }
+  .da-wa-card-body { min-width: 0 !important; width: 100%; }
+  .da-wa-card .da-btn { width: 100%; }
+}
+
+/* ── Tax receipt address row ──
+   `1.6fr 0.85fr 1fr` squeezes the Province and Postal code columns until
+   their labels collide. Two rows on phones, one column on the narrowest. */
+@media (max-width: 640px) {
+  .da-addr-grid { grid-template-columns: 1fr 1fr !important; }
+  .da-addr-city { grid-column: 1 / -1; }
+}
+@media (max-width: 380px) {
+  .da-addr-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 640px) {
+  .da-form-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── PAD form download button ──
+   With the card stacked, the label wrapped onto four lines and
+   `border-radius: 999px` turned the near-square result into a circle.
+   Keep it a pill: full width, one line, capped radius. */
+@media (max-width: 480px) {
+  .da-pad-btn {
+    display: flex !important;
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 999px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .amb, .amb * { animation: none !important; }
   .da-donate-glow { animation: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Button system
+   ──────────────────────────────────────────────────────────────────
+   The site's CTAs were flat single-colour pills, which read cheap next
+   to the rest of the design. These give every button the same physical
+   vocabulary: a soft vertical gradient, a lit top bevel, a two-layer
+   shadow (tight contact + wide ambient), a lift on hover and a real
+   press state. `.da-btn` also guarantees a 44px touch target and
+   never lets a label wrap into a blob on narrow screens.
+   ══════════════════════════════════════════════════════════════════ */
+.da-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+/* travelling sheen, revealed on hover */
+.da-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.42) 50%, transparent 62%);
+  transform: translateX(-130%);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.da-btn:hover::after { transform: translateX(130%); }
+
+.da-btn:hover { transform: translateY(-2px); }
+.da-btn:active { transform: translateY(0); transition-duration: 0.08s; }
+
+/* Primary — gold */
+.da-btn-gold {
+  background: linear-gradient(180deg, #e8c765 0%, #c9a227 52%, #ac8a1e 100%);
+  color: #16210f;
+  border-color: rgba(255, 240, 190, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 249, 227, 0.6),
+    inset 0 -1px 0 rgba(90, 66, 8, 0.35),
+    0 2px 5px rgba(0, 0, 0, 0.3),
+    0 12px 26px -10px rgba(201, 162, 39, 0.7);
+}
+.da-btn-gold:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 249, 227, 0.75),
+    inset 0 -1px 0 rgba(90, 66, 8, 0.35),
+    0 3px 7px rgba(0, 0, 0, 0.32),
+    0 20px 38px -12px rgba(201, 162, 39, 0.85);
+}
+
+/* Secondary — glass outline on dark */
+.da-btn-ghost {
+  background: linear-gradient(180deg, rgba(246, 243, 234, 0.11), rgba(246, 243, 234, 0.04));
+  color: #f6f3ea;
+  border-color: rgba(246, 243, 234, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 2px 5px rgba(0, 0, 0, 0.22),
+    0 12px 26px -14px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+.da-btn-ghost:hover {
+  border-color: rgba(227, 197, 106, 0.65);
+  color: #f7ecc9;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 3px 7px rgba(0, 0, 0, 0.26),
+    0 18px 34px -14px rgba(201, 162, 39, 0.5);
+}
+.da-btn-ghost::after {
+  background: linear-gradient(105deg, transparent 38%, rgba(227, 197, 106, 0.3) 50%, transparent 62%);
+}
+
+/* Tertiary — deep forest chip that sits on gold panels */
+.da-btn-forest {
+  background: linear-gradient(180deg, #17402c 0%, #0e2419 100%);
+  color: #f6f3ea;
+  border-color: rgba(227, 197, 106, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 2px 5px rgba(0, 0, 0, 0.3),
+    0 12px 24px -12px rgba(0, 0, 0, 0.7);
+}
+.da-btn-forest:hover {
+  border-color: rgba(227, 197, 106, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 3px 8px rgba(0, 0, 0, 0.34),
+    0 18px 32px -12px rgba(201, 162, 39, 0.45);
+}
+
+/* WhatsApp / mint */
+.da-btn-green {
+  background: linear-gradient(180deg, #38e07b 0%, #25d366 55%, #1cb356 100%);
+  color: #08280f;
+  border-color: rgba(198, 255, 219, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(232, 255, 240, 0.6),
+    0 2px 5px rgba(0, 0, 0, 0.28),
+    0 12px 26px -10px rgba(37, 211, 102, 0.62);
+}
+.da-btn-green:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(232, 255, 240, 0.75),
+    0 3px 7px rgba(0, 0, 0, 0.3),
+    0 20px 38px -12px rgba(37, 211, 102, 0.8);
+}
+
+/* Ice blue — PAD form download */
+.da-btn-ice {
+  background: linear-gradient(180deg, #e8f5fa 0%, #b7d4e3 52%, #8fb4c9 100%);
+  color: #0d2a1c;
+  border-color: rgba(245, 252, 255, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 2px 5px rgba(0, 0, 0, 0.26),
+    0 12px 26px -10px rgba(143, 180, 201, 0.66);
+}
+.da-btn-ice:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 3px 7px rgba(0, 0, 0, 0.28),
+    0 20px 38px -12px rgba(143, 180, 201, 0.85);
+}
+
+/* Size variants */
+.da-btn-sm { min-height: 38px; padding: 9px 18px; font-size: 12.5px; gap: 7px; }
+.da-btn-lg { min-height: 54px; padding: 16px 34px; font-size: 16px; }
+.da-btn-block { width: 100%; }
+
+@media (max-width: 420px) {
+  .da-btn { padding: 12px 20px; font-size: 13.5px; }
+  .da-btn-lg { min-height: 48px; padding: 14px 24px; font-size: 14.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .da-btn, .da-btn::after { transition: none !important; }
+  .da-btn:hover { transform: none; }
+  .da-btn:hover::after { transform: translateX(-130%); }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Money numerals
+   Currency figures are the emotional centre of the giving sections, so
+   they get real typographic treatment: lining tabular figures (so
+   digits don't jitter while counting up), a warm vertical gradient
+   through the glyphs and a soft gold bloom behind them.
+   ══════════════════════════════════════════════════════════════════ */
+.da-money {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+  letter-spacing: 0.005em;
+  background-image: linear-gradient(175deg, #f7e6b0 0%, #e3c56a 42%, #c9a227 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 26px rgba(201, 162, 39, 0.42);
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+}
+.da-money-cream {
+  background-image: linear-gradient(175deg, #ffffff 0%, #f6f3ea 45%, #ddd3b6 100%);
+  text-shadow: 0 0 24px rgba(246, 243, 234, 0.32);
 }
 
 ::selection { background: var(--moss); color: var(--bone); }

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { X, Copy, Check } from "lucide-react";
-import { ORG } from "@/lib/links";
+import { ORG, EXT } from "@/lib/links";
 import {
   PROGRAM_INFO,
   PROGRAM_ACCENT,
@@ -448,7 +448,10 @@ function WelearnDesk({ onClick }: { onClick: () => void }) {
 export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { onOpenOnce: () => void; onOpenMonthly: () => void; onOpenMonthly60: () => void }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.25 });
-  const [monthly, parking, qard] = useCountUp([ORG.finances.monthlyExpenses, 20000, 144000], inView);
+  const [monthly, parking, qard, total] = useCountUp(
+    [ORG.finances.monthlyExpenses, ORG.finances.parkingLot, ORG.finances.loanRemaining, ORG.finances.loanTotal],
+    inView,
+  );
   const ease = [0.16, 0.8, 0.4, 1] as const;
   const ctx = React.useContext(HomeHighlightContext);
 
@@ -471,10 +474,10 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
             The community purchased this property outright in 2020 and carries a Qard-e-Hasan.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.3, ease }} style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
-            <button onClick={onOpenOnce} style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 15, padding: "15px 28px", borderRadius: 999, border: "none", cursor: "pointer" }}>
+            <button onClick={onOpenOnce} className="da-btn da-btn-gold da-btn-lg">
               Donate now <span aria-hidden="true">↗</span>
             </button>
-            <button onClick={onOpenMonthly} style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "transparent", color: "#f6f3ea", fontWeight: 500, fontSize: 15, padding: "15px 28px", borderRadius: 999, border: "1px solid rgba(246,243,234,0.3)", cursor: "pointer" }}>
+            <button onClick={onOpenMonthly} className="da-btn da-btn-ghost da-btn-lg">
               Set up a monthly pledge
             </button>
           </motion.div>
@@ -486,28 +489,27 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
           transition={{ duration: 0.8, delay: 0.15, ease }}
           style={{ flex: "1 1 320px", minWidth: 280, display: "flex", flexDirection: "column", gap: 1, background: "rgba(246,243,234,0.12)", border: "1px solid rgba(201,162,39,0.28)", borderRadius: 16, overflow: "hidden" }}
         >
-          <div className="da-giving-stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
-            <div style={{ background: "#0e2419", padding: "32px 20px" }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(monthly)}</div>
-              <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Monthly maintenance target</div>
-            </div>
-            <div style={{ background: "#0e2419", padding: "32px 20px" }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(parking)}</div>
-              <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Parking lot renovation</div>
-            </div>
-            <div style={{ background: "#0e2419", padding: "32px 20px" }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(24px,2.4vw,32px)", color: "#c9a227", marginBottom: 8, fontVariantNumeric: "tabular-nums" }}>{fmt(qard)}</div>
-              <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Qard-e-Hasan remaining</div>
-            </div>
+          <div className="da-giving-stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
+            {[
+              { v: total, label: "Total loan to repay" },
+              { v: qard, label: "Qard-e-Hasan remaining" },
+              { v: monthly, label: "Monthly maintenance target" },
+              { v: parking, label: "Parking lot renovation" },
+            ].map((s) => (
+              <div key={s.label} style={{ background: "#0e2419", padding: "30px 20px" }}>
+                <div className="da-money" style={{ fontSize: "clamp(25px,2.5vw,33px)", marginBottom: 8 }}>{fmt(s.v)}</div>
+                <div style={{ fontSize: 12.5, lineHeight: 1.45, color: "rgba(246,243,234,0.6)" }}>{s.label}</div>
+              </div>
+            ))}
           </div>
           <div style={{ background: "linear-gradient(120deg, rgba(201,162,39,0.22), rgba(201,162,39,0.1))", padding: "26px 28px", display: "flex", flexDirection: "column", gap: 10 }}>
             <div style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Fun fact</div>
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(30px,3vw,38px)", color: "#f6f3ea", whiteSpace: "nowrap" }}>$60</div>
+              <div className="da-money da-money-cream" style={{ fontSize: "clamp(32px,3.2vw,42px)", whiteSpace: "nowrap" }}>$60</div>
               <div style={{ width: 1, alignSelf: "stretch", background: "rgba(201,162,39,0.35)" }} />
               <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "rgba(246,243,234,0.85)", fontWeight: 500 }}>If every family gave just $60 a month, it would cover the loan and running costs — together.</div>
             </div>
-            <button onClick={onOpenMonthly60} style={{ alignSelf: "flex-start", background: "#0e2419", color: "#f6f3ea", border: "1px solid rgba(201,162,39,0.4)", fontSize: 12.5, fontWeight: 600, padding: "9px 18px", borderRadius: 999, cursor: "pointer" }}>
+            <button onClick={onOpenMonthly60} className="da-btn da-btn-forest da-btn-sm" style={{ alignSelf: "flex-start" }}>
               I can do that — give $60/month
             </button>
           </div>
@@ -616,17 +618,17 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
             </div>
           </motion.div>
 
-          <div id="whatsapp-section" style={{ position: "relative", marginTop: 20, display: "flex", alignItems: "center", gap: 22, flexWrap: "wrap", padding: "26px 30px", borderRadius: 20, background: "linear-gradient(120deg, rgba(80,160,120,0.14), rgba(80,160,120,0.04))", border: "1px solid rgba(120,190,150,0.25)" }}>
+          <div id="whatsapp-section" className="da-wa-card" style={{ position: "relative", marginTop: 20, display: "flex", alignItems: "center", gap: 22, flexWrap: "wrap", padding: "26px 30px", borderRadius: 20, background: "linear-gradient(120deg, rgba(80,160,120,0.14), rgba(80,160,120,0.04))", border: "1px solid rgba(120,190,150,0.25)" }}>
             <div style={{ width: 52, height: 52, flexShrink: 0, borderRadius: 999, overflow: "hidden" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/assets/whatsapp-icon.png" alt="WhatsApp" style={{ width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.16)" }} />
             </div>
-            <div style={{ flex: 1, minWidth: 240 }}>
+            <div className="da-wa-card-body" style={{ flex: 1, minWidth: 240 }}>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", margin: "0 0 4px 0" }}>New to the community?</h3>
-              <p style={{ fontSize: 13.5, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements — or come see the masjid. Everyone is welcome.</p>
+              <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements — or come see the masjid. Everyone is welcome.</p>
             </div>
-            <a href="https://chat.whatsapp.com/F7LaeeNTGIlBPxJndDpEny" target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0, background: "#25D366", color: "#0e2419", fontWeight: 600, fontSize: 13.5, padding: "12px 22px", borderRadius: 999 }}>
-              Join the group ↗
+            <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-green da-btn-sm" style={{ flexShrink: 0 }}>
+              Join the group <span aria-hidden="true">↗</span>
             </a>
             {ctx && <SectionSpotlight id="whatsapp-section" nonce={ctx.nonce} active={ctx.isHighlighted("whatsapp-section")} />}
           </div>
@@ -649,7 +651,7 @@ function CopyBtn({ label, value }: { label: string; value: string }) {
           setTimeout(() => setCopied(false), 2000);
         });
       }}
-      style={{ background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 11, fontWeight: 600, padding: "5px 10px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}
+      style={{ display: "inline-flex", alignItems: "center", minHeight: 34, background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 11.5, fontWeight: 600, padding: "6px 13px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}
     >
       {copied ? "Copied ✓" : label}
     </button>
@@ -689,7 +691,7 @@ export function ContactSection() {
                     <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the masjid</div>
                     <div style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 600 }}>4269 Limebank Rd, Ottawa, ON K1V 1G5</div>
                   </div>
-                  <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0, background: "#c9a227", color: "#0e2419", fontWeight: 700, fontSize: 13, padding: "11px 20px", borderRadius: 999 }}>
+                  <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm" style={{ flexShrink: 0 }}>
                     Get directions ↗
                   </a>
                 </div>
@@ -708,7 +710,7 @@ export function ContactSection() {
                     <span style={{ fontSize: 15, color: "#f6f3ea", fontWeight: 700 }}>613-709-2329</span>
                     <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
                       <CopyBtn label="Copy" value="613-709-2329" />
-                      <a href="tel:+16137092329" style={{ display: "inline-flex", alignItems: "center", background: "#7cc99a", color: "#0e2419", fontWeight: 700, fontSize: 11, padding: "6px 12px", borderRadius: 999, whiteSpace: "nowrap" }}>
+                      <a href="tel:+16137092329" style={{ display: "inline-flex", alignItems: "center", minHeight: 34, background: "#7cc99a", color: "#0e2419", fontWeight: 700, fontSize: 11.5, padding: "6px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>
                         Call ↗
                       </a>
                     </div>

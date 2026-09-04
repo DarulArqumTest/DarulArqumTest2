@@ -164,8 +164,7 @@ export function PadFormPage() {
               href={EXT.padFormPdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="da-pad-btn"
-              style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#d7ebf3,#8fb4c9)", color: "#0e2419", fontWeight: 800, fontSize: 14, padding: "11px 22px", borderRadius: 999, boxShadow: "0 14px 30px -8px rgba(143,180,201,0.45)" }}
+              className="da-pad-btn da-btn da-btn-ice da-btn-sm"
             >
               Open PAD form (PDF) <span aria-hidden="true">→</span>
             </a>

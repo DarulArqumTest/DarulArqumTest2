@@ -9,6 +9,7 @@ import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ORG, R } from "@/lib/links";
 import { DonateMenu } from "@/components/site/donate-menu";
+import { LocationsMenu, LocationsMobileList } from "@/components/site/locations-menu";
 import { requestSectionScroll, type ScrollTargetId } from "@/components/site/use-scroll-highlight";
 
 type NavItem = { label: string; href: string } | { label: string; sectionId: ScrollTargetId };
@@ -87,6 +88,7 @@ export function Navbar() {
           aria-label="Primary"
         >
           <span className="absolute left-1/2 top-[5px] -translate-x-1/2 text-[8px] text-da-gold/55">✦</span>
+          <LocationsMenu />
           {NAV.map((item) => (
             <NavLink
               key={item.label}
@@ -129,6 +131,9 @@ export function Navbar() {
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
               className="space-y-1 px-5 pb-6 pt-2"
             >
+              <motion.div variants={{ hidden: { opacity: 0, x: -14 }, show: { opacity: 1, x: 0 } }}>
+                <LocationsMobileList onNavigate={() => setOpen(false)} />
+              </motion.div>
               {NAV.map((item) => (
                 <motion.div
                   key={item.label}

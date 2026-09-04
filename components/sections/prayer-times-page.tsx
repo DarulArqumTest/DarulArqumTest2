@@ -5,6 +5,7 @@
 import * as React from "react";
 import { Twinkle, Lantern, GeoMedallion } from "@/components/sections/home-literal";
 import { PRAYERS, SHURUQ, nextPrayer, activePrayerKey } from "@/lib/prayer";
+import { EXT } from "@/lib/links";
 
 function useNow(intervalMs = 30000) {
   const [now, setNow] = React.useState<Date | null>(null);
@@ -173,7 +174,7 @@ function IqamaPill() {
   const h = Math.floor(next.minutesUntil / 60);
   const m = next.minutesUntil % 60;
   return (
-    <div style={{ position: "fixed", top: 70, left: "50%", transform: "translateX(-50%)", zIndex: 25, display: "inline-flex", alignItems: "center", gap: 10, padding: "10px 20px", borderRadius: 999, background: "rgba(14,36,25,0.9)", backdropFilter: "blur(10px) saturate(140%)", border: "1px solid rgba(201,162,39,0.35)", boxShadow: "0 14px 30px -10px rgba(0,0,0,0.5)", whiteSpace: "nowrap" }}>
+    <div className="da-iqama-pill" style={{ position: "fixed", top: 70, left: "50%", transform: "translateX(-50%)", zIndex: 25, display: "inline-flex", alignItems: "center", gap: 10, padding: "10px 20px", borderRadius: 999, background: "rgba(14,36,25,0.9)", backdropFilter: "blur(10px) saturate(140%)", border: "1px solid rgba(201,162,39,0.35)", boxShadow: "0 14px 30px -10px rgba(0,0,0,0.5)", whiteSpace: "nowrap" }}>
       <span className="da-live-pulse" style={{ width: 7, height: 7, borderRadius: 999, background: "#c9a227", flexShrink: 0 }} />
       <span style={{ fontSize: 12, color: "rgba(246,243,234,0.6)" }}>Next iqama</span>
       <span style={{ fontSize: 13, color: "#f6f3ea", fontWeight: 600 }}>
@@ -331,7 +332,7 @@ export function PrayerTimesPage() {
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 100px", overflow: "hidden", background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(120,190,150,0.10), transparent 72%)" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", position: "relative", overflow: "hidden", borderRadius: 22 }}>
           <a
-            href="https://chat.whatsapp.com/F7LaeeNTGIlBPxJndDpEny"
+            href={EXT.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             style={{ position: "relative", display: "flex", alignItems: "center", gap: 22, padding: "34px 36px", background: "linear-gradient(120deg, #163f2c, #0d2b1e)", border: "1.5px solid rgba(120,190,150,0.4)", borderRadius: 22, flexWrap: "wrap" }}

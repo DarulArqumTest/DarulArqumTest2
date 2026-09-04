@@ -280,6 +280,33 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
   );
 }
 
+/**
+ * Newsletter envelope mark. Drawn rather than bitmapped so it sits inside
+ * its tile with real padding — the previous card cropped a square PNG into
+ * a circle, which clipped the artwork and read as a mistake.
+ */
+function MailGlyph() {
+  return (
+    <svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden style={{ display: "block" }}>
+      <defs>
+        <linearGradient id="da-mail-body" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#e9e3d4" />
+        </linearGradient>
+      </defs>
+      {/* envelope back */}
+      <rect x="5" y="11" width="38" height="26" rx="4.5" fill="url(#da-mail-body)" />
+      {/* coloured inner chevrons — the "M" fold */}
+      <path d="M5 15.5 24 29 43 15.5v5.2L24 34 5 20.7Z" fill="#d94f3d" />
+      <path d="M5 15.5v5.2L14 27V19Z" fill="#e8b52e" />
+      <path d="M43 15.5v5.2L34 27V19Z" fill="#2f9e5c" />
+      <path d="M5 15.5 24 29 43 15.5" fill="none" stroke="#c9a227" strokeWidth="1.4" strokeLinejoin="round" />
+      {/* outline */}
+      <rect x="5" y="11" width="38" height="26" rx="4.5" fill="none" stroke="#b99a3c" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 /* ── Hero ─────────────────────────────────────────────────────── */
 
 function Hero({ revealed }: { revealed: boolean }) {
@@ -382,10 +409,13 @@ function Hero({ revealed }: { revealed: boolean }) {
                 e.preventDefault();
                 window.dispatchEvent(new CustomEvent("da:scroll-highlight", { detail: { id: "programs-section" } }));
               }}
-              style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 15, padding: "15px 28px", borderRadius: 999 }}
+              className="da-btn da-btn-gold da-btn-lg"
             >
               Programs &amp; news <span aria-hidden="true">→</span>
             </a>
+            <Link href={R.locations} className="da-btn da-btn-ghost da-btn-lg">
+              Our two locations <span aria-hidden="true">→</span>
+            </Link>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
@@ -442,22 +472,33 @@ function Hero({ revealed }: { revealed: boolean }) {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.34 }} style={{ marginTop: 14 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 13, padding: "16px 18px", borderRadius: 12, background: "rgba(201,162,39,0.07)", border: "1px solid rgba(201,162,39,0.25)" }}>
-              <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width={16} height={13} viewBox="0 0 26 18" aria-hidden>
-                  <rect x={1} y={1} width={24} height={16} rx={2.5} fill="none" stroke="#e3c56a" strokeWidth={1.8} />
-                  <path d="M1.5 2.5 L13 11 L24.5 2.5" fill="none" stroke="#e3c56a" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+            <div
+              className="da-news-card"
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: 16,
+                padding: "18px 20px",
+                borderRadius: 16,
+                background: "linear-gradient(125deg, rgba(201,162,39,0.14), rgba(201,162,39,0.05))",
+                border: "1px solid rgba(227,197,106,0.36)",
+                boxShadow: "0 22px 48px -26px rgba(0,0,0,0.7)",
+              }}
+            >
+              <span className="da-news-icon" aria-hidden>
+                <MailGlyph />
+              </span>
+              <div className="da-news-body" style={{ flex: "1 1 230px", minWidth: 0 }}>
+                <div style={{ fontSize: 14.5, fontWeight: 700, color: "#f6f3ea", marginBottom: 3, letterSpacing: "0.005em" }}>
+                  Don&apos;t miss what&apos;s next
+                </div>
+                <div style={{ fontSize: 12.8, lineHeight: 1.55, color: "rgba(246,243,234,0.68)" }}>
+                  Subscribe to our newsletter — for programs, fundraising milestones and masjid news.
+                </div>
               </div>
-              <div style={{ flex: "1 1 240px" }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>Don&apos;t miss what&apos;s next</div>
-                <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)" }}>Programs, fundraising milestones &amp; masjid news — a few times a year.</div>
-              </div>
-              <Link
-                href={R.newsletters}
-                style={{ flexShrink: 0, fontSize: 12.5, fontWeight: 600, color: "#e3c56a", padding: "8px 6px", whiteSpace: "nowrap" }}
-              >
-                Subscribe →
+              <Link href={R.newsletters} className="da-btn da-btn-gold da-btn-sm" style={{ flexShrink: 0 }}>
+                Subscribe <span aria-hidden="true">→</span>
               </Link>
             </div>
           </motion.div>

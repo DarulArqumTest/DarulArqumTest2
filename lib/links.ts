@@ -11,8 +11,8 @@ export const EXT = {
   mawaqitEmbed:
     "https://mawaqit.net/en/m/darul-arqum-ottawa-canada-ottawa-k1v-1g5-canada",
 
-  // Community
-  whatsapp: "https://chat.whatsapp.com/F7LaeeNTGIlBPxJndDpEny",
+  // Community — the org-wide announcements group (iqama changes, janazah, events).
+  whatsapp: "https://chat.whatsapp.com/G8CW0AUcDDWCDLhbxYQaJS",
   youtubeChannel: "https://www.youtube.com/channel/UCRSJNamNoeDsOlwzk8dMcvQ",
   youtubeIntro: "https://youtu.be/6wVEPBovOjI",
   welearnZoom: "https://zoom.us/j/93194466159",
@@ -45,12 +45,15 @@ export const ORG = {
   emailHref: "mailto:admin@darularqum.org",
   madrasaFeeEmail: "alaarifislamicins@gmail.com",
   charityReg: "709549687RR0001",
-  bank: { institution: "004 (TD)", transit: "32936", account: "5254632" },
+  bank: { institution: "004 (TD)", transit: "32936", account: "5254985" },
   jumua: { first: "1:30 PM", second: "2:30 PM" },
   finances: {
     propertyPrice: 665000,
     acquired: "July 30, 2020",
-    loanRemaining: 144000,
+    /** Qard-e-Hasan still outstanding. */
+    loanRemaining: 200000,
+    /** Total loan carried across both properties. */
+    loanTotal: 600000,
     monthlyExpenses: 10000,
     perFamily: 60,
     parkingLot: 20000,
@@ -63,9 +66,77 @@ export const ORG = {
   ],
 } as const;
 
+/**
+ * The two masjids. The original Limebank property is now "Darul Arqum East";
+ * the newly acquired Old Richmond Rd property is "Darul Arqum West".
+ *
+ * ADMIN-ACCESS FOLLOW-UP: `west.postal` and `west.mapsShort` are blank until
+ * the West property has its own Google Business listing — the address search
+ * URL below works in the meantime. `west.opens` is placeholder copy pending
+ * a confirmed opening date.
+ */
+export type LocationKey = "east" | "west";
+
+export type Location = {
+  key: LocationKey;
+  name: string;
+  short: string;
+  street: string;
+  city: string;
+  postal: string;
+  /** Full one-line address for display. */
+  address: string;
+  mapsUrl: string;
+  embedQuery: string;
+  status: "open" | "coming-soon";
+  statusLabel: string;
+  blurb: string;
+  accent: string;
+};
+
+export const LOCATIONS: Record<LocationKey, Location> = {
+  east: {
+    key: "east",
+    name: "Darul Arqum East",
+    short: "East",
+    street: "4269 Limebank Rd",
+    city: "Ottawa, ON",
+    postal: "K1V 1G5",
+    address: "4269 Limebank Rd, Ottawa, ON K1V 1G5",
+    mapsUrl: "https://maps.app.goo.gl/7WWyowUrajYGgNv16",
+    embedQuery: "Darul Arqum Markaz of Ottawa, 4269 Limebank Rd, Ottawa, ON K1V 1G5",
+    status: "open",
+    statusLabel: "Open daily",
+    blurb:
+      "The first masjid in Riverside South — acquired by the community in 2020. Five daily prayers in congregation, Jumu'ah, and the full Al-Arif madrasa.",
+    accent: "#c9a227",
+  },
+  west: {
+    key: "west",
+    name: "Darul Arqum West",
+    short: "West",
+    street: "6050 Old Richmond Rd",
+    city: "Ottawa, ON",
+    postal: "",
+    address: "6050 Old Richmond Rd, Ottawa, ON",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=6050+Old+Richmond+Rd+Ottawa+ON",
+    embedQuery: "6050 Old Richmond Rd, Ottawa, ON",
+    status: "coming-soon",
+    statusLabel: "Opening soon",
+    blurb:
+      "Our second masjid, newly acquired by the community. Prayer timings, programs and an opening date will be announced here and in the WhatsApp group.",
+    accent: "#a9e0c0",
+  },
+};
+
+export const LOCATION_LIST = [LOCATIONS.east, LOCATIONS.west] as const;
+
 /** Internal route map (new IA). Old slugs 301 in next.config.mjs. */
 export const R = {
   home: "/",
+  locations: "/locations",
+  locationEast: "/locations#east",
+  locationWest: "/locations#west",
   prayer: "/prayer-times",
   programs: "/programs",
   quran: "/programs/quran-classes",
