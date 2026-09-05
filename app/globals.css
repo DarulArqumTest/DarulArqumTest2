@@ -103,12 +103,6 @@ body { overflow-x: hidden; }
   .da-iqama-now { transform: translateX(-50%) scale(0.7) !important; }
 }
 
-/* Home giving section: a 2x2 stat block. Six-figure amounts need the full
-   card width on a phone, so collapse to a single column there. */
-@media (max-width: 440px) {
-  .da-giving-stats-grid { grid-template-columns: 1fr !important; }
-}
-
 /* Prayer times "TV": the masjid-screen embed is rendered at a fixed
    desktop-like width (so it keeps its horizontal landscape layout) and then
    visually scaled down to fit via MawaqitScreen — same technique as the
@@ -257,6 +251,99 @@ body { overflow-x: hidden; }
   .da-hero-cta > .da-btn { font-size: 12px; padding: 10px 8px; }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   Phone layout — its own design, not the desktop shrunk
+   ──────────────────────────────────────────────────────────────────
+   The desktop layout gives every element a generous block of its own.
+   Carried onto a phone that becomes a very long scroll of half-empty
+   rows. Below, each block gets a compact phone-specific arrangement:
+   facts become one-line rows, the cost breakdown becomes a tight 2x2,
+   and the programme cards lose their desktop-sized minimum heights.
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 760px) {
+  /* ── hero fact cards: title and value on ONE line each ── */
+  .da-hero-stats {
+    display: flex !important;
+    flex-direction: column;
+    gap: 7px !important;
+  }
+  .da-hero-stats > * {
+    flex: none !important;
+    width: 100%;
+    padding: 9px 13px !important;
+    gap: 10px !important;
+    border-radius: 11px !important;
+  }
+  .da-hero-stats > * > div:first-child {
+    width: 25px !important;
+    height: 25px !important;
+    font-size: 11px !important;
+  }
+  /* the label/value pair becomes a single justified row */
+  .da-hero-stats > * > div:nth-child(2) {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+  }
+  .da-hero-stats > * > div:nth-child(2) > div { margin-bottom: 0 !important; }
+  .da-hero-stats > * > div:nth-child(2) > div:first-child {
+    font-size: 12.5px !important;
+    white-space: nowrap;
+  }
+  .da-hero-stats > * > div:nth-child(2) > div:last-child {
+    font-size: 11.5px !important;
+    text-align: right;
+  }
+
+  /* ── giving CTAs: one row, not two ── */
+  .da-give-cta {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px !important;
+  }
+  .da-give-cta > .da-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 10px;
+    font-size: 12.5px;
+    gap: 5px;
+  }
+
+  /* ── cost breakdown: tight 2x2 rather than four tall bands ── */
+  .da-giving-stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .da-geo-tile { padding: 15px 8px !important; background-size: 44px 44px !important; }
+  .da-geo-tile .da-money { font-size: 22px !important; margin-bottom: 2px !important; }
+  .da-geo-tile > div:last-child { font-size: 10.5px !important; line-height: 1.3 !important; }
+
+  .da-funfact { padding: 18px 16px 16px !important; }
+  .da-funfact-label { margin-bottom: 10px !important; padding: 5px 12px !important; }
+  .da-funfact .da-money { font-size: 38px !important; margin-bottom: 8px !important; }
+  .da-funfact-rule { margin-bottom: 11px !important; }
+  .da-funfact p { font-size: 12.5px !important; margin-bottom: 14px !important; }
+
+  /* ── programmes: drop the desktop minimum heights ── */
+  .da-prog-head { padding: 18px 16px 14px !important; }
+  .da-prog-head h3 { font-size: 22px !important; }
+  .da-prog-head p { font-size: 12px !important; }
+  .da-prog-frame { padding: 6px !important; border-radius: 18px !important; }
+  .da-prog-list { gap: 10px !important; }
+  /* the desktop cards reserve 220-260px each for their photography; on a
+     phone that is most of the screen per card */
+  .da-prog-card { min-height: 150px !important; padding: 16px !important; }
+  .da-prog-card h3, .da-prog-card h4 { font-size: 18px !important; }
+  .da-prog-card p { font-size: 11.5px !important; line-height: 1.45 !important; }
+  /* the Quran card stacks two sub-panels on a phone; trim the panels only */
+  .da-prog-card [style*="flex: 1 1 200px"] { padding: 14px 15px !important; }
+}
+
+@media (max-width: 440px) {
+  .da-giving-stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .da-geo-tile .da-money { font-size: 20px !important; }
+}
+
 /* ── Section rhythm ──
    Sections hard-code `padding: 120px 28px`. On phones the 28px side
    padding stacks on top of card padding and eats the line length, and
@@ -319,6 +406,17 @@ body { overflow-x: hidden; }
   border-radius: 34px;
   padding: 24px 28px;
   box-shadow: 7px 9px 0 rgba(11, 26, 18, 0.5);
+}
+/* Bottom-exit tail: the same drawing rotated so it leaves the underside of a
+   wide bubble and points down-right at a horn sitting below it. */
+.da-cb-t-bottom .da-cb-tail {
+  right: auto;
+  left: 62%;
+  bottom: -40px;
+  width: 52px;
+  height: 54px;
+  transform: rotate(38deg);
+  transform-origin: 20% 20%;
 }
 .da-cb-tail {
   position: absolute;
@@ -406,15 +504,15 @@ body { overflow-x: hidden; }
    at ~1440. These steps keep the bubble inside the gutter at every size. */
 .da-hero-announce {
   position: absolute;
-  right: clamp(70px, 12vw, 210px);
+  right: clamp(84px, 14vw, 240px);
   top: 18vh;
   z-index: 3;
   width: 320px;
   display: block;
 }
-@media (min-width: 1400px) { .da-hero-announce { width: 345px; } }
-@media (min-width: 1660px) { .da-hero-announce { width: 400px; } }
-@media (min-width: 1900px) { .da-hero-announce { width: 450px; } }
+@media (min-width: 1400px) { .da-hero-announce { width: 300px; } }
+@media (min-width: 1660px) { .da-hero-announce { width: 370px; } }
+@media (min-width: 1900px) { .da-hero-announce { width: 430px; } }
 .da-hero-bubble { width: 100%; min-width: 0; }
 /* The horn hangs off the bubble's lower-right, where the tail actually
    points — not level with it. Positioned absolutely so its size never
@@ -508,21 +606,20 @@ body { overflow-x: hidden; }
   .da-dock-sheet {
     position: relative;
     width: 100%;
-    max-width: 350px;
+    max-width: 360px;
     max-height: 88vh;
-    /* room for the horn hanging off the lower-right */
-    /* right padding = horn offset + 0.6875*hornWidth + tail reach, which is
-       what puts the horn's mouth exactly on the tail's tip */
-    padding: 0 86px 74px 0;
+    /* A phone screen is portrait, so the desktop's side-by-side arrangement
+       cannot simply be scaled down. Here the bubble is a wide box and the
+       horn sits underneath it, with room reserved below for both. */
+    padding: 0 0 92px 0;
   }
-  .da-dock-sheet .da-cb-body { padding: 22px 20px; }
-  .da-dock-sheet .da-comic-title { font-size: 27px; }
-  .da-dock-sheet .da-comic-copy { font-size: 13px; }
-  .da-dock-sheet .da-comic-actions { flex-direction: column; align-items: stretch; }
+  .da-dock-sheet .da-cb-body { padding: 20px 20px 18px; border-radius: 28px; }
+  .da-dock-sheet .da-comic-title { font-size: 25px; }
+  .da-dock-sheet .da-comic-copy { font-size: 13px; margin-bottom: 13px; }
+  .da-dock-sheet .da-comic-actions { flex-direction: column; align-items: stretch; gap: 2px; }
   .da-dock-sheet .da-comic-cta { justify-content: center; }
-  .da-dock-sheet .da-cb-tail { right: -14px; bottom: 14px; width: 42px; height: 44px; }
-  /* horn at the tail's tip, mirroring the desktop arrangement */
-  .da-sheet-mega { position: absolute; right: 0; bottom: 40px; }
+  /* horn centred beneath the bubble, under the tail leaving its underside */
+  .da-sheet-mega { position: absolute; left: 50%; margin-left: -8px; bottom: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -22,14 +22,14 @@ export function ComicBubble({
   className = "",
 }: {
   children: ReactNode;
-  /** Side the tail points toward, or none for a plain bubble. */
-  tail?: "right" | "none";
+  /** Where the tail leaves the bubble, or none for a plain bubble. */
+  tail?: "right" | "bottom" | "none";
   className?: string;
 }) {
   return (
-    <div className={`da-cb ${className}`}>
+    <div className={`da-cb da-cb-t-${tail} ${className}`}>
       <div className="da-cb-body">{children}</div>
-      {tail === "right" && (
+      {tail !== "none" && (
         <svg className="da-cb-tail" viewBox="0 0 64 66" aria-hidden>
           {/* fill runs back past the body's edge so it hides the border */}
           <path d="M-6 4 C 14 24 32 42 60 62 C 34 50 12 38 -6 34 Z" fill="#fdfcf7" />

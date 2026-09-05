@@ -310,22 +310,6 @@ function NewsletterEnvelope() {
           <path d="M6 182 L26 164" />
         </g>
 
-        {/* dotted flight path — round caps make real dots, not dashes */}
-        <path
-          d="M170 132 C 200 124 216 104 212 84 C 209 66 188 64 184 82 C 179 104 204 116 228 108 C 252 100 264 80 266 58"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="6.5"
-          strokeLinecap="round"
-          strokeDasharray="0.5 15"
-        />
-
-        {/* paper aeroplane */}
-        <g transform="rotate(-12 276 34)">
-          <path d="M310 2 L252 52 L280 60 Z" fill="#fff" />
-          <path d="M310 2 L280 60 L296 80 Z" fill="#e5b3ac" />
-        </g>
-
         <g transform="rotate(-6 150 190)">
           {/* flap flung open, hinged behind the body — red inner face */}
           <path d="M58 146 C 96 136 206 136 244 146 L 158 52 Z" fill="#d1281c" />
@@ -350,6 +334,23 @@ function NewsletterEnvelope() {
             <path d="M96 266 C 118 270 146 271 164 269" />
           </g>
         </g>
+
+        {/* dotted flight path — round caps make real dots, not dashes */}
+        <path
+          d="M170 132 C 200 124 216 104 212 84 C 209 66 188 64 184 82 C 179 104 204 116 228 108 C 252 100 264 80 266 58"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="6.5"
+          strokeLinecap="round"
+          strokeDasharray="0.5 15"
+        />
+
+        {/* paper aeroplane */}
+        <g transform="rotate(-12 276 34)">
+          <path d="M310 2 L252 52 L280 60 Z" fill="#fff" />
+          <path d="M310 2 L280 60 L296 80 Z" fill="#e5b3ac" />
+        </g>
+
       </svg>
 
       <span className="da-env-words">

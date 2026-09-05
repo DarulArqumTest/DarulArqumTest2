@@ -184,9 +184,11 @@ export function WestAnnounceDock() {
               <button type="button" onClick={() => setExpanded(false)} aria-label="Close" className="da-sheet-x">
                 ✕
               </button>
-              {/* same composition as the desktop hero — bubble with its tail
-                  running into the horn at the lower right — just scaled down */}
-              <ComicBubble tail="right">
+              {/* A phone screen is portrait, so the desktop's side-by-side
+                  arrangement does not scale down cleanly. Here the bubble is a
+                  wide box with its tail leaving the underside, and the horn
+                  sits below it. */}
+              <ComicBubble tail="bottom">
                 <AnnounceBody onClose={close} />
               </ComicBubble>
               <div className="da-sheet-mega">

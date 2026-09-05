@@ -410,6 +410,7 @@ function WelearnDesk({ onClick }: { onClick: () => void }) {
   return (
     <div
       onClick={onClick}
+      className="da-prog-card"
       style={{ cursor: "pointer", position: "relative", minHeight: 220, padding: 0, borderRadius: 16, overflow: "hidden", background: "linear-gradient(100deg, #8a6a44 0%, #6b4f30 50%, #55391f 100%)", border: "1px solid rgba(201,162,39,0.3)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}
     >
       <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(100deg, rgba(0,0,0,0.08) 0px, transparent 2px, transparent 34px, rgba(0,0,0,0.08) 36px)", pointerEvents: "none" }} />
@@ -473,7 +474,7 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
           <motion.p initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.2, ease }} style={{ fontSize: 16, lineHeight: 1.7, color: "rgba(246,243,234,0.72)", maxWidth: 480, margin: "0 0 36px 0" }}>
             The community purchased this property outright in 2020 and carries a Qard-e-Hasan.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.3, ease }} style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
+          <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.3, ease }} className="da-give-cta" style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
             <button onClick={onOpenOnce} className="da-btn da-btn-gold da-btn-lg">
               Donate now <span aria-hidden="true">↗</span>
             </button>
@@ -553,17 +554,18 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
             We offer learning for every age, <span style={{ color: "#c9a227", fontStyle: "italic" }}>every week.</span>
           </motion.h2>
 
-          <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.18, ease }} style={{ position: "relative", borderRadius: 24, overflow: "hidden", border: "1px solid rgba(201,162,39,0.3)", background: "#0e2419", padding: 8 }}>
-            <div style={{ position: "relative", padding: "26px 30px 24px" }}>
+          <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.18, ease }} className="da-prog-frame" style={{ position: "relative", borderRadius: 24, overflow: "hidden", border: "1px solid rgba(201,162,39,0.3)", background: "#0e2419", padding: 8 }}>
+            <div className="da-prog-head" style={{ position: "relative", padding: "26px 30px 24px" }}>
               <div style={{ fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 600, marginBottom: 10 }}>Al-Arif Islamic Institute</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 30, color: "#f6f3ea", margin: "0 0 4px 0" }}>Five programs, one madrasa</h3>
               <p style={{ fontSize: 13.5, color: "rgba(246,243,234,0.55)", margin: 0 }}>Led by Mufti Taqi and our teaching team — choose the track that fits, at any age.</p>
             </div>
 
-            <div style={{ padding: "0 6px 6px", display: "flex", flexDirection: "column", gap: 16 }}>
+            <div className="da-prog-list" style={{ padding: "0 6px 6px", display: "flex", flexDirection: "column", gap: 16 }}>
               {/* Aalim — flagship */}
               <div
                 onClick={() => onOpen("aalim")}
+                className="da-prog-card"
                 style={{ cursor: "pointer", position: "relative", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 220, padding: "28px 34px", overflow: "hidden", borderRadius: 16, backgroundImage: "linear-gradient(100deg, rgba(8,18,13,0.92) 0%, rgba(9,18,13,0.6) 45%, rgba(9,18,13,0.25) 100%), url('/assets/program-aalim.jpg')", backgroundSize: "cover", backgroundPosition: "center 30%" }}
               >
                 <div style={{ position: "absolute", top: 26, right: 30, width: 48, height: 48, borderRadius: 999, background: "rgba(14,36,25,0.6)", border: "1.5px solid rgba(201,162,39,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -581,7 +583,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
               </div>
 
               {/* Quran Studies split hero */}
-              <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", minHeight: 260, display: "flex", flexDirection: "column", backgroundImage: "linear-gradient(190deg, rgba(8,18,13,0.45) 0%, rgba(9,18,13,0.8) 65%, #0e2419 95%), url('/assets/program-quran.jpg')", backgroundSize: "cover", backgroundPosition: "center 26%" }}>
+              <div className="da-prog-card" style={{ position: "relative", borderRadius: 16, overflow: "hidden", minHeight: 260, display: "flex", flexDirection: "column", backgroundImage: "linear-gradient(190deg, rgba(8,18,13,0.45) 0%, rgba(9,18,13,0.8) 65%, #0e2419 95%), url('/assets/program-quran.jpg')", backgroundSize: "cover", backgroundPosition: "center 26%" }}>
                 <div style={{ position: "relative", zIndex: 2, textAlign: "center", padding: "24px 16px 0", pointerEvents: "none" }}>
                   <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d98f4a", fontWeight: 700, marginBottom: 6 }}>Al-Arif Islamic Institute</div>
                   <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 24, color: "#f6f3ea", margin: 0 }}>Quran studies</h3>
@@ -608,6 +610,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
               <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
                 <div
                   onClick={() => onOpen("kids")}
+                  className="da-prog-card"
                   style={{ cursor: "pointer", position: "relative", minHeight: 220, padding: 22, borderRadius: 16, overflow: "hidden", backgroundImage: "linear-gradient(160deg, rgba(10,20,15,0.5) 0%, rgba(9,18,13,0.8) 40%, rgba(8,16,12,0.98) 65%, rgba(8,16,12,0.98) 100%), url('/assets/program-kids.jpg')", backgroundSize: "cover", backgroundPosition: "center 20%", border: "1px solid rgba(120,190,150,0.25)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}
                 >
                   <div style={{ fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700, marginBottom: 4 }}>Ages 5–10</div>
