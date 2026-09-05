@@ -411,12 +411,10 @@ body { overflow-x: hidden; }
    wide bubble and points down-right at a horn sitting below it. */
 .da-cb-t-bottom .da-cb-tail {
   right: auto;
-  left: 62%;
-  bottom: -40px;
-  width: 52px;
+  left: 58%;
+  bottom: -46px;
+  width: 56px;
   height: 54px;
-  transform: rotate(38deg);
-  transform-origin: 20% 20%;
 }
 .da-cb-tail {
   position: absolute;
@@ -513,7 +511,25 @@ body { overflow-x: hidden; }
 @media (min-width: 1400px) { .da-hero-announce { width: 300px; } }
 @media (min-width: 1660px) { .da-hero-announce { width: 370px; } }
 @media (min-width: 1900px) { .da-hero-announce { width: 430px; } }
-.da-hero-bubble { width: 100%; min-width: 0; }
+.da-hero-bubble {
+  /* Pulled in from the aside's right edge so the bubble stops at the horn's
+     OUTERMOST sound wave rather than overlapping it. The horn is anchored to
+     the aside, not the bubble, so it stays put; the tail below is lengthened
+     by the same amount to bridge the new gap. */
+  width: calc(100% - 40px);
+  min-width: 0;
+}
+.da-hero-announce .da-cb-tail { right: -76px; width: 94px; height: 97px; }
+/* The bubble is narrow enough here that the CTA's single line no longer fits;
+   let it fill the width and wrap rather than spill past the ink line. */
+.da-hero-announce .da-comic-cta {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  font-size: 13px;
+  padding: 10px 14px;
+}
 /* The horn hangs off the bubble's lower-right, where the tail actually
    points — not level with it. Positioned absolutely so its size never
    competes with the bubble for the gutter's width.
@@ -611,7 +627,7 @@ body { overflow-x: hidden; }
     /* A phone screen is portrait, so the desktop's side-by-side arrangement
        cannot simply be scaled down. Here the bubble is a wide box and the
        horn sits underneath it, with room reserved below for both. */
-    padding: 0 0 92px 0;
+    padding: 0 0 96px 0;
   }
   .da-dock-sheet .da-cb-body { padding: 20px 20px 18px; border-radius: 28px; }
   .da-dock-sheet .da-comic-title { font-size: 25px; }
@@ -619,7 +635,7 @@ body { overflow-x: hidden; }
   .da-dock-sheet .da-comic-actions { flex-direction: column; align-items: stretch; gap: 2px; }
   .da-dock-sheet .da-comic-cta { justify-content: center; }
   /* horn centred beneath the bubble, under the tail leaving its underside */
-  .da-sheet-mega { position: absolute; left: 50%; margin-left: -8px; bottom: 0; }
+  .da-sheet-mega { position: absolute; left: 50%; margin-left: 49px; bottom: -10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
