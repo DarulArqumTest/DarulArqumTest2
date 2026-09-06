@@ -65,10 +65,13 @@ const SHAPES = (
 export function MasjidProgress({
   repaid,
   total,
+  history,
   className,
 }: {
   repaid: number;
   total: number;
+  /** year-end outstanding balances, oldest first; drives the year label */
+  history?: { year: number; remaining: number }[];
   className?: string;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -83,25 +86,41 @@ export function MasjidProgress({
   const pct = total > 0 ? Math.max(0, Math.min(1, repaid / total)) : 0;
   const level = BOTTOM - pct * (BOTTOM - TOP);
 
-  // the figure counts up alongside the gold, so the number and the drawing
-  // arrive at the same answer at the same moment
+  /**
+   * The figure counts up alongside the gold, and the year runs with it, so
+   * the drawing reads as the repayment happening over time rather than as a
+   * bar that fills for no reason.
+   *
+   * The years come from ORG.finances.loanHistory. Only the two ends of that
+   * list are confirmed figures, so the run between them is a straight line —
+   * the honest shape of "we know where it started and where it is now".
+   */
   const [shown, setShown] = React.useState(0);
+  const [year, setYear] = React.useState<number | null>(null);
+  const firstYear = history?.[0]?.year ?? null;
+  const lastYear = history?.[history.length - 1]?.year ?? null;
+
   React.useEffect(() => {
     if (!inView) return;
     if (reduce) {
       setShown(repaid);
+      setYear(lastYear);
       return;
     }
     const t0 = performance.now();
     let raf = 0;
     const step = (now: number) => {
       const t = Math.min(1, (now - t0) / 1600);
-      setShown(Math.round(repaid * (1 - Math.pow(1 - t, 3))));
+      const e = 1 - Math.pow(1 - t, 3);
+      setShown(Math.round(repaid * e));
+      if (firstYear !== null && lastYear !== null) {
+        setYear(Math.round(firstYear + (lastYear - firstYear) * e));
+      }
       if (t < 1) raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [inView, reduce, repaid]);
+  }, [inView, reduce, repaid, firstYear, lastYear]);
 
   const rise = reduce
     ? { y: level }
@@ -213,6 +232,20 @@ export function MasjidProgress({
         <circle cx="266" cy="63" r="2.2" fill="#e3c56a" />
         <rect width={W} height={H} fill="#e3c56a" mask={`url(#${id("crescent")})`} />
       </svg>
+
+      {/* the years it took, run under the drawing as the gold rises */}
+      {firstYear !== null && lastYear !== null && (
+        <div className="da-mp-years" aria-hidden>
+          <span>{firstYear}</span>
+          <span className="da-mp-years-track">
+            <span className="da-mp-years-fill" style={{ width: `${pct * 100}%` }} />
+            <span className="da-mp-years-now" style={{ left: `${pct * 100}%` }}>
+              {year ?? firstYear}
+            </span>
+          </span>
+          <span>{lastYear}</span>
+        </div>
+      )}
 
       <div className="da-mp-read">
         <div className="da-mp-read-main">

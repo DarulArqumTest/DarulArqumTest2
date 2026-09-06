@@ -533,6 +533,7 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
             <MasjidProgress
               repaid={ORG.finances.loanTotal - ORG.finances.loanRemaining}
               total={ORG.finances.loanTotal}
+              history={ORG.finances.loanHistory}
             />
           </div>
 

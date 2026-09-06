@@ -56,6 +56,23 @@ export const ORG = {
     loanRemaining: 200000,
     /** Total loan carried across both properties. */
     loanTotal: 600000,
+    /**
+     * The repayment, year by year, for the animated masjid on the homepage.
+     *
+     * ADMIN NOTE: these two entries are the only figures anyone has
+     * confirmed — the loan as taken in 2020, and what is outstanding today.
+     * The line between them is drawn straight because nothing in between has
+     * been verified, NOT because that is what happened.
+     *
+     * To show the real shape of the repayment, add the actual year-end
+     * outstanding balances here and the drawing follows them. Do not put
+     * invented figures in this list: it is presented to donors as this
+     * charity's own accounts.
+     */
+    loanHistory: [
+      { year: 2020, remaining: 600000 },
+      { year: 2026, remaining: 200000 },
+    ] as { year: number; remaining: number }[],
     monthlyExpenses: 10000,
     perFamily: 60,
     parkingLot: 20000,
