@@ -12,7 +12,7 @@
  * that is fidgeting.
  */
 
-export type SuccessScene = "register" | "chair" | "coin" | "stamp";
+export type SuccessScene = "register" | "chair" | "coin" | "stamp" | "envelope";
 
 const C = {
   cream: "#f6f3ea",
@@ -139,6 +139,26 @@ const SCENES: Record<SuccessScene, React.ReactNode> = {
       </g>
       {/* the drop */}
       <path d="M100 36v6" stroke={C.gold} strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+    </>
+  ),
+
+  /* sealed and gone: the still version of the newsletter scene */
+  envelope: (
+    <>
+      <path d="M46 34h108v58a6 6 0 0 1-6 6H52a6 6 0 0 1-6-6Z" fill={C.paper} />
+      <path d="M46 34l54 38 54-38Z" fill={C.red} />
+      <path d="M46 92l40-30M154 92l-40-30" stroke="#e08076" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+      <path {...L} d="M46 34h108v58a6 6 0 0 1-6 6H52a6 6 0 0 1-6-6Z" />
+      {/* away it goes */}
+      <g fill="#fff" opacity="0.9">
+        <circle cx="160" cy="30" r="2.6" />
+        <circle cx="170" cy="24" r="2.6" />
+        <circle cx="180" cy="19" r="2.6" />
+      </g>
+      <g transform="rotate(-16 190 14)">
+        <path d="M200 2 L176 22 L188 26 Z" fill={C.cream} />
+        <path d="M200 2 L188 26 L194 34 Z" fill="#e5b3ac" />
+      </g>
     </>
   ),
 

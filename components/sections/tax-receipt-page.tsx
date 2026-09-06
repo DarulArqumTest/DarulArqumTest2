@@ -12,6 +12,7 @@ import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { motion } from "motion/react";
 import { Loader2 } from "lucide-react";
 import { SuccessArt } from "@/components/site/success-art";
+import { SuccessOverlay } from "@/components/site/success-overlay";
 import { submitForm } from "@/app/actions/submit";
 import { ORG, R } from "@/lib/links";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
@@ -46,6 +47,8 @@ const dotGrid: React.CSSProperties = {
 
 export function TaxReceiptPage() {
   const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
+  /** the full-screen stamp, played once */
+  const [stampScene, setStampScene] = React.useState(false);
   const [delivered, setDelivered] = React.useState(false);
   const [values, setValues] = React.useState<Record<string, string>>({});
   const [emailError, setEmailError] = React.useState("");
@@ -69,6 +72,7 @@ export function TaxReceiptPage() {
     if (res.ok) {
       setDelivered(res.delivered);
       setState("done");
+      setStampScene(true);
     } else setState("error");
   }
 
@@ -138,6 +142,7 @@ export function TaxReceiptPage() {
           </p>
         </div>
 
+        {stampScene && <SuccessOverlay scene="stamp" onClose={() => setStampScene(false)} />}
         {/* done: the receipt, stamped — same panel language as every other form */}
         {state === "done" ? (
           <motion.div

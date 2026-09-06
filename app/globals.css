@@ -3927,6 +3927,74 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
+   The success animation, over the whole screen
+   ──────────────────────────────────────────────────────────────────
+   The panels were drawn but still, and they sat where the form had
+   been — which on a phone is most of a page below the fold, so the
+   people most likely to miss the moment were the ones on the smallest
+   screens. It takes the screen instead, then hands the page back.
+   ══════════════════════════════════════════════════════════════════ */
+.da-sx {
+  position: fixed;
+  inset: 0;
+  /* above the sticky header, which sits at 50 */
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: pointer;
+  background: rgba(6, 18, 12, 0.72);
+  backdrop-filter: blur(18px) saturate(0.85);
+  -webkit-backdrop-filter: blur(18px) saturate(0.85);
+}
+.da-sx-stage {
+  width: min(88vw, 440px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.da-sx-art,
+.da-sx-env {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.55));
+}
+.da-sx-caption {
+  margin: 0;
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(24px, 5vw, 34px);
+  line-height: 1.1;
+  color: #f8f5ec;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6);
+}
+.da-sx-skip {
+  position: absolute;
+  right: 20px;
+  bottom: 22px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  background: rgba(246, 243, 234, 0.1);
+  border: 1px solid rgba(246, 243, 234, 0.28);
+  color: rgba(246, 243, 234, 0.8);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.da-sx-skip:hover { background: rgba(246, 243, 234, 0.16); color: #f6f3ea; }
+
+@media (max-width: 520px) {
+  .da-sx-stage { width: 92vw; gap: 18px; }
+  .da-sx-skip { right: 50%; transform: translateX(50%); bottom: 26px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
    Ramadan mode
    ──────────────────────────────────────────────────────────────────
    A night sky with the lanterns up across it. It only exists during

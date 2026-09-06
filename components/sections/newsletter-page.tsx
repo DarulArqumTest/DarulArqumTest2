@@ -55,8 +55,11 @@ export function NewsletterPage() {
     <div className="da-nl">
       {/* ── the envelope, at the size it was drawn for ── */}
       <header className="da-nl-hero">
+        {/* Shut, and nothing in the air. The letter has not been sent yet —
+            an open envelope with a plane already leaving was the end of the
+            story printed at the top of the page. */}
         <div className="da-nl-hero-art">
-          <NewsletterEnvelopeArt flying={sent && !reduce} />
+          <NewsletterEnvelopeArt fold={-1} flight={-1} />
         </div>
         <div className="da-nl-hero-text">
           <Breadcrumbs items={[{ label: "Newsletters" }]} className="mb-4" />
@@ -92,6 +95,7 @@ export function NewsletterPage() {
           emailField="email"
           phoneField={null}
           sections={FORM_SECTIONS}
+          doneScene="envelope"
           note="One list, run by the masjid. Your address is not shared with anyone, and every issue has a way off it."
           onSuccess={() => setSent(true)}
           renderDone={({ delivered, mailto }) => (

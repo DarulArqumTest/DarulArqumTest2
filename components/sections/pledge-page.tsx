@@ -14,6 +14,7 @@ import { ORG, R } from "@/lib/links";
 import { submitForm } from "@/app/actions/submit";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
 import { SuccessArt } from "@/components/site/success-art";
+import { SuccessOverlay } from "@/components/site/success-overlay";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
@@ -129,6 +130,8 @@ export function PledgePage() {
   const [padSignature, setPadSignature] = React.useState("");
   const [padComments, setPadComments] = React.useState("");
   const [padState, setPadState] = React.useState<"idle" | "busy" | "done">("idle");
+  /** the full-screen coin, played once */
+  const [padScene, setPadScene] = React.useState(false);
   const [padDelivered, setPadDelivered] = React.useState(false);
 
   const fillTimer = React.useRef<ReturnType<typeof setInterval> | null>(null);
@@ -211,6 +214,7 @@ export function PledgePage() {
     });
     if (res.ok) setPadDelivered(res.delivered);
     setPadState("done");
+    setPadScene(true);
   };
 
   const showIdentityFields = !anonymous || method === "bank";
@@ -560,6 +564,7 @@ export function PledgePage() {
                     <textarea value={padComments} onChange={(e) => setPadComments(e.target.value)} placeholder="Comments (optional)" rows={2} style={{ ...padInputStyle, gridColumn: "span 2", resize: "vertical" }} />
                   </div>
                   <p style={{ fontSize: 11.5, lineHeight: 1.6, color: "rgba(246,243,234,0.45)", margin: "4px 0 0 0" }}>By submitting, I authorize Darul Arqum to collect the above amount from my account, cancellable with 30 days&apos; notice.</p>
+                  {padScene && <SuccessOverlay scene="coin" onClose={() => setPadScene(false)} />}
                   {padState === "done" ? (
                     /* a coin going into a box that already has a few in it */
                     <div className="da-panel da-panel-flush da-form-done da-form-done-sm" style={{ ["--tint" as string]: "#e3c56a", marginTop: 6 }}>

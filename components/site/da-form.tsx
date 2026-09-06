@@ -26,6 +26,7 @@ import { ORG } from "@/lib/links";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
 import { Glyph, type GlyphName } from "@/components/site/program-glyphs";
 import { SuccessArt, type SuccessScene } from "@/components/site/success-art";
+import { SuccessOverlay } from "@/components/site/success-overlay";
 
 /* ── what a page declares ─────────────────────────────────────────── */
 
@@ -181,6 +182,8 @@ export function DaForm({
   const [values, setValues] = React.useState<Record<string, string>>({});
   const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [live, setLive] = React.useState<Record<string, string>>({});
+  /** the full-screen scene, shown once and then dismissed */
+  const [overlay, setOverlay] = React.useState(false);
 
   function validate(name: string, value: string) {
     if (name === emailField) return isValidEmail(value) ? "" : "Enter a valid email address.";
@@ -219,6 +222,7 @@ export function DaForm({
     if (res.ok) {
       setDelivered(res.delivered);
       setState("done");
+      setOverlay(true);
       onSuccess?.(res.delivered);
     } else setState("error");
   }
@@ -230,10 +234,20 @@ export function DaForm({
       .join("\n"),
   )}`;
 
-  if (state === "done" && renderDone) return <>{renderDone({ delivered, mailto })}</>;
+  const scene = overlay ? <SuccessOverlay scene={doneScene} onClose={() => setOverlay(false)} /> : null;
+
+  if (state === "done" && renderDone)
+    return (
+      <>
+        {scene}
+        {renderDone({ delivered, mailto })}
+      </>
+    );
 
   if (state === "done") {
     return (
+      <>
+        {scene}
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
@@ -257,7 +271,8 @@ export function DaForm({
             </a>
           )}
         </div>
-      </motion.div>
+        </motion.div>
+      </>
     );
   }
 
