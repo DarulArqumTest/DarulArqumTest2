@@ -46,7 +46,8 @@ export type GlyphName =
   | "star8"
   | "note"
   | "minbar"
-  | "congregation";
+  | "congregation"
+  | "camera";
 
 /* ── the palette, taken from the site's own art ───────────────────── */
 const C = {
@@ -361,6 +362,21 @@ const PATHS: Record<GlyphName, React.ReactNode> = {
       <path fill={C.gold} d="M8.5 4.2h1.4v3.4H8.5Z" />
       <circle fill={C.gold} cx="9.2" cy="3.4" r="1.05" />
       <path stroke={C.brass} strokeWidth={1.1} strokeLinecap="round" d="M6.6 12.2h5.2M6.6 15h5.2" opacity={0.8} />
+    </>
+  ),
+  /* a camera: charcoal body, brass ring, blue-green glass, a live red light */
+  camera: (
+    <>
+      <path fill={C.slate} d="M9.4 3.8h5.2l1.3 2.3h3.5A2.2 2.2 0 0 1 21.6 8.3v9.5a2.2 2.2 0 0 1-2.2 2.2H4.6a2.2 2.2 0 0 1-2.2-2.2V8.3a2.2 2.2 0 0 1 2.2-2.2h3.5Z" />
+      <path fill={C.ink} d="M2.4 8.3a2.2 2.2 0 0 1 2.2-2.2h3.5l.5-.9H4.6a2.2 2.2 0 0 0-2.2 2.2v9.5a2.2 2.2 0 0 0 2.2 2.2h1Z" opacity={0.55} />
+      <circle fill={C.brass} cx="12" cy="13" r="5.2" />
+      <circle fill={C.ink} cx="12" cy="13" r="4" />
+      <circle fill={C.slate} cx="12" cy="13" r="3" />
+      <circle fill={C.blue} cx="12" cy="13" r="1.9" />
+      <path fill={C.paper} d="M10.7 11.5a2 2 0 0 1 1.6-.8.55.55 0 0 1 0 1.1 .9.9 0 0 0-.75.4Z" opacity={0.9} />
+      <circle fill={C.red} cx="18.4" cy="9.2" r="1.05" />
+      <rect fill={C.gold} x="4.4" y="8.6" width="2.6" height="1.4" rx="0.7" />
+      <path {...L} d="M9.4 3.8h5.2l1.3 2.3h3.5A2.2 2.2 0 0 1 21.6 8.3v9.5a2.2 2.2 0 0 1-2.2 2.2H4.6a2.2 2.2 0 0 1-2.2-2.2V8.3a2.2 2.2 0 0 1 2.2-2.2h3.5Z" />
     </>
   ),
   /* the five daily prayers: rows standing under one green arch */

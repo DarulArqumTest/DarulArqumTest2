@@ -2645,19 +2645,7 @@ body { overflow-x: hidden; }
 .da-pd-all { font-size: 13px; font-weight: 600; color: #e3c56a; white-space: nowrap; }
 .da-pd-all:hover { color: #f3e2ad; }
 .da-pd-others { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.da-pd-other {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 15px 42px 15px 18px;
-  border-radius: 13px;
-  background: rgba(246, 243, 234, 0.045);
-  border: 1px solid rgba(246, 243, 234, 0.12);
-  border-left: 3px solid var(--accent);
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-.da-pd-other:hover { background: rgba(246, 243, 234, 0.08); transform: translateY(-2px); }
+/* superseded: the card is a banner + text panel, defined further down */
 .da-pd-other-name { font-family: "Cormorant Garamond", serif; font-size: 19px; font-weight: 600; color: #f6f3ea; }
 .da-pd-other-note { font-size: 12.5px; color: rgba(246, 243, 234, 0.55); }
 .da-pd-other-go { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 15px; }
@@ -3040,4 +3028,198 @@ body { overflow-x: hidden; }
 
 @media (max-width: 640px) {
   .da-formsec { padding: 16px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Panels with weight
+   ──────────────────────────────────────────────────────────────────
+   Replaces the pattern that had spread across the whole site: a
+   translucent tinted gradient behind a border of the same tint, with a
+   blur under it. Every one of those reads as the same soft nothing, and
+   the tint doing double duty as both fill and edge is exactly what makes
+   it look generated.
+   These are built the way the announcement button is built — the one
+   thing on the site that reads as made: an opaque surface, a hard dark
+   edge, and a hard offset shadow with no blur at all. The accent appears
+   as a solid object (a bar, a plate, a chip), never as a wash over
+   everything.
+   ══════════════════════════════════════════════════════════════════ */
+.da-panel {
+  position: relative;
+  display: block;
+  padding: 24px 26px;
+  border-radius: 16px;
+  background: #12291c;
+  border: 2px solid #0a1a12;
+  box-shadow: 4px 4px 0 rgba(5, 14, 9, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+/* the accent as a solid bar down the edge, not a wash across the middle */
+.da-panel::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 16px;
+  bottom: 16px;
+  width: 5px;
+  border-radius: 3px;
+  background: var(--tint, #e3c56a);
+}
+.da-panel-flush { padding-left: 30px; }
+
+.da-panel-eyebrow {
+  display: block;
+  margin: 0 0 4px;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--tint, #e3c56a);
+}
+.da-panel-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(21px, 2.2vw, 27px);
+  line-height: 1.15;
+  margin: 0 0 8px;
+  color: #f8f5ec;
+}
+.da-panel-copy { margin: 0; font-size: 14.5px; line-height: 1.6; color: rgba(246, 243, 234, 0.72); }
+
+/* the button that goes with it: solid, hard-edged, offset shadow */
+.da-solid-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  background: var(--btn, linear-gradient(180deg, #f0d888, #c9a227));
+  border: 2px solid #0a1a12;
+  box-shadow: 3px 3px 0 rgba(5, 14, 9, 0.6);
+  color: var(--btn-ink, #14261a);
+  font-size: 13.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.da-solid-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 rgba(5, 14, 9, 0.65); }
+.da-solid-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(5, 14, 9, 0.5); }
+.da-solid-btn-quiet {
+  --btn: #1b3a28;
+  --btn-ink: #f2efe4;
+}
+
+@media (max-width: 640px) {
+  .da-panel { padding: 18px 18px 18px 22px; border-radius: 14px; box-shadow: 3px 3px 0 rgba(5, 14, 9, 0.6); }
+  .da-panel::before { top: 12px; bottom: 12px; width: 4px; }
+  .da-solid-btn { width: 100%; }
+}
+
+/* the special request: a panel that looks like it is asking something */
+.da-request {
+  align-items: center;
+}
+.da-request-icon {
+  grid-area: icon;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: radial-gradient(circle at 32% 26%, #1b3f26, #0a1d13);
+  border: 2px solid #0a1a12;
+  box-shadow: 2px 2px 0 rgba(5, 14, 9, 0.55);
+}
+.da-request-label {
+  grid-area: label;
+  margin: 0 !important;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #f2564a;
+}
+.da-request-body {
+  grid-area: body;
+  margin: 0 !important;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(246, 243, 234, 0.8);
+}
+
+/* the gallery's volunteer call */
+.da-gal-cta-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background: radial-gradient(circle at 32% 26%, #1b3f26, #0a1d13);
+  border: 2px solid #0a1a12;
+  box-shadow: 2px 2px 0 rgba(5, 14, 9, 0.55);
+}
+
+/* the programmes index help strip */
+.da-prog-help {
+  max-width: 1240px;
+  margin: 30px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  --tint: #a9e0c0;
+}
+.da-prog-help-text { flex: 1 1 380px; min-width: 0; }
+.da-prog-help-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* "Questions? Call …" — the long form on wide screens, short on phones */
+.da-call-cta-narrow { display: none; }
+@media (max-width: 520px) {
+  .da-call-cta-wide { display: none; }
+  .da-call-cta-narrow { display: inline; }
+}
+
+/* Other programmes: each card carries its own banner */
+.da-pd-other {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 14px;
+  overflow: hidden;
+  padding: 0 42px 0 0;
+  border-radius: 14px;
+  background: #10241a;
+  border: 2px solid #0a1a12;
+  box-shadow: 3px 3px 0 rgba(5, 14, 9, 0.5);
+  border-left: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.da-pd-other:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 rgba(5, 14, 9, 0.6); background: #12291d; }
+.da-pd-other-art {
+  position: relative;
+  flex-shrink: 0;
+  width: 96px;
+  align-self: stretch;
+  min-height: 74px;
+  background-size: cover;
+  border-right: 2px solid var(--accent);
+}
+.da-pd-other-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(8, 20, 14, 0.2), rgba(16, 36, 26, 0.75));
+}
+.da-pd-other-text { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 3px; min-width: 0; padding: 12px 0; }
+
+@media (max-width: 760px) {
+  .da-prog-help-actions { width: 100%; }
+  .da-pd-other-art { width: 74px; min-height: 66px; }
 }

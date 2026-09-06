@@ -78,8 +78,13 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
           <p className="da-pd-lede">{p.lede}</p>
           <div className="da-pd-head-actions">
             <JoinButtons p={p} size="da-btn-lg" />
-            <a href={ORG.phoneHref} className="da-btn da-btn-ghost da-btn-lg">
-              Ask a question
+            {/* "Ask a question" opened a tel: link, which on a desktop asks
+                you to pick an application and then does nothing. The number
+                is on the button now, and it goes to the contact section on a
+                machine that cannot dial. */}
+            <a href={ORG.phoneHref} className="da-btn da-btn-ghost da-btn-lg da-call-cta">
+              <span className="da-call-cta-wide">Questions? Call {ORG.phone}</span>
+              <span className="da-call-cta-narrow">Call {ORG.phone}</span>
             </a>
           </div>
         </div>
@@ -134,12 +139,12 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
 
         {/* ── the ask ── */}
         <Rise delay={0.05}>
-          <div className="da-pd-cta">
+          <div className="da-pd-cta da-panel da-panel-flush">
             <div className="da-pd-cta-medallion" aria-hidden>
               <GeoMedallion size={220} opacity={1} />
             </div>
             <div className="da-pd-cta-text">
-              <p className="da-pd-eyebrow">Ready to join?</p>
+              <p className="da-panel-eyebrow">Ready to join?</p>
               <h2 className="da-pd-cta-title">
                 {p.registerHref ? "Registration takes a couple of minutes." : "The class is open — come in."}
               </h2>
@@ -166,9 +171,20 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
           </div>
           <div className="da-pd-others">
             {others.map((o) => (
+              // each card carries that programme's own banner, so the four
+              // are told apart by their subject rather than by a stripe
               <Link key={o.slug} href={o.href} className="da-pd-other" style={{ "--accent": o.accent } as React.CSSProperties}>
-                <span className="da-pd-other-name">{o.name}</span>
-                <span className="da-pd-other-note">{o.cardFacts[0]?.value}</span>
+                {o.photo && (
+                  <span
+                    className="da-pd-other-art"
+                    style={{ backgroundImage: `url('${o.photo}')`, backgroundPosition: o.focus }}
+                    aria-hidden
+                  />
+                )}
+                <span className="da-pd-other-text">
+                  <span className="da-pd-other-name">{o.name}</span>
+                  <span className="da-pd-other-note">{o.cardFacts[0]?.value}</span>
+                </span>
                 <span className="da-pd-other-go" aria-hidden="true">
                   →
                 </span>

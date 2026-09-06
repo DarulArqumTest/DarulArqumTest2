@@ -7,14 +7,15 @@ import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
-import { ORG } from "@/lib/links";
+import { LOCATIONS, ORG } from "@/lib/links";
 
 const MILESTONES = [
   { key: "founding", year: "2019", title: "A community organizes", body: "Darul Arqum incorporates (Feb 23, 2019) as a non-profit charitable organization — Riverside South families uniting to establish the area's first masjid, Islamic education, and community services." },
   { key: "home", year: "2020", title: "A home of our own", body: "On July 30, 2020 the community acquires 4269 Limebank Rd for CA$665,000 — an extraordinary act of collective giving through donations and an interest-free Qard-e-Hasan." },
   { key: "worship", year: "2021", title: "Doors open for worship", body: "Five daily prayers in congregation, Jumu'ah with two khutbahs, and the community's first Taraweeh at home in Ramadhan 1442." },
   { key: "knowledge", year: "2025", title: "A house of knowledge", body: "Al-Arif Islamic Institute launches the Aalim program and full-time Hifz under Mufti Taqi, joining the weekday madrasa, KidsLearnArabic and WeLearn online." },
-  { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $144K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: 42 },
+  { key: "second", year: "2026", title: "A second masjid", body: `The community acquires ${LOCATIONS.west.street} — a second home in Ottawa. ${LOCATIONS.east.name} continues at ${LOCATIONS.east.street}; ${LOCATIONS.west.name} opens insha'Allah, with details to follow.` },
+  { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: 42 },
 ] as const;
 
 const THEMES: Record<string, { accent: string; accentSoft: string; tag: string }> = {
@@ -22,6 +23,7 @@ const THEMES: Record<string, { accent: string; accentSoft: string; tag: string }
   home: { accent: "#f3d98a", accentSoft: "rgba(243,217,138,0.16)", tag: "Property acquired" },
   worship: { accent: "#a9e0c0", accentSoft: "rgba(169,224,192,0.16)", tag: "Five daily prayers" },
   knowledge: { accent: "#8ec7ff", accentSoft: "rgba(142,199,255,0.14)", tag: "Al-Arif Islamic Institute" },
+  second: { accent: "#7cc99a", accentSoft: "rgba(124,201,154,0.16)", tag: "Darul Arqum West" },
   today: { accent: "#e88a6a", accentSoft: "rgba(232,138,106,0.16)", tag: "In progress" },
 };
 
@@ -131,7 +133,7 @@ function MilestoneRow({ m, index, activeIdx }: { m: (typeof MILESTONES)[number];
               <div style={{ marginTop: 16, height: 6, borderRadius: 999, background: "rgba(246,243,234,0.12)", overflow: "hidden" }}>
                 <div style={{ height: "100%", width: `${m.progressPct}%`, borderRadius: 999, background: `linear-gradient(90deg, #c9a227, ${t.accent})` }} />
               </div>
-              <div style={{ marginTop: 8, fontSize: 11, color: "rgba(246,243,234,0.5)" }}>$144K community loan · ${ORG.finances.monthlyExpenses.toLocaleString()}/mo running costs</div>
+              <div style={{ marginTop: 8, fontSize: 11, color: "rgba(246,243,234,0.5)" }}>${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan · ${ORG.finances.monthlyExpenses.toLocaleString()}/mo running costs</div>
             </>
           )}
         </motion.div>

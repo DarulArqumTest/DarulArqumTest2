@@ -368,12 +368,16 @@ export function PrayerTimesPage() {
           <Breadcrumbs items={[{ label: "Prayer times" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.6vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 26px 0" }}>Prayer times</h1>
 
-          <div className="da-request" style={{ position: "relative", padding: "18px 22px", borderRadius: 16, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.04))", border: "1px solid rgba(201,162,39,0.35)" }}>
-            <div className="da-request-icon" style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 12, background: "radial-gradient(circle at 32% 26%, #17381f, #0a1d13)", border: "1px solid rgba(227,197,106,0.45)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 16px -8px rgba(0,0,0,0.6)" }}>
+          {/* It read as one more soft tinted card among many, which is not
+              what "special request" should look like. Solid panel, hard edge,
+              a red bar down the side and a red label — the two things on this
+              page that are asking something of you. */}
+          <div className="da-request da-panel da-panel-flush" style={{ "--tint": "#d63a2e" } as React.CSSProperties}>
+            <div className="da-request-icon">
               <Glyph name="announce" size={24} />
             </div>
-            <div className="da-request-label" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 800 }}>Special request</div>
-            <p className="da-request-body" style={{ fontSize: 14, lineHeight: 1.55, color: "rgba(246,243,234,0.82)" }}>Please arrive before iqama. Timing changes are announced in the community WhatsApp group.</p>
+            <div className="da-request-label">Special request</div>
+            <p className="da-request-body">Please arrive before iqama. Timing changes are announced in the community WhatsApp group.</p>
           </div>
         </div>
       </section>

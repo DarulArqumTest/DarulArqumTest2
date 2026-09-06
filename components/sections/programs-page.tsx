@@ -96,16 +96,19 @@ export function ProgramsPage() {
         ))}
       </div>
 
-      <div className="da-prog-help">
-        <div>
-          <p className="da-prog-eyebrow">Not sure which one fits?</p>
-          <p className="da-prog-help-copy">
+      {/* Was a yellow card holding a yellow button, with the question set as
+          a caption. The question is the heading; the panel is neutral so the
+          actions are the only colour in it. */}
+      <div className="da-prog-help da-panel da-panel-flush">
+        <div className="da-prog-help-text">
+          <h2 className="da-panel-title">Not sure which one fits?</h2>
+          <p className="da-panel-copy">
             Tell us the student&apos;s age and what they can already read, and the team will point you
             to the right class.
           </p>
         </div>
         <div className="da-prog-help-actions">
-          <a href={ORG.phoneHref} className="da-btn da-btn-gold da-btn-sm">
+          <a href={ORG.phoneHref} className="da-solid-btn">
             Call {ORG.phone}
           </a>
           <WhatsAppButton label="Ask on WhatsApp" />
