@@ -2853,14 +2853,16 @@ body { overflow-x: hidden; }
 }
 .da-fact-mark {
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 16px;
+  left: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  color: var(--tint);
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 34% 28%, #16351f, #0b1e14);
+  border: 1px solid color-mix(in srgb, var(--tint) 38%, transparent);
 }
 .da-fact-eyebrow {
   font-size: 10.5px;
@@ -2926,9 +2928,11 @@ body { overflow-x: hidden; }
   height: 35px;
   flex-shrink: 0;
   border-radius: 999px;
-  color: var(--tint);
-  background: #10281c;
+  /* a dark plate: the mark carries its own colours and needs a ground that
+     does not tint them */
+  background: radial-gradient(circle at 34% 28%, #16351f, #0b1e14);
   border: 1px solid color-mix(in srgb, var(--tint) 42%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 .da-track-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-top: 4px; }
 .da-track-label {
@@ -2951,7 +2955,7 @@ body { overflow-x: hidden; }
 @media (max-width: 640px) {
   .da-facts { grid-template-columns: 1fr; gap: 10px; margin-bottom: 12px; }
   .da-fact { padding: 14px 16px 14px 56px; border-radius: 14px; }
-  .da-fact-mark { top: 14px; left: 15px; width: 28px; height: 28px; }
+  .da-fact-mark { top: 13px; left: 13px; width: 30px; height: 30px; }
   .da-fact-value { font-size: 18px; }
   .da-fact-note { font-size: 11.5px; }
   .da-track { padding: 16px; border-radius: 14px; }
@@ -3008,7 +3012,6 @@ body { overflow-x: hidden; }
 }
 .da-formsec .da-sec-mark { background: color-mix(in srgb, var(--tint) 22%, transparent); border-color: color-mix(in srgb, var(--tint) 46%, transparent); }
 .da-formsec > div:first-child > span { color: var(--tint) !important; }
-.da-formsec { --glyph-accent: var(--tint); }
 
 /* who the student is — the lattice the whole site is built from */
 .da-formsec-student {
