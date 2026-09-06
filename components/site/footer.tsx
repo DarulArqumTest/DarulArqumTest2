@@ -20,10 +20,14 @@ const COLUMNS = [
   {
     heading: "Programs",
     items: [
-      { label: "Weekdays Quran classes", href: R.quran + "/register" },
-      { label: "Aalim program & Hifz", href: R.aalim + "/register" },
-      { label: "KidsLearnArabic", href: R.kidsArabic + "/register" },
-      { label: "welearn (online)", href: `${R.home}#welearn-card`, sectionId: "welearn-card" as ScrollTargetId },
+      // these point at the programme pages now, not straight into a form —
+      // most people want to read what a class is before signing up for it
+      { label: "All programs", href: R.programs },
+      { label: "Weekday Quran classes", href: R.quran },
+      { label: "Aalim program", href: R.aalim },
+      { label: "Quran Hifz", href: "/programs/hifz" },
+      { label: "KidsLearnArabic", href: R.kidsArabic },
+      { label: "welearn (online)", href: R.welearn },
     ],
   },
   {
@@ -53,8 +57,8 @@ export function Footer() {
       <DaAmbient />
       <div className="relative mx-auto max-w-wide px-5 py-16">
         <Reveal>
-          <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
-            <div>
+          <div className="da-foot-grid grid gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
+            <div className="da-foot-brand">
               {/* The footer's own lockup. Where the navbar sets the emblem and
                   the name side by side inside a plate, this one stands the
                   emblem above the name on a struck rule with the locality
@@ -69,10 +73,10 @@ export function Footer() {
                 <span className="da-fbrand-name">Darul Arqum</span>
                 <span className="da-fbrand-sub">Riverside South · Ottawa</span>
               </Link>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-da-cream/55">
+              <p className="da-foot-tagline mt-4 max-w-xs text-sm leading-relaxed text-da-cream/55">
                 {ORG.tagline}. The first masjid in Riverside South. Let&apos;s build it together.
               </p>
-              <ul className="mt-6 space-y-2.5 text-sm text-da-cream/70">
+              <ul className="da-foot-contact mt-6 space-y-2.5 text-sm text-da-cream/70">
                 <li className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-da-goldL" aria-hidden />
                   <a href={ORG.mapsUrl} className="hover:text-da-cream">{ORG.address}</a>
@@ -89,7 +93,7 @@ export function Footer() {
             </div>
 
             {COLUMNS.map((col) => (
-              <nav key={col.heading} aria-label={col.heading}>
+              <nav key={col.heading} className="da-foot-col" aria-label={col.heading}>
                 <p className="text-xs uppercase tracking-[0.2em] text-da-goldL">{col.heading}</p>
                 <ul className="mt-4 space-y-2.5 text-sm">
                   {col.items.map((item) => {

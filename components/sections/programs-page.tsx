@@ -13,84 +13,9 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { PROGRAM_INFO, PROGRAM_ACCENT, type ProgramKey } from "@/components/sections/home-literal";
+import { PROGRAMS, type Program } from "@/lib/programs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { EXT, ORG, R } from "@/lib/links";
-
-type Entry = {
-  key: ProgramKey;
-  photo: string | null;
-  focus: string;
-  detailHref: string;
-  registerHref?: string;
-  /** short, scannable facts — the things people actually ask */
-  facts: { label: string; value: string }[];
-};
-
-const ENTRIES: Entry[] = [
-  {
-    key: "aalim",
-    photo: "/assets/program-aalim.jpg",
-    focus: "center 30%",
-    detailHref: R.aalim,
-    registerHref: `${R.aalim}/register`,
-    facts: [
-      { label: "Runs", value: "Mon – Fri, full time" },
-      { label: "Fee", value: "$150 / month" },
-      { label: "Teacher", value: "Mufti Taqi" },
-      { label: "Where", value: "At the masjid" },
-    ],
-  },
-  {
-    key: "hifz",
-    photo: "/assets/program-quran.jpg",
-    focus: "center 26%",
-    detailHref: R.aalim,
-    registerHref: "/programs/hifz/register",
-    facts: [
-      { label: "Runs", value: "Mon – Fri, full time" },
-      { label: "Fee", value: "$75 / month" },
-      { label: "Teacher", value: "Mufti Taqi" },
-      { label: "Where", value: "At the masjid" },
-    ],
-  },
-  {
-    key: "quran",
-    photo: "/assets/program-quran.jpg",
-    focus: "center 60%",
-    detailHref: R.quran,
-    registerHref: `${R.quran}/register`,
-    facts: [
-      { label: "Runs", value: "Sat & Sun" },
-      { label: "Fee", value: "$50 / month" },
-      { label: "Ages", value: "6 and up" },
-      { label: "Tracks", value: "Nazira · Hifz · Deeniyaat · Akhlaqiat · Seerah" },
-    ],
-  },
-  {
-    key: "kids",
-    photo: "/assets/program-kids.jpg",
-    focus: "center 20%",
-    detailHref: R.kidsArabic,
-    registerHref: `${R.kidsArabic}/register`,
-    facts: [
-      { label: "Ages", value: "5 – 10" },
-      { label: "Where", value: "At the masjid" },
-      { label: "Focus", value: "Letters, sounds, vocabulary" },
-    ],
-  },
-  {
-    key: "welearn",
-    photo: null,
-    focus: "center",
-    detailHref: R.welearn,
-    facts: [
-      { label: "Runs", value: "Live over Zoom" },
-      { label: "Teacher", value: "Sheikh Saud Hasan" },
-      { label: "Link", value: "Shared with registered students" },
-    ],
-  },
-];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -132,9 +57,8 @@ function WelearnArt({ accent }: { accent: string }) {
   );
 }
 
-function ProgramCard({ entry, index }: { entry: Entry; index: number }) {
-  const info = PROGRAM_INFO[entry.key];
-  const accent = PROGRAM_ACCENT[entry.key];
+function ProgramCard({ p, index }: { p: Program; index: number }) {
+  const accent = p.accent;
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
   const reduce = useReducedMotion();
@@ -148,10 +72,10 @@ function ProgramCard({ entry, index }: { entry: Entry; index: number }) {
       className="da-prog-card"
       style={{ "--accent": accent } as React.CSSProperties}
     >
-      {entry.photo ? (
+      {p.photo ? (
         <div
           className="da-prog-art"
-          style={{ backgroundImage: `url('${entry.photo}')`, backgroundSize: "cover", backgroundPosition: entry.focus }}
+          style={{ backgroundImage: `url('${p.photo}')`, backgroundSize: "cover", backgroundPosition: p.focus }}
           aria-hidden
         />
       ) : (
@@ -159,12 +83,12 @@ function ProgramCard({ entry, index }: { entry: Entry; index: number }) {
       )}
 
       <div className="da-prog-body">
-        <p className="da-prog-eyebrow">{info.eyebrow}</p>
-        <h2 className="da-prog-title">{info.title}</h2>
-        <p className="da-prog-lede">{info.lede}</p>
+        <p className="da-prog-eyebrow">{p.eyebrow}</p>
+        <h2 className="da-prog-title">{p.name}</h2>
+        <p className="da-prog-lede">{p.lede}</p>
 
         <dl className="da-prog-facts">
-          {entry.facts.map((f) => (
+          {p.cardFacts.map((f) => (
             <div key={f.label}>
               <dt>{f.label}</dt>
               <dd>{f.value}</dd>
@@ -172,19 +96,17 @@ function ProgramCard({ entry, index }: { entry: Entry; index: number }) {
           ))}
         </dl>
 
-        <p className="da-prog-body-copy">{info.body}</p>
-
         <div className="da-prog-actions">
-          {entry.registerHref ? (
-            <Link href={entry.registerHref} className="da-btn da-btn-gold da-btn-sm">
+          {p.registerHref ? (
+            <Link href={p.registerHref} className="da-btn da-btn-gold da-btn-sm">
               Register <span aria-hidden="true">→</span>
             </Link>
           ) : (
-            <a href={info.zoomUrl} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm">
+            <a href={p.joinUrl} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm">
               Join on Zoom <span aria-hidden="true">↗</span>
             </a>
           )}
-          <Link href={entry.detailHref} className="da-btn da-btn-ghost da-btn-sm">
+          <Link href={p.href} className="da-btn da-btn-ghost da-btn-sm">
             Full details
           </Link>
         </div>
@@ -203,15 +125,15 @@ export function ProgramsPage() {
           Learning at the masjid, <em>from first surah to Aalim.</em>
         </h1>
         <p className="da-prog-intro">
-          Five programmes run out of Darul Arqum: two full-time tracks at the institute, a weekend
-          madrasa, an Arabic class built for young children, and live classes online. Schedules and
-          fees are below — register from any card.
+          Five programmes run out of Darul Arqum: two full-time tracks at the institute, an evening
+          madrasa five nights a week, an Arabic class built for young children, and live classes
+          online. Schedules and fees are below — register from any card.
         </p>
       </div>
 
       <div className="da-prog-grid">
-        {ENTRIES.map((e, i) => (
-          <ProgramCard key={e.key} entry={e} index={i} />
+        {PROGRAMS.map((p, i) => (
+          <ProgramCard key={p.slug} p={p} index={i} />
         ))}
       </div>
 

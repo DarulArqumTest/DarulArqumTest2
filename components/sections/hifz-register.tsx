@@ -364,7 +364,7 @@ export function HifzRegister() {
           <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700 }}>Al-Arif Islamic Institute · flagship</span>
         </motion.div>
 
-        <Breadcrumbs items={[{ label: "Programs", href: R.programs }, { label: "Hifz", href: R.aalim }, { label: "Register" }]} className="mb-5" />
+        <Breadcrumbs items={[{ label: "Programs", href: R.programs }, { label: "Hifz", href: "/programs/hifz" }, { label: "Register" }]} className="mb-5" />
 
         <motion.h1
           initial={{ opacity: 0, y: 14 }}

@@ -2472,3 +2472,257 @@ body { overflow-x: hidden; }
   }
   .da-404-art { max-width: 130px; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   Programme detail page
+   Explains a class; does not sign you up for one. The registration
+   form used to sit in the right-hand column here, which meant anyone
+   still deciding had to scroll past twenty inputs to find the times.
+   ══════════════════════════════════════════════════════════════════ */
+.da-pd {
+  position: relative;
+  min-height: 100vh;
+  background: #0e2419;
+  font-family: "Work Sans", sans-serif;
+  color: #f6f3ea;
+}
+
+.da-pd-head { position: relative; overflow: hidden; padding: 116px 28px 52px; }
+.da-pd-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  opacity: 0.5;
+}
+.da-pd-head::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 24, 16, 0.9) 0%, rgba(11, 30, 20, 0.86) 45%, #0e2419 100%);
+}
+.da-pd-head-inner { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; }
+.da-pd-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--accent, #c9a227);
+}
+.da-pd-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.05;
+  margin: 0 0 16px;
+  color: #f6f3ea;
+}
+.da-pd-lede {
+  max-width: 60ch;
+  margin: 0 0 28px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(246, 243, 234, 0.78);
+}
+.da-pd-head-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.da-pd-body { max-width: 1080px; margin: 0 auto; padding: 8px 28px 104px; }
+.da-pd-section { margin-top: 56px; }
+.da-pd-h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(24px, 2.6vw, 32px);
+  line-height: 1.15;
+  margin: 0 0 14px;
+  color: #f6f3ea;
+}
+.da-pd-copy { margin: 0; font-size: 15.5px; line-height: 1.72; color: rgba(246, 243, 234, 0.76); }
+
+.da-pd-split { display: grid; grid-template-columns: 1.25fr 1fr; gap: 44px; align-items: start; }
+
+.da-pd-notes { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.da-pd-notes li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(246, 243, 234, 0.56);
+}
+.da-pd-notes li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 9px;
+  color: var(--accent, #c9a227);
+}
+
+.da-pd-facts {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  background: rgba(246, 243, 234, 0.1);
+  border: 1px solid rgba(246, 243, 234, 0.12);
+  border-top: 3px solid var(--accent, #c9a227);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.da-pd-facts > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 18px;
+  background: #10281c;
+}
+.da-pd-facts dt {
+  flex-shrink: 0;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(246, 243, 234, 0.45);
+}
+.da-pd-facts dd {
+  margin: 0;
+  min-width: 0;
+  text-align: right;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(246, 243, 234, 0.92);
+}
+
+.da-pd-curriculum { margin: 0; padding: 0; list-style: none; display: grid; gap: 1px; background: rgba(246, 243, 234, 0.1); border: 1px solid rgba(246, 243, 234, 0.12); border-radius: 16px; overflow: hidden; }
+.da-pd-curriculum li { display: flex; gap: 16px; padding: 16px 20px; background: #10281c; }
+.da-pd-num {
+  flex-shrink: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--accent, #c9a227);
+  opacity: 0.75;
+}
+.da-pd-cur-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.da-pd-cur-body strong { font-size: 14.5px; font-weight: 650; color: #f6f3ea; }
+.da-pd-cur-body span { font-size: 13.5px; line-height: 1.55; color: rgba(246, 243, 234, 0.62); }
+
+.da-pd-cta {
+  position: relative;
+  overflow: hidden;
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 26px;
+  padding: 30px 34px;
+  border-radius: 20px;
+  background: radial-gradient(ellipse 90% 140% at 8% 0%, rgba(201, 162, 39, 0.16), transparent 68%), linear-gradient(180deg, #123321, #0d2419);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+}
+.da-pd-cta-medallion { position: absolute; top: -66px; right: -56px; opacity: 0.22; pointer-events: none; }
+.da-pd-cta-text { position: relative; flex: 1 1 380px; min-width: 0; }
+.da-pd-cta-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(21px, 2.2vw, 27px);
+  line-height: 1.2;
+  margin: 0 0 8px;
+  color: #f6f3ea;
+}
+.da-pd-cta-actions { position: relative; display: flex; flex-wrap: wrap; gap: 10px; }
+
+.da-pd-others-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.da-pd-others-head .da-pd-h2 { margin-bottom: 0; }
+.da-pd-all { font-size: 13px; font-weight: 600; color: #e3c56a; white-space: nowrap; }
+.da-pd-all:hover { color: #f3e2ad; }
+.da-pd-others { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.da-pd-other {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 15px 42px 15px 18px;
+  border-radius: 13px;
+  background: rgba(246, 243, 234, 0.045);
+  border: 1px solid rgba(246, 243, 234, 0.12);
+  border-left: 3px solid var(--accent);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.da-pd-other:hover { background: rgba(246, 243, 234, 0.08); transform: translateY(-2px); }
+.da-pd-other-name { font-family: "Cormorant Garamond", serif; font-size: 19px; font-weight: 600; color: #f6f3ea; }
+.da-pd-other-note { font-size: 12.5px; color: rgba(246, 243, 234, 0.55); }
+.da-pd-other-go { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 15px; }
+
+@media (max-width: 900px) {
+  .da-pd-split { grid-template-columns: 1fr; gap: 26px; }
+  .da-pd-others { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .da-pd-head { padding: 92px 16px 34px; }
+  .da-pd-lede { font-size: 14.5px; line-height: 1.55; margin-bottom: 20px; }
+  .da-pd-head-actions > .da-btn { flex: 1; justify-content: center; }
+  .da-pd-body { padding: 8px 16px 72px; }
+  .da-pd-section { margin-top: 36px; }
+  .da-pd-copy { font-size: 14px; line-height: 1.62; }
+  .da-pd-facts > div { padding: 11px 14px; gap: 12px; }
+  .da-pd-facts dt { font-size: 9px; letter-spacing: 0.09em; }
+  .da-pd-facts dd { font-size: 12.5px; }
+  .da-pd-curriculum li { padding: 13px 15px; gap: 12px; }
+  .da-pd-num { font-size: 16px; }
+  .da-pd-cur-body strong { font-size: 13.5px; }
+  .da-pd-cur-body span { font-size: 12.5px; }
+  .da-pd-cta { margin-top: 36px; padding: 20px 18px; gap: 16px; border-radius: 16px; }
+  .da-pd-cta-medallion { display: none; }
+  .da-pd-cta-actions { width: 100%; }
+  .da-pd-cta-actions > .da-btn { flex: 1; justify-content: center; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Footer on a phone
+   ──────────────────────────────────────────────────────────────────
+   The five columns simply stacked, which turned the four short link
+   lists into four full screens of scrolling for about twenty links.
+   The identity block centres — emblem, name, tagline and the three
+   contact lines all read as one plate — and the four lists pair up
+   into a 2×2 with hairlines between them, so the whole footer is one
+   screen instead of five.
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .da-foot-grid { gap: 0 !important; }
+
+  .da-foot-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 26px;
+    border-bottom: 1px solid rgba(201, 162, 39, 0.18);
+  }
+  .da-foot-tagline { max-width: 34ch; margin-top: 14px !important; }
+  .da-foot-contact { margin-top: 18px !important; width: 100%; }
+  /* the contact rows centre as a group but keep the icon beside the text */
+  .da-foot-contact li { justify-content: center; }
+  .da-foot-contact a { text-align: left; }
+
+  /* the four lists, two up, divided */
+  .da-foot-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+  }
+  .da-foot-brand { grid-column: 1 / -1; }
+  .da-foot-col {
+    padding: 22px 0 22px 18px;
+    border-bottom: 1px solid rgba(201, 162, 39, 0.14);
+  }
+  /* left-hand column of each pair has no left padding; right-hand gets a rule */
+  .da-foot-col:nth-of-type(odd) { padding-left: 0; padding-right: 14px; }
+  .da-foot-col:nth-of-type(even) { border-left: 1px solid rgba(201, 162, 39, 0.14); }
+  /* the bottom pair keeps a rule under it only if it is not the last row */
+  .da-foot-col:nth-last-of-type(-n + 2) { border-bottom: 0; }
+
+  .da-foot-col > p { font-size: 10px !important; letter-spacing: 0.16em !important; }
+  .da-foot-col ul { margin-top: 12px !important; }
+  .da-foot-col li { font-size: 13px; line-height: 1.35; }
+  .da-foot-col ul > li + li { margin-top: 9px !important; }
+}
