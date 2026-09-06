@@ -146,6 +146,8 @@ export function DaForm({
   note,
   extra,
   doneTitle = "Registration received",
+  onSuccess,
+  renderDone,
 }: {
   formName: string;
   sections: Section[];
@@ -157,6 +159,17 @@ export function DaForm({
   /** anything to render between the last section and the submit row */
   extra?: React.ReactNode;
   doneTitle?: string;
+  /**
+   * Told when the form goes through, so a page can react somewhere else —
+   * the newsletter page uses it to send the paper aeroplane in its hero.
+   */
+  onSuccess?: (delivered: boolean) => void;
+  /**
+   * Replaces the standard success panel. A page only reaches for this when
+   * it has a better thing to say than "received"; everything else keeps the
+   * shared panel so five forms cannot drift apart again.
+   */
+  renderDone?: (args: { delivered: boolean; mailto: string }) => React.ReactNode;
 }) {
   const reduce = useReducedMotion();
   const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
@@ -202,6 +215,7 @@ export function DaForm({
     if (res.ok) {
       setDelivered(res.delivered);
       setState("done");
+      onSuccess?.(res.delivered);
     } else setState("error");
   }
 
@@ -211,6 +225,8 @@ export function DaForm({
       .map(([k, v]) => `${k}: ${v}`)
       .join("\n"),
   )}`;
+
+  if (state === "done" && renderDone) return <>{renderDone({ delivered, mailto })}</>;
 
   if (state === "done") {
     return (

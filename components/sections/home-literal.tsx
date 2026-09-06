@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { EXT, R } from "@/lib/links";
 import { getProgram } from "@/lib/programs";
 import { HeroAnnouncement } from "@/components/site/west-announce-banner";
+import { NewsletterEnvelopeArt } from "@/components/site/newsletter-envelope-art";
 
 const GREETINGS: { text: string; lang?: "ar" }[] = [
   { text: "السَّلَامُ عَلَيْكُمْ", lang: "ar" },
@@ -292,76 +293,18 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
 }
 
 /**
- * Newsletter sign-up, built as an actual envelope rather than a generic card
- * with an icon bolted on: a red flap folds down over cream paper, the "M"
- * crease of the classic mail mark reads across the top, and the copy and
- * button sit on the paper below like the letter inside.
+ * Newsletter sign-up: a white envelope with its flap open, a paper aeroplane
+ * leaving on a dotted loop, speed ticks behind it. The whole card is the
+ * link; there is no separate button.
  *
- * The flap is one SVG rather than CSS triangles so the crease lines, the
- * shading and the gold edge stay in register at any width.
- */
-/**
- * Newsletter sign-up, drawn in the flat cartoon style of the reference:
- * a white envelope with its flap open, a paper aeroplane leaving on a dashed
- * loop, and speed ticks behind it — all on a red field, with the wordmark in
- * its own ruled box. The envelope's interior carries the red chevron of the
- * familiar mail mark so it reads as "mail" instantly.
- *
- * The whole card is the link; there is no separate button.
+ * The drawing itself now lives in NewsletterEnvelopeArt, because the page
+ * this card leads to shows the same envelope and animates it. It used to be
+ * inlined here, and the signup page had a different envelope entirely.
  */
 function NewsletterEnvelope() {
   return (
     <Link href={R.newsletters} className="da-env" aria-label="Subscribe to our newsletter">
-      <svg className="da-env-art" viewBox="0 0 320 270" aria-hidden>
-        {/* speed ticks */}
-        <g stroke="#fff" strokeWidth="7" strokeLinecap="round">
-          <path d="M12 138 L40 110" />
-          <path d="M42 88 L60 70" />
-          <path d="M6 182 L26 164" />
-        </g>
-
-        <g transform="rotate(-6 150 190)">
-          {/* flap flung open, hinged behind the body — red inner face */}
-          <path d="M58 146 C 96 136 206 136 244 146 L 158 52 Z" fill="#d1281c" />
-          <path d="M58 146 L 158 52 L 244 146" fill="none" stroke="#f2a79d" strokeWidth="3.4" strokeLinejoin="round" strokeLinecap="round" />
-
-          {/* pillowy white body */}
-          <path
-            d="M56 146 C 94 137 208 137 246 146 C 255 184 253 230 243 258
-               C 202 273 100 273 59 258 C 49 230 47 184 56 146 Z"
-            fill="#fff"
-          />
-          {/* shadow of the open flap falling inside the mouth */}
-          <path d="M60 148 C 96 140 206 140 242 148 C 206 158 96 158 60 148 Z" fill="#e7ded6" />
-
-          {/* front panel, peak tucked up under the flap */}
-          <path d="M59 258 C 100 273 202 273 243 258 L 158 186 Z" fill="#fff" />
-          <path d="M59 258 L 158 186 L 243 258" fill="none" stroke="#e08076" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
-
-          {/* hand-drawn creases */}
-          <g stroke="#e08076" strokeWidth="2.6" strokeLinecap="round" fill="none">
-            <path d="M74 254 C 104 262 150 264 176 260" />
-            <path d="M96 266 C 118 270 146 271 164 269" />
-          </g>
-        </g>
-
-        {/* dotted flight path — round caps make real dots, not dashes */}
-        <path
-          d="M170 132 C 200 124 216 104 212 84 C 209 66 188 64 184 82 C 179 104 204 116 228 108 C 252 100 264 80 266 58"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="6.5"
-          strokeLinecap="round"
-          strokeDasharray="0.5 15"
-        />
-
-        {/* paper aeroplane */}
-        <g transform="rotate(-12 276 34)">
-          <path d="M310 2 L252 52 L280 60 Z" fill="#fff" />
-          <path d="M310 2 L280 60 L296 80 Z" fill="#e5b3ac" />
-        </g>
-
-      </svg>
+      <NewsletterEnvelopeArt className="da-env-art" />
 
       <span className="da-env-words">
         <span className="da-env-sub">Subscribe</span>
