@@ -66,7 +66,7 @@ export function Footer() {
                 <p className="font-daDisplay text-2xl tracking-tight text-da-cream">Darul Arqum</p>
               </div>
               <p className="mt-3 max-w-xs text-sm leading-relaxed text-da-cream/55">
-                {ORG.tagline}. The first masjid in Riverside South — let&apos;s build it together.
+                {ORG.tagline}. The first masjid in Riverside South. Let&apos;s build it together.
               </p>
               <ul className="mt-6 space-y-2.5 text-sm text-da-cream/70">
                 <li className="flex items-start gap-2.5">

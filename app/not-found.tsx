@@ -1,23 +1,67 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Ambient } from "@/components/site/ambient";
-import { R } from "@/lib/links";
+import { LOCATION_LIST, R } from "@/lib/links";
 
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: true },
+};
+
+/**
+ * 404. Rebuilt in the 2026 palette so a mistyped address does not drop the
+ * visitor onto a page that looks like a different website.
+ *
+ * The links below are the four things people actually arrive looking for,
+ * plus both masjid addresses, so the page is a way onward rather than a
+ * dead end.
+ */
 export default function NotFound() {
+  const links = [
+    { href: R.prayer, label: "Prayer times", note: "Daily iqama and Jumu'ah" },
+    { href: R.locations, label: "Locations", note: "Both masjids and directions" },
+    { href: R.programs, label: "Programs", note: "Madrasa, Hifz and weekend classes" },
+    { href: R.give, label: "Give", note: "Donate or set up a monthly pledge" },
+  ];
+
   return (
-    <main className="relative flex min-h-[70vh] items-center overflow-hidden bg-ink px-5 text-bone">
-        <Ambient dark grain />
-        <div className="relative mx-auto max-w-wide py-40">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-brassL">404</p>
-          <h1 className="mt-4 font-display text-5xl tracking-tight md:text-7xl">This page has moved on</h1>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-bone/60">
-            The redesign reorganized a few old addresses. Everything still exists — try one of these.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link href={R.home} className="rounded-full bg-brass px-6 py-3.5 text-sm font-medium text-ink">Home</Link>
-            <Link href={R.prayer} className="rounded-full border border-bone/25 px-6 py-3.5 text-sm text-bone">Prayer times</Link>
-            <Link href={R.give} className="rounded-full border border-bone/25 px-6 py-3.5 text-sm text-bone">Give</Link>
-          </div>
+    <main className="da-404">
+      <div className="da-404-inner">
+        <p className="da-404-code">Error 404</p>
+
+        <h1 className="da-404-title">
+          We couldn&apos;t find that page.
+        </h1>
+
+        <p className="da-404-lede">
+          The address may have changed, or the link that brought you here may be out of
+          date. Here is where most people are heading.
+        </p>
+
+        <nav className="da-404-grid" aria-label="Popular pages">
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} className="da-404-card">
+              <span className="da-404-card-label">{l.label}</span>
+              <span className="da-404-card-note">{l.note}</span>
+              <span className="da-404-card-go" aria-hidden="true">
+                →
+              </span>
+            </Link>
+          ))}
+        </nav>
+
+        <div className="da-404-foot">
+          <Link href={R.home} className="da-btn da-btn-gold">
+            Back to the home page
+          </Link>
+          <span className="da-404-addr">
+            {LOCATION_LIST.map((loc) => (
+              <span key={loc.key}>
+                <strong>{loc.name}</strong> {loc.street}
+              </span>
+            ))}
+          </span>
         </div>
+      </div>
     </main>
   );
 }

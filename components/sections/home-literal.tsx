@@ -27,8 +27,8 @@ const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: s
   aalim: {
     eyebrow: "Al-Arif Islamic Institute",
     title: "Aalim program",
-    lede: "Led by Mufti Taqi — trained in jurisprudence, Hadith, Tafsir and Arabic — Al-Arif Madrasa pairs academic excellence with spiritual grounding.",
-    body: "Structured classical studies: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id — a full academic path toward becoming a scholar of Islamic sciences.",
+    lede: "Led by Mufti Taqi, trained in jurisprudence, Hadith, Tafsir and Arabic, Al-Arif Madrasa pairs academic excellence with spiritual grounding.",
+    body: "Structured classical studies: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id. A full academic path toward becoming a scholar of Islamic sciences.",
     logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $150/month.",
   },
   hifz: {
@@ -41,23 +41,23 @@ const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: s
   quran: {
     eyebrow: "Weekend madrasa · ages 6+",
     title: "Weekend Quran classes",
-    lede: "Building recitation, memorization, and character — one structured track at a time.",
+    lede: "Building recitation, memorization, and character, one structured track at a time.",
     body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
     logistics: "Saturday & Sunday, at the masjid · $50/month.",
   },
   kids: {
     eyebrow: "Ages 5–10",
     title: "KidsLearnArabic",
-    lede: "A dedicated Arabic track for young learners — playful, structured, and rooted in the language of the Quran.",
+    lede: "A dedicated Arabic track for young learners: playful, structured, and rooted in the language of the Quran.",
     body: "Children aged 5–10 build letters, sounds, vocabulary and confidence in a nurturing environment at the masjid, taught by teachers experienced with young learners.",
     logistics: "Ages 5–10, on site at Darul Arqum.",
   },
   welearn: {
     eyebrow: "Online · Zoom",
     title: "welearn",
-    lede: "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan — join the class over Zoom from anywhere.",
-    body: "Sessions run live — no software beyond Zoom needed. Class announcements, schedule changes and recordings are shared through the community WhatsApp group.",
-    logistics: "Live over Zoom — link shared with registered students.",
+    lede: "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan. Join the class over Zoom from anywhere.",
+    body: "Sessions run live, with no software beyond Zoom needed. Class announcements, schedule changes and recordings are shared through the community WhatsApp group.",
+    logistics: "Live over Zoom. The link is shared with registered students.",
     zoomUrl: "https://zoom.us/j/93194466159",
   },
 };
@@ -459,7 +459,7 @@ function Hero({ revealed }: { revealed: boolean }) {
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.16 }} style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(246,243,234,0.78)", maxWidth: 560, margin: "0 0 40px 0" }}>
-            The first masjid in the community — 4269 Limebank Rd, Ottawa. Acquired by its people in 2020, sustained by its people every month since. Let&apos;s build it together.
+            The first masjid in the community, at 4269 Limebank Rd, Ottawa. Acquired by its people in 2020, sustained by its people every month since. Let&apos;s build it together.
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.22 }} className="da-hero-cta" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 48 }}>

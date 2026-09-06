@@ -146,7 +146,7 @@ export function WestAnnounceDock() {
 
   return (
     <>
-      <button type="button" className="da-dock" onClick={() => setExpanded(true)} aria-label="New location — tap for details">
+      <button type="button" className="da-dock" onClick={() => setExpanded(true)} aria-label="New location, tap for details">
         <motion.span
           className="da-dock-bubble"
           initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6, x: 20 }}

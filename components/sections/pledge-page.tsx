@@ -421,7 +421,7 @@ export function PledgePage() {
                 </div>
                 <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 23, lineHeight: 1.3, color: "#f6f3ea", margin: "0 0 10px 0" }}>Keeping your donation anonymous isn&apos;t available for this payment method.</h3>
                 <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.6)", margin: "0 0 26px 0" }}>Bank debit needs your name and contact info for banking and tax receipts.</p>
-                <button onClick={dismissBankAnonNotice} style={{ width: "100%", background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 14, padding: "13px 0", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
+                <button type="button" onClick={dismissBankAnonNotice} style={{ width: "100%", background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 14, padding: "13px 0", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
                   I understand
                 </button>
               </div>
@@ -560,7 +560,7 @@ export function PledgePage() {
                       {padDelivered ? "Submitted — the team has your details." : "Recorded — please also email a photo of a VOID cheque to admin@darularqum.org."}
                     </div>
                   ) : (
-                    <button onClick={submitPad} disabled={padState === "busy"} style={{ alignSelf: "flex-start", marginTop: 4, background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 13.5, padding: "11px 20px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
+                    <button type="button" onClick={submitPad} disabled={padState === "busy"} style={{ alignSelf: "flex-start", marginTop: 4, background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 13.5, padding: "11px 20px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
                       {padState === "busy" ? "Sending…" : "Email my void cheque details"}
                     </button>
                   )}
@@ -585,7 +585,7 @@ export function PledgePage() {
                   </p>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                     <span style={{ fontSize: 13.5, color: "rgba(246,243,234,0.8)", fontFamily: "monospace", background: "rgba(246,243,234,0.06)", padding: "8px 12px", borderRadius: 8 }}>{ORG.email}</span>
-                    <button onClick={copyEmail} style={{ background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 13, fontWeight: 600, padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
+                    <button type="button" onClick={copyEmail} style={{ background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 13, fontWeight: 600, padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
                       {copied ? "Copied!" : "Copy email"}
                     </button>
                   </div>

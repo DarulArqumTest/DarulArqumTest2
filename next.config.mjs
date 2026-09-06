@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /**
+   * Both of these ship barrel files: importing one symbol pulls the whole
+   * index into the client bundle. `optimizePackageImports` rewrites those to
+   * deep imports at build time, so only the icons and motion primitives that
+   * are actually referenced get bundled.
+   */
+  experimental: {
+    optimizePackageImports: ["lucide-react", "motion", "motion/react"],
+  },
+
   async redirects() {
     // Complete 301 map: every legacy Wix slug lands on its new home.
     const map = [

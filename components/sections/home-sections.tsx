@@ -81,7 +81,7 @@ export function Hero() {
         </h1>
 
         <motion.p {...rise(0.4)} className="mt-7 max-w-xl text-[17px] leading-relaxed text-da-cream/78">
-          The first masjid in the community — 4269 Limebank Rd, Ottawa. Acquired by its people in
+          The first masjid in the community, at 4269 Limebank Rd, Ottawa. Acquired by its people in
           2020, sustained by its people every month since. Let&apos;s build it together.
         </motion.p>
 
@@ -102,7 +102,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-da-cream/25 px-7 py-[15px] text-sm font-medium text-da-cream transition-colors hover:bg-da-cream/10"
           >
             <Clock className="h-4 w-4" aria-hidden />
-            Prayer times — live
+            Prayer times, live
           </Link>
         </motion.div>
 
@@ -140,7 +140,7 @@ export function PrayerFeature() {
               theme="da"
               eyebrow="Live from the masjid"
               title="The prayer screen, wherever you are"
-              lede="The same Mawaqit display running inside Darul Arqum — adhan and iqama for all five prayers, Hijri date, Shurûq and Jumu'ah — mirrored here in real time."
+              lede="The same Mawaqit display running inside Darul Arqum: adhan and iqama for all five prayers, Hijri date, Shurûq and Jumu'ah, mirrored here in real time."
             />
             <Reveal delay={0.25} className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -183,8 +183,8 @@ const PROGRAM_INFO: Record<
   aalim: {
     title: "Aalim program",
     eyebrow: "Al-Arif Islamic Institute · flagship",
-    lede: "Led by Mufti Taqi — trained in jurisprudence, Hadith, Tafsir and Arabic — Al-Arif Madrasa pairs academic excellence with spiritual grounding.",
-    body: "Structured classical studies: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id — a full academic path toward becoming a scholar of Islamic sciences.",
+    lede: "Led by Mufti Taqi, trained in jurisprudence, Hadith, Tafsir and Arabic, Al-Arif Madrasa pairs academic excellence with spiritual grounding.",
+    body: "Structured classical studies: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id. A full academic path toward becoming a scholar of Islamic sciences.",
     logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $150/month.",
     accent: "#c9a227",
     cta: { label: "Register for Aalim", href: "/programs/aalim/register" },
@@ -201,7 +201,7 @@ const PROGRAM_INFO: Record<
   quran: {
     title: "Weekend Quran classes",
     eyebrow: "Weekend madrasa · ages 6+",
-    lede: "Building recitation, memorization, and character — one structured track at a time.",
+    lede: "Building recitation, memorization, and character, one structured track at a time.",
     body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
     logistics: "Saturday & Sunday, at the masjid · $50/month.",
     accent: "#d98f4a",
@@ -210,7 +210,7 @@ const PROGRAM_INFO: Record<
   kids: {
     title: "KidsLearnArabic",
     eyebrow: "Ages 5–10",
-    lede: "A dedicated Arabic track for young learners — playful, structured, and rooted in the language of the Quran.",
+    lede: "A dedicated Arabic track for young learners: playful, structured, and rooted in the language of the Quran.",
     body: "Children aged 5–10 build letters, sounds, vocabulary and confidence in a nurturing environment at the masjid, taught by teachers experienced with young learners.",
     logistics: "Ages 5–10, on site at Darul Arqum.",
     accent: "#7cc99a",
@@ -219,9 +219,9 @@ const PROGRAM_INFO: Record<
   welearn: {
     title: "welearn",
     eyebrow: "Online · Zoom",
-    lede: "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan — join the class over Zoom from anywhere.",
-    body: "Sessions run live — no software beyond Zoom needed. Class announcements, schedule changes and recordings are shared through the community WhatsApp group.",
-    logistics: "Live over Zoom — link shared with registered students.",
+    lede: "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan. Join the class over Zoom from anywhere.",
+    body: "Sessions run live, with no software beyond Zoom needed. Class announcements, schedule changes and recordings are shared through the community WhatsApp group.",
+    logistics: "Live over Zoom. The link is shared with registered students.",
     accent: "#8fb4c9",
     cta: { label: "Join the live class", href: EXT.welearnZoom },
   },
@@ -330,7 +330,7 @@ export function ProgramsSection() {
           theme="da"
           eyebrow="Programs &amp; news"
           title="We offer learning for every age, every week."
-          lede="Led by Mufti Taqi and our teaching team — choose the track that fits, at any age."
+          lede="Led by Mufti Taqi and our teaching team. Choose the track that fits, at any age."
         />
 
         <div className="mt-14 overflow-hidden rounded-3xl border border-da-gold/30 p-2">
@@ -353,7 +353,7 @@ export function ProgramsSection() {
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-da-gold">Al-Arif Islamic Institute · flagship</p>
                 <h3 className="mt-2 font-daDisplay text-2xl font-semibold text-da-cream">Aalim program</h3>
                 <p className="mt-2 max-w-xl text-sm leading-relaxed text-da-cream/65">
-                  Classical studies — Sarf &amp; Nahw, Quran, Hadith, Fiqh and Aqa&apos;id — a full academic path toward becoming a scholar.
+                  Classical studies in Sarf &amp; Nahw, Quran, Hadith, Fiqh and Aqa&apos;id: a full academic path toward becoming a scholar.
                 </p>
                 <span className="mt-4 inline-block rounded-full bg-da-cream/10 px-3 py-1 text-xs font-medium text-da-cream/80">
                   Monday–Friday · $150/mo
@@ -445,7 +445,7 @@ export function CommunitySection() {
             <div className="flex-1">
               <h3 className="font-daDisplay text-2xl font-semibold text-da-cream">New to the community?</h3>
               <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-da-cream/70">
-                Join the WhatsApp group for Iqama alerts and announcements — or come see the masjid. Everyone is welcome.
+                Join the WhatsApp group for Iqama alerts and announcements, or come see the masjid. Everyone is welcome.
               </p>
             </div>
             <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-da-bg">
@@ -538,14 +538,14 @@ export function GivingSection() {
               <div className="flex items-center gap-4">
                 <p className="font-daDisplay text-[clamp(30px,3vw,38px)] font-semibold text-da-gold">${ORG.finances.perFamily}</p>
                 <p className="border-l border-da-cream/20 pl-4 text-sm leading-relaxed text-da-cream/75">
-                  If every family gave just ${ORG.finances.perFamily} a month, it would cover the loan and running costs — together.
+                  If every family gave just ${ORG.finances.perFamily} a month, it would cover the loan and running costs, together.
                 </p>
               </div>
               <Link
                 href={`${R.pledge}?amount=${ORG.finances.perFamily}&freq=monthly`}
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-da-cream px-5 py-2.5 text-sm font-semibold text-da-bg"
               >
-                I can do that — give ${ORG.finances.perFamily}/month
+                I can do that: give ${ORG.finances.perFamily}/month
               </Link>
             </div>
           </div>
@@ -580,7 +580,7 @@ export function StoryTeaser() {
             theme="da"
             eyebrow="The story"
             title="From a rented hall to a home of our own"
-            lede="Founded in 2019, Darul Arqum set out to give Riverside South its first masjid. On July 30, 2020 the community acquired 4269 Limebank Rd — and the work of building a destination for worship, education and service began."
+            lede="Founded in 2019, Darul Arqum set out to give Riverside South its first masjid. On July 30, 2020 the community acquired 4269 Limebank Rd, and the work of building a destination for worship, education and service began."
           />
           <Reveal delay={0.2}>
             <Link

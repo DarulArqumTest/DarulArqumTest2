@@ -10,7 +10,7 @@ import { MapPin, Phone, Mail } from "lucide-react";
 export const metadata: Metadata = {
   title: "Contact & visit",
   description:
-    "Reach the Darul Arqum board, plan a visit to 4269 Limebank Rd in Ottawa, or send a message — everyone is welcome.",
+    "Reach the Darul Arqum board, plan a visit to 4269 Limebank Rd in Ottawa, or send a message. Everyone is welcome.",
 };
 
 export default function ContactPage() {
@@ -19,7 +19,7 @@ export default function ContactPage() {
         <PageHero
           eyebrow="Contact & visit"
           title="The door is open"
-          lede="Questions about prayers, programs, giving, or visiting the masjid — the board reads every message."
+          lede="Questions about prayers, programs, giving, or visiting the masjid. The board reads every message."
         />
 
         <section className="px-5 py-20 md:py-28">
@@ -31,7 +31,7 @@ export default function ContactPage() {
                   <li className="flex items-start gap-2.5">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brass" aria-hidden />
                     <a href={ORG.mapsUrl} target="_blank" rel="noopener noreferrer" className="u-draw hover:text-ink">
-                      {ORG.address} — open in Maps
+                      {ORG.address} · open in Maps
                     </a>
                   </li>
                   <li className="flex items-center gap-2.5">
@@ -86,7 +86,7 @@ export default function ContactPage() {
 
         <CTABand
           title="Coming for salah?"
-          body="Check today's iqama before you head out — times shift through the year."
+          body="Check today's iqama before you head out, as times shift through the year."
           actions={[
             { label: "Live prayer times", href: R.prayer, primary: true },
             { label: "WhatsApp alerts", href: EXT.whatsapp },

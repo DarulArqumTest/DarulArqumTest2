@@ -5,7 +5,7 @@ import { ProgramDetail } from "@/components/site/program-page";
 export const metadata: Metadata = {
   title: "KidsLearnArabic",
   description:
-    "Arabic for ages 5–10 at Darul Arqum, Ottawa — the language of the Quran made approachable and joyful for young learners.",
+    "Arabic for ages 5–10 at Darul Arqum, Ottawa: the language of the Quran made approachable and joyful for young learners.",
 };
 
 export default function KidsArabicPage() {
@@ -14,7 +14,7 @@ export default function KidsArabicPage() {
         <PageHero
           eyebrow="Programs · ages 5–10"
           title="KidsLearnArabic"
-          lede="A dedicated Arabic track for young learners — playful, structured, and rooted in the language of the Quran."
+          lede="A dedicated Arabic track for young learners: playful, structured, and rooted in the language of the Quran."
         />
         <ProgramDetail
           about={{
@@ -32,10 +32,10 @@ export default function KidsArabicPage() {
           fields={[
             { name: "Child name", label: "Child's full name", required: true, half: true },
             { name: "Child age", label: "Age", required: true, half: true },
-            { name: "Parent 1", label: "Parent / guardian 1 — name & phone", required: true },
-            { name: "Parent 2", label: "Parent / guardian 2 — name & phone" },
+            { name: "Parent 1", label: "Parent / guardian 1, name & phone", required: true },
+            { name: "Parent 2", label: "Parent / guardian 2, name & phone" },
             { name: "email", label: "Email", type: "email", required: true },
-            { name: "Emergency contact", label: "Emergency contact — name & phone", required: true },
+            { name: "Emergency contact", label: "Emergency contact, name & phone", required: true },
             { name: "Medical conditions", label: "Allergies / medical conditions", type: "textarea" },
             { name: "Health card", label: "Health card number (optional)", half: true },
           ]}

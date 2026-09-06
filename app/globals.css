@@ -706,7 +706,6 @@ body { overflow-x: hidden; }
     width: 100%;
     justify-content: center;
     white-space: nowrap;
-    border-radius: 999px !important;
   }
 }
 
@@ -734,7 +733,12 @@ body { overflow-x: hidden; }
   gap: 9px;
   min-height: 46px;
   padding: 13px 26px;
-  border-radius: 999px;
+  /* Squared-off rather than a full pill. Every CTA being a capsule was the
+     single biggest thing making the page read as generic; a considered
+     radius reads as a designed control instead. Genuinely round elements
+     (status dots, icon wells, the Locations capsule in the navbar) keep
+     their 999px on purpose. */
+  border-radius: 11px;
   border: 1px solid transparent;
   font-family: inherit;
   font-size: 14.5px;
@@ -865,8 +869,8 @@ body { overflow-x: hidden; }
 }
 
 /* Size variants */
-.da-btn-sm { min-height: 38px; padding: 9px 18px; font-size: 12.5px; gap: 7px; }
-.da-btn-lg { min-height: 54px; padding: 16px 34px; font-size: 16px; }
+.da-btn-sm { min-height: 38px; padding: 9px 17px; font-size: 12.5px; gap: 7px; border-radius: 9px; }
+.da-btn-lg { min-height: 54px; padding: 16px 32px; font-size: 16px; border-radius: 13px; }
 .da-btn-block { width: 100%; }
 
 @media (max-width: 420px) {
@@ -1058,6 +1062,149 @@ body { overflow-x: hidden; }
 .da-money-cream {
   background-image: linear-gradient(175deg, #ffffff 0%, #f6f3ea 45%, #ddd3b6 100%);
   text-shadow: 0 0 24px rgba(246, 243, 234, 0.32);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   404
+   ══════════════════════════════════════════════════════════════════ */
+.da-404 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 78vh;
+  padding: clamp(80px, 12vw, 140px) clamp(16px, 4vw, 28px);
+  background: linear-gradient(170deg, #0e2419 0%, #10301f 55%, #0a1f15 100%);
+  font-family: "Work Sans", sans-serif;
+}
+.da-404-inner { width: 100%; max-width: 900px; margin: 0 auto; }
+.da-404-code {
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c9a227;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+.da-404-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(34px, 5.4vw, 62px);
+  line-height: 1.06;
+  color: #f6f3ea;
+  margin: 0 0 18px;
+}
+.da-404-lede {
+  font-size: clamp(14.5px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: rgba(246, 243, 234, 0.72);
+  max-width: 560px;
+  margin: 0 0 38px;
+}
+.da-404-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 38px;
+}
+.da-404-card {
+  position: relative;
+  display: block;
+  padding: 18px 46px 18px 20px;
+  border-radius: 14px;
+  background: rgba(246, 243, 234, 0.05);
+  border: 1px solid rgba(246, 243, 234, 0.14);
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+.da-404-card:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.42);
+  transform: translateY(-2px);
+}
+.da-404-card-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 650;
+  color: #f6f3ea;
+  margin-bottom: 3px;
+}
+.da-404-card-note {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(246, 243, 234, 0.6);
+}
+.da-404-card-go {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  color: #e3c56a;
+  font-size: 16px;
+}
+.da-404-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+.da-404-addr {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(246, 243, 234, 0.55);
+}
+.da-404-addr strong { color: rgba(246, 243, 234, 0.85); font-weight: 650; }
+
+@media (max-width: 640px) {
+  .da-404-grid { grid-template-columns: 1fr; gap: 9px; }
+  .da-404-card { padding: 14px 40px 14px 16px; }
+  .da-404-foot { gap: 16px; }
+  .da-404-foot .da-btn { width: 100%; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Form controls on phones
+   ──────────────────────────────────────────────────────────────────
+   Two separate problems get fixed here.
+
+   1. iOS Safari zooms the whole page when a field with a font smaller
+      than 16px receives focus. Every input is therefore 16px on phones
+      even where the surrounding type is smaller.
+   2. A long value (an email, an address, an account number) was making
+      its field grow and the row wrap onto a second line, which is what
+      made the forms feel squeezed. Fields are now allowed to shrink
+      inside their row and their placeholders ellipsis rather than push.
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 760px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+    max-width: 100%;
+  }
+  /* a flex/grid child will not shrink below its content unless told to */
+  input,
+  select {
+    min-width: 0;
+    text-overflow: ellipsis;
+  }
+  label {
+    min-width: 0;
+    max-width: 100%;
+  }
+  /* placeholders are hints, not content: truncate rather than widen */
+  input::placeholder {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  /* keep multi-column field rows from bursting their container */
+  form div[style*="grid-template-columns"],
+  form div[style*="gridTemplateColumns"] {
+    max-width: 100%;
+  }
 }
 
 ::selection { background: var(--moss); color: var(--bone); }

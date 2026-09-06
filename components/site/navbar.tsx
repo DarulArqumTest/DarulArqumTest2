@@ -156,7 +156,7 @@ export function Navbar() {
                 <DonateMenu align="left" />
                 <a
                   href={ORG.phoneHref}
-                  className="flex items-center gap-2 rounded-full border border-da-gold/25 px-5 py-3 text-sm text-da-cream"
+                  className="flex items-center gap-2 rounded-[11px] border border-da-gold/25 px-5 py-3 text-sm text-da-cream"
                 >
                   <Phone className="h-4 w-4" aria-hidden />
                   {ORG.phone}

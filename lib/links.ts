@@ -110,7 +110,7 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     status: "open",
     statusLabel: "Open daily",
     blurb:
-      "The first masjid in Riverside South — acquired by the community in 2020. Five daily prayers in congregation, Jumu'ah, and the full Al-Arif madrasa.",
+      "The first masjid in Riverside South, acquired by the community in 2020. Five daily prayers in congregation, Jumu'ah, and the full Al-Arif madrasa.",
     accent: "#c9a227",
   },
   west: {

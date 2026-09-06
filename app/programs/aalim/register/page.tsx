@@ -3,7 +3,7 @@ import { AalimRegister } from "@/components/sections/aalim-register";
 
 export const metadata: Metadata = {
   title: "Register for the Aalim program",
-  description: "Register for the Aalim program at Al-Arif Islamic Institute — Monday–Friday, $150/month.",
+  description: "Register for the Aalim program at Al-Arif Islamic Institute. Monday–Friday, $150/month.",
 };
 
 export default function AalimRegisterRoute() {

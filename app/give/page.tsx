@@ -18,14 +18,14 @@ const CHANNELS = [
   {
     icon: Mail,
     title: "Interac e-transfer",
-    body: `Fastest and fee-free — send to ${ORG.email}. Include your mailing address for a tax receipt.`,
+    body: `Fastest and fee-free: send to ${ORG.email}. Include your mailing address for a tax receipt.`,
     href: ORG.emailHref,
     cta: "Start an e-transfer",
   },
   {
     icon: Repeat,
     title: "Monthly pledge (PAD)",
-    body: "Pre-authorized debit from your bank — the steadiest way to carry the masjid. Set up online or with the printable form.",
+    body: "Pre-authorized debit from your bank, the steadiest way to carry the masjid. Set up online or with the printable form.",
     href: R.pledge,
     cta: "Set up a pledge",
     featured: true,
@@ -33,21 +33,21 @@ const CHANNELS = [
   {
     icon: CreditCard,
     title: "PayPal / card",
-    body: "Give by credit card through the pledge flow — one-time or monthly (minimum $20 monthly).",
+    body: "Give by credit card through the pledge flow, one-time or monthly (minimum $20 monthly).",
     href: R.pledge,
     cta: "Give by card",
   },
   {
     icon: Landmark,
     title: "Bank deposit",
-    body: `Direct deposit at any TD branch — institution ${ORG.bank.institution}, transit ${ORG.bank.transit}, account ${ORG.bank.account}.`,
+    body: `Direct deposit at any TD branch. Institution ${ORG.bank.institution}, transit ${ORG.bank.transit}, account ${ORG.bank.account}.`,
     href: R.pledge,
     cta: "See details",
   },
   {
     icon: Banknote,
     title: "Cheque or money order",
-    body: `Payable to "Darul Arqum" — mail or drop off at ${ORG.address}.`,
+    body: `Payable to "Darul Arqum". Mail or drop off at ${ORG.address}.`,
     href: R.contact,
     cta: "Visit or mail",
   },
@@ -68,7 +68,7 @@ export default function GivePage() {
         <PageHero
           eyebrow="Sadaqah Jariyah"
           title="Carry the first masjid in Riverside South"
-          lede="Every donation is tax-deductible — Darul Arqum is a CRA registered charity (#709549687RR0001). Receipts are issued each February to donors with a complete mailing address."
+          lede="Every donation is tax-deductible. Darul Arqum is a CRA registered charity (#709549687RR0001). Receipts are issued each February to donors with a complete mailing address."
         >
           <div className="flex flex-wrap gap-3">
             <a href={ORG.emailHref} className="inline-flex items-center gap-2 rounded-full bg-brass px-7 py-4 text-sm font-medium text-ink transition-transform hover:scale-[1.03]">
@@ -134,7 +134,7 @@ export default function GivePage() {
                 <div className="flex-1">
                   <p className="font-display text-xl tracking-tight">Already gave, or need a receipt for last year?</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-bone/65">
-                    Request or update the mailing address on file so your official CRA tax receipt reaches you — issued every February.
+                    Request or update the mailing address on file so your official CRA tax receipt reaches you, issued every February.
                   </p>
                 </div>
                 <Link

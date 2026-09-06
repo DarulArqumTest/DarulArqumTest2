@@ -25,9 +25,20 @@ export const metadata: Metadata = {
     "The first masjid in Riverside South, Ottawa. Live prayer times, Jumu'ah, Quran classes, the Aalim program, and community programs. CRA registered charity #709549687RR0001.",
   openGraph: {
     title: "Darul Arqum · Masjid in Riverside South, Ottawa",
-    description: "Prayer times, programs, and community — the first masjid in Riverside South.",
+    description:
+      "Prayer times, programs and community across our two masjids in Ottawa.",
     type: "website",
+    siteName: "Darul Arqum",
+    locale: "en_CA",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Darul Arqum · Masjid in Riverside South, Ottawa",
+    description:
+      "Prayer times, programs and community across our two masjids in Ottawa.",
+  },
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

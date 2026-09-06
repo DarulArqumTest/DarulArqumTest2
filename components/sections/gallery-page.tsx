@@ -196,7 +196,7 @@ export function GalleryPage() {
             style={{ maxWidth: "100%", maxHeight: "100%", borderRadius: 12, boxShadow: "0 40px 90px -20px rgba(0,0,0,0.7)", transform: "scale(1)", transition: "transform .3s cubic-bezier(.2,.8,.3,1)" }}
           />
         )}
-        <button
+        <button type="button"
           onClick={() => setLightboxSrc(null)}
           aria-label="Close"
           style={{ position: "absolute", top: 24, right: 28, width: 40, height: 40, borderRadius: 999, background: "rgba(246,243,234,0.1)", border: "1px solid rgba(246,243,234,0.3)", color: "#f6f3ea", fontSize: 18, cursor: "pointer", lineHeight: 1 }}

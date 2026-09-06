@@ -93,7 +93,7 @@ export function GiveModal({ state, setState, close }: { state: GiveModalState; s
             onClick={(e) => e.stopPropagation()}
             style={{ position: "relative", width: "100%", maxWidth: 520, maxHeight: "88vh", overflowY: "auto", background: "#122d20", border: "1px solid rgba(201,162,39,0.3)", borderRadius: 20, padding: 32, boxShadow: "0 30px 60px -12px rgba(0,0,0,0.5)" }}
           >
-            <button onClick={close} aria-label="Close" style={{ position: "absolute", top: 18, right: 18, width: 32, height: 32, borderRadius: 999, background: "rgba(246,243,234,0.08)", border: "1px solid rgba(246,243,234,0.2)", color: "#f6f3ea", fontSize: 16, cursor: "pointer", lineHeight: 1 }}>
+            <button type="button" onClick={close} aria-label="Close" style={{ position: "absolute", top: 18, right: 18, width: 32, height: 32, borderRadius: 999, background: "rgba(246,243,234,0.08)", border: "1px solid rgba(246,243,234,0.2)", color: "#f6f3ea", fontSize: 16, cursor: "pointer", lineHeight: 1 }}>
               ✕
             </button>
 
@@ -164,7 +164,7 @@ export function GiveModal({ state, setState, close }: { state: GiveModalState; s
                     {state.method === "bank" && (
                       <div style={{ padding: "0 18px 18px", display: "flex", flexDirection: "column", gap: 12 }}>
                         <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(246,243,234,0.65)", margin: 0 }}>
-                          Pre-authorized bank debit needs your banking details and a void cheque photo — you&apos;ll fill that out on the pledge page next.
+                          Pre-authorized bank debit needs your banking details and a void cheque photo. You&apos;ll fill that out on the pledge page next.
                         </p>
                         <a href={padContinueUrl} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 13.5, padding: "11px 20px", borderRadius: 999 }}>
                           Continue to pledge page ↗
@@ -187,11 +187,11 @@ export function GiveModal({ state, setState, close }: { state: GiveModalState; s
                 {(state.method === "etransfer" || state.etransferOnly) && (
                   <div style={{ padding: "0 18px 18px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <p style={{ fontSize: 12.5, lineHeight: 1.65, color: "rgba(246,243,234,0.65)", margin: 0 }}>
-                      Open your banking app and send an Interac e-Transfer for <strong style={{ color: "#c9a227" }}>${state.amount || "0"}</strong> to the email below. Autodeposit is enabled, so no security question is needed — just add your name in the message so we can match your donation to a tax receipt.
+                      Open your banking app and send an Interac e-Transfer for <strong style={{ color: "#c9a227" }}>${state.amount || "0"}</strong> to the email below. Autodeposit is enabled, so no security question is needed. Just add your name in the message so we can match your donation to a tax receipt.
                     </p>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                       <span style={{ fontSize: 13.5, color: "rgba(246,243,234,0.8)", fontFamily: "monospace", background: "rgba(246,243,234,0.06)", padding: "8px 12px", borderRadius: 8 }}>{ORG.email}</span>
-                      <button onClick={copyEmail} style={{ background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 13, fontWeight: 600, padding: "8px 16px", borderRadius: 999, cursor: "pointer" }}>
+                      <button type="button" onClick={copyEmail} style={{ background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 13, fontWeight: 600, padding: "8px 16px", borderRadius: 999, cursor: "pointer" }}>
                         {copiedEmail ? "Copied ✓" : "Copy email"}
                       </button>
                     </div>
@@ -335,7 +335,7 @@ export function ProgramModal({ program, onClose }: { program: ProgramKey | null;
             onClick={(e) => e.stopPropagation()}
             style={{ position: "relative", width: "100%", maxWidth: 480, maxHeight: "88vh", overflowY: "auto", background: modalBg, border: `1px solid ${accent}55`, borderRadius: 20, boxShadow: "0 30px 60px -12px rgba(0,0,0,0.5)" }}
           >
-            <button onClick={onClose} aria-label="Close" style={{ position: "absolute", top: 18, right: 18, zIndex: 2, width: 32, height: 32, borderRadius: 999, background: "rgba(0,0,0,0.25)", border: "1px solid rgba(246,243,234,0.3)", color: "#f6f3ea", fontSize: 16, cursor: "pointer", lineHeight: 1 }}>
+            <button type="button" onClick={onClose} aria-label="Close" style={{ position: "absolute", top: 18, right: 18, zIndex: 2, width: 32, height: 32, borderRadius: 999, background: "rgba(0,0,0,0.25)", border: "1px solid rgba(246,243,234,0.3)", color: "#f6f3ea", fontSize: 16, cursor: "pointer", lineHeight: 1 }}>
               ✕
             </button>
 
@@ -475,10 +475,10 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
             The community purchased this property outright in 2020 and carries a Qard-e-Hasan.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.3, ease }} className="da-give-cta" style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
-            <button onClick={onOpenOnce} className="da-btn da-btn-gold da-btn-lg">
+            <button type="button" onClick={onOpenOnce} className="da-btn da-btn-gold da-btn-lg">
               Donate now <span aria-hidden="true">↗</span>
             </button>
-            <button onClick={onOpenMonthly} className="da-btn da-btn-ghost da-btn-lg">
+            <button type="button" onClick={onOpenMonthly} className="da-btn da-btn-ghost da-btn-lg">
               Set up a monthly pledge
             </button>
           </motion.div>
@@ -512,10 +512,10 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
             <div className="da-money da-money-cream" style={{ fontSize: "clamp(44px,5vw,58px)", lineHeight: 1, marginBottom: 12 }}>$60</div>
             <div className="da-funfact-rule" aria-hidden />
             <p style={{ fontSize: 13.8, lineHeight: 1.6, color: "rgba(246,243,234,0.86)", fontWeight: 500, margin: "0 auto 20px", maxWidth: 340 }}>
-              If every family gave just $60 a month, it would cover the loan and running costs — together.
+              If every family gave just $60 a month, it would cover the loan and running costs, together.
             </p>
-            <button onClick={onOpenMonthly60} className="da-btn da-btn-forest da-btn-sm">
-              I can do that — give $60/month
+            <button type="button" onClick={onOpenMonthly60} className="da-btn da-btn-forest da-btn-sm">
+              I can do that: give $60/month
             </button>
           </div>
         </motion.div>
@@ -558,7 +558,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
             <div className="da-prog-head" style={{ position: "relative", padding: "26px 30px 24px" }}>
               <div style={{ fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 600, marginBottom: 10 }}>Al-Arif Islamic Institute</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 30, color: "#f6f3ea", margin: "0 0 4px 0" }}>Five programs, one madrasa</h3>
-              <p style={{ fontSize: 13.5, color: "rgba(246,243,234,0.55)", margin: 0 }}>Led by Mufti Taqi and our teaching team — choose the track that fits, at any age.</p>
+              <p style={{ fontSize: 13.5, color: "rgba(246,243,234,0.55)", margin: 0 }}>Led by Mufti Taqi and our teaching team. Choose the track that fits, at any age.</p>
             </div>
 
             <div className="da-prog-list" style={{ padding: "0 6px 6px", display: "flex", flexDirection: "column", gap: 16 }}>
@@ -576,7 +576,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
                 </div>
                 <div style={{ position: "relative", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 8 }}>Al-Arif Islamic Institute · flagship</div>
                 <h4 style={{ position: "relative", fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 24, color: "#f6f3ea", margin: "0 0 6px 0" }}>Aalim program</h4>
-                <p style={{ position: "relative", fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.75)", margin: "0 0 10px", maxWidth: 520 }}>Classical studies — Sarf &amp; Nahw, Quran, Hadith, Fiqh and Aqa&apos;id — a full academic path toward becoming a scholar.</p>
+                <p style={{ position: "relative", fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.75)", margin: "0 0 10px", maxWidth: 520 }}>Classical studies — Sarf &amp; Nahw, Quran, Hadith, Fiqh and Aqa&apos;id. A full academic path toward becoming a scholar.</p>
                 <div style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12, color: "#e3c56a", fontWeight: 600, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.35)", padding: "6px 14px", borderRadius: 999, width: "fit-content" }}>
                   Monday–Friday <span style={{ opacity: 0.5 }}>·</span> $150/mo
                 </div>
@@ -632,7 +632,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
             </div>
             <div className="da-wa-card-body" style={{ flex: 1, minWidth: 240 }}>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", margin: "0 0 4px 0" }}>New to the community?</h3>
-              <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements — or come see the masjid. Everyone is welcome.</p>
+              <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements, or come see the masjid. Everyone is welcome.</p>
             </div>
             <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-green da-btn-sm" style={{ flexShrink: 0 }}>
               Join the group <span aria-hidden="true">↗</span>
@@ -651,7 +651,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
 function CopyBtn({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = React.useState(false);
   return (
-    <button
+    <button type="button"
       onClick={() => {
         navigator.clipboard.writeText(value).then(() => {
           setCopied(true);

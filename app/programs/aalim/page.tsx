@@ -5,7 +5,7 @@ import { QuoteBlock } from "@/components/site/quote-block";
 import { ORG } from "@/lib/links";
 
 export const metadata: Metadata = {
-  title: "Aalim program & Hifz — Al-Arif Islamic Institute",
+  title: "Aalim program & Hifz at Al-Arif Islamic Institute",
   description:
     "Structured classical studies at Darul Arqum: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id, plus a full-time Quran Hifz track led by Mufti Taqi.",
 };
@@ -16,7 +16,7 @@ export default function AalimPage() {
         <PageHero
           eyebrow="Programs · Al-Arif Islamic Institute"
           title="Aalim program & Quran Hifz"
-          lede="Led by Mufti Taqi — a scholar trained at the Al-Rashid Institute with deep expertise in jurisprudence, Hadith, Tafsir and Arabic — Al-Arifa Madrasa pairs academic excellence with spiritual growth."
+          lede="Led by Mufti Taqi, a scholar trained at the Al-Rashid Institute with deep expertise in jurisprudence, Hadith, Tafsir and Arabic — Al-Arifa Madrasa pairs academic excellence with spiritual growth."
         />
         <ProgramDetail
           about={{

@@ -9,7 +9,7 @@ import { EXT, ORG, R } from "@/lib/links";
 export const metadata: Metadata = {
   title: "Programs",
   description:
-    "Quran classes, the Aalim program, Hifz, KidsLearnArabic and welearn — Islamic education for every age at Darul Arqum, Ottawa.",
+    "Quran classes, the Aalim program, Hifz, KidsLearnArabic and welearn. Islamic education for every age at Darul Arqum, Ottawa.",
 };
 
 export default function ProgramsPage() {
@@ -18,7 +18,7 @@ export default function ProgramsPage() {
         <PageHero
           eyebrow="Education"
           title="Programs at Darul Arqum"
-          lede="From a child's first surah to the classical sciences of the Aalim course — taught in person at the masjid and live online. A weekend Quran class also runs Saturdays 2:30–4:30 PM with Maulana Nazrul Islam."
+          lede="From a child's first surah to the classical sciences of the Aalim course, taught in person at the masjid and live online. A weekend Quran class also runs Saturdays 2:30–4:30 PM with Maulana Nazrul Islam."
         >
           <p className="text-sm text-bone/55">
             Questions? Call <a className="u-draw text-bone" href={ORG.phoneHref}>{ORG.phone}</a> or{" "}
