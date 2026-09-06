@@ -93,8 +93,11 @@ body { overflow-x: hidden; }
 /* Prayer times iqama table: scale everything down on narrow phones so all
    5 columns still fit on screen at once, instead of cramping or scrolling. */
 @media (max-width: 480px) {
-  .da-iqama-cell { padding: 16px 2px 12px !important; }
-  .da-iqama-disc { transform: translate(-50%,-50%) scale(0.55) !important; }
+  /* 16px of top padding left no sky at all, so the sun had nowhere to be but
+     on top of the name. A phone gets a smaller band and a smaller sun, but
+     it gets one. */
+  .da-iqama-cell { padding: 44px 2px 12px !important; }
+  .da-iqama-sky { height: 38px; --scale: 0.45; }
   .da-iqama-arabic { font-size: 12px !important; margin: 8px 0 4px 0 !important; }
   .da-iqama-name { font-size: 9.5px !important; margin-bottom: 8px !important; }
   .da-iqama-label { font-size: 6.5px !important; margin-bottom: 1px !important; }
@@ -536,6 +539,39 @@ body { overflow-x: hidden; }
    reserves for it, so it never lands on the sun or the Arabic name. */
 .da-board .da-iqama-now { top: 14px !important; }
 
+/* The sun and moon get the top half of the cell and nothing below it, so
+   the disc can never drift onto the times no matter how tall the cell is.
+   The ground fades in underneath and gives the type a surface without
+   flattening the sky above it. */
+.da-iqama-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* the clear band above the type — the cell's own top padding, less the
+     room the "Now" badge needs */
+  height: 52px;
+  --scale: 0.62;
+  z-index: 0;
+  pointer-events: none;
+}
+.da-iqama-disc {
+  position: absolute;
+  left: 50%;
+  width: calc(var(--disc) * var(--scale));
+  height: calc(var(--disc) * var(--scale));
+  /* the sun's box, not its centre, travels the band: it can reach the top
+     and the bottom of the sky and never leave it */
+  top: calc((100% - var(--disc) * var(--scale)) * var(--f));
+  transform: translateX(-50%);
+}
+.da-iqama-ground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    The masjid screen (desktop only)
    A cabinet, a bezel, a nameplate and a stand. What hangs in the bezel
@@ -575,6 +611,8 @@ body { overflow-x: hidden; }
    roughly 16:9 and gives the sun and moon art room to be seen, which the
    letterboxed version never had. */
 .da-tv-screen .da-iqama-cell { padding: 118px 14px 62px !important; }
+/* on the screen there is real sky, so the sun runs at full size through it */
+.da-tv-screen .da-iqama-sky { height: 106px; --scale: 1; }
 .da-tv-screen .da-iqama-arabic { font-size: 22px !important; }
 .da-tv-screen .da-iqama-name { font-size: 15px !important; }
 .da-tv-screen .da-board-note { padding: 15px 20px; }

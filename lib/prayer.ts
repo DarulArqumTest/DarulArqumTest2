@@ -1,13 +1,13 @@
 /**
  * Prayer schedule utilities.
  *
- * SOURCE OF TRUTH: the live Mawaqit screen (iframed on /prayer-times).
- * The constants below are a safe FALLBACK so native modules (next-prayer
- * band, iqama cards) always render even if the embed is blocked or offline.
- * The UI labels them "confirm on the live screen".
+ * SOURCE OF TRUTH: the masjid's own Mawaqit schedule, read at request time
+ * by lib/mawaqit.ts and served from /api/prayer-times. Components take it
+ * through usePrayerTimes().
  *
- * ADMIN-ACCESS FOLLOW-UP: replace with a small server proxy to Mawaqit's
- * mosque data (or a JSON the admin updates) for exact daily adhan times.
+ * The constants below are only a last-resort fallback for when Mawaqit is
+ * unreachable, so that the board renders something rather than nothing.
+ * They are a snapshot and they drift — never treat them as current.
  */
 
 export type Prayer = {
@@ -40,22 +40,52 @@ export function toMinutes(t: string): number | null {
   return h * 60 + parseInt(m[2], 10);
 }
 
-export function nextPrayer(now: Date): {
+/**
+ * Minutes since midnight *at the masjid*, not in the reader's own zone.
+ *
+ * Without this a visitor in Vancouver sees "NOW" on the wrong prayer and a
+ * countdown three hours out, because the board describes a place, not a
+ * device.
+ */
+export function minutesNowInZone(now: Date, timeZone: string): number {
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).formatToParts(now);
+    const h = Number(parts.find((p) => p.type === "hour")?.value ?? NaN);
+    const m = Number(parts.find((p) => p.type === "minute")?.value ?? NaN);
+    if (Number.isNaN(h) || Number.isNaN(m)) throw new Error("unparsed");
+    return (h % 24) * 60 + m;
+  } catch {
+    return now.getHours() * 60 + now.getMinutes();
+  }
+}
+
+export function nextPrayer(
+  now: Date,
+  list: Prayer[] = PRAYERS,
+  timeZone = "America/Toronto",
+  tomorrowList: Prayer[] = list,
+): {
   prayer: Prayer;
   minutesUntil: number;
   tomorrow: boolean;
 } | null {
   try {
-    const cur = now.getHours() * 60 + now.getMinutes();
-    for (const p of PRAYERS) {
+    const cur = minutesNowInZone(now, timeZone);
+    for (const p of list) {
       const t = toMinutes(p.iqama);
       if (t !== null && t > cur)
         return { prayer: p, minutesUntil: t - cur, tomorrow: false };
     }
-    const fajr = toMinutes(PRAYERS[0].iqama);
+    const first = tomorrowList[0] ?? list[0];
+    const fajr = toMinutes(first.iqama);
     if (fajr === null) return null;
     return {
-      prayer: PRAYERS[0],
+      prayer: first,
       minutesUntil: 24 * 60 - cur + fajr,
       tomorrow: true,
     };
@@ -64,10 +94,14 @@ export function nextPrayer(now: Date): {
   }
 }
 
-export function activePrayerKey(now: Date): string | null {
-  const cur = now.getHours() * 60 + now.getMinutes();
+export function activePrayerKey(
+  now: Date,
+  list: Prayer[] = PRAYERS,
+  timeZone = "America/Toronto",
+): string | null {
+  const cur = minutesNowInZone(now, timeZone);
   let active: string | null = null;
-  for (const p of PRAYERS) {
+  for (const p of list) {
     const t = toMinutes(p.adhan);
     if (t !== null && t <= cur) active = p.key;
   }

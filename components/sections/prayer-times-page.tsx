@@ -4,8 +4,9 @@
 
 import * as React from "react";
 import { Twinkle, Lantern, GeoMedallion } from "@/components/sections/home-literal";
-import { PRAYERS, SHURUQ, nextPrayer, activePrayerKey } from "@/lib/prayer";
-import { EXT, ORG } from "@/lib/links";
+import { nextPrayer, activePrayerKey } from "@/lib/prayer";
+import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
+import { EXT } from "@/lib/links";
 import { useIsDesktop } from "@/components/site/use-media-query";
 
 function useNow(intervalMs = 30000) {
@@ -44,45 +45,104 @@ function GeoStar({ top, left, right, size, opacity, twinkle }: { top: string; le
   );
 }
 
-const TIME_LOOK: Record<string, { bg: string; discTop: string; discSize: number; disc: string; discGlow: string; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
+/**
+ * A waxing crescent, drawn rather than approximated.
+ *
+ * Isha's "moon" used to be a 16px dot — the right idea at the wrong size
+ * with none of the shape that makes a moon read as a moon. This carves a
+ * real crescent out of a lit disc with a mask, and puts craters on the lit
+ * limb where they catch the light. IDs are scoped with useId because three
+ * copies of this can be in the document at once and a duplicate mask id
+ * resolves to whichever one the browser saw first.
+ */
+function Moon() {
+  const uid = React.useId().replace(/:/g, "");
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 40 40" aria-hidden style={{ display: "block", overflow: "visible", filter: "drop-shadow(0 0 6px rgba(198,214,255,0.5))" }}>
+      <defs>
+        <mask id={`mk${uid}`}>
+          <rect width="40" height="40" fill="#000" />
+          <circle cx="19" cy="20" r="17" fill="#fff" />
+          <circle cx="31.5" cy="13.5" r="15" fill="#000" />
+        </mask>
+        <radialGradient id={`gr${uid}`} cx="34%" cy="64%" r="72%">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="62%" stopColor="#eaeefc" />
+          <stop offset="100%" stopColor="#c2cae6" />
+        </radialGradient>
+      </defs>
+      <g mask={`url(#mk${uid})`}>
+        <circle cx="19" cy="20" r="17" fill={`url(#gr${uid})`} />
+        <circle cx="11.5" cy="14.5" r="2.7" fill="#a9b3d2" opacity="0.5" />
+        <circle cx="8.6" cy="23.5" r="1.9" fill="#a9b3d2" opacity="0.42" />
+        <circle cx="14.6" cy="28.5" r="1.4" fill="#a9b3d2" opacity="0.38" />
+        <circle cx="7.6" cy="18.2" r="1.05" fill="#a9b3d2" opacity="0.34" />
+        <circle cx="13.4" cy="21.6" r="1.15" fill="#a9b3d2" opacity="0.3" />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Each prayer's sky.
+ *
+ * Two things have to be true at once: the sun has to sit where it sits at
+ * that hour, and the times have to be readable. Those fought each other
+ * while the disc was positioned against the whole cell — Fajr's and
+ * Maghrib's suns landed directly behind "IQAMA" — so the disc is now
+ * positioned inside a sky band that occupies only the top of the cell, and
+ * the text sits on a `ground` wash that fades in below it. The art keeps
+ * its full height; the type gets a surface.
+ *
+ * `skyTop` is a percentage of that band, so the arc is preserved: Fajr low
+ * and rising, Dhuhr overhead, Asr past its peak, Maghrib setting, and the
+ * moon high over Isha.
+ */
+const TIME_LOOK: Record<string, { bg: string; skyFrac: number; discSize: number; disc: string; discGlow: string; moon?: boolean; ground: string; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
   fajr: {
     bg: "linear-gradient(180deg, #182238 0%, #35335c 48%, #6d4c6f 82%, #a8724f 100%)",
-    discTop: "72%", discSize: 34, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.4)",
-    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.85)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)", halo: "0 0 3px rgba(12,16,32,0.95), 0 0 7px rgba(12,16,32,0.85), 0 1px 2px rgba(12,16,32,1)",
+    skyFrac: 0.88, discSize: 38, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.45)",
+    ground: "linear-gradient(180deg, rgba(10,8,24,0) 16%, rgba(10,8,24,0.55) 38%, rgba(8,6,20,0.78) 100%)",
+    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.88)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)", halo: "0 1px 3px rgba(8,6,20,0.95)",
   },
   dhuhr: {
     bg: "linear-gradient(180deg, #2f6fb0 0%, #5b9bd6 55%, #a9d4ee 100%)",
-    discTop: "20%", discSize: 40, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.6)",
-    textPrimary: "#0e2419", textAccent: "#7a4a12", textSecondary: "rgba(14,36,25,0.78)", textMuted: "rgba(14,36,25,0.55)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)", halo: "0 0 3px rgba(255,255,255,0.95), 0 0 7px rgba(233,245,255,0.9), 0 1px 2px rgba(255,255,255,1)",
+    skyFrac: 0.06, discSize: 48, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.65)",
+    ground: "linear-gradient(180deg, rgba(240,248,255,0) 16%, rgba(240,248,255,0.62) 38%, rgba(247,251,255,0.88) 100%)",
+    textPrimary: "#10261b", textAccent: "#7a4a12", textSecondary: "rgba(16,38,27,0.85)", textMuted: "rgba(16,38,27,0.6)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)", halo: "0 1px 2px rgba(255,255,255,0.9)",
   },
   asr: {
     bg: "linear-gradient(180deg, #a8622c 0%, #cf9143 55%, #ecc57e 100%)",
-    discTop: "34%", discSize: 38, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.55)",
-    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.75)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)", halo: "0 0 3px rgba(255,248,232,0.95), 0 0 7px rgba(255,244,220,0.9), 0 1px 2px rgba(255,248,232,1)",
+    skyFrac: 0.42, discSize: 44, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.6)",
+    ground: "linear-gradient(180deg, rgba(255,247,230,0) 16%, rgba(255,247,230,0.6) 38%, rgba(255,250,238,0.87) 100%)",
+    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.82)", textMuted: "rgba(42,22,8,0.55)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)", halo: "0 1px 2px rgba(255,251,240,0.9)",
   },
   maghrib: {
     bg: "linear-gradient(180deg, #4a2a56 0%, #a83f4a 45%, #d9722f 78%, #f0a860 100%)",
-    discTop: "66%", discSize: 42, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.55)",
-    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.85)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)", halo: "0 0 3px rgba(38,12,32,0.95), 0 0 7px rgba(38,12,32,0.85), 0 1px 2px rgba(38,12,32,1)",
+    skyFrac: 0.9, discSize: 46, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.6)",
+    ground: "linear-gradient(180deg, rgba(26,5,20,0) 16%, rgba(26,5,20,0.58) 38%, rgba(22,4,17,0.8) 100%)",
+    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.88)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)", halo: "0 1px 3px rgba(22,4,17,0.95)",
   },
   isha: {
     bg: "linear-gradient(180deg, #0a1220 0%, #182642 55%, #223458 100%)",
-    discTop: "22%", discSize: 16, disc: "radial-gradient(circle, #f4f6ff, #cfd8f5 70%)", discGlow: "rgba(244,246,255,0.35)",
-    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.85)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)", halo: "0 0 3px rgba(6,10,22,0.95), 0 0 7px rgba(6,10,22,0.85), 0 1px 2px rgba(6,10,22,1)",
+    skyFrac: 0.32, discSize: 52, disc: "", discGlow: "", moon: true,
+    ground: "linear-gradient(180deg, rgba(3,6,16,0) 16%, rgba(3,6,16,0.45) 38%, rgba(2,5,14,0.68) 100%)",
+    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.88)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)", halo: "0 1px 3px rgba(2,5,14,0.95)",
   },
 };
 
 function IqamaTable() {
   const now = useNow(60000);
-  const active = now ? activePrayerKey(now) : null;
+  const { prayers, shuruq, timezone } = usePrayerTimes();
+  const active = now ? activePrayerKey(now, prayers, timezone) : null;
   return (
     <div className="da-iqama-wrap" style={{ maxWidth: 980, margin: "60px auto 0" }}>
       <div className="da-iqama-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", boxShadow: "0 20px 50px -25px rgba(0,0,0,0.5)" }}>
-        {PRAYERS.map((p, i) => {
+        {prayers.map((p, i) => {
           const look = TIME_LOOK[p.key];
           const isActive = active === p.key;
           const isFirst = i === 0;
-          const isLast = i === PRAYERS.length - 1;
+          const isLast = i === prayers.length - 1;
           const scrim = isActive
             ? "linear-gradient(180deg, rgba(8,10,18,0.32), rgba(8,10,18,0.08) 45%, rgba(8,10,18,0.4)),"
             : "linear-gradient(180deg, rgba(8,10,18,0.5), rgba(8,10,18,0.22) 45%, rgba(8,10,18,0.55)),";
@@ -116,7 +176,30 @@ function IqamaTable() {
                   </div>
                 </div>
               )}
-              <div className="da-iqama-disc" style={{ position: "absolute", top: look.discTop, left: "50%", transform: "translate(-50%,-50%)", width: look.discSize, height: look.discSize, borderRadius: 999, background: look.disc, boxShadow: `0 0 22px 6px ${look.discGlow}`, zIndex: 0 }} />
+              {/* The sky band: bounded to the clear space above the type, and
+                  the disc is lerped *inside* it — `(100% - size) * f` puts
+                  the sun's own box, not its centre, at the fraction — so it
+                  physically cannot reach the times however tall a cell gets.
+                  Positioning by centre is what let Fajr's and Maghrib's suns
+                  land on top of "IQAMA". */}
+              <div
+                className="da-iqama-sky"
+                style={{ "--disc": `${look.discSize}px`, "--f": look.skyFrac } as React.CSSProperties}
+                aria-hidden
+              >
+                <div
+                  className="da-iqama-disc"
+                  style={{
+                    borderRadius: look.moon ? 0 : 999,
+                    background: look.moon ? undefined : look.disc,
+                    boxShadow: look.moon ? undefined : `0 0 26px 8px ${look.discGlow}`,
+                  }}
+                >
+                  {look.moon && <Moon />}
+                </div>
+              </div>
+              {/* the ground the type stands on */}
+              <div className="da-iqama-ground" style={{ background: look.ground }} aria-hidden />
               <div className="da-iqama-text" style={{ position: "relative", zIndex: 1 }}>
                 <div dir="rtl" lang="ar" className="da-iqama-arabic" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: look.halo }}>{p.arabic}</div>
                 <div className="da-iqama-name" style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: look.halo }}>{p.name}</div>
@@ -135,7 +218,7 @@ function IqamaTable() {
       <p className="da-board-note">
         <span className="da-board-note-mark" aria-hidden>✦</span>
         <span>
-          Shurûq {SHURUQ} · Changes are announced in the{" "}
+          Shurûq {shuruq} · Changes are announced in the{" "}
           <a
             href="#whatsapp-join"
             onClick={(e) => {
@@ -194,12 +277,13 @@ function MasjidScreen({ children }: { children: React.ReactNode }) {
 
 /** Jumu'ah banner, the five prayers, and the board's own footnote. */
 function Board() {
+  const { jumua } = usePrayerTimes();
   return (
     <div className="da-board">
       <div className="da-board-jumuah">
         <span className="da-live-pulse da-board-dot" aria-hidden />
         <span className="da-board-jumuah-label">Jumu&apos;ah</span>
-        <span className="da-jumuah-text">1st Khutbah {ORG.jumua.first} &amp; 2nd Khutbah {ORG.jumua.second}</span>
+        <span className="da-jumuah-text">1st Khutbah {jumua.first} &amp; 2nd Khutbah {jumua.second}</span>
       </div>
       <IqamaTable />
     </div>
@@ -208,8 +292,9 @@ function Board() {
 
 function IqamaPill() {
   const now = useNow();
+  const { prayers, tomorrow, timezone } = usePrayerTimes();
   if (!now) return null;
-  const next = nextPrayer(now);
+  const next = nextPrayer(now, prayers, timezone, tomorrow);
   if (!next) return null;
   const h = Math.floor(next.minutesUntil / 60);
   const m = next.minutesUntil % 60;

@@ -12,13 +12,8 @@ import * as React from "react";
 import { motion } from "motion/react";
 import { ExternalLink, MonitorPlay, BellRing } from "lucide-react";
 import { EXT } from "@/lib/links";
-import {
-  PRAYERS,
-  SHURUQ,
-  nextPrayer,
-  activePrayerKey,
-  FALLBACK_DATE_NOTE,
-} from "@/lib/prayer";
+import { nextPrayer, activePrayerKey, FALLBACK_DATE_NOTE } from "@/lib/prayer";
+import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -34,8 +29,9 @@ function useNow(intervalMs = 30000) {
 
 export function NextPrayerBand() {
   const now = useNow();
+  const { prayers, tomorrow, timezone } = usePrayerTimes();
   if (!now) return <div className="h-[64px] bg-forest" aria-hidden />;
-  const next = nextPrayer(now);
+  const next = nextPrayer(now, prayers, timezone, tomorrow);
   if (!next) return null;
   const h = Math.floor(next.minutesUntil / 60);
   const m = next.minutesUntil % 60;
@@ -119,7 +115,8 @@ export function PrayerScreen({ tall = false }: { tall?: boolean }) {
 
 export function IqamaCards() {
   const now = useNow(60000);
-  const active = now ? activePrayerKey(now) : null;
+  const { prayers, shuruq, live, timezone } = usePrayerTimes();
+  const active = now ? activePrayerKey(now, prayers, timezone) : null;
   return (
     <div>
       <motion.div
@@ -129,7 +126,7 @@ export function IqamaCards() {
         variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
         className="grid grid-cols-2 gap-3 md:grid-cols-5"
       >
-        {PRAYERS.map((p) => {
+        {prayers.map((p) => {
           const isActive = active === p.key;
           return (
             <motion.div
@@ -167,7 +164,10 @@ export function IqamaCards() {
       </motion.div>
       <p className="mt-4 flex items-center gap-2 text-xs text-ink/50">
         <BellRing className="h-3.5 w-3.5 text-brass" aria-hidden />
-        Shurûq {SHURUQ} · {FALLBACK_DATE_NOTE} — iqama changes are announced in the WhatsApp group.
+        Shurûq {shuruq} ·{" "}
+        {live
+          ? "Live from the masjid screen — changes are announced in the WhatsApp group."
+          : `${FALLBACK_DATE_NOTE} — iqama changes are announced in the WhatsApp group.`}
       </p>
     </div>
   );
