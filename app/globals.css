@@ -3620,3 +3620,61 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
   .da-checks { grid-template-columns: 1fr; }
   .da-form-done { gap: 14px; }
 }
+
+/* ── the Zoom join button ──
+   Zoom's blue, Zoom's camera, and two lines: what pressing it does, and
+   where it goes. It already existed on the homepage's welearn card; the
+   programme pages had a gold button that said neither. */
+.da-zoom-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 22px 13px 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #3d97ff, #0b5cff);
+  border: 2px solid #063a9e;
+  box-shadow: 3px 3px 0 rgba(4, 26, 70, 0.55);
+  color: #fff;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.da-zoom-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 rgba(4, 26, 70, 0.6); }
+.da-zoom-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(4, 26, 70, 0.5); }
+.da-zoom-btn-sheen {
+  position: absolute;
+  top: -22px;
+  right: -22px;
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+.da-zoom-btn-mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+}
+.da-zoom-btn-text { position: relative; display: flex; flex-direction: column; text-align: left; line-height: 1.25; }
+.da-zoom-btn-label { font-size: 14.5px; font-weight: 700; }
+.da-zoom-btn-sub { font-size: 11.5px; font-weight: 500; color: rgba(255, 255, 255, 0.82); }
+
+.da-zoom-btn-sm { padding: 9px 16px 9px 11px; gap: 10px; border-radius: 12px; }
+.da-zoom-btn-sm .da-zoom-btn-mark { width: 30px; height: 30px; border-radius: 8px; }
+.da-zoom-btn-sm .da-zoom-btn-mark svg { width: 16px; height: 16px; }
+.da-zoom-btn-sm .da-zoom-btn-label { font-size: 13px; }
+.da-zoom-btn-sm .da-zoom-btn-sub { font-size: 10.5px; }
+
+/* the welearn art fills its banner the way a photograph would */
+.da-prog-art > svg, .da-pd-photo > svg { width: 100%; height: 100%; }
+
+@media (max-width: 640px) {
+  .da-zoom-btn { width: 100%; justify-content: center; }
+}

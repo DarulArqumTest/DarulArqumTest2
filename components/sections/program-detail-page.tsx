@@ -18,6 +18,8 @@ import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
+import { WelearnArt } from "@/components/site/welearn-art";
+import { ZoomJoinButton } from "@/components/site/zoom-join-button";
 import { GeoMedallion } from "@/components/sections/home-literal";
 import { otherPrograms, type Program } from "@/lib/programs";
 import { ORG, R } from "@/lib/links";
@@ -50,11 +52,8 @@ function JoinButtons({ p, size = "" }: { p: Program; size?: string }) {
       </Link>
     );
   }
-  return (
-    <a href={p.joinUrl} target="_blank" rel="noopener noreferrer" className={cls}>
-      {p.joinLabel ?? "Join"} <span aria-hidden="true">↗</span>
-    </a>
-  );
+  // Zoom's own button, not a gold one that says nothing about where it goes
+  return <ZoomJoinButton className={size === "da-btn-lg" ? undefined : "da-zoom-btn-sm"} />;
 }
 
 export function ProgramDetailPage({ program: p }: { program: Program }) {
@@ -64,12 +63,16 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
     <div className="da-pd" style={{ "--accent": p.accent } as React.CSSProperties}>
       {/* ── masthead ── */}
       <header className="da-pd-head">
-        {p.photo && (
+        {p.photo ? (
           <div
             className="da-pd-photo"
             style={{ backgroundImage: `url('${p.photo}')`, backgroundPosition: p.focus }}
             aria-hidden
           />
+        ) : (
+          <div className="da-pd-photo">
+            <WelearnArt />
+          </div>
         )}
         <div className="da-pd-head-inner">
           <Breadcrumbs items={[{ label: "Programs", href: R.programs }, { label: p.name }]} className="mb-6" />

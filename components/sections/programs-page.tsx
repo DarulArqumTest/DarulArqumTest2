@@ -16,6 +16,8 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { PROGRAMS, type Program } from "@/lib/programs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
+import { WelearnArt } from "@/components/site/welearn-art";
+import { ZoomJoinButton } from "@/components/site/zoom-join-button";
 import { ORG } from "@/lib/links";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -35,11 +37,17 @@ function ProgramCard({ p, index }: { p: Program; index: number }) {
       className="da-prog-card"
       style={{ "--accent": accent } as React.CSSProperties}
     >
-      <div
-        className={p.slug === "welearn" ? "da-prog-art da-prog-art-flat" : "da-prog-art"}
-        style={{ backgroundImage: `url('${p.photo}')`, backgroundSize: "cover", backgroundPosition: p.focus }}
-        aria-hidden
-      />
+      {p.photo ? (
+        <div
+          className="da-prog-art"
+          style={{ backgroundImage: `url('${p.photo}')`, backgroundSize: "cover", backgroundPosition: p.focus }}
+          aria-hidden
+        />
+      ) : (
+        <div className="da-prog-art">
+          <WelearnArt />
+        </div>
+      )}
 
       <div className="da-prog-body">
         <p className="da-prog-eyebrow">{p.eyebrow}</p>
@@ -61,9 +69,7 @@ function ProgramCard({ p, index }: { p: Program; index: number }) {
               Register <span aria-hidden="true">→</span>
             </Link>
           ) : (
-            <a href={p.joinUrl} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm">
-              Join on Zoom <span aria-hidden="true">↗</span>
-            </a>
+            <ZoomJoinButton label="Join the live class" sub="via Zoom ↗" className="da-zoom-btn-sm" />
           )}
           <Link href={p.href} className="da-btn da-btn-ghost da-btn-sm">
             Full details

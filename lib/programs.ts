@@ -235,11 +235,12 @@ export const PROGRAMS: Program[] = [
     notes: [
       "Schedule changes and recordings go out in the WhatsApp group rather than by email.",
     ],
-    // the official Zoom wordmark rather than a drawing of a computer — every
-    // other card carries a real image, and this is the real one for this class
-    photo: "/assets/program-welearn.png",
+    // The Zoom wordmark said which app the class runs on, not what the class
+    // is. The desk from the homepage says the second thing; the Zoom mark
+    // stays where it belongs, on the button that joins.
+    photo: null,
     focus: "center",
-    accent: "#0b5cff",
+    accent: "#8fb4c9",
     metaTitle: "welearn — online with Sheikh Saud Hasan",
     metaDescription:
       "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan — join the class over Zoom from anywhere.",
