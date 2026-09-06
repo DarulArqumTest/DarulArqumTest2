@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
-import { ORG } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Weekdays Quran classes",
@@ -13,6 +13,7 @@ export default function QuranClassesPage() {
   return (
     <main className="bg-bone">
         <PageHero
+          crumbs={[{ label: "Programs", href: R.programs }, { label: "Quran classes" }]}
           eyebrow="Programs · weekday madrasa"
           title="Weekdays Quran classes"
           lede="Evening madrasa at the masjid, Monday to Friday, 6:00–8:00 PM — building recitation, memorization, and character."

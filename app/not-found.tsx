@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LOCATION_LIST, R } from "@/lib/links";
+import { LostLantern } from "@/components/site/lost-lantern";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -26,16 +27,18 @@ export default function NotFound() {
   return (
     <main className="da-404">
       <div className="da-404-inner">
-        <p className="da-404-code">Error 404</p>
-
-        <h1 className="da-404-title">
-          We couldn&apos;t find that page.
-        </h1>
-
-        <p className="da-404-lede">
-          The address may have changed, or the link that brought you here may be out of
-          date. Here is where most people are heading.
-        </p>
+        <div className="da-404-top">
+          <LostLantern />
+          <div>
+            <p className="da-404-code">Error 404</p>
+            <h1 className="da-404-title">This lantern has gone out.</h1>
+            <p className="da-404-lede">
+              There is no page at that address — it may have moved, or the link that
+              brought you here may be out of date. One ember is still going, and these
+              are the four doors most people are looking for.
+            </p>
+          </div>
+        </div>
 
         <nav className="da-404-grid" aria-label="Popular pages">
           {links.map((l) => (

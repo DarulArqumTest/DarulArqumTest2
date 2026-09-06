@@ -8,6 +8,7 @@
  */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { ORG, R } from "@/lib/links";
 import { submitForm } from "@/app/actions/submit";
@@ -274,13 +275,15 @@ export function PledgePage() {
         ))}
       </div>
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "56px 24px 120px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "56px 24px 120px" }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 18px 8px 8px", borderRadius: 999, background: "rgba(201,162,39,0.12)", border: "1px solid rgba(201,162,39,0.35)", marginBottom: 20 }}>
           <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: 999, background: "#c9a227", color: "#0e2419", fontSize: 13, fontWeight: 800, flexShrink: 0 }}>✓</span>
           <span style={{ fontSize: 12.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700 }}>
             CRA registered charity <span style={{ color: "rgba(246,243,234,0.5)", fontWeight: 500, letterSpacing: "0.02em" }}>· {ORG.charityReg}</span>
           </span>
         </div>
+
+        <Breadcrumbs items={[{ label: "Give", href: R.give }, { label: "Monthly pledge" }]} className="mb-5" />
 
         <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.6vw,50px)", lineHeight: 1.1, color: "#f6f3ea", margin: "0 0 36px 0" }}>
           Help{" "}
@@ -383,7 +386,7 @@ export function PledgePage() {
         </div>
 
         {/* FORM */}
-        <div style={{ borderRadius: 24, padding: 40, background: "rgba(246,243,234,0.05)", border: "1px solid rgba(201,162,39,0.3)", boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)" }}>
+        <div className="da-form-card" style={{ borderRadius: 24, padding: 40, background: "rgba(246,243,234,0.05)", border: "1px solid rgba(201,162,39,0.3)", boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)" }}>
           <div style={{ fontSize: 11.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 8 }}>Donation authorization form</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 29, color: "#f6f3ea", margin: "0 0 22px 0" }}>Your details</h2>
 
@@ -431,7 +434,7 @@ export function PledgePage() {
 
           {showIdentityFields && (
             <>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>First name</span>
                   <input value={firstName} onChange={(e) => setFirstName(e.target.value)} style={inputStyle} />
@@ -441,7 +444,7 @@ export function PledgePage() {
                   <input value={lastName} onChange={(e) => setLastName(e.target.value)} style={inputStyle} />
                 </label>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Email</span>
                   <input
@@ -542,7 +545,7 @@ export function PledgePage() {
                     Fill in your banking details below, then attach a photo of a VOID cheque to the email that opens when you submit. Prefer a
                     printable, paper copy instead? <Link href={R.padForm} style={{ color: "#8fb4c9", textDecoration: "underline" }}>Get the PAD form</Link>.
                   </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                     <input value={padBankName} onChange={(e) => setPadBankName(e.target.value)} placeholder="Bank name" style={{ ...padInputStyle, gridColumn: "span 2" }} />
                     <input value={padInstitution} onChange={(e) => setPadInstitution(e.target.value)} placeholder="Institution #" style={padInputStyle} />
                     <input value={padTransit} onChange={(e) => setPadTransit(e.target.value)} placeholder="Transit #" style={padInputStyle} />

@@ -1,3 +1,4 @@
+import { R } from "@/lib/links";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
@@ -12,6 +13,7 @@ export default function KidsArabicPage() {
   return (
     <main className="bg-bone">
         <PageHero
+          crumbs={[{ label: "Programs", href: R.programs }, { label: "KidsLearnArabic" }]}
           eyebrow="Programs · ages 5–10"
           title="KidsLearnArabic"
           lede="A dedicated Arabic track for young learners: playful, structured, and rooted in the language of the Quran."

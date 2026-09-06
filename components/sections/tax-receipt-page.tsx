@@ -7,11 +7,12 @@
  */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { submitForm } from "@/app/actions/submit";
-import { ORG } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
@@ -130,11 +131,12 @@ export function TaxReceiptPage() {
             </div>
           </div>
           <div style={{ fontSize: 12.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Update your donor profile</div>
+          <Breadcrumbs items={[{ label: "Give", href: R.give }, { label: "Tax receipt" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(30px,5vw,42px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center" }}>Tax Receipt Information</h1>
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "36px 24px 64px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "36px 24px 64px" }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "16px 20px", borderRadius: 14, background: "linear-gradient(120deg, rgba(201,162,39,0.12), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.3)", marginBottom: 24 }}>
           <span style={{ color: "#c9a227", fontSize: 16, marginTop: 1 }}>ⓘ</span>
           <p style={{ fontSize: 13, lineHeight: 1.65, color: "rgba(246,243,234,0.78)", margin: 0 }}>
@@ -143,7 +145,7 @@ export function TaxReceiptPage() {
         </div>
 
         {state === "done" ? (
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} style={{ borderRadius: 20, border: "1px solid rgba(201,162,39,0.25)", background: "rgba(201,162,39,0.07)", padding: 32 }}>
+          <motion.div className="da-card-pad" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} style={{ borderRadius: 20, border: "1px solid rgba(201,162,39,0.25)", background: "rgba(201,162,39,0.07)", padding: 32 }}>
             <CheckCircle2 className="h-6 w-6" style={{ color: "#e3c56a" }} aria-hidden />
             <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>{delivered ? "Details sent" : "Details recorded"}</p>
             <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>

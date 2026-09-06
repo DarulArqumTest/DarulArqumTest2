@@ -66,6 +66,7 @@ export default function GivePage() {
   return (
     <main className="bg-bone">
         <PageHero
+          crumbs={[{ label: "Give" }]}
           eyebrow="Sadaqah Jariyah"
           title="Carry the first masjid in Riverside South"
           lede="Every donation is tax-deductible. Darul Arqum is a CRA registered charity (#709549687RR0001). Receipts are issued each February to donors with a complete mailing address."

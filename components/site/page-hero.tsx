@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Ambient } from "@/components/site/ambient";
 import { DaAmbient } from "@/components/site/da-motifs";
+import { Breadcrumbs, type Crumb } from "@/components/site/breadcrumbs";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -12,12 +13,15 @@ export function PageHero({
   title,
   lede,
   children,
+  crumbs,
   theme = "classic",
 }: {
   eyebrow: string;
   title: string;
   lede?: string;
   children?: React.ReactNode;
+  /** trail back up, minus Home — omit on top-level pages */
+  crumbs?: Crumb[];
   /** "da" opts into the 2026 redesign palette/fonts. */
   theme?: "classic" | "da";
 }) {
@@ -30,29 +34,36 @@ export function PageHero({
   const isDa = theme === "da";
   return (
     <div
-      className={`relative overflow-hidden px-5 pb-16 pt-32 md:pb-20 md:pt-40 ${
+      className={`relative overflow-hidden px-5 pb-11 pt-24 md:pb-20 md:pt-40 ${
         isDa ? "bg-da-bg font-daBody text-da-cream" : "bg-ink text-bone"
       }`}
     >
       {isDa ? <DaAmbient stars /> : <Ambient dark grain />}
       <div className="relative mx-auto max-w-wide">
+        {crumbs && (
+          <motion.div {...rise(0.04)} className="mb-6">
+            <Breadcrumbs items={crumbs} />
+          </motion.div>
+        )}
         <motion.p {...rise(0.1)} className={`text-[11px] uppercase tracking-[0.3em] ${isDa ? "text-da-goldL" : "text-brassL"}`}>
           {eyebrow}
         </motion.p>
         <motion.h1
           {...rise(0.22)}
-          className={`mt-5 max-w-3xl leading-[1.04] tracking-tight ${
-            isDa ? "font-daDisplay text-[clamp(34px,4.6vw,64px)] font-medium" : "font-display text-5xl md:text-7xl"
+          className={`mt-4 max-w-3xl leading-[1.04] tracking-tight md:mt-5 ${
+            isDa
+              ? "font-daDisplay text-[clamp(30px,4.6vw,64px)] font-medium"
+              : "font-display text-[34px] sm:text-5xl md:text-7xl"
           }`}
         >
           {title}
         </motion.h1>
         {lede && (
-          <motion.p {...rise(0.34)} className={`mt-6 max-w-copy text-sm leading-relaxed md:text-base ${isDa ? "text-da-cream/70" : "text-bone/65"}`}>
+          <motion.p {...rise(0.34)} className={`mt-4 max-w-copy text-[13.5px] leading-relaxed md:mt-6 md:text-base ${isDa ? "text-da-cream/70" : "text-bone/65"}`}>
             {lede}
           </motion.p>
         )}
-        {children && <motion.div {...rise(0.46)} className="mt-9">{children}</motion.div>}
+        {children && <motion.div {...rise(0.46)} className="mt-6 md:mt-9">{children}</motion.div>}
       </div>
       <motion.div
         initial={reduce ? false : { scaleX: 0 }}

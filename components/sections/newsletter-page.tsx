@@ -7,6 +7,7 @@
  */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -144,6 +145,7 @@ export function NewsletterPage() {
             </div>
           </div>
           <div style={{ fontSize: 12.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Stay connected</div>
+          <Breadcrumbs items={[{ label: "Newsletters" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center" }}>The Darul Arqum Newsletter</h1>
         </div>
       </div>

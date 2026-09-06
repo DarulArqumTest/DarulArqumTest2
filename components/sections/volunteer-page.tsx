@@ -7,6 +7,7 @@
  */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -204,6 +205,7 @@ export function VolunteerPage() {
             <span style={{ fontSize: 13.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#f3c98a", fontWeight: 700, textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>Serve your community</span>
             <span style={{ width: 26, height: 1, background: "linear-gradient(90deg, rgba(232,176,106,0.7), transparent)" }} />
           </div>
+          <Breadcrumbs items={[{ label: "Community" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center", textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}>Join Darul Arqum</h1>
         </div>
       </div>
@@ -214,7 +216,7 @@ export function VolunteerPage() {
         </p>
 
         {state === "done" ? (
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} style={{ borderRadius: 20, border: "1px solid rgba(217,143,74,0.25)", background: "rgba(217,143,74,0.07)", padding: 32 }}>
+          <motion.div className="da-card-pad" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} style={{ borderRadius: 20, border: "1px solid rgba(217,143,74,0.25)", background: "rgba(217,143,74,0.07)", padding: 32 }}>
             <CheckCircle2 className="h-6 w-6" style={{ color: "#e8b06a" }} aria-hidden />
             <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>{delivered ? "Application sent" : "Application recorded"}</p>
             <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>
@@ -249,7 +251,7 @@ export function VolunteerPage() {
                 <div style={{ width: 28, height: 28, borderRadius: 8, background: "rgba(217,143,74,0.2)", border: "1px solid rgba(217,143,74,0.45)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e8b06a", fontSize: 13, fontWeight: 700, fontFamily: "'Cormorant Garamond',serif" }}>1</div>
                 <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700 }}>Your details</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Full name</span>
                   <input name="Full name" required style={inputStyle} />

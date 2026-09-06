@@ -16,7 +16,7 @@ type NavItem = { label: string; href: string } | { label: string; sectionId: Scr
 
 const NAV: NavItem[] = [
   { label: "Prayer times", href: R.prayer },
-  { label: "Programs", sectionId: "programs-section" },
+  { label: "Programs", href: R.programs },
   { label: "Story", href: R.story },
   { label: "Gallery", href: R.gallery },
   { label: "Community", sectionId: "whatsapp-section" },

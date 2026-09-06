@@ -3,6 +3,7 @@
 /** Literal, line-for-line port of `Gallery.dc.html`. */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { Twinkle, CrescentMoon } from "@/components/sections/home-literal";
 import { EXT, R } from "@/lib/links";
@@ -49,6 +50,7 @@ export function GalleryPage() {
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 46px", textAlign: "center", background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,162,39,0.10), transparent 70%)" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>Darul Arqum · Ottawa</div>
+          <Breadcrumbs items={[{ label: "Gallery" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.8vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 20px 0" }}>Gallery</h1>
           <p style={{ fontSize: 15.5, lineHeight: 1.7, color: "rgba(246,243,234,0.68)", margin: "0 auto", maxWidth: 560 }}>Moments from the masjid, our community, and the nights that built it.</p>
         </div>

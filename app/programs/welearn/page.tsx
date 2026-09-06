@@ -17,6 +17,7 @@ export default function WelearnPage() {
   return (
     <main className="bg-bone">
         <PageHero
+          crumbs={[{ label: "Programs", href: R.programs }, { label: "welearn" }]}
           eyebrow="Programs · online"
           title="welearn"
           lede="Learn with Sheikh Saud Hasan — live sessions over Zoom, open to the community wherever you are."

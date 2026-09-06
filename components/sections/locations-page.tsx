@@ -7,6 +7,7 @@
  */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion, useInView } from "motion/react";
 import { LOCATION_LIST, ORG, R, type Location } from "@/lib/links";
@@ -135,6 +136,8 @@ export function LocationsPage() {
             <span style={{ width: 26, height: 1, background: "rgba(201,162,39,0.6)" }} />
             <span style={{ fontSize: 12.5, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 600 }}>Our locations</span>
           </motion.div>
+
+          <Breadcrumbs items={[{ label: "Locations" }]} className="mb-5" />
 
           <motion.h1
             initial={{ opacity: 0, y: 18 }}

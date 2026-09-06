@@ -1,11 +1,13 @@
 "use client";
 
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+
 /** Faithful, dedicated port of `PAD Form.dc.html` — an informational page
  * pointing donors to the downloadable Pre-Authorized Debit form. No form
  * fields on this page in the source; it's a "how it works" + PDF link. */
 
 import Link from "next/link";
-import { EXT, ORG } from "@/lib/links";
+import { EXT, ORG, R } from "@/lib/links";
 
 const dotGrid: React.CSSProperties = {
   backgroundImage: "radial-gradient(rgba(246,243,234,0.05) 1px, transparent 1px)",
@@ -107,11 +109,12 @@ export function PadFormPage() {
             بركة
           </div>
           <div style={{ fontSize: 12.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Give automatically · every month · lasting barakah</div>
+          <Breadcrumbs items={[{ label: "Give", href: R.give }, { label: "PAD form" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(30px,5vw,42px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center" }}>Pre-Authorized Debit (PAD) Form</h1>
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "36px 24px 64px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "36px 24px 64px" }}>
         <div style={{ borderRadius: 16, background: "linear-gradient(135deg, rgba(201,162,39,0.1), rgba(143,180,201,0.05))", border: "1px solid rgba(201,162,39,0.28)", padding: "26px 28px", marginBottom: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
             <div style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.18)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a", fontSize: 15, fontWeight: 700, fontFamily: "'Cormorant Garamond',serif" }}>?</div>

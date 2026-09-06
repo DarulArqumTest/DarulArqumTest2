@@ -3,6 +3,7 @@
 /** Literal, line-for-line port of `Story.dc.html`. */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
@@ -273,6 +274,7 @@ export function StoryPage() {
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "74px 24px 50px", textAlign: "center", background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,162,39,0.10), transparent 70%)" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>Darul Arqum · Ottawa</div>
+          <Breadcrumbs items={[{ label: "The story" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.8vw,56px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 20px 0" }}>Our story</h1>
           <p style={{ fontSize: 15.5, lineHeight: 1.7, color: "rgba(246,243,234,0.68)", margin: "0 auto", maxWidth: 560 }}>From a handful of Riverside South families to a home of worship and learning — scroll to watch it unfold, year by year.</p>
         </div>

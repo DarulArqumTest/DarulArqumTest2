@@ -3,6 +3,7 @@
 /** Literal, line-for-line port of `Prayer Times.dc.html`. */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Twinkle, Lantern, GeoMedallion } from "@/components/sections/home-literal";
 import { nextPrayer, activePrayerKey } from "@/lib/prayer";
 import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
@@ -105,7 +106,7 @@ function Moon() {
 const TIME_LOOK: Record<string, { bg: string; skyFrac: number; skyX: string; discSize: number; disc: string; discGlow: string; moon?: boolean; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
   fajr: {
     bg: "linear-gradient(180deg, #182238 0%, #35335c 48%, #6d4c6f 82%, #a8724f 100%)",
-    skyFrac: 0.94, skyX: "30%", discSize: 38, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.45)",
+    skyFrac: 0.94, skyX: "50%", discSize: 38, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.45)",
     textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.88)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)",
     halo: "0 1px 0 rgba(10,14,30,0.95), 0 -1px 0 rgba(10,14,30,0.7), 1px 0 0 rgba(10,14,30,0.7), -1px 0 0 rgba(10,14,30,0.7), 0 0 4px rgba(10,14,30,0.95), 0 0 9px rgba(10,14,30,0.7)",
   },
@@ -117,19 +118,19 @@ const TIME_LOOK: Record<string, { bg: string; skyFrac: number; skyX: string; dis
   },
   asr: {
     bg: "linear-gradient(180deg, #a8622c 0%, #cf9143 55%, #ecc57e 100%)",
-    skyFrac: 0.4, skyX: "62%", discSize: 42, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.6)",
+    skyFrac: 0.4, skyX: "50%", discSize: 42, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.6)",
     textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.78)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)",
     halo: "0 1px 0 rgba(255,250,238,0.95), 0 -1px 0 rgba(255,246,226,0.8), 1px 0 0 rgba(255,246,226,0.8), -1px 0 0 rgba(255,246,226,0.8), 0 0 4px rgba(255,250,238,0.95), 0 0 9px rgba(255,246,226,0.8)",
   },
   maghrib: {
     bg: "linear-gradient(180deg, #4a2a56 0%, #a83f4a 45%, #d9722f 78%, #f0a860 100%)",
-    skyFrac: 0.96, skyX: "72%", discSize: 44, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.6)",
+    skyFrac: 0.96, skyX: "50%", discSize: 44, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.6)",
     textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.88)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)",
     halo: "0 1px 0 rgba(46,10,24,0.98), 0 -1px 0 rgba(46,10,24,0.8), 1px 0 0 rgba(46,10,24,0.8), -1px 0 0 rgba(46,10,24,0.8), 0 0 4px rgba(46,10,24,0.98), 0 0 9px rgba(46,10,24,0.8)",
   },
   isha: {
     bg: "linear-gradient(180deg, #0a1220 0%, #182642 55%, #223458 100%)",
-    skyFrac: 0.16, skyX: "68%", discSize: 46, disc: "", discGlow: "", moon: true,
+    skyFrac: 0.16, skyX: "50%", discSize: 46, disc: "", discGlow: "", moon: true,
     textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.88)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)",
     halo: "0 1px 0 rgba(4,8,20,0.95), 0 -1px 0 rgba(4,8,20,0.7), 1px 0 0 rgba(4,8,20,0.7), -1px 0 0 rgba(4,8,20,0.7), 0 0 4px rgba(4,8,20,0.95), 0 0 9px rgba(4,8,20,0.7)",
   },
@@ -363,6 +364,7 @@ export function PrayerTimesPage() {
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 46px", background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,162,39,0.10), transparent 70%)" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>Darul Arqum · Ottawa</div>
+          <Breadcrumbs items={[{ label: "Prayer times" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.6vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 26px 0" }}>Prayer times</h1>
 
           <div className="da-request" style={{ position: "relative", padding: "18px 22px", borderRadius: 16, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.04))", border: "1px solid rgba(201,162,39,0.35)" }}>

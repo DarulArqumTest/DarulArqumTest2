@@ -17,6 +17,7 @@ export default function ContactPage() {
   return (
     <main className="bg-bone">
         <PageHero
+          crumbs={[{ label: "Contact" }]}
           eyebrow="Contact & visit"
           title="The door is open"
           lede="Questions about prayers, programs, giving, or visiting the masjid. The board reads every message."

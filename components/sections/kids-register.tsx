@@ -10,11 +10,12 @@
  */
 
 import * as React from "react";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { submitForm } from "@/app/actions/submit";
-import { ORG } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
@@ -286,7 +287,7 @@ export function KidsRegister() {
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "32px 24px 64px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "32px 24px 64px" }}>
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -296,6 +297,8 @@ export function KidsRegister() {
           <span style={{ width: 22, height: 1, background: "rgba(124,201,154,0.6)" }} />
           <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Ages 5–10</span>
         </motion.div>
+
+        <Breadcrumbs items={[{ label: "Programs", href: R.programs }, { label: "KidsLearnArabic", href: R.kidsArabic }, { label: "Register" }]} className="mb-5" />
 
         <motion.h1
           initial={{ opacity: 0, y: 14 }}
@@ -366,7 +369,7 @@ export function KidsRegister() {
 
         {state === "done" ? (
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            className="da-card-pad" initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             style={{ borderRadius: 20, border: "1px solid rgba(124,201,154,0.25)", background: "rgba(124,201,154,0.07)", padding: 32 }}
           >
@@ -419,7 +422,7 @@ export function KidsRegister() {
                 </div>
                 <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Student</span>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
                   <span style={labelStyle}>Child&apos;s full name</span>
                   <input name="studentName" required style={inputStyle} />
@@ -457,7 +460,7 @@ export function KidsRegister() {
                   <span style={labelStyle}>Parent / guardian name</span>
                   <input name="parentName" style={inputStyle} />
                 </label>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     <span style={labelStyle}>Email</span>
                     <input

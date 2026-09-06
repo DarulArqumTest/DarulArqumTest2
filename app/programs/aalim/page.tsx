@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
 import { ProgramDetail } from "@/components/site/program-page";
 import { QuoteBlock } from "@/components/site/quote-block";
-import { ORG } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Aalim program & Hifz at Al-Arif Islamic Institute",
@@ -14,6 +14,7 @@ export default function AalimPage() {
   return (
     <main className="bg-bone">
         <PageHero
+          crumbs={[{ label: "Programs", href: R.programs }, { label: "Aalim & Hifz" }]}
           eyebrow="Programs · Al-Arif Islamic Institute"
           title="Aalim program & Quran Hifz"
           lede="Led by Mufti Taqi, a scholar trained at the Al-Rashid Institute with deep expertise in jurisprudence, Hadith, Tafsir and Arabic — Al-Arifa Madrasa pairs academic excellence with spiritual growth."
