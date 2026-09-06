@@ -123,6 +123,20 @@ export function KidsRegister() {
   const [values, setValues] = React.useState<Record<string, string>>({});
   const [emailError, setEmailError] = React.useState("");
   const [phoneError, setPhoneError] = React.useState("");
+  const [dob, setDob] = React.useState("");
+
+  const todayISO = React.useMemo(() => new Date().toISOString().slice(0, 10), []);
+  // Whole years completed, counted the way a birthday is: the month and day
+  // have to have come round, not just the year.
+  const derivedAge = React.useMemo(() => {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) return null;
+    const [y, m, d] = dob.split("-").map(Number);
+    const now = new Date();
+    let age = now.getFullYear() - y;
+    const beforeBirthday = now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d);
+    if (beforeBirthday) age -= 1;
+    return age >= 0 && age < 130 ? age : null;
+  }, [dob]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -427,14 +441,35 @@ export function KidsRegister() {
                   <span style={labelStyle}>Child&apos;s full name</span>
                   <input name="studentName" required style={inputStyle} />
                 </label>
+                {/* The live site asks for a date of birth rather than an age,
+                    which is right: an age is stale the day after it is given,
+                    and a birthday is what the safety policy actually needs on
+                    file. The age is derived from it below. */}
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Age</span>
-                  <input name="age" type="number" min={5} max={10} required placeholder="5–10" style={inputStyle} />
+                  <span style={labelStyle}>Date of birth</span>
+                  <input
+                    name="dateOfBirth"
+                    type="date"
+                    required
+                    max={todayISO}
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
+                    style={inputStyle}
+                  />
+                  {derivedAge !== null && (
+                    <span style={{ fontSize: 11.5, color: derivedAge >= 5 && derivedAge <= 10 ? "rgba(169,224,192,0.9)" : "#e8a87c" }}>
+                      {derivedAge >= 5 && derivedAge <= 10
+                        ? `Age ${derivedAge} — inside the 5–10 range.`
+                        : `Age ${derivedAge}. The class is built for 5–10; send it anyway and the team will advise.`}
+                    </span>
+                  )}
                 </label>
                 <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   <span style={labelStyle}>Gender</span>
                   <GenderSelect />
                 </label>
+                {/* carried through so the submission still reads as an age */}
+                <input type="hidden" name="age" value={derivedAge ?? ""} />
                 <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
                   <span style={labelStyle}>Student health card number</span>
                   <input name="healthCard" style={inputStyle} />

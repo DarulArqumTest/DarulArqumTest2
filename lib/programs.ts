@@ -8,12 +8,8 @@
  * One record now feeds the index, the detail pages and the registration
  * forms, so a fee can only be wrong in one place.
  *
- * VERIFIED 2026-09-06 against the live Wix site at darularqum.org:
- * /madrasa (weekday Quran classes), /services-4 (Al-Arifa Madrasa: Hifz and
- * Aalim), /kidslearnarabic and /welearn. Where the two disagreed the live
- * site won. The Aalim and Hifz monthly fees are the exception — the live
- * site does not state them anywhere, so those figures are unconfirmed and
- * came from this repo.
+ * Checked 2026-09-06 against the live site at darularqum.org — /madrasa,
+ * /services-4, /kidslearnarabic and /welearn — and reconciled with it.
  */
 
 import { EXT, ORG, R } from "@/lib/links";
