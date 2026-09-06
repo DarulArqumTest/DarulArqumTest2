@@ -261,41 +261,46 @@ body { overflow-x: hidden; }
    and the programme cards lose their desktop-sized minimum heights.
    ══════════════════════════════════════════════════════════════════ */
 @media (max-width: 760px) {
-  /* ── hero fact cards: title and value on ONE line each ── */
+  /* ── hero fact cards ──
+     Not one line each. Squeezing "In congregation, every day" onto a single
+     row forced it to wrap anyway, and the extra line pushed the neighbouring
+     card out of alignment. Each card is instead a fixed-height block with the
+     label above the value, so every card is the same height whatever its copy
+     does, and the row stays square. */
   .da-hero-stats {
-    display: flex !important;
-    flex-direction: column;
-    gap: 7px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px !important;
   }
   .da-hero-stats > * {
     flex: none !important;
     width: 100%;
-    padding: 9px 13px !important;
+    /* fixed height is what keeps the row aligned when copy lengths differ */
+    min-height: 62px;
+    align-items: center !important;
+    padding: 10px 12px !important;
     gap: 10px !important;
-    border-radius: 11px !important;
+    border-radius: 12px !important;
   }
+  .da-hero-stats > *:last-child { grid-column: 1 / -1; }
   .da-hero-stats > * > div:first-child {
-    width: 25px !important;
-    height: 25px !important;
+    width: 26px !important;
+    height: 26px !important;
     font-size: 11px !important;
   }
-  /* the label/value pair becomes a single justified row */
-  .da-hero-stats > * > div:nth-child(2) {
-    flex: 1;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-    min-width: 0;
-  }
-  .da-hero-stats > * > div:nth-child(2) > div { margin-bottom: 0 !important; }
+  .da-hero-stats > * > div:nth-child(2) { flex: 1; min-width: 0; }
   .da-hero-stats > * > div:nth-child(2) > div:first-child {
-    font-size: 12.5px !important;
-    white-space: nowrap;
+    font-size: 9.5px !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.72;
+    margin-bottom: 2px !important;
   }
   .da-hero-stats > * > div:nth-child(2) > div:last-child {
-    font-size: 11.5px !important;
-    text-align: right;
+    font-size: 13px !important;
+    font-weight: 650;
+    color: #f6f3ea !important;
+    line-height: 1.25;
   }
 
   /* ── giving CTAs: one row, not two ── */
@@ -396,24 +401,104 @@ body { overflow-x: hidden; }
     0 12px 26px -10px rgba(124, 201, 154, 0.6);
 }
 
-/* ── Prayer times: Jumu'ah banner ──
-   Two khutbah times on one line at 14.5px broke onto a second row and
-   doubled the banner's height. */
-@media (max-width: 760px) {
-  .da-jumuah-text { font-size: 12px !important; white-space: nowrap; }
+/* ══════════════════════════════════════════════════════════════════
+   Prayer board
+   The Jumu'ah banner is joined to the top of the prayer table: one
+   object with a continuous outline, rather than a tab floating above.
+   ══════════════════════════════════════════════════════════════════ */
+.da-board {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  margin: 0 auto;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  box-shadow: 0 34px 80px -34px rgba(0, 0, 0, 0.75);
 }
-@media (max-width: 380px) {
-  .da-jumuah-text { font-size: 10.5px !important; }
+.da-board-jumuah {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 13px;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #7a2020, #4d1414);
+  border-bottom: 1px solid rgba(227, 197, 106, 0.35);
+}
+.da-board-dot { width: 8px; height: 8px; border-radius: 999px; background: #ffd7d7; flex-shrink: 0; }
+.da-board-jumuah-label {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 700;
+}
+.da-jumuah-text { font-size: 14.5px; color: #fff; font-weight: 700; text-align: center; }
+
+/* the table sits flush inside the board */
+.da-board .da-iqama-grid { border-radius: 0 !important; box-shadow: none !important; }
+.da-board .da-iqama-cell {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+/* the table brings its own 60px top margin for the standalone layout;
+   inside the board it must sit flush under the banner */
+.da-board .da-iqama-wrap { margin-top: 0 !important; max-width: none !important; }
+
+/* The "Now" pill hangs above its cell, which the board's rounded overflow
+   clips. Seat it inside the cell instead. */
+.da-board .da-iqama-now { top: 5px !important; }
+
+/* quiet link out to the live Mawaqit board */
+.da-board-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 16px auto 0;
+  padding: 8px 14px;
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(246, 243, 234, 0.6);
+  border: 1px solid rgba(246, 243, 234, 0.16);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.da-board-link:hover {
+  color: #e3c56a;
+  border-color: rgba(227, 197, 106, 0.5);
+  background: rgba(201, 162, 39, 0.08);
+}
+
+@media (max-width: 760px) {
+  .da-board { border-radius: 16px; }
+  .da-board-jumuah { padding: 10px 12px; gap: 4px 9px; }
+  .da-jumuah-text { font-size: 12.5px; }
+  .da-board-jumuah-label { font-size: 9.5px; }
+}
+@media (max-width: 400px) {
+  .da-jumuah-text { font-size: 11.5px; }
 }
 
 /* ── Contact: call row ──
-   The number wrapped onto a second line once Copy and Call sat beside it. */
+   Not shrunk to fit. The number keeps its full size and the actions move
+   onto their own line beneath it, so the card reads as a deliberate
+   two-row block instead of a squeezed one-row one. */
 @media (max-width: 760px) {
-  .da-call-row { flex-wrap: nowrap !important; }
-  .da-call-number { font-size: 13.5px !important; white-space: nowrap; }
-}
-@media (max-width: 380px) {
-  .da-call-number { font-size: 12.5px !important; }
+  .da-call-row {
+    flex-wrap: wrap !important;
+    row-gap: 10px !important;
+  }
+  .da-call-number {
+    flex: 1 1 100%;
+    font-size: 17px !important;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .da-call-row > div:last-child { flex: 1 1 100%; }
+  .da-call-row > div:last-child > * { flex: 1; justify-content: center; }
 }
 
 /* ── Section rhythm ──
@@ -746,12 +831,36 @@ body { overflow-x: hidden; }
 }
 
 /* ── Home WhatsApp card ──
-   Icon + copy + button on one row leaves the paragraph ~120px of space
-   at phone width, so it spilled past the card edge. Stack it. */
+   The icon had a row to itself with the heading beneath it, which left a
+   band of dead space across the top. Icon and heading now share the first
+   row, the body spans under both, and the button takes the full width. */
 @media (max-width: 620px) {
-  .da-wa-card { flex-direction: column; align-items: flex-start; gap: 14px !important; padding: 20px 18px !important; }
-  .da-wa-card-body { min-width: 0 !important; width: 100%; }
-  .da-wa-card .da-btn { width: 100%; }
+  .da-wa-card {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon head" "body body" "cta cta";
+    align-items: center;
+    gap: 10px 13px !important;
+    padding: 16px 16px 18px !important;
+  }
+  .da-wa-card > div:first-child { grid-area: icon; width: 42px !important; height: 42px !important; }
+  .da-wa-card-body {
+    display: contents;
+    min-width: 0 !important;
+  }
+  .da-wa-card-body h3 {
+    grid-area: head;
+    align-self: center;
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+    margin: 0 !important;
+  }
+  .da-wa-card-body p {
+    grid-area: body;
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+  }
+  .da-wa-card .da-btn { grid-area: cta; width: 100%; }
 }
 
 /* ── Tax receipt address row ──

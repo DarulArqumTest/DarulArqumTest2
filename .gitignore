@@ -29,3 +29,6 @@ next-env.d.ts
 
 # graphify knowledge-graph output (local tool artefacts, not source)
 graphify-out/
+
+# locally rendered preview of the generated OG card
+social-share-preview.png
