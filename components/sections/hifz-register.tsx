@@ -351,6 +351,7 @@ export function HifzRegister() {
           subject="Quran Hifz registration"
           submitLabel="Submit registration"
           doneTitle="Registration received"
+          doneScene="register"
           emailField="parentEmail"
           phoneField="emergencyContact"
           sections={FORM_SECTIONS}

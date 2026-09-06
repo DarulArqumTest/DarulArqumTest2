@@ -13,6 +13,7 @@ import Link from "next/link";
 import { ORG, R } from "@/lib/links";
 import { submitForm } from "@/app/actions/submit";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
+import { SuccessArt } from "@/components/site/success-art";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
@@ -560,11 +561,23 @@ export function PledgePage() {
                   </div>
                   <p style={{ fontSize: 11.5, lineHeight: 1.6, color: "rgba(246,243,234,0.45)", margin: "4px 0 0 0" }}>By submitting, I authorize Darul Arqum to collect the above amount from my account, cancellable with 30 days&apos; notice.</p>
                   {padState === "done" ? (
-                    <div style={{ fontSize: 13.5, color: "#a9e0c0", marginTop: 4 }}>
-                      {padDelivered ? "Submitted — the team has your details." : "Recorded — please also email a photo of a VOID cheque to admin@darularqum.org."}
+                    /* a coin going into a box that already has a few in it */
+                    <div className="da-panel da-panel-flush da-form-done da-form-done-sm" style={{ ["--tint" as string]: "#e3c56a", marginTop: 6 }}>
+                      <span className="da-form-done-art" aria-hidden>
+                        <SuccessArt scene="coin" />
+                      </span>
+                      <div>
+                        <p className="da-panel-eyebrow">{padDelivered ? "Sent" : "Recorded"}</p>
+                        <h3 className="da-panel-title">Pledge received</h3>
+                        <p className="da-panel-copy">
+                          {padDelivered
+                            ? "The team has your details and will set the monthly debit up from here."
+                            : `Your details are saved. Please also email a photo of a VOID cheque to ${ORG.email} so the team can set the debit up.`}
+                        </p>
+                      </div>
                     </div>
                   ) : (
-                    <button type="button" onClick={submitPad} disabled={padState === "busy"} style={{ alignSelf: "flex-start", marginTop: 4, background: "#c9a227", color: "#0e2419", fontWeight: 600, fontSize: 13.5, padding: "11px 20px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "'Work Sans',sans-serif" }}>
+                    <button type="button" onClick={submitPad} disabled={padState === "busy"} className="da-solid-btn" style={{ alignSelf: "flex-start", marginTop: 4 }}>
                       {padState === "busy" ? "Sending…" : "Email my void cheque details"}
                     </button>
                   )}

@@ -25,6 +25,7 @@ import { submitForm } from "@/app/actions/submit";
 import { ORG } from "@/lib/links";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
 import { Glyph, type GlyphName } from "@/components/site/program-glyphs";
+import { SuccessArt, type SuccessScene } from "@/components/site/success-art";
 
 /* ── what a page declares ─────────────────────────────────────────── */
 
@@ -146,6 +147,7 @@ export function DaForm({
   note,
   extra,
   doneTitle = "Registration received",
+  doneScene = "register",
   onSuccess,
   renderDone,
 }: {
@@ -159,6 +161,8 @@ export function DaForm({
   /** anything to render between the last section and the submit row */
   extra?: React.ReactNode;
   doneTitle?: string;
+  /** which picture of what just happened the success panel shows */
+  doneScene?: SuccessScene;
   /**
    * Told when the form goes through, so a page can react somewhere else —
    * the newsletter page uses it to send the paper aeroplane in its hero.
@@ -236,8 +240,8 @@ export function DaForm({
         className="da-panel da-panel-flush da-form-done"
         style={{ ["--tint" as string]: "#7cc99a" }}
       >
-        <span className="da-form-done-mark" aria-hidden>
-          <Glyph name="assessment" size={26} />
+        <span className="da-form-done-art" aria-hidden>
+          <SuccessArt scene={doneScene} />
         </span>
         <div>
           <p className="da-panel-eyebrow">{delivered ? "Sent" : "Recorded"}</p>
@@ -260,6 +264,15 @@ export function DaForm({
   return (
     <motion.form
       onSubmit={onSubmit}
+      /**
+       * Submission goes through the handler above; this is what happens if
+       * it cannot. A form with no method GETs, which appends every field to
+       * the URL — so a submit landing before hydration finished put the
+       * student's name, a parent's email and a phone number into the address
+       * bar, into browser history, and into the server log. POST keeps them
+       * in the body where they belong.
+       */
+      method="post"
       noValidate
       initial={reduce ? false : { opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}

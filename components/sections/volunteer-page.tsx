@@ -137,6 +137,7 @@ export function VolunteerPage() {
           subject="Volunteer application"
           submitLabel="Submit application"
           doneTitle="Application received"
+          doneScene="chair"
           emailField="email"
           phoneField="Phone"
           sections={FORM_SECTIONS}

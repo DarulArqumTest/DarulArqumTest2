@@ -213,6 +213,7 @@ export function AalimRegister() {
           subject="Aalim program registration"
           submitLabel="Submit registration"
           doneTitle="Registration received"
+          doneScene="register"
           emailField="parentEmail"
           phoneField="emergencyContact"
           sections={FORM_SECTIONS}

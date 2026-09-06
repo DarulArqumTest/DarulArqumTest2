@@ -10,7 +10,8 @@ import * as React from "react";
 import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { motion } from "motion/react";
-import { CheckCircle2, Loader2, Mail } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { SuccessArt } from "@/components/site/success-art";
 import { submitForm } from "@/app/actions/submit";
 import { ORG, R } from "@/lib/links";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
@@ -137,23 +138,38 @@ export function TaxReceiptPage() {
           </p>
         </div>
 
+        {/* done: the receipt, stamped — same panel language as every other form */}
         {state === "done" ? (
-          <motion.div className="da-card-pad" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} style={{ borderRadius: 20, border: "1px solid rgba(201,162,39,0.25)", background: "rgba(201,162,39,0.07)", padding: 32 }}>
-            <CheckCircle2 className="h-6 w-6" style={{ color: "#e3c56a" }} aria-hidden />
-            <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>{delivered ? "Details sent" : "Details recorded"}</p>
-            <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>
-              {delivered ? "The Darul Arqum team has received your updated donor details." : "To make sure it reaches the team right away, you can also send it directly from your email app — everything is prefilled."}
-            </p>
-            {!delivered && (
-              <a href={mailto} style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 8, borderRadius: 999, background: "#c9a227", padding: "12px 20px", fontSize: 14, fontWeight: 500, color: "#0e2419" }}>
-                <Mail className="h-4 w-4" aria-hidden />
-                Send via your email app
-              </a>
-            )}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="da-panel da-panel-flush da-form-done"
+            style={{ ["--tint" as string]: "#e3c56a" }}
+          >
+            <span className="da-form-done-art" aria-hidden>
+              <SuccessArt scene="stamp" />
+            </span>
+            <div>
+              <p className="da-panel-eyebrow">{delivered ? "Sent" : "Recorded"}</p>
+              <h2 className="da-panel-title">{delivered ? "Details sent" : "Details recorded"}</h2>
+              <p className="da-panel-copy">
+                {delivered
+                  ? "The Darul Arqum team has your updated donor details, and your receipt will follow."
+                  : "Your details are saved. To be certain they reach the team today, send them from your own email app as well — everything is prefilled."}
+              </p>
+              {!delivered && (
+                <a href={mailto} className="da-solid-btn" style={{ marginTop: 16 }}>
+                  <Glyph name="envelope" size={17} /> Send from my email app
+                </a>
+              )}
+            </div>
           </motion.div>
         ) : (
+          /* method="post" keeps donor name and address out of the URL if a
+             submit lands before hydration; see the note in da-form.tsx */
           <form
             onSubmit={onSubmit}
+            method="post"
             style={{
               display: "flex",
               flexDirection: "column",
