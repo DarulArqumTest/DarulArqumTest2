@@ -90,19 +90,19 @@ export function Navbar() {
           </span>
         </Link>
 
-        <div className="mx-auto hidden items-center gap-3.5 xl:flex">
+        {/* One system, not four. Brand plate, locations chip, link bar and
+            Donate all sit at the same height on the same radius behind the
+            same gold hairline; only the Donate button is filled, because it
+            is the only one asking for an action. The nav used to be a
+            half-pill with a floating ✦ that landed in the middle of a link. */}
+        <div className="da-navset mx-auto hidden xl:flex">
           <LocationsMenu />
-          <span aria-hidden className="h-5 w-px bg-da-gold/25" />
-          <nav
-            className="relative flex items-center gap-6 rounded-t-[10px] rounded-b-full border border-da-gold/[0.22] bg-da-cream/[0.045] px-8 py-2.5"
-            aria-label="Primary"
-          >
-            <span className="absolute left-1/2 top-[5px] -translate-x-1/2 text-[8px] text-da-gold/55">✦</span>
+          <nav className="da-navlinks" aria-label="Primary">
             {NAV.map((item) => (
               <NavLink
                 key={item.label}
                 item={item}
-                className="u-draw text-sm font-medium text-da-cream/[0.82] transition-all hover:-translate-y-0.5 hover:text-da-goldL"
+                className="u-draw text-sm font-medium text-da-cream/[0.82] transition-colors hover:text-da-goldL"
               />
             ))}
           </nav>

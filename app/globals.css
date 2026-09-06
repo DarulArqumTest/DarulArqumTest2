@@ -551,7 +551,9 @@ body { overflow-x: hidden; }
 }
 .da-tv-outer {
   width: 100%;
-  max-width: 980px;
+  /* narrower than the page's 980 measure: at full width the screen came out
+     letterboxed to roughly 16:6 and read as a banner rather than a screen */
+  max-width: 880px;
   margin: 0 auto;
   padding: 18px 18px 14px;
   border-radius: 26px;
@@ -567,6 +569,15 @@ body { overflow-x: hidden; }
   border-radius: 0 !important;
   box-shadow: none !important;
 }
+
+/* The board's own proportions are set by its content; a screen's are set by
+   the screen. The extra sky above and below each prayer brings the bezel to
+   roughly 16:9 and gives the sun and moon art room to be seen, which the
+   letterboxed version never had. */
+.da-tv-screen .da-iqama-cell { padding: 118px 14px 62px !important; }
+.da-tv-screen .da-iqama-arabic { font-size: 22px !important; }
+.da-tv-screen .da-iqama-name { font-size: 15px !important; }
+.da-tv-screen .da-board-note { padding: 15px 20px; }
 
 /* the stand — a tapered neck into a wide foot, with a floor shadow */
 .da-tv-neck {
@@ -718,11 +729,15 @@ body { overflow-x: hidden; }
    ══════════════════════════════════════════════════════════════════ */
 .da-contact-side { display: grid; grid-template-rows: 1fr 1fr; gap: 20px; height: 100%; }
 
+/* The cards are stretched to the height of the map beside them, so the
+   content has to be scaled to that height rather than sitting small in the
+   middle of it. Icon, rule and type are sized so the two cards fill their
+   column and read as a matched pair. */
 .da-contact-card {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 22px 26px;
+  gap: 22px;
+  padding: 24px 28px;
   border-radius: 20px;
 }
 .da-contact-call {
@@ -740,16 +755,16 @@ body { overflow-x: hidden; }
 .da-contact-main { display: flex; align-items: center; gap: 18px; flex: 1; min-width: 0; }
 .da-contact-icon {
   display: block;
-  width: 52px;
-  height: 52px;
+  width: 68px;
+  height: 68px;
   flex-shrink: 0;
   border-radius: 999px;
   overflow: hidden;
 }
-.da-contact-icon-lg { width: 66px; height: 66px; }
+.da-contact-icon-lg { width: 74px; height: 74px; }
 .da-contact-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.da-contact-text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.da-contact-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .da-contact-label {
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -759,7 +774,7 @@ body { overflow-x: hidden; }
 }
 .da-contact-label-gold { color: #e3c56a; }
 .da-call-number {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 700;
   color: #f6f3ea;
   letter-spacing: 0.01em;
@@ -767,7 +782,7 @@ body { overflow-x: hidden; }
   font-variant-numeric: tabular-nums;
 }
 .da-email-value {
-  font-size: 19px;
+  font-size: 23px;
   font-weight: 700;
   color: #f6f3ea;
   white-space: nowrap;
@@ -778,7 +793,7 @@ body { overflow-x: hidden; }
   flex-shrink: 0;
   align-self: stretch;
   width: 1px;
-  min-height: 56px;
+  min-height: 72px;
   background: linear-gradient(180deg, transparent, rgba(246, 243, 234, 0.22) 18%, rgba(246, 243, 234, 0.22) 82%, transparent);
 }
 .da-contact-email .da-contact-div {
@@ -789,9 +804,9 @@ body { overflow-x: hidden; }
 .da-contact-actions {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   flex-shrink: 0;
-  width: 108px;
+  width: 116px;
 }
 .da-copy-btn,
 .da-call-btn {
@@ -799,10 +814,10 @@ body { overflow-x: hidden; }
   align-items: center;
   justify-content: center;
   gap: 5px;
-  min-height: 36px;
-  padding: 7px 14px;
+  min-height: 40px;
+  padding: 8px 14px;
   border-radius: 10px;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 650;
   white-space: nowrap;
   cursor: pointer;
@@ -834,9 +849,11 @@ body { overflow-x: hidden; }
   .da-contact-icon { width: 42px; height: 42px; }
   .da-contact-icon-lg { width: 46px; height: 46px; }
   .da-contact-text { gap: 3px; }
+  .da-contact-text { gap: 3px; }
   .da-contact-label { font-size: 9.5px; letter-spacing: 0.1em; }
   .da-call-number { font-size: 19px; }
-  .da-email-value { font-size: 14.5px; }
+  .da-copy-btn, .da-call-btn { min-height: 36px; font-size: 12.5px; }
+  .da-email-value { font-size: 15px; }
   .da-contact-call .da-contact-div { display: none; }
   .da-contact-email .da-contact-div {
     align-self: center;
@@ -1529,20 +1546,54 @@ body { overflow-x: hidden; }
    plate, divided by a gold hairline, with the locality set beneath the
    name so the whole thing carries the identity.
    ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════
+   Navigation bar: one system
+   The bar used to hold four unrelated shapes — a rounded brand plate, a
+   neon capsule, a half-pill nav with a floating star, and a pill button.
+   Individually fine, together incoherent. Every element now sits at the
+   same height, on the same radius, behind the same gold hairline; the
+   Donate button is the only filled one because it is the only one asking
+   for an action.
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --da-nav-h: 44px;
+  --da-nav-r: 12px;
+  --da-nav-line: rgba(201, 162, 39, 0.24);
+  --da-nav-fill: rgba(246, 243, 234, 0.05);
+}
+
+.da-navitem {
+  display: inline-flex;
+  align-items: center;
+  height: var(--da-nav-h);
+  border-radius: var(--da-nav-r);
+}
+.da-navset { align-items: center; gap: 11px; }
+.da-navlinks {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  height: var(--da-nav-h);
+  padding: 0 24px;
+  border-radius: var(--da-nav-r);
+  border: 1px solid var(--da-nav-line);
+  background: var(--da-nav-fill);
+}
+
 .da-brand {
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  padding: 6px 14px 6px 7px;
-  border-radius: 13px;
-  background: linear-gradient(150deg, rgba(246, 243, 234, 0.08), rgba(246, 243, 234, 0.03));
-  border: 1px solid rgba(201, 162, 39, 0.3);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  height: var(--da-nav-h);
+  padding: 0 14px 0 7px;
+  border-radius: var(--da-nav-r);
+  background: var(--da-nav-fill);
+  border: 1px solid var(--da-nav-line);
   transition: border-color 0.25s ease, background 0.25s ease;
 }
 .da-brand:hover {
-  border-color: rgba(227, 197, 106, 0.6);
-  background: linear-gradient(150deg, rgba(246, 243, 234, 0.12), rgba(246, 243, 234, 0.05));
+  border-color: rgba(227, 197, 106, 0.55);
+  background: rgba(246, 243, 234, 0.09);
 }
 .da-brand-emblem {
   display: flex;
@@ -1583,7 +1634,7 @@ body { overflow-x: hidden; }
   white-space: nowrap;
 }
 @media (max-width: 420px) {
-  .da-brand { gap: 8px; padding: 5px 11px 5px 6px; }
+  .da-brand { gap: 8px; padding: 0 11px 0 6px; }
   .da-brand-name { font-size: 17px; }
   .da-brand-sub { font-size: 7.5px; letter-spacing: 0.1em; }
 }
@@ -1607,10 +1658,12 @@ body { overflow-x: hidden; }
    room, so the emblem stands above the name on a starred rule with the
    locality letterspaced underneath.
    ══════════════════════════════════════════════════════════════════ */
+/* The emblem sits centred over the wordmark rather than flush left: left
+   aligned it read as a stray icon parked beside empty space. */
 .da-fbrand {
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 11px;
 }
 .da-fbrand-emblem {
@@ -1657,55 +1710,36 @@ body { overflow-x: hidden; }
 
 .da-loc-menu { position: relative; display: inline-flex; }
 
-/* A folded paper map, not a neon capsule.
-   The old trigger was one saturated green wash with a glow and a counter
-   badge, which shouted louder than the nav beside it. This is a scrap of
-   old chart paper: a warm parchment tint, a faint grid, two vertical fold
-   creases catching the light, a squared-off corner where it has been
-   folded back — and a red pin dropped on it. */
+/* Same chip as its neighbours, with just enough of a folded-map hint to
+   tell it apart: a very faint chart grid under the surface and a red pin
+   dropped on it. The previous version was a different material altogether
+   — parchment, creases, a turned-back corner and its own corner radii —
+   which is what made the bar read as a pile of unrelated objects. */
 .da-loc-trigger {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 40px;
-  padding: 0 14px;
-  border-radius: 8px 3px 8px 3px;
+  height: var(--da-nav-h);
+  padding: 0 16px;
+  border-radius: var(--da-nav-r);
   overflow: hidden;
   font-size: 13.5px;
-  font-weight: 650;
+  font-weight: 600;
   white-space: nowrap;
-  color: rgba(246, 243, 234, 0.9);
-  background-color: rgba(233, 224, 198, 0.09);
+  color: rgba(246, 243, 234, 0.86);
+  background-color: var(--da-nav-fill);
   background-image:
-    /* fold creases */
-    linear-gradient(90deg, transparent 31%, rgba(246, 243, 234, 0.12) 31.5%, transparent 32%),
-    linear-gradient(90deg, transparent 68%, rgba(0, 0, 0, 0.18) 68.5%, transparent 69%),
-    /* chart grid */
-    repeating-linear-gradient(90deg, rgba(246, 243, 234, 0.05) 0 1px, transparent 1px 11px),
-    repeating-linear-gradient(0deg, rgba(246, 243, 234, 0.05) 0 1px, transparent 1px 11px),
-    /* paper warmth */
-    linear-gradient(140deg, rgba(214, 176, 108, 0.14), rgba(120, 190, 150, 0.08));
-  border: 1px solid rgba(233, 224, 198, 0.26);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
-}
-/* the turned-back corner */
-.da-loc-trigger::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 11px;
-  height: 11px;
-  background: linear-gradient(225deg, rgba(11, 30, 20, 0.95) 50%, rgba(246, 243, 234, 0.22) 50%);
+    repeating-linear-gradient(90deg, rgba(246, 243, 234, 0.045) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(0deg, rgba(246, 243, 234, 0.045) 0 1px, transparent 1px 12px);
+  border: 1px solid var(--da-nav-line);
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 .da-loc-trigger:hover,
 .da-loc-trigger[data-open] {
-  color: #fbf7ec;
-  background-color: rgba(233, 224, 198, 0.15);
-  border-color: rgba(233, 224, 198, 0.48);
-  transform: translateY(-1px);
+  color: #f6f3ea;
+  background-color: rgba(246, 243, 234, 0.09);
+  border-color: rgba(227, 197, 106, 0.55);
 }
 .da-loc-pin {
   flex-shrink: 0;
