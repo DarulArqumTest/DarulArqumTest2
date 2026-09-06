@@ -895,11 +895,21 @@ body { overflow-x: hidden; }
   .da-call-number { font-size: 19px; }
   .da-copy-btn, .da-call-btn { min-height: 36px; font-size: 12.5px; }
   .da-email-value { font-size: 15px; }
-  .da-contact-call .da-contact-div { display: none; }
+  /* Once the card wraps, the actions sit under the text rather than beside
+     it, and a vertical rule between them becomes a stub of a line hanging in
+     the left margin dividing nothing. Horizontal is the only orientation the
+     stacked layout has a use for. */
+  .da-contact-card .da-contact-div {
+    flex: 1 1 100%;
+    align-self: stretch;
+    width: 100%;
+    height: 1px;
+    min-height: 0;
+    margin: 2px 0 0;
+    background: linear-gradient(90deg, transparent, rgba(150, 210, 175, 0.4) 12%, rgba(150, 210, 175, 0.4) 88%, transparent);
+  }
   .da-contact-email .da-contact-div {
-    align-self: center;
-    min-height: 34px;
-    background: linear-gradient(180deg, transparent, rgba(227, 197, 106, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(227, 197, 106, 0.5) 12%, rgba(227, 197, 106, 0.5) 88%, transparent);
   }
   .da-contact-actions { flex-direction: row; width: 100%; }
   .da-contact-actions > * { flex: 1; }
@@ -3175,8 +3185,115 @@ body { overflow-x: hidden; }
   gap: 22px;
   --tint: #a9e0c0;
 }
-.da-prog-help-text { flex: 1 1 380px; min-width: 0; }
+.da-prog-help-text { flex: 1 1 320px; min-width: 0; }
 .da-prog-help-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ── the panel that helps you choose ──
+   It was a heading, a line of copy and two buttons in a row, which is the
+   same shape as every other strip on the site. The fingerpost gives it a
+   subject, its own pocket of night sky gives it depth, and the actions sit
+   in their own bay so the plate is not competing with the sentence. */
+.da-prog-help {
+  align-items: stretch;
+  gap: 26px;
+  padding-top: 26px;
+  padding-bottom: 26px;
+}
+.da-prog-help-art {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: center;
+  display: block;
+  width: 96px;
+  height: 118px;
+  padding: 8px 6px 4px;
+  border-radius: 14px;
+  background: radial-gradient(120% 90% at 50% 20%, #1c4531 0%, #102a1d 55%, #0c2016 100%);
+  border: 1px solid #0a1a12;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), inset 0 -14px 22px rgba(0, 0, 0, 0.3);
+}
+.da-prog-help-text { align-self: center; }
+.da-prog-help .da-prog-help-actions {
+  flex: 0 0 auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-self: center;
+  gap: 10px;
+}
+.da-prog-help .da-wa-btn {
+  min-height: 44px;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+/* ── the number, on a plate ──
+   `.da-solid-btn` is the site's general-purpose gold slab, and using it here
+   made the most useful action on the page look like a duplicate of
+   "Register". This is a brass plaque instead: bevelled, engraved, with the
+   handset on its own dark ground and in its own colour. */
+.da-callplate {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 9px 20px 9px 10px;
+  border-radius: 12px;
+  background: linear-gradient(168deg, #f4de9f 0%, #dcbc63 36%, #c9a227 64%, #ab8720 100%);
+  border: 2px solid #0a1a12;
+  box-shadow:
+    3px 3px 0 rgba(5, 14, 9, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(74, 55, 6, 0.28);
+  color: #14261a;
+  text-decoration: none;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.da-callplate:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 rgba(5, 14, 9, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -2px 0 rgba(74, 55, 6, 0.28); }
+.da-callplate:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(5, 14, 9, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -2px 0 rgba(74, 55, 6, 0.28); }
+.da-callplate-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(165deg, #1a3527, #0d2116);
+  border: 1px solid rgba(6, 16, 10, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+.da-callplate-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.da-callplate-label {
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: rgba(20, 38, 26, 0.62);
+}
+.da-callplate-num {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: #14261a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.32);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .da-prog-help { gap: 18px; }
+  .da-prog-help .da-prog-help-actions { flex: 1 1 100%; flex-direction: row; }
+  .da-prog-help .da-callplate { flex: 1 1 auto; }
+  .da-prog-help .da-wa-btn { flex: 1 1 auto; min-height: 58px; }
+}
+@media (max-width: 560px) {
+  .da-prog-help-art { width: 66px; height: 84px; padding: 6px 4px 3px; border-radius: 12px; }
+  .da-prog-help-text { flex: 1 1 180px; }
+  .da-prog-help .da-prog-help-actions { flex-direction: column; }
+  /* full width, but the plaque keeps its lockup on the left edge — centring
+     it leaves a wide empty field of brass beside the number */
+  .da-prog-help .da-callplate { width: 100%; justify-content: flex-start; }
+  .da-prog-help .da-wa-btn { width: 100%; justify-content: center; }
+}
 
 /* "Questions? Call …" — the long form on wide screens, short on phones */
 .da-call-cta-narrow { display: none; }

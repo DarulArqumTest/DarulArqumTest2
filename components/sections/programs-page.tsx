@@ -18,7 +18,8 @@ import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { WelearnArt } from "@/components/site/welearn-art";
 import { ZoomJoinButton } from "@/components/site/zoom-join-button";
-import { ORG } from "@/lib/links";
+import { SignpostArt } from "@/components/site/signpost-art";
+import { CallPlate } from "@/components/site/call-plate";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -102,11 +103,16 @@ export function ProgramsPage() {
         ))}
       </div>
 
-      {/* Was a yellow card holding a yellow button, with the question set as
-          a caption. The question is the heading; the panel is neutral so the
-          actions are the only colour in it. */}
+      {/* The panel a person lands on when none of the five cards obviously
+          describes their child. It gets a fingerpost, because the question is
+          about direction, and the number on a plate rather than on the same
+          gold slab as every other action on the page. */}
       <div className="da-prog-help da-panel da-panel-flush">
+        <span className="da-prog-help-art" aria-hidden>
+          <SignpostArt />
+        </span>
         <div className="da-prog-help-text">
+          <p className="da-panel-eyebrow">Choosing a class</p>
           <h2 className="da-panel-title">Not sure which one fits?</h2>
           <p className="da-panel-copy">
             Tell us the student&apos;s age and what they can already read, and the team will point you
@@ -114,9 +120,7 @@ export function ProgramsPage() {
           </p>
         </div>
         <div className="da-prog-help-actions">
-          <a href={ORG.phoneHref} className="da-solid-btn">
-            Call {ORG.phone}
-          </a>
+          <CallPlate />
           <WhatsAppButton label="Ask on WhatsApp" />
         </div>
       </div>
