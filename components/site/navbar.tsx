@@ -19,7 +19,10 @@ const NAV: NavItem[] = [
   { label: "Programs", href: R.programs },
   { label: "Story", href: R.story },
   { label: "Gallery", href: R.gallery },
-  { label: "Community", sectionId: "whatsapp-section" },
+  // was a scroll to the homepage WhatsApp card, which meant /community —
+  // the volunteer page — could only be reached from a single link at the
+  // foot of the gallery. It is a nav destination now.
+  { label: "Community", href: R.community },
   { label: "Contact us", sectionId: "contact-us" },
 ];
 

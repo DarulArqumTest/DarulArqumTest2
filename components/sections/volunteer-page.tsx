@@ -9,6 +9,7 @@
 import * as React from "react";
 import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { VolunteerHero } from "@/components/site/volunteer-hero";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -161,55 +162,31 @@ export function VolunteerPage() {
         </div>
       </div>
 
-      {/* HERO: raised hands under a dome */}
-      <div style={{ position: "relative", width: "100%", height: 300, overflow: "hidden", background: "linear-gradient(180deg, #16302280, #0e2419)" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 100% at 50% 120%, rgba(217,143,74,0.22), transparent 60%)" }} />
-        <Link href="/" style={{ position: "absolute", top: 20, left: 24, zIndex: 3, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500 }}>
-          ← Back to Darul Arqum
+      {/* HERO: the hall being set up, the night before */}
+      <div className="da-vol-hero-wrap">
+        <VolunteerHero />
+        <Link href="/" className="da-vol-back">
+          <span aria-hidden="true">←</span> Back to Darul Arqum
         </Link>
-
-        <svg width="100%" height="100%" viewBox="0 0 900 300" preserveAspectRatio="xMidYMax meet" style={{ position: "absolute", inset: 0, opacity: 0.35 }}>
-          <path d="M300 300 V180 A150 150 0 0 1 600 180 V300" fill="none" stroke="#e8b06a" strokeWidth={2} />
-          <path d="M270 300 V170 A180 180 0 0 1 630 170 V300" fill="none" stroke="#e8b06a" strokeWidth={1} opacity={0.5} />
-        </svg>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 34, left: "16%", fontSize: 13, color: "rgba(232,176,106,0.5)" }} aria-hidden><Glyph name="star8" size={14} /></div>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 56, right: "17%", fontSize: 10, color: "rgba(124,201,154,0.4)", animationDelay: "0.5s" }} aria-hidden><Glyph name="star8" size={14} /></div>
-
-        <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14 }}>
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 14, marginBottom: 2 }}>
-            {[
-              { w: 34, h: 52, color: "#e8b06a", sw: 2, dur: "4s", delay: 0, opacity: 1 },
-              { w: 40, h: 60, color: "#f3c98a", sw: 2.2, dur: "4.6s", delay: 0.4, opacity: 1 },
-              { w: 30, h: 46, color: "#e8b06a", sw: 1.8, dur: "4.2s", delay: 0.8, opacity: 0.8 },
-            ].map((h, i) => (
-              <div key={i} style={{ animation: "handRaise 4s ease-in-out infinite", animationDuration: h.dur, animationDelay: `${h.delay}s` }}>
-                <svg width={h.w} height={h.h} viewBox="0 0 34 52">
-                  <path
-                    d="M17 52 V22 M17 22 C17 22 10 20 9 12 C8 6 12 3 15 5 C16 6 16 9 16 12 M17 22 C17 22 12 19 12 13 C12 8 15 5 17 7 C18 8 18 10 18 13 M17 22 C17 22 22 19 22 13 C22 8 19 5 17 7 C16 8 16 10 16 13 M17 22 C17 22 24 20 25 12 C26 6 22 3 19 5 C18 6 18 9 18 12"
-                    fill="none"
-                    stroke={h.color}
-                    strokeWidth={h.sw}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    opacity={h.opacity}
-                  />
-                </svg>
-              </div>
-            ))}
+        <div className="da-vol-hero-text">
+          <div className="da-vol-kicker">
+            <span aria-hidden />
+            Serve your community
+            <span aria-hidden />
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ width: 26, height: 1, background: "linear-gradient(90deg, transparent, rgba(232,176,106,0.7))" }} />
-            <span style={{ fontSize: 13.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#f3c98a", fontWeight: 700, textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>Serve your community</span>
-            <span style={{ width: 26, height: 1, background: "linear-gradient(90deg, rgba(232,176,106,0.7), transparent)" }} />
-          </div>
-          <Breadcrumbs items={[{ label: "Community" }]} className="mb-5" />
-          <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,44px)", color: "#f6f3ea", margin: 0, padding: "0 20px", textAlign: "center", textShadow: "0 4px 24px rgba(0,0,0,0.55)" }}>Join Darul Arqum</h1>
+          <Breadcrumbs items={[{ label: "Community" }]} className="mb-4" />
+          <h1 className="da-vol-h1">Join Darul Arqum</h1>
+          <p className="da-vol-sub">
+            Somebody put the chairs out before you arrived. Come and be that somebody.
+          </p>
         </div>
       </div>
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 660, margin: "0 auto", padding: "36px 24px 64px" }}>
         <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "rgba(246,243,234,0.72)", textAlign: "center", margin: "0 0 30px 0" }}>
-          &quot;Whoever loves the masjid, Allah loves him.&quot; Darul Arqum runs entirely on the generosity of volunteers who give their time — from teaching and events, to maintenance and hospitality. Tell us where you&apos;d like to help.
+          &quot;Whoever loves the masjid, Allah loves him.&quot; The masjid runs on people who
+          give their time — teaching, events, maintenance, hospitality. Tell us where
+          you&apos;d like to help and the team will find you a place.
         </p>
 
         {state === "done" ? (

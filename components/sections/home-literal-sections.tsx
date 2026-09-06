@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { Glyph } from "@/components/site/program-glyphs";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { X, Copy, Check } from "lucide-react";
-import { ORG, EXT, LOCATIONS } from "@/lib/links";
+import { EXT, LOCATIONS, ORG, R } from "@/lib/links";
 import { getProgram } from "@/lib/programs";
 import {
   PROGRAM_INFO,
@@ -589,7 +590,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
           </motion.h2>
 
           <motion.div initial={{ opacity: 0, y: 26 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.18, ease }} className="da-prog-frame" style={{ position: "relative", borderRadius: 24, overflow: "hidden", border: "1px solid rgba(201,162,39,0.3)", background: "#0e2419", padding: 8 }}>
-            <div className="da-prog-head" style={{ position: "relative", padding: "26px 30px 24px" }}>
+            <div className="da-prog-head da-prog-head-art" style={{ position: "relative", padding: "26px 30px 24px" }}>
               <div style={{ fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 600, marginBottom: 10 }}>Al-Arif Islamic Institute</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 30, color: "#f6f3ea", margin: "0 0 4px 0" }}>Five programs, one madrasa</h3>
               <p style={{ fontSize: 13.5, color: "rgba(246,243,234,0.55)", margin: 0 }}>Led by Mufti Taqi and our teaching team. Choose the track that fits, at any age.</p>
@@ -668,9 +669,16 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", margin: "0 0 4px 0" }}>New to the community?</h3>
               <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements, or come see the masjid. Everyone is welcome.</p>
             </div>
-            <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-green da-btn-sm" style={{ flexShrink: 0 }}>
-              Join the group <span aria-hidden="true">↗</span>
-            </a>
+            <div className="da-wa-card-actions">
+              <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-green da-btn-sm" style={{ flexShrink: 0 }}>
+                Join the group <span aria-hidden="true">↗</span>
+              </a>
+              {/* the second way in to volunteering — the first was one link at
+                  the foot of the gallery, which nobody would think to look for */}
+              <Link href={R.community} className="da-btn da-btn-ghost da-btn-sm" style={{ flexShrink: 0 }}>
+                Volunteer <span aria-hidden="true">→</span>
+              </Link>
+            </div>
             {ctx && <SectionSpotlight id="whatsapp-section" nonce={ctx.nonce} active={ctx.isHighlighted("whatsapp-section")} />}
           </div>
           {ctx && <SectionSpotlight id="programs-section" nonce={ctx.nonce} active={ctx.isHighlighted("programs-section")} />}
@@ -766,17 +774,29 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <a href="mailto:admin@darularqum.org" className="da-contact-card da-contact-email">
-                <span className="da-contact-icon da-contact-icon-lg">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/email-icon.png" alt="" />
-                </span>
+              {/* mirrors the call card: identity on the left, actions in their
+                  own bay past the rule. It was centred with nothing on the
+                  right, which is what left the space. */}
+              <div className="da-contact-card da-contact-email">
+                <div className="da-contact-main">
+                  <span className="da-contact-icon da-contact-icon-lg">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/assets/email-icon.png" alt="" />
+                  </span>
+                  <span className="da-contact-text">
+                    <span className="da-contact-label da-contact-label-gold">Email us</span>
+                    <a href={ORG.emailHref} className="da-email-value">{ORG.email}</a>
+                    <span className="da-contact-note">Tax receipts, registrations and general questions</span>
+                  </span>
+                </div>
                 <span className="da-contact-div" aria-hidden />
-                <span className="da-contact-text">
-                  <span className="da-contact-label da-contact-label-gold">Email us</span>
-                  <span className="da-email-value">admin@darularqum.org</span>
-                </span>
-              </a>
+                <div className="da-contact-actions">
+                  <CopyBtn label="Copy" value={ORG.email} />
+                  <a href={ORG.emailHref} className="da-mail-btn">
+                    Email <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
