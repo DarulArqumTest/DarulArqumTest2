@@ -9,13 +9,23 @@ import { motion } from "motion/react";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
 import { LOCATIONS, ORG } from "@/lib/links";
 
+/**
+ * How much of the Qard-e-Hasan is repaid, worked out rather than written
+ * down. This ring used to be a hardcoded 42 while the homepage derived the
+ * same figure from the same record and showed 67 — two pages of one site
+ * disagreeing about the community's own loan.
+ */
+const LOAN_REPAID_PCT = Math.round(
+  ((ORG.finances.loanTotal - ORG.finances.loanRemaining) / ORG.finances.loanTotal) * 100,
+);
+
 const MILESTONES = [
   { key: "founding", year: "2019", title: "A community organizes", body: "Darul Arqum incorporates (Feb 23, 2019) as a non-profit charitable organization — Riverside South families uniting to establish the area's first masjid, Islamic education, and community services." },
   { key: "home", year: "2020", title: "A home of our own", body: "On July 30, 2020 the community acquires 4269 Limebank Rd for CA$665,000 — an extraordinary act of collective giving through donations and an interest-free Qard-e-Hasan." },
   { key: "worship", year: "2021", title: "Doors open for worship", body: "Five daily prayers in congregation, Jumu'ah with two khutbahs, and the community's first Taraweeh at home in Ramadhan 1442." },
   { key: "knowledge", year: "2025", title: "A house of knowledge", body: "Al-Arif Islamic Institute launches the Aalim program and full-time Hifz under Mufti Taqi, joining the weekday madrasa, KidsLearnArabic and WeLearn online." },
   { key: "second", year: "2026", title: "A second masjid", body: `The community acquires ${LOCATIONS.west.street} — a second home in Ottawa. ${LOCATIONS.east.name} continues at ${LOCATIONS.east.street}; ${LOCATIONS.west.name} opens insha'Allah, with details to follow.` },
-  { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: 42 },
+  { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: LOAN_REPAID_PCT },
 ] as const;
 
 const THEMES: Record<string, { accent: string; accentSoft: string; tag: string }> = {
