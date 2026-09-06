@@ -15,7 +15,9 @@ export const EXT = {
   whatsapp: "https://chat.whatsapp.com/G8CW0AUcDDWCDLhbxYQaJS",
   youtubeChannel: "https://www.youtube.com/channel/UCRSJNamNoeDsOlwzk8dMcvQ",
   youtubeIntro: "https://youtu.be/6wVEPBovOjI",
-  welearnZoom: "https://zoom.us/j/93194466159",
+  // the pwd is part of the link on darularqum.org/welearn — without it the
+  // meeting asks for a password nobody has been given
+  welearnZoom: "https://zoom.us/j/93194466159?pwd=bkVmeXpvdDAxOGJ4ZmE4K2xSTEpKZz09",
 
   // Giving — live public endpoints (interim source of truth).
   ircMatchingCampaign:

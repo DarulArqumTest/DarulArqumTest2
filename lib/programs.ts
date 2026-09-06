@@ -7,6 +7,13 @@
  * programme at $50 while its own page described a weekday madrasa at $75.
  * One record now feeds the index, the detail pages and the registration
  * forms, so a fee can only be wrong in one place.
+ *
+ * VERIFIED 2026-09-06 against the live Wix site at darularqum.org:
+ * /madrasa (weekday Quran classes), /services-4 (Al-Arifa Madrasa: Hifz and
+ * Aalim), /kidslearnarabic and /welearn. Where the two disagreed the live
+ * site won. The Aalim and Hifz monthly fees are the exception — the live
+ * site does not state them anywhere, so those figures are unconfirmed and
+ * came from this repo.
  */
 
 import { EXT, ORG, R } from "@/lib/links";
@@ -135,7 +142,7 @@ export const PROGRAMS: Program[] = [
       { label: "Eligibility", value: "Boys, ages 6 and up" },
       { label: "Fee", value: "$75 / month" },
       { label: "Sibling discount", value: "$25 off" },
-      { label: "Saturday class", value: "2:30 – 4:30 PM · Maulana Nazrul Islam" },
+      { label: "Weekend class", value: "Offered — time and fee still to be set" },
       { label: "Fee e-transfer", value: ORG.madrasaFeeEmail },
       { label: "Where", value: ORG.address },
     ],
@@ -143,14 +150,14 @@ export const PROGRAMS: Program[] = [
       { label: "Runs", value: "Mon – Fri, 6 – 8 PM" },
       { label: "Fee", value: "$75 / month" },
       { label: "Ages", value: "Boys, 6 and up" },
-      { label: "Also", value: "Saturday class, 2:30 – 4:30 PM" },
+      { label: "Also", value: "A weekend class, time still to be set" },
     ],
     curriculum: [
       { title: "Nazira", body: "Reading the Quran correctly, from the letters upward." },
       { title: "Hifz", body: "Memorization at a pace that fits alongside school." },
       { title: "Deeniyaat", body: "Islamic studies: the basics every Muslim should carry." },
       { title: "Akhlaqiat", body: "Character and manners, taught as a subject rather than assumed." },
-      { title: "Seerah", body: "The life of the Prophet ﷺ." },
+      { title: "Seerah", body: "The life of the Prophet ﷺ and the Sahaba." },
     ],
     notes: [
       "Childcare is not provided — drop-off and pick-up must be punctual.",
@@ -207,19 +214,25 @@ export const PROGRAMS: Program[] = [
     name: "welearn",
     eyebrow: "Online · live over Zoom",
     lede:
-      "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan — join from anywhere.",
+      "Two live classes a week with Sheikh Saud Hasan — Quran tafsir and the stories of the Prophets, over Zoom from anywhere.",
     about:
-      "Sessions run live, with nothing to install beyond Zoom. There is no registration form: you open the link at class time. Schedule changes, announcements and recordings are shared through the community WhatsApp group, so joining that group is how you keep in step.",
+      "welearn runs twice a week and the two evenings are different subjects, not one class split in half. Thursday is Darsul Quran, working through Tafseer Ma'riful Quran. Wednesday is Qasas-un-Nabiyyeen — the stories of the Prophets — taught alongside basic Arabic. Sessions are live, there is nothing to install beyond Zoom, and there is no registration form: you open the link at class time.",
     facts: [
-      { label: "Runs", value: "Live over Zoom" },
+      { label: "Runs", value: "Wednesday & Thursday · 8:00 PM" },
       { label: "Teacher", value: "Sheikh Saud Hasan" },
-      { label: "Joining", value: "Open the link at class time" },
+      { label: "Thursday", value: "Darsul Quran · Tafseer Ma'riful Quran" },
+      { label: "Wednesday", value: "Qasas-un-Nabiyyeen + basic Arabic" },
+      { label: "Joining", value: "Open the Zoom link at class time" },
       { label: "Announcements", value: "Community WhatsApp group" },
     ],
     cardFacts: [
-      { label: "Runs", value: "Live over Zoom" },
+      { label: "Runs", value: "Wed & Thu · 8:00 PM" },
       { label: "Teacher", value: "Sheikh Saud Hasan" },
-      { label: "Joining", value: "Open the link at class time" },
+      { label: "Where", value: "Live over Zoom" },
+    ],
+    curriculum: [
+      { title: "Darsul Quran", body: "Thursdays — tafsir, working through Tafseer Ma'riful Quran." },
+      { title: "Qasas-un-Nabiyyeen", body: "Wednesdays — the stories of the Prophets, with basic Arabic taught alongside." },
     ],
     notes: [
       "Schedule changes and recordings go out in the WhatsApp group rather than by email.",
