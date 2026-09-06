@@ -15,7 +15,6 @@ import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
-import Link from "next/link";
 import { motion } from "motion/react";
 import { ORG, R } from "@/lib/links";
 
@@ -241,12 +240,6 @@ export function KidsRegister() {
             aria-hidden
           />
 
-          <Link
-            href="/"
-            style={{ position: "absolute", top: 14, left: 18, zIndex: 3, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500 }}
-          >
-            ← Back to Darul Arqum
-          </Link>
 
           <div
             aria-hidden

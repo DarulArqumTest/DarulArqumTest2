@@ -16,7 +16,6 @@ const dotGrid: React.CSSProperties = {
 import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { VolunteerHero } from "@/components/site/volunteer-hero";
-import Link from "next/link";
 import { motion } from "motion/react";
 import { ORG } from "@/lib/links";
 
@@ -112,9 +111,6 @@ export function VolunteerPage() {
       {/* HERO: the hall being set up, the night before */}
       <div className="da-vol-hero-wrap">
         <VolunteerHero />
-        <Link href="/" className="da-vol-back">
-          <span aria-hidden="true">←</span> Back to Darul Arqum
-        </Link>
         <div className="da-vol-hero-text">
           <div className="da-vol-kicker">
             <span aria-hidden />

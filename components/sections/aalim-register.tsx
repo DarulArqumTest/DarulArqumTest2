@@ -13,7 +13,6 @@ import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
-import Link from "next/link";
 import { motion } from "motion/react";
 import { ORG, R } from "@/lib/links";
 
@@ -169,11 +168,6 @@ export function AalimRegister() {
           style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", filter: "saturate(1.05) brightness(1)" }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(9,20,15,0.3) 0%, rgba(9,20,15,0.55) 52%, rgba(11,26,18,0.85) 82%, #0e2419 100%)" }} />
-        <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "0 auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "24px 24px 0" }}>
-          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "rgba(246,243,234,0.8)", fontWeight: 500 }}>
-            ← Back to Darul Arqum
-          </Link>
-        </div>
       </div>
 
       <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "-108px auto 0", padding: "0 24px 64px" }}>

@@ -89,9 +89,6 @@ export function NewsletterArchivePage() {
       <div style={{ position: "relative", width: "100%", padding: "56px 24px 40px", overflow: "hidden", background: "linear-gradient(180deg, #16302280, #0e2419)" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 100% at 50% 0%, rgba(201,162,39,0.16), transparent 60%)" }} />
         <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto" }}>
-          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500, marginBottom: 26 }}>
-            ← Back to Darul Arqum
-          </Link>
           <div style={eyebrowStyle}>Newsletter archive · First release</div>
           <Breadcrumbs items={[{ label: "Newsletters", href: R.newsletters }, { label: "December 2020" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(34px,5.5vw,50px)", lineHeight: 1.1, color: "#f6f3ea", margin: "0 0 10px 0" }}>

@@ -7,7 +7,6 @@ import { Glyph } from "@/components/site/program-glyphs";
  * pointing donors to the downloadable Pre-Authorized Debit form. No form
  * fields on this page in the source; it's a "how it works" + PDF link. */
 
-import Link from "next/link";
 import { EXT, ORG, R } from "@/lib/links";
 
 const dotGrid: React.CSSProperties = {
@@ -49,9 +48,6 @@ export function PadFormPage() {
       {/* HERO: dome of barakah */}
       <div style={{ position: "relative", width: "100%", height: 340, overflow: "hidden", background: "linear-gradient(180deg, #16302280, #0e2419)" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 100% at 50% 120%, rgba(201,162,39,0.24), transparent 60%)" }} />
-        <Link href="/" style={{ position: "absolute", top: 20, left: 24, zIndex: 3, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500 }}>
-          ← Back to Darul Arqum
-        </Link>
 
         <svg width="100%" height="100%" viewBox="0 0 900 340" preserveAspectRatio="xMidYMax meet" style={{ position: "absolute", inset: 0, opacity: 0.4, pointerEvents: "none" }}>
           <path d="M300 340 V210 A150 150 0 0 1 600 210 V340" fill="none" stroke="#c9a227" strokeWidth={2} />

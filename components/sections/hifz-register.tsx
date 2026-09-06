@@ -15,7 +15,6 @@ import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
-import Link from "next/link";
 import { motion } from "motion/react";
 import { ORG, R } from "@/lib/links";
 
@@ -174,9 +173,6 @@ export function HifzRegister() {
             aria-hidden
           />
 
-          <Link href="/" style={{ position: "absolute", top: 14, left: 18, zIndex: 3, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500 }}>
-            ← Back to Darul Arqum
-          </Link>
 
           <div className="da-twinkle absolute" style={{ top: 34, right: 56, fontSize: 20, color: "rgba(227,177,106,0.5)", fontFamily: "'Amiri',serif", transform: "rotate(-8deg)" }} aria-hidden><Glyph name="star8" size={14} /></div>
           <div className="absolute" style={{ bottom: 40, left: 64, fontSize: 14, color: "rgba(227,177,106,0.35)", fontFamily: "'Amiri',serif", transform: "rotate(10deg)" }} aria-hidden><Glyph name="star8" size={14} /></div>

@@ -107,9 +107,6 @@ export function NewsletterPage() {
       {/* HERO: wax-seal envelope */}
       <div style={{ position: "relative", width: "100%", height: 300, overflow: "hidden", background: "linear-gradient(180deg, #16302280, #0e2419)" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 100% at 50% 120%, rgba(124,201,154,0.22), transparent 60%)" }} />
-        <Link href="/" style={{ position: "absolute", top: 20, left: 24, zIndex: 3, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(246,243,234,0.75)", fontWeight: 500 }}>
-          ← Back to Darul Arqum
-        </Link>
 
         <svg width="100%" height="100%" viewBox="0 0 900 300" preserveAspectRatio="xMidYMax meet" style={{ position: "absolute", inset: 0, opacity: 0.32, pointerEvents: "none" }}>
           <path d="M300 300 V185 A150 150 0 0 1 600 185 V300" fill="none" stroke="#7cc99a" strokeWidth={2} />

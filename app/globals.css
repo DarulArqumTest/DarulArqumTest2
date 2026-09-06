@@ -3489,19 +3489,6 @@ body { overflow-x: hidden; }
   inset: 0;
   background: linear-gradient(180deg, rgba(8, 22, 15, 0.35) 0%, rgba(8, 22, 15, 0.15) 34%, rgba(10, 27, 18, 0.82) 76%, #0e2419 100%);
 }
-.da-vol-back {
-  position: absolute;
-  top: 18px;
-  left: 24px;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(246, 243, 234, 0.8);
-}
-.da-vol-back:hover { color: #f3d98a; }
 .da-vol-hero-text {
   position: relative;
   z-index: 2;
