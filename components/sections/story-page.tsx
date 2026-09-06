@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
 import { LOCATIONS, ORG } from "@/lib/links";
+import { StoryVignette, type StoryScene } from "@/components/site/story-vignettes";
 
 /**
  * How much of the Qard-e-Hasan is repaid, worked out rather than written
@@ -128,6 +129,12 @@ function MilestoneRow({ m, index, activeIdx }: { m: (typeof MILESTONES)[number];
           <div style={{ position: "absolute", top: 22, right: 22, width: 44, height: 44, borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center", background: t.accentSoft, border: `1.5px solid ${t.accent}` }}>
             <Badge milestoneKey={m.key} accent={t.accent} progressPct={"progressPct" in m ? m.progressPct : 0} />
           </div>
+
+          {/* the milestone, drawn: the table it was decided at, the key that
+              changed hands, the first rows standing, and so on */}
+          <span className="da-story-vig" style={{ ["--accent" as string]: t.accent }} aria-hidden>
+            <StoryVignette scene={m.key as StoryScene} />
+          </span>
 
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 14, paddingRight: 56 }}>
             {m.key === "today" && <span className="da-live-pulse" style={{ width: 6, height: 6, borderRadius: 999, background: t.accent, flexShrink: 0 }} />}
