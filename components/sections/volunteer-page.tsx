@@ -7,6 +7,7 @@
  */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
@@ -171,12 +172,8 @@ export function VolunteerPage() {
           <path d="M300 300 V180 A150 150 0 0 1 600 180 V300" fill="none" stroke="#e8b06a" strokeWidth={2} />
           <path d="M270 300 V170 A180 180 0 0 1 630 170 V300" fill="none" stroke="#e8b06a" strokeWidth={1} opacity={0.5} />
         </svg>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 34, left: "16%", fontSize: 13, color: "rgba(232,176,106,0.5)" }} aria-hidden>
-          ✦
-        </div>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 56, right: "17%", fontSize: 10, color: "rgba(124,201,154,0.4)", animationDelay: "0.5s" }} aria-hidden>
-          ✦
-        </div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 34, left: "16%", fontSize: 13, color: "rgba(232,176,106,0.5)" }} aria-hidden><Glyph name="star8" size={14} /></div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 56, right: "17%", fontSize: 10, color: "rgba(124,201,154,0.4)", animationDelay: "0.5s" }} aria-hidden><Glyph name="star8" size={14} /></div>
 
         <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14 }}>
           <div style={{ display: "flex", alignItems: "flex-end", gap: 14, marginBottom: 2 }}>

@@ -37,7 +37,13 @@ export type GlyphName =
   | "history"
   | "revision"
   | "tajweed"
-  | "assessment";
+  | "assessment"
+  | "announce"
+  | "envelope"
+  | "star8"
+  | "note"
+  | "minbar"
+  | "congregation";
 
 const S = {
   fill: "none" as const,
@@ -273,6 +279,65 @@ const PATHS: Record<GlyphName, React.ReactNode> = {
       <path {...S} d="M6.4 3.6h11.2a1.8 1.8 0 0 1 1.8 1.8v13.2a1.8 1.8 0 0 1-1.8 1.8H6.4a1.8 1.8 0 0 1-1.8-1.8V5.4a1.8 1.8 0 0 1 1.8-1.8Z" />
       <path {...S} d="M9 2.6h6v3H9Z" />
       <path {...S} d="M8.4 12.4l2.2 2.2 4.8-4.8" />
+    </>
+  ),
+  /* the quiet sibling of the homepage's cartoon megaphone */
+  announce: (
+    <>
+      <path {...F} d="M4 9.6h3.4L15.4 5v14L7.4 14.4H4A1.6 1.6 0 0 1 2.4 12.8v-1.6A1.6 1.6 0 0 1 4 9.6Z" />
+      <path {...S} d="M4 9.6h3.4L15.4 5v14L7.4 14.4H4A1.6 1.6 0 0 1 2.4 12.8v-1.6A1.6 1.6 0 0 1 4 9.6Z" />
+      <path {...GOLD} d="M15.4 5c1.5 0 2.6 3.1 2.6 7s-1.1 7-2.6 7Z" opacity={0.9} />
+      <path {...S} d="M6.6 14.6l1 5.2a1.4 1.4 0 0 0 2.8-.2l-.5-4.4" />
+      <path {...S} d="M19.6 9.4a5 5 0 0 1 0 5.2" opacity={0.7} />
+      <path {...S} d="M21.4 7.2a8.4 8.4 0 0 1 0 9.6" opacity={0.45} />
+    </>
+  ),
+  /* the newsletter's own envelope, flap flung open — small */
+  envelope: (
+    <>
+      <path {...F} d="M3.4 9.4h17.2v9.4a1.6 1.6 0 0 1-1.6 1.6H5a1.6 1.6 0 0 1-1.6-1.6Z" />
+      <path {...S} d="M3.4 9.4h17.2v9.4a1.6 1.6 0 0 1-1.6 1.6H5a1.6 1.6 0 0 1-1.6-1.6Z" />
+      <path {...GOLD} d="M3.4 9.4 12 2.6l8.6 6.8-1.4 1.1L12 5.1 4.8 10.5Z" />
+      <path {...S} d="M3.4 9.4 12 2.6l8.6 6.8" />
+      <path {...S} d="M3.9 19.9 10 14.2M20.1 19.9 14 14.2" opacity={0.55} strokeWidth={1.2} />
+    </>
+  ),
+  /* the lattice star, drawn — the site's ornament, not a font character */
+  star8: (
+    <>
+      <rect {...F} x="7.4" y="7.4" width="9.2" height="9.2" />
+      <rect {...S} x="7.4" y="7.4" width="9.2" height="9.2" />
+      <rect {...S} x="7.4" y="7.4" width="9.2" height="9.2" transform="rotate(45 12 12)" />
+    </>
+  ),
+  /* a nib, for a note in the margin */
+  note: (
+    <>
+      <path {...F} d="M12 3.4 16.2 12 12 20.6 7.8 12Z" />
+      <path {...S} d="M12 3.4 16.2 12 12 20.6 7.8 12Z" />
+      <path {...S} d="M12 8.6V15" opacity={0.6} strokeWidth={1.2} />
+      <circle {...GOLD} cx="12" cy="12" r="1.5" />
+    </>
+  ),
+  /* Jumu'ah: the minbar the khutbah is given from */
+  minbar: (
+    <>
+      <path {...S} d="M4 8.4a5.2 5.2 0 0 1 10.4 0" />
+      <path {...F} d="M4 8.4h10.4v11.4H4Z" />
+      <path {...S} d="M4 19.8V8.4h10.4v11.4" />
+      <path {...S} d="M14.4 19.8h5.6l-1.6-3.2h-4M16.4 16.6l-1.4-3h-.6" />
+      <path {...GOLD} d="M8.4 4.4h1.6v3.2H8.4Z" opacity={0.85} />
+      <path {...S} d="M9.2 4.4V2.6" opacity={0.6} strokeWidth={1.2} />
+      <path {...S} d="M6.6 12.2h5.2M6.6 15.2h5.2" opacity={0.5} strokeWidth={1.1} />
+    </>
+  ),
+  /* the five daily prayers: rows standing under one arch */
+  congregation: (
+    <>
+      <path {...S} d="M3.6 11.4a8.4 8.4 0 0 1 16.8 0" />
+      <path {...GOLD} d="M11.2 2.4h1.6v2.4h-1.6Z" opacity={0.85} />
+      <path {...F} d="M3.6 14h16.8v2.4H3.6ZM3.6 18h16.8v2.4H3.6Z" />
+      <path {...S} d="M3.6 14h16.8M3.6 16.4h16.8M3.6 18h16.8M3.6 20.4h16.8" opacity={0.75} strokeWidth={1.3} />
     </>
   ),
 };

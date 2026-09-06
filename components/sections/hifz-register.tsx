@@ -10,6 +10,7 @@
  */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
@@ -226,12 +227,8 @@ export function HifzRegister() {
             ← Back to Darul Arqum
           </Link>
 
-          <div className="da-twinkle absolute" style={{ top: 34, right: 56, fontSize: 20, color: "rgba(227,177,106,0.5)", fontFamily: "'Amiri',serif", transform: "rotate(-8deg)" }} aria-hidden>
-            ✦
-          </div>
-          <div className="absolute" style={{ bottom: 40, left: 64, fontSize: 14, color: "rgba(227,177,106,0.35)", fontFamily: "'Amiri',serif", transform: "rotate(10deg)" }} aria-hidden>
-            ✦
-          </div>
+          <div className="da-twinkle absolute" style={{ top: 34, right: 56, fontSize: 20, color: "rgba(227,177,106,0.5)", fontFamily: "'Amiri',serif", transform: "rotate(-8deg)" }} aria-hidden><Glyph name="star8" size={14} /></div>
+          <div className="absolute" style={{ bottom: 40, left: 64, fontSize: 14, color: "rgba(227,177,106,0.35)", fontFamily: "'Amiri',serif", transform: "rotate(10deg)" }} aria-hidden><Glyph name="star8" size={14} /></div>
 
           <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
             <div style={{ position: "relative", width: 180, height: 230, display: "flex", justifyContent: "center" }}>
@@ -316,7 +313,7 @@ export function HifzRegister() {
                     justifyContent: "center",
                   }}
                 >
-                  <span style={{ color: "#e9cd7a", fontSize: 11 }}>✦</span>
+                  <span style={{ color: "#e9cd7a", fontSize: 11 }}><Glyph name="star8" size={14} /></span>
                 </div>
                 <div style={{ position: "relative", zIndex: 2, marginTop: 198, textAlign: "center", fontSize: 7, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(205,168,79,0.8)", fontWeight: 600 }}>
                   Al-Qur&apos;an Al-Kareem
@@ -396,7 +393,7 @@ export function HifzRegister() {
           transition={{ duration: 0.8, delay: 0.18 }}
           style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "14px 18px", borderRadius: 12, background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.1)", marginBottom: 36 }}
         >
-          <span style={{ color: "#e8b06a", fontSize: 13, marginTop: 1 }}>✦</span>
+          <span style={{ color: "#e8b06a", display: "flex", marginTop: 1 }} aria-hidden><Glyph name="note" size={14} /></span>
           <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(246,243,234,0.65)", margin: 0 }}>
             Submitting this form starts registration. Our team will follow up by email or phone to confirm placement and fees.
           </p>

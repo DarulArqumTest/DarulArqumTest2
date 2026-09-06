@@ -1,6 +1,7 @@
 "use client";
 
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { Glyph } from "@/components/site/program-glyphs";
 
 /** Faithful, dedicated port of `PAD Form.dc.html` — an informational page
  * pointing donors to the downloadable Pre-Authorized Debit form. No form
@@ -78,12 +79,8 @@ export function PadFormPage() {
             <path d="M13 2 A8 8 0 1 0 13 18 A6.4 6.4 0 1 1 13 2 Z" fill="#e3c56a" />
           </svg>
         </div>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 78, left: "20%", fontSize: 12, color: "rgba(201,162,39,0.5)" }} aria-hidden>
-          ✦
-        </div>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 64, right: "22%", fontSize: 10, color: "rgba(124,201,154,0.4)", animationDelay: "0.7s" }} aria-hidden>
-          ✦
-        </div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 78, left: "20%", fontSize: 12, color: "rgba(201,162,39,0.5)" }} aria-hidden><Glyph name="star8" size={14} /></div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 64, right: "22%", fontSize: 10, color: "rgba(124,201,154,0.4)", animationDelay: "0.7s" }} aria-hidden><Glyph name="star8" size={14} /></div>
 
         <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <div style={{ position: "relative", width: 120, height: 96 }}>

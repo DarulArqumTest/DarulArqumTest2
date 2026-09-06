@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { X, Copy, Check } from "lucide-react";
 import { ORG, EXT, LOCATIONS } from "@/lib/links";
@@ -538,7 +539,7 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
 
           <div className="da-funfact">
             <span className="da-funfact-label">
-              <span aria-hidden style={{ fontSize: 11 }}>✦</span>
+              <span aria-hidden style={{ display: "flex", color: "#e3c56a" }}><Glyph name="star8" size={12} /></span>
               Fun fact
             </span>
             <div className="da-money da-money-cream" style={{ fontSize: "clamp(44px,5vw,58px)", lineHeight: 1, marginBottom: 12 }}>$60</div>

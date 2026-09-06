@@ -8,6 +8,7 @@
  */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { EXT, R } from "@/lib/links";
@@ -512,8 +513,11 @@ function Hero({ revealed }: { revealed: boolean }) {
               };
               const inner = (
                 <>
-                  <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "#f6f3ea", fontSize: 14 }}>
-                    ✦
+                  {/* Jumu'ah gets the minbar, the daily prayers get rows
+                      standing under one arch. Both cards carried the same
+                      four-point star, which said nothing about either. */}
+                  <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a" }}>
+                    <Glyph name={c.title === "Jumu'ah" ? "minbar" : "congregation"} size={18} />
                   </div>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>{c.title}</div>

@@ -7,6 +7,7 @@
  */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
@@ -126,9 +127,7 @@ export function NewsletterPage() {
             <path d="M1 2 L13 11 L25 2" fill="none" stroke="#c9a227" strokeWidth={1.4} />
           </svg>
         </div>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 44, right: "24%", fontSize: 11, color: "rgba(201,162,39,0.5)" }} aria-hidden>
-          ✦
-        </div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 44, right: "24%", fontSize: 11, color: "rgba(201,162,39,0.5)" }} aria-hidden><Glyph name="star8" size={14} /></div>
 
         <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12 }}>
           <div className="da-float-slow relative" style={{ width: 96, height: 70, animationDuration: "4.5s" }}>
@@ -189,7 +188,7 @@ export function NewsletterPage() {
             <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
             <div style={{ position: "absolute", top: -30, right: -30, width: 100, height: 100, borderRadius: 999, background: "radial-gradient(circle, rgba(124,201,154,0.18), transparent 70%)", pointerEvents: "none" }} />
             <div style={{ display: "flex", alignItems: "center", gap: 10, position: "relative" }}>
-              <div style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.45)", display: "flex", alignItems: "center", justifyContent: "center", color: "#a9e0c0", fontSize: 13 }}>✉</div>
+              <div style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.45)", display: "flex", alignItems: "center", justifyContent: "center", color: "#a9e0c0" }}><Glyph name="envelope" size={15} /></div>
               <div style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Subscribe</div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, position: "relative" }}>
@@ -235,7 +234,7 @@ export function NewsletterPage() {
               }}
             >
               {state === "busy" && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
-              {state === "busy" ? "Sending…" : "✉ Subscribe"}
+              {state === "busy" ? "Sending…" : <><Glyph name="envelope" size={16} /> Subscribe</>}
               {state !== "busy" && <span aria-hidden="true">→</span>}
             </button>
             {state === "error" && (
@@ -249,7 +248,7 @@ export function NewsletterPage() {
           href={R.newsletterDec2020}
           style={{ display: "flex", alignItems: "center", gap: 16, padding: "18px 20px", borderRadius: 14, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.35)", textDecoration: "none", boxShadow: "0 16px 34px -18px rgba(201,162,39,0.5)" }}
         >
-          <div style={{ width: 44, height: 44, flexShrink: 0, borderRadius: 10, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a", fontSize: 19 }}>✉</div>
+          <div style={{ width: 44, height: 44, flexShrink: 0, borderRadius: 10, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a" }}><Glyph name="envelope" size={22} /></div>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 17, color: "#f6f3ea" }}>December 2020 — The First Edition</div>
             <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)" }}>Read the archived newsletter</div>

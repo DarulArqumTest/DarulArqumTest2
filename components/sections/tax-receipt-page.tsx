@@ -7,6 +7,7 @@
  */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion } from "motion/react";
@@ -101,12 +102,8 @@ export function TaxReceiptPage() {
           <path d="M300 280 V170 A150 150 0 0 1 600 170 V280" fill="none" stroke="#c9a227" strokeWidth={2} />
           <path d="M270 280 V160 A180 180 0 0 1 630 160 V280" fill="none" stroke="#c9a227" strokeWidth={1} opacity={0.5} />
         </svg>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 36, left: "14%", fontSize: 15, color: "rgba(201,162,39,0.5)" }} aria-hidden>
-          ✦
-        </div>
-        <div className="da-twinkle pointer-events-none absolute" style={{ top: 64, right: "16%", fontSize: 11, color: "rgba(124,201,154,0.45)", animationDelay: "0.6s" }} aria-hidden>
-          ✦
-        </div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 36, left: "14%", fontSize: 15, color: "rgba(201,162,39,0.5)" }} aria-hidden><Glyph name="star8" size={14} /></div>
+        <div className="da-twinkle pointer-events-none absolute" style={{ top: 64, right: "16%", fontSize: 11, color: "rgba(124,201,154,0.45)", animationDelay: "0.6s" }} aria-hidden><Glyph name="star8" size={14} /></div>
         <div className="pointer-events-none absolute" style={{ top: 18, right: "9%", display: "flex", flexDirection: "column", alignItems: "center", animation: "da-lantern-sway 4.6s ease-in-out infinite", animationDelay: "0.3s", transformOrigin: "top center", opacity: 0.85 }} aria-hidden>
           <div style={{ width: 1.3, height: 30, background: "rgba(201,162,39,0.4)" }} />
           <div className="da-lantern-glow absolute rounded-full blur-[8px]" style={{ top: 26, width: 26, height: 26, background: "rgba(227,197,106,0.4)" }} />

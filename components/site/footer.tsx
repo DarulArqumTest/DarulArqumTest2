@@ -6,6 +6,7 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { EXT, ORG, R } from "@/lib/links";
 import { Reveal, DrawnRule } from "@/components/site/reveal";
 import { DaAmbient } from "@/components/site/da-motifs";
+import { Glyph } from "@/components/site/program-glyphs";
 import { requestSectionScroll, type ScrollTargetId } from "@/components/site/use-scroll-highlight";
 
 const COLUMNS = [
@@ -68,7 +69,7 @@ export function Footer() {
                   <Image src="/assets/logo-icon.png" alt="Darul Arqum emblem" width={38} height={38} />
                 </span>
                 <span className="da-fbrand-rule" aria-hidden>
-                  <i /><b>✦</b><i />
+                  <i /><b><Glyph name="star8" size={9} /></b><i />
                 </span>
                 <span className="da-fbrand-name">Darul Arqum</span>
                 <span className="da-fbrand-sub">Riverside South · Ottawa</span>

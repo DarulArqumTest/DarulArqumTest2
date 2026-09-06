@@ -10,6 +10,7 @@
  */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
@@ -270,16 +271,12 @@ export function KidsRegister() {
             aria-hidden
             className="da-twinkle absolute"
             style={{ top: 36, right: 52, fontSize: 22, color: "rgba(246,243,234,0.55)", fontFamily: "'Amiri',serif", transform: "rotate(-8deg)" }}
-          >
-            ✦
-          </div>
+          ><Glyph name="star8" size={14} /></div>
           <div
             aria-hidden
             className="absolute"
             style={{ bottom: 44, left: 60, fontSize: 16, color: "rgba(246,243,234,0.4)", fontFamily: "'Amiri',serif", transform: "rotate(10deg)" }}
-          >
-            ✦
-          </div>
+          ><Glyph name="star8" size={14} /></div>
 
           <div style={{ position: "relative", zIndex: 2, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10 }}>
             <div
@@ -344,7 +341,7 @@ export function KidsRegister() {
           transition={{ duration: 0.8, delay: 0.18 }}
           style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "14px 18px", borderRadius: 12, background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.1)", marginBottom: 36 }}
         >
-          <span style={{ color: "#a9e0c0", fontSize: 13, marginTop: 1 }}>✦</span>
+          <span style={{ color: "#a9e0c0", display: "flex", marginTop: 1 }} aria-hidden><Glyph name="note" size={14} /></span>
           <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(246,243,234,0.65)", margin: 0 }}>
             Submitting this form starts registration. Our team will follow up by email or phone to confirm placement and fees.
           </p>

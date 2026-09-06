@@ -3,6 +3,7 @@
 /** Literal, line-for-line port of `Prayer Times.dc.html`. */
 
 import * as React from "react";
+import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Twinkle, Lantern, GeoMedallion } from "@/components/sections/home-literal";
 import { nextPrayer, activePrayerKey } from "@/lib/prayer";
@@ -218,7 +219,7 @@ function IqamaTable() {
           prayer gradients so it reads as the board's own footer rather than a
           slab of section-green under it. */}
       <p className="da-board-note">
-        <span className="da-board-note-mark" aria-hidden>✦</span>
+        <span className="da-board-note-mark" aria-hidden><Glyph name="star8" size={13} /></span>
         <span>
           Shurûq {shuruq} · Changes are announced in the{" "}
           <a
@@ -368,8 +369,8 @@ export function PrayerTimesPage() {
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.6vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 26px 0" }}>Prayer times</h1>
 
           <div className="da-request" style={{ position: "relative", padding: "18px 22px", borderRadius: 16, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.04))", border: "1px solid rgba(201,162,39,0.35)" }}>
-            <div className="da-request-icon" style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 12, background: "#f6f3ea", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-              <span style={{ fontSize: 22 }}>📢</span>
+            <div className="da-request-icon" style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 12, background: "linear-gradient(160deg, rgba(201,162,39,0.26), rgba(201,162,39,0.08))", border: "1px solid rgba(227,197,106,0.5)", color: "#f3d98a", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 16px -8px rgba(0,0,0,0.6)" }}>
+              <Glyph name="announce" size={24} />
             </div>
             <div className="da-request-label" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 800 }}>Special request</div>
             <p className="da-request-body" style={{ fontSize: 14, lineHeight: 1.55, color: "rgba(246,243,234,0.82)" }}>Please arrive before iqama. Timing changes are announced in the community WhatsApp group.</p>
