@@ -18,8 +18,19 @@ const daDisplay = Cormorant_Garamond({
 });
 const daBody = Work_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-da-body" });
 
+/**
+ * Absolute URLs for og:image and canonical are built from this. It must point
+ * at the host actually serving the page: hard-coding the production domain
+ * meant preview deployments advertised an image URL on a domain that does not
+ * serve them yet, so Discord, WhatsApp and iMessage fetched nothing and showed
+ * no preview at all.
+ */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.darularqum.org");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.darularqum.org"),
+  metadataBase: new URL(SITE_URL),
   title: { default: "Darul Arqum · Masjid in Riverside South, Ottawa", template: "%s · Darul Arqum" },
   description:
     "The first masjid in Riverside South, Ottawa. Live prayer times, Jumu'ah, Quran classes, the Aalim program, and community programs. CRA registered charity #709549687RR0001.",

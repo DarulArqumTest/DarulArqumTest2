@@ -38,13 +38,16 @@ export function DonateMenu({ align = "right" }: { align?: "left" | "right" }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            initial={{ opacity: 0, y: align === "right" ? -6 : 6, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            exit={{ opacity: 0, y: align === "right" ? -6 : 6, scale: 0.97 }}
             transition={{ duration: 0.18 }}
             className={cn(
-              "absolute top-[calc(100%+10px)] z-30 w-[230px] rounded-2xl bg-da-cream p-2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.45)]",
-              align === "right" ? "right-0" : "left-0",
+              "absolute z-30 w-[230px] rounded-2xl bg-da-cream p-2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.45)]",
+              // In the phone sheet this button sits at the very bottom of the
+              // menu, so a downward panel opened off the end of the scroll
+              // area and could not be reached. Open upward there instead.
+              align === "right" ? "right-0 top-[calc(100%+10px)]" : "left-0 bottom-[calc(100%+10px)]",
             )}
           >
             <Link

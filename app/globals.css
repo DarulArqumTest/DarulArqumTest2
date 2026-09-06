@@ -344,6 +344,78 @@ body { overflow-x: hidden; }
   .da-geo-tile .da-money { font-size: 20px !important; }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   More phone compaction
+   Each block below was giving one line of copy its own full-width row,
+   which is what made these cards several times taller than they needed
+   to be.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Prayer times: WhatsApp hero ──
+   Icon, copy and button were stacking into a very tall card. The copy now
+   sits beside the icon in the space that was already there. */
+@media (max-width: 760px) {
+  .da-wa-hero {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon body" "cta cta";
+    align-items: center;
+    gap: 12px 14px !important;
+    padding: 16px 16px 18px !important;
+    border-radius: 18px !important;
+  }
+  .da-wa-hero-icon { grid-area: icon; width: 44px !important; height: 44px !important; }
+  .da-wa-hero-body { grid-area: body; min-width: 0 !important; }
+  .da-wa-hero-eyebrow { font-size: 9.5px !important; letter-spacing: 0.1em !important; margin-bottom: 3px !important; }
+  .da-wa-hero-title { font-size: 19px !important; line-height: 1.2 !important; margin-bottom: 4px !important; }
+  .da-wa-hero-note { font-size: 12px !important; line-height: 1.45 !important; }
+  .da-wa-hero-cta { grid-area: cta; width: 100%; }
+}
+
+/* Squared, layered button rather than a flat mint pill. */
+.da-wa-hero-cta {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 11px;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0b2416;
+  background: linear-gradient(180deg, #c6efd7 0%, #a9e0c0 52%, #85c9a3 100%);
+  border: 1px solid rgba(226, 250, 236, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(240, 255, 246, 0.8),
+    inset 0 -1px 0 rgba(20, 70, 45, 0.25),
+    0 2px 5px rgba(0, 0, 0, 0.26),
+    0 12px 26px -10px rgba(124, 201, 154, 0.6);
+}
+
+/* ── Prayer times: Jumu'ah banner ──
+   Two khutbah times on one line at 14.5px broke onto a second row and
+   doubled the banner's height. */
+@media (max-width: 760px) {
+  .da-jumuah-text { font-size: 12px !important; white-space: nowrap; }
+}
+@media (max-width: 380px) {
+  .da-jumuah-text { font-size: 10.5px !important; }
+}
+
+/* ── Contact: call row ──
+   The number wrapped onto a second line once Copy and Call sat beside it. */
+@media (max-width: 760px) {
+  .da-call-row { flex-wrap: nowrap !important; }
+  .da-call-number { font-size: 13.5px !important; white-space: nowrap; }
+}
+@media (max-width: 380px) {
+  .da-call-number { font-size: 12.5px !important; }
+}
+
 /* ── Section rhythm ──
    Sections hard-code `padding: 120px 28px`. On phones the 28px side
    padding stacks on top of card padding and eats the line length, and

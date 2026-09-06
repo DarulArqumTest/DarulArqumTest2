@@ -713,8 +713,8 @@ export function ContactSection() {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700, marginBottom: 6 }}>Call us</div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                    <span style={{ fontSize: 15, color: "#f6f3ea", fontWeight: 700 }}>613-709-2329</span>
+                  <div className="da-call-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                    <span className="da-call-number" style={{ fontSize: 15, color: "#f6f3ea", fontWeight: 700 }}>613-709-2329</span>
                     <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
                       <CopyBtn label="Copy" value="613-709-2329" />
                       <a href="tel:+16137092329" style={{ display: "inline-flex", alignItems: "center", minHeight: 34, background: "#7cc99a", color: "#0e2419", fontWeight: 700, fontSize: 11.5, padding: "6px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>
