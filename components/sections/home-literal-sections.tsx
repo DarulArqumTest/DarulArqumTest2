@@ -16,6 +16,7 @@ import {
   type ProgramKey,
 } from "@/components/sections/home-literal";
 import { SectionSpotlight, HomeHighlightContext } from "@/components/site/use-scroll-highlight";
+import { MasjidProgress } from "@/components/site/masjid-progress";
 
 /* ── animated counter ─────────────────────────────────────────── */
 
@@ -524,6 +525,17 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
           transition={{ duration: 0.8, delay: 0.15, ease }}
           style={{ flex: "1 1 320px", minWidth: 280, display: "flex", flexDirection: "column", gap: 1, background: "rgba(246,243,234,0.12)", border: "1px solid rgba(201,162,39,0.28)", borderRadius: 16, overflow: "hidden" }}
         >
+          {/* The four tiles below state the loan as two flat numbers. The
+              difference between them is what this community has already
+              paid off, and nothing said so — so it is drawn, directly above
+              the numbers it is made of. */}
+          <div className="da-geo-tile da-mp-tile">
+            <MasjidProgress
+              repaid={ORG.finances.loanTotal - ORG.finances.loanRemaining}
+              total={ORG.finances.loanTotal}
+            />
+          </div>
+
           <div className="da-giving-stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
             {[
               { v: total, label: "Total loan to repay" },

@@ -1497,6 +1497,62 @@ body { overflow-x: hidden; }
   background-position: center;
   overflow: hidden;
 }
+/* ── the loan, drawn ──
+   Sits at the head of the same object as the four stat tiles and borrows
+   their girih ground, so it reads as the picture those numbers add up to
+   rather than as a separate widget parked above them. */
+.da-mp-tile { padding: 18px 16px 14px; }
+.da-mp { position: relative; z-index: 1; }
+.da-mp-eyebrow {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #c9a227;
+}
+.da-mp-art { display: block; width: 100%; height: auto; }
+.da-mp-read {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(201, 162, 39, 0.26);
+}
+.da-mp-read-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; text-align: left; }
+/* the figure is counting, so the digits have to hold their columns */
+.da-mp-num {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1;
+  color: #f3d98a;
+  font-variant-numeric: tabular-nums;
+}
+.da-mp-cap { font-size: 11.5px; line-height: 1.35; color: rgba(246, 243, 234, 0.62); font-variant-numeric: tabular-nums; }
+.da-mp-pct {
+  flex-shrink: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1;
+  color: #f6f3ea;
+  font-variant-numeric: tabular-nums;
+}
+.da-mp-pct span { font-size: 0.55em; color: rgba(246, 243, 234, 0.55); margin-left: 1px; }
+
+@media (max-width: 640px) {
+  .da-mp-tile { padding: 14px 13px 12px; }
+  .da-mp-eyebrow { font-size: 9.5px; margin-bottom: 8px; }
+  .da-mp-read { margin-top: 10px; padding-top: 10px; }
+  .da-mp-num { font-size: 22px; }
+  .da-mp-pct { font-size: 25px; }
+  .da-mp-cap { font-size: 11px; }
+}
+
 /* fade the pattern out from the centre so the numerals stay legible */
 .da-geo-tile::before {
   content: "";
