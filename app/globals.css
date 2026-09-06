@@ -4042,6 +4042,117 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
+   The gallery, hung on a wall
+   ──────────────────────────────────────────────────────────────────
+   Everything else on the site is drawn, and the gallery was three
+   photographs in a grid with a hairline border each. Frame is CSS so
+   it stays sharp at any width and downloads nothing.
+   ══════════════════════════════════════════════════════════════════ */
+.da-frame { margin: 0; padding-top: 30px; position: relative; }
+.da-frame-hang {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 42px;
+  pointer-events: none;
+}
+.da-frame-body {
+  position: relative;
+  padding: 13px;
+  border-radius: 4px;
+  /* brass moulding, lit from the upper left */
+  background: linear-gradient(145deg, #f0d888 0%, #c9a227 34%, #8a6c14 68%, #6d5613 100%);
+  box-shadow:
+    0 26px 50px -20px rgba(0, 0, 0, 0.72),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.28),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.24);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.da-frame-body[role="button"] { cursor: zoom-in; }
+.da-frame-body[role="button"]:hover {
+  transform: translateY(-3px) rotate(0deg) !important;
+  box-shadow:
+    0 34px 60px -20px rgba(0, 0, 0, 0.78),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.32),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.24);
+}
+.da-frame-body:focus-visible { outline: 3px solid #f3d98a; outline-offset: 4px; }
+
+/* the cream mount the picture sits in */
+.da-frame-mount {
+  padding: 14px 14px 12px;
+  background: linear-gradient(170deg, #f4eeda, #e6dcc0);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+.da-frame-plate {
+  position: relative;
+  overflow: hidden;
+  background: #122d20;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.da-frame-plate img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* the glass, catching the light across one corner */
+.da-frame-glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 22%, transparent 44%);
+}
+.da-frame-caption {
+  margin: 10px 2px 0;
+  text-align: center;
+  font-size: 11.5px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #6a5c3c;
+}
+
+/* the wall they hang on */
+.da-wall {
+  position: relative;
+  border-radius: 18px;
+  padding: 34px 26px 40px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(227, 197, 106, 0.1), transparent 62%),
+    linear-gradient(180deg, #16342310, #0b201510);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+/* the picture rail the nails go into */
+.da-wall::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 26px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.32) 8%, rgba(201, 162, 39, 0.32) 92%, transparent);
+}
+.da-wall-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 26px;
+  align-items: start;
+}
+
+@media (max-width: 620px) {
+  .da-wall { padding: 26px 14px 30px; border-radius: 14px; }
+  .da-wall::before { top: 20px; left: 12px; right: 12px; }
+  .da-frame { padding-top: 24px; }
+  .da-frame-hang { width: 140px; height: 34px; }
+  .da-frame-body { padding: 9px; }
+  .da-frame-mount { padding: 10px 10px 9px; }
+  /* a tilted frame on a narrow screen just crops itself against the gutter */
+  .da-frame-body { transform: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
    Friday
    ──────────────────────────────────────────────────────────────────
    One day a week, and the busiest one. Stands down during Ramadan so

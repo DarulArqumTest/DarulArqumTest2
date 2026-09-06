@@ -9,6 +9,8 @@ import Link from "next/link";
 import { Twinkle, CrescentMoon } from "@/components/sections/home-literal";
 import { EXT, R } from "@/lib/links";
 
+import { PhotoFrame } from "@/components/site/photo-frame";
+
 const HOUSE_IMG = "/assets/hero-house.jpg";
 const FUND1_IMG = EXT.galleryFundraising1;
 const FUND2_IMG = EXT.galleryFundraising2;
@@ -62,12 +64,14 @@ export function GalleryPage() {
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 10 }}>Masjid Gallery</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 28, color: "#f6f3ea", margin: "0 0 24px 0" }}>Our home at Limebank Road.</h2>
-          <div
-            onClick={() => setLightboxSrc(HOUSE_IMG)}
-            style={{ cursor: "zoom-in", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(201,162,39,0.3)", boxShadow: "0 24px 60px -24px rgba(0,0,0,0.5)" }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={HOUSE_IMG} alt="Darul Arqum masjid house" style={{ width: "100%", maxHeight: 560, objectFit: "cover", display: "block" }} />
+          <div className="da-wall">
+            <PhotoFrame
+              src={HOUSE_IMG}
+              alt="Darul Arqum masjid house"
+              caption="4269 Limebank Road, Ottawa"
+              aspect="1360 / 900"
+              onClick={() => setLightboxSrc(HOUSE_IMG)}
+            />
           </div>
         </div>
       </section>
@@ -78,17 +82,22 @@ export function GalleryPage() {
           <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 10 }}>March 7th, 2020</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 28, color: "#f6f3ea", margin: "0 0 8px 0" }}>Masjid fundraising event</h2>
           <p style={{ fontSize: 14, color: "rgba(246,243,234,0.6)", margin: "0 0 24px 0" }}>Hellenic Meeting &amp; Receptions Centre, Ottawa</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 16 }}>
-            {[FUND1_IMG, FUND2_IMG].map((src) => (
-              <div
-                key={src}
-                onClick={() => setLightboxSrc(src)}
-                style={{ cursor: "zoom-in", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(201,162,39,0.25)", aspectRatio: "1141/344", background: "#122d20" }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt="Fundraising event, March 7 2020" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-              </div>
-            ))}
+          <div className="da-wall">
+            <div className="da-wall-row">
+              {[FUND1_IMG, FUND2_IMG].map((src, i) => (
+                <PhotoFrame
+                  key={src}
+                  src={src}
+                  alt="Fundraising event, March 7 2020"
+                  caption="Hellenic Meeting & Receptions Centre"
+                  aspect="4 / 3"
+                  /* a degree either way, so two frames side by side do not
+                     read as one machine-straight row */
+                  tilt={i === 0 ? -1.1 : 1.1}
+                  onClick={() => setLightboxSrc(src)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
