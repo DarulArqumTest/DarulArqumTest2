@@ -3926,6 +3926,152 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
   border: 2px solid #0a1a12;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   Ramadan mode
+   ──────────────────────────────────────────────────────────────────
+   A night sky with the lanterns up across it. It only exists during
+   the month — outside it the component renders nothing at all, so
+   there is no empty strip to style around.
+   ══════════════════════════════════════════════════════════════════ */
+.da-ram {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* the top of this band sits under the fixed navbar when you scroll onto
+     it, so the lanterns start below the bar rather than behind it */
+  padding: 116px 24px 32px;
+  background:
+    radial-gradient(ellipse 70% 120% at 18% 0%, rgba(227, 197, 106, 0.16), transparent 60%),
+    linear-gradient(180deg, #0a1a2c 0%, #0c2033 42%, #0e2419 100%);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.28);
+}
+.da-ram-last-ten {
+  background:
+    radial-gradient(ellipse 80% 130% at 50% 0%, rgba(227, 197, 106, 0.24), transparent 62%),
+    linear-gradient(180deg, #10142e 0%, #101d38 44%, #0e2419 100%);
+}
+.da-ram-lanterns {
+  position: absolute;
+  top: 34px;
+  left: 0;
+  width: 100%;
+  height: 118px;
+  pointer-events: none;
+}
+.da-ram-lantern { animation: da-ram-sway 5.2s ease-in-out infinite; }
+@keyframes da-ram-sway {
+  0%, 100% { transform: rotate(-3.5deg); }
+  50% { transform: rotate(3.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .da-ram-lantern { animation: none; }
+}
+
+.da-ram-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.da-ram-moon { flex: 0 0 auto; line-height: 0; }
+.da-ram-mid { flex: 1 1 300px; min-width: 0; }
+
+.da-ram-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #e3c56a;
+}
+.da-ram-qadr {
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: #e3c56a;
+  color: #14261a;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+.da-ram-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.05;
+  color: #f8f5ec;
+  margin: 0 0 8px;
+}
+.da-ram-title b { font-weight: 600; color: #f3d98a; font-variant-numeric: tabular-nums; }
+.da-ram-title span { font-size: 0.55em; color: rgba(246, 243, 234, 0.55); }
+.da-ram-note { margin: 0; font-size: 13.5px; line-height: 1.55; color: rgba(246, 243, 234, 0.7); max-width: 44ch; }
+
+/* the number people actually came for */
+.da-ram-count {
+  flex: 0 0 auto;
+  min-width: 210px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: linear-gradient(165deg, #12291c, #0a1d13);
+  border: 2px solid #0a1a12;
+  box-shadow: 4px 4px 0 rgba(5, 14, 9, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.da-ram-count-label {
+  margin: 0 0 2px;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #a9e0c0;
+}
+.da-ram-count-time {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1;
+  color: #f8f5ec;
+  /* it is counting every second; the digits must not shuffle */
+  font-variant-numeric: tabular-nums;
+}
+.da-ram-count-at { margin: 4px 0 0; font-size: 11.5px; color: rgba(246, 243, 234, 0.5); font-variant-numeric: tabular-nums; }
+.da-ram-pair {
+  display: flex;
+  gap: 18px;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(201, 162, 39, 0.25);
+}
+.da-ram-pair span { display: flex; flex-direction: column; gap: 1px; font-size: 13px; color: #f3d98a; font-variant-numeric: tabular-nums; }
+.da-ram-pair b {
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: rgba(246, 243, 234, 0.45);
+}
+.da-ram-cta { flex: 0 0 auto; }
+
+@media (max-width: 860px) {
+  .da-ram { padding: 104px 16px 24px; }
+  .da-ram-inner { gap: 18px; }
+  .da-ram-moon { flex: 0 0 auto; }
+  .da-ram-mid { flex: 1 1 190px; }
+  .da-ram-count { flex: 1 1 100%; min-width: 0; }
+  .da-ram-count-time { font-size: 34px; }
+}
+@media (max-width: 480px) {
+  .da-ram-lanterns { height: 96px; }
+  .da-ram-title { font-size: 24px; }
+  .da-ram-note { font-size: 12.5px; }
+}
+
 /* ── the timeline, with pictures ──
    Each milestone card leads with the scene rather than a paragraph. The
    ground is the card's own accent at low strength, so six drawings sit in
