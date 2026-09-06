@@ -21,7 +21,7 @@ const STEPS = [
 
 export function PadFormPage() {
   return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+    <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       <div className="da-drift-gold pointer-events-none fixed z-0 rounded-full blur-[8px]" style={{ width: 460, height: 460, top: "-12%", right: "-10%", background: "radial-gradient(circle, rgba(143,180,201,0.16), transparent 70%)" }} aria-hidden />
       <div className="da-drift-green pointer-events-none fixed z-0 rounded-full blur-[8px]" style={{ width: 400, height: 400, bottom: "-14%", left: "-10%", background: "radial-gradient(circle, rgba(201,162,39,0.12), transparent 72%)" }} aria-hidden />
       <div className="pointer-events-none absolute inset-0 z-0 opacity-50" style={dotGrid} aria-hidden />

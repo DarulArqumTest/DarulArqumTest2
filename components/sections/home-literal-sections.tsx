@@ -624,10 +624,10 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#f6f3ea", fontSize: 12.5, fontWeight: 700 }}>Learn more →</span>
                   </div>
                   <div onClick={() => onOpen("quran")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.36)", borderTop: "3px solid rgba(246,243,234,0.3)" }}>
-                    <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(246,243,234,0.6)", fontWeight: 700, marginBottom: 6 }}>Weekends</div>
-                    <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Weekend classes</div>
-                    <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.7)", margin: "0 0 8px 0" }}>Quran reading &amp; tajweed for all ages.</p>
-                    <div style={{ fontSize: 11, color: "rgba(246,243,234,0.65)", fontWeight: 600, marginBottom: 10 }}>Saturday &amp; Sunday · $50/mo</div>
+                    <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(246,243,234,0.6)", fontWeight: 700, marginBottom: 6 }}>Mon – Fri · ages 6+</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Weekday classes</div>
+                    <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.7)", margin: "0 0 8px 0" }}>Nazira, Hifz, Deeniyaat, Akhlaqiat and Seerah.</p>
+                    <div style={{ fontSize: 11, color: "rgba(246,243,234,0.65)", fontWeight: 600, marginBottom: 10 }}>Mon–Fri, 6–8 PM · $75/mo</div>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#f6f3ea", fontSize: 12.5, fontWeight: 600 }}>Learn more →</span>
                   </div>
                 </div>

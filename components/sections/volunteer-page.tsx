@@ -122,7 +122,7 @@ export function VolunteerPage() {
   const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("Volunteer Application")}&body=${mailtoBody}`;
 
   return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+    <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       <div className="da-drift-gold pointer-events-none fixed z-0 rounded-full blur-[8px]" style={{ width: 460, height: 460, top: "-12%", right: "-10%", background: "radial-gradient(circle, rgba(217,143,74,0.16), transparent 70%)" }} aria-hidden />
       <div className="da-drift-green pointer-events-none fixed z-0 rounded-full blur-[8px]" style={{ width: 400, height: 400, bottom: "-14%", left: "-10%", background: "radial-gradient(circle, rgba(60,140,100,0.16), transparent 72%)" }} aria-hidden />
       <div className="pointer-events-none absolute inset-0 z-0 opacity-50" style={dotGrid} aria-hidden />

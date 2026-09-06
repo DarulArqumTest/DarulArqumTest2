@@ -15,47 +15,10 @@ import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { PROGRAMS, type Program } from "@/lib/programs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
-import { EXT, ORG, R } from "@/lib/links";
+import { WhatsAppButton } from "@/components/site/whatsapp-button";
+import { ORG } from "@/lib/links";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-/** welearn has no photograph, so it gets a drawn one: a lit screen at night. */
-function WelearnArt({ accent }: { accent: string }) {
-  return (
-    <div className="da-prog-art" aria-hidden>
-      <svg viewBox="0 0 200 120" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="da-wl-sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#12283a" />
-            <stop offset="100%" stopColor="#0d2419" />
-          </linearGradient>
-          <linearGradient id="da-wl-screen" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={accent} stopOpacity="0.95" />
-            <stop offset="100%" stopColor={accent} stopOpacity="0.55" />
-          </linearGradient>
-        </defs>
-        <rect width="200" height="120" fill="url(#da-wl-sky)" />
-        {[
-          [24, 22],
-          [48, 14],
-          [160, 26],
-          [178, 46],
-          [36, 92],
-          [150, 96],
-        ].map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r={i % 2 ? 1.1 : 1.6} fill="#f6f3ea" opacity={0.5} />
-        ))}
-        <rect x="62" y="34" width="76" height="46" rx="4" fill="url(#da-wl-screen)" />
-        <rect x="66" y="38" width="68" height="38" rx="2" fill="#0b1f16" opacity="0.72" />
-        {[44, 52, 60].map((y, i) => (
-          <rect key={y} x="72" y={y} width={i === 1 ? 44 : 56} height="3" rx="1.5" fill={accent} opacity={0.55} />
-        ))}
-        <rect x="92" y="80" width="16" height="6" fill={accent} opacity="0.5" />
-        <rect x="78" y="86" width="44" height="4" rx="2" fill={accent} opacity="0.65" />
-      </svg>
-    </div>
-  );
-}
 
 function ProgramCard({ p, index }: { p: Program; index: number }) {
   const accent = p.accent;
@@ -72,15 +35,11 @@ function ProgramCard({ p, index }: { p: Program; index: number }) {
       className="da-prog-card"
       style={{ "--accent": accent } as React.CSSProperties}
     >
-      {p.photo ? (
-        <div
-          className="da-prog-art"
-          style={{ backgroundImage: `url('${p.photo}')`, backgroundSize: "cover", backgroundPosition: p.focus }}
-          aria-hidden
-        />
-      ) : (
-        <WelearnArt accent={accent} />
-      )}
+      <div
+        className={p.slug === "welearn" ? "da-prog-art da-prog-art-flat" : "da-prog-art"}
+        style={{ backgroundImage: `url('${p.photo}')`, backgroundSize: "cover", backgroundPosition: p.focus }}
+        aria-hidden
+      />
 
       <div className="da-prog-body">
         <p className="da-prog-eyebrow">{p.eyebrow}</p>
@@ -149,9 +108,7 @@ export function ProgramsPage() {
           <a href={ORG.phoneHref} className="da-btn da-btn-gold da-btn-sm">
             Call {ORG.phone}
           </a>
-          <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-ghost da-btn-sm">
-            Ask in the WhatsApp group <span aria-hidden="true">↗</span>
-          </a>
+          <WhatsAppButton label="Ask on WhatsApp" />
         </div>
       </div>
     </div>

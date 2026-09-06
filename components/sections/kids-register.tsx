@@ -11,6 +11,7 @@
 
 import * as React from "react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { getProgram } from "@/lib/programs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -69,6 +70,9 @@ function GenderSelect() {
     </select>
   );
 }
+
+/** the one record behind this programme, so a fee cannot drift here */
+const P = getProgram("kids-arabic");
 
 const LETTERS: { top: number; side: "left" | "right"; pos: string; size: number; color: string; delay: number; ch: string }[] = [
   { top: 360, side: "left", pos: "6%", size: 46, color: "rgba(124,201,154,0.16)", delay: 0, ch: "ا" },
@@ -168,7 +172,7 @@ export function KidsRegister() {
   const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("KidsLearnArabic registration")}&body=${mailtoBody}`;
 
   return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+    <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       {/* ambient background */}
       <div
         className="da-drift-gold pointer-events-none fixed z-0 rounded-full blur-[8px]"
@@ -301,7 +305,7 @@ export function KidsRegister() {
         </div>
       </div>
 
-      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", padding: "32px 24px 64px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "0 auto", padding: "32px 24px 64px" }}>
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -336,8 +340,8 @@ export function KidsRegister() {
               </div>
               <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Age group</span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Ages 5–10</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>On site at Darul Arqum</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Ages {P.facts[0].value}</div>
+            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>{P.facts[2].value}</div>
           </div>
           <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(80,160,120,0.18), rgba(80,160,120,0.04))", border: "1px solid rgba(120,190,150,0.4)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>

@@ -9,6 +9,7 @@
 
 import * as React from "react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { getProgram } from "@/lib/programs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -76,6 +77,9 @@ function CrescentMoon({ top, left, right, size, glowSize, glowOpacity, delay = 0
     </div>
   );
 }
+
+/** the one record behind this programme, so a fee cannot drift here */
+const P = getProgram("quran-classes");
 
 const LANTERNS = [
   { top: 420, side: "left" as const, pos: "calc(50% - 380px)", stringH: 60, bodyW: 24, bodyH: 34, glow: 38, delay: 0.3, sway: 4.2 },
@@ -156,7 +160,7 @@ export function QuranRegister() {
   const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("Quran class registration")}&body=${mailtoBody}`;
 
   return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+    <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       {/* ambient background */}
       <div
         className="da-drift-gold pointer-events-none fixed z-0 rounded-full blur-[8px]"
@@ -217,17 +221,17 @@ export function QuranRegister() {
           style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", filter: "saturate(0.8) brightness(0.75)" }}
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(9,20,15,0.55) 0%, rgba(9,20,15,0.75) 55%, #0e2419 100%)" }} />
-        <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "0 auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "24px 24px 0" }}>
+        <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "0 auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "24px 24px 0" }}>
           <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "rgba(246,243,234,0.8)", fontWeight: 500 }}>
             ← Back to Darul Arqum
           </Link>
         </div>
       </div>
 
-      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "-108px auto 0", padding: "0 24px 64px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "-108px auto 0", padding: "0 24px 64px" }}>
         <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
           <span style={{ width: 22, height: 1, background: "rgba(201,162,39,0.6)" }} />
-          <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>Weekend madrasa · ages 6+</span>
+          <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700 }}>{P.eyebrow}</span>
         </motion.div>
 
         <Breadcrumbs items={[{ label: "Programs", href: R.programs }, { label: "Quran classes", href: R.quran }, { label: "Register" }]} className="mb-5" />
@@ -238,7 +242,7 @@ export function QuranRegister() {
           transition={{ duration: 0.8, delay: 0.05 }}
           style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: "clamp(32px,5vw,42px)", lineHeight: 1.1, color: "#f6f3ea", margin: "0 0 20px 0" }}
         >
-          Register for Weekend Quran classes
+          Register for {P.name}
         </motion.h1>
 
         <motion.div
@@ -254,8 +258,8 @@ export function QuranRegister() {
               </div>
               <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700 }}>Schedule</span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Weekends</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Saturday &amp; Sunday, at the masjid</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Weekdays</div>
+            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>{P.facts[0].value}</div>
           </div>
           <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(80,160,120,0.18), rgba(80,160,120,0.04))", border: "1px solid rgba(120,190,150,0.4)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
@@ -264,8 +268,8 @@ export function QuranRegister() {
               </div>
               <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Tuition</span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>$50 / month</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Monthly tuition, due at the start of each month</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>{P.facts[2].value}</div>
+            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>{P.facts[3].value} for each additional child of the same parents</div>
           </div>
         </motion.div>
 

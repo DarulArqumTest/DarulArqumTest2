@@ -11,6 +11,7 @@
 
 import * as React from "react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { getProgram } from "@/lib/programs";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -69,6 +70,9 @@ function GenderSelect() {
     </select>
   );
 }
+
+/** the one record behind this programme, so a fee cannot drift here */
+const P = getProgram("hifz");
 
 const LANTERNS = [
   { top: 420, side: "left" as const, pos: "calc(50% - 380px)", stringH: 60, bodyW: 24, bodyH: 34, delay: 0.3, sway: 4.2 },
@@ -146,7 +150,7 @@ export function HifzRegister() {
   const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("Quran Hifz registration")}&body=${mailtoBody}`;
 
   return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+    <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       {/* ambient background */}
       <div
         className="da-drift-gold pointer-events-none fixed z-0 rounded-full blur-[8px]"
@@ -358,7 +362,7 @@ export function HifzRegister() {
         </div>
       </div>
 
-      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 640, margin: "32px auto 0", padding: "0 24px 64px" }}>
+      <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "32px auto 0", padding: "0 24px 64px" }}>
         <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
           <span style={{ width: 22, height: 1, background: "rgba(217,143,74,0.6)" }} />
           <span style={{ fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700 }}>Al-Arif Islamic Institute · flagship</span>
@@ -398,7 +402,7 @@ export function HifzRegister() {
               </div>
               <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Tuition</span>
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>$75 / month</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>{P.facts[1].value}</div>
             <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Monthly tuition, due at the start of each month</div>
           </div>
         </motion.div>

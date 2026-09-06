@@ -196,7 +196,8 @@ export const PROGRAMS: Program[] = [
       "Registration collects emergency and health details required by the programme's safety policy. They are shared only with the teaching team.",
     ],
     photo: "/assets/program-kids.jpg",
-    focus: "center 20%",
+    // the lettering sat high and clipped at 20%; this centres it in the crop
+    focus: "center 35%",
     accent: "#7cc99a",
     metaTitle: "KidsLearnArabic",
     metaDescription:
@@ -233,9 +234,11 @@ export const PROGRAMS: Program[] = [
     notes: [
       "Schedule changes and recordings go out in the WhatsApp group rather than by email.",
     ],
-    photo: null,
+    // the official Zoom wordmark rather than a drawing of a computer — every
+    // other card carries a real image, and this is the real one for this class
+    photo: "/assets/program-welearn.png",
     focus: "center",
-    accent: "#8fb4c9",
+    accent: "#0b5cff",
     metaTitle: "welearn — online with Sheikh Saud Hasan",
     metaDescription:
       "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan — join the class over Zoom from anywhere.",

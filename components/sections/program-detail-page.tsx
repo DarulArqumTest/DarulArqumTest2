@@ -17,9 +17,10 @@ import * as React from "react";
 import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { GeoMedallion } from "@/components/sections/home-literal";
 import { otherPrograms, type Program } from "@/lib/programs";
-import { EXT, ORG, R } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -150,9 +151,7 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
             </div>
             <div className="da-pd-cta-actions">
               <JoinButtons p={p} />
-              <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-ghost da-btn-sm">
-                WhatsApp group <span aria-hidden="true">↗</span>
-              </a>
+              <WhatsAppButton />
             </div>
           </div>
         </Rise>

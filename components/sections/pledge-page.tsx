@@ -245,7 +245,7 @@ export function PledgePage() {
   const labelStyle: React.CSSProperties = { fontSize: 11.5, textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(246,243,234,0.55)", minHeight: "2.6em", display: "block" };
 
   return (
-    <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
+    <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
       {/* decorative field: crescent moon, glowing lanterns, stars */}
       <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }} aria-hidden>
         <div style={{ position: "absolute", top: -130, right: -90, width: 440, height: 440, borderRadius: 999, background: "radial-gradient(circle, rgba(201,162,39,0.2), transparent 70%)" }} />

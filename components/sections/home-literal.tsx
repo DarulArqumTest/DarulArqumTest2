@@ -10,7 +10,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { R } from "@/lib/links";
+import { EXT, R } from "@/lib/links";
 import { HeroAnnouncement } from "@/components/site/west-announce-banner";
 
 const GREETINGS: { text: string; lang?: "ar" }[] = [
@@ -39,11 +39,11 @@ const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: s
     logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $75/month.",
   },
   quran: {
-    eyebrow: "Weekend madrasa · ages 6+",
-    title: "Weekend Quran classes",
+    eyebrow: "Madrasa · ages 6 and up",
+    title: "Weekday Quran classes",
     lede: "Building recitation, memorization, and character, one structured track at a time.",
     body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
-    logistics: "Saturday & Sunday, at the masjid · $50/month.",
+    logistics: "Monday–Friday, 6:00–8:00 PM, at the masjid · boys 6+ · $75/month, $25 off each additional child.",
   },
   kids: {
     eyebrow: "Ages 5–10",
@@ -55,10 +55,10 @@ const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: s
   welearn: {
     eyebrow: "Online · Zoom",
     title: "welearn",
-    lede: "Live online Islamic learning from Darul Arqum with Sheikh Saud Hasan. Join the class over Zoom from anywhere.",
-    body: "Sessions run live, with no software beyond Zoom needed. Class announcements, schedule changes and recordings are shared through the community WhatsApp group.",
-    logistics: "Live over Zoom. The link is shared with registered students.",
-    zoomUrl: "https://zoom.us/j/93194466159",
+    lede: "Two live classes a week with Sheikh Saud Hasan — Quran tafsir and the stories of the Prophets, over Zoom from anywhere.",
+    body: "Thursday is Darsul Quran, working through Tafseer Ma'riful Quran. Wednesday is Qasas-un-Nabiyyeen, the stories of the Prophets, with basic Arabic alongside. Nothing to install beyond Zoom.",
+    logistics: "Wednesday & Thursday, 8:00 PM, live over Zoom.",
+    zoomUrl: EXT.welearnZoom,
   },
 };
 
