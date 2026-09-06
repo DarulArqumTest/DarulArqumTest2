@@ -12,6 +12,7 @@
 import * as React from "react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
+import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
@@ -327,51 +328,15 @@ export function KidsRegister() {
           Register for KidsLearnArabic
         </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 24 }}
-        >
-          <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(124,201,154,0.16), rgba(124,201,154,0.04))", border: "1px solid rgba(124,201,154,0.4)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-              <div className="da-float-slow" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#a9e0c0", fontSize: 14 }}>
-                ◷
-              </div>
-              <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Age group</span>
-            </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 21, color: "#f6f3ea", marginBottom: 4 }}>Ages {P.facts[0].value}</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>{P.facts[2].value}</div>
-          </div>
-          <div style={{ padding: "18px 20px", borderRadius: 16, background: "linear-gradient(135deg, rgba(80,160,120,0.18), rgba(80,160,120,0.04))", border: "1px solid rgba(120,190,150,0.4)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-              <div className="da-float-slow" style={{ animationDelay: "0.3s", width: 30, height: 30, flexShrink: 0, borderRadius: 999, background: "rgba(80,160,120,0.22)", border: "1px solid rgba(120,190,150,0.55)", display: "flex", alignItems: "center", justifyContent: "center", color: "#a9e0c0", fontSize: 14 }}>
-                $
-              </div>
-              <span style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Tuition</span>
-            </div>
-            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", marginBottom: 4 }}>Contact us for tuition</div>
-            <div style={{ fontSize: 13, color: "rgba(246,243,234,0.7)" }}>Our team will confirm fees when you register</div>
-          </div>
-        </motion.div>
+        <FactTiles
+          schedule={`Ages ${P.facts[0].value}`}
+          scheduleNote={P.facts[2].value}
+          tuition="Contact us for tuition"
+          tuitionNote="The team confirms fees when you register"
+          accent="#7cc99a"
+        />
 
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.14 }}
-          style={{ padding: "20px 22px", borderRadius: 16, background: "linear-gradient(135deg, rgba(124,201,154,0.12), rgba(124,201,154,0.03))", border: "1px solid rgba(124,201,154,0.28)", marginBottom: 16 }}
-        >
-          <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700, marginBottom: 14 }}>How your child learns</div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
-            <div style={{ position: "absolute", top: 8, left: 8, right: 8, height: 1.5, background: "rgba(124,201,154,0.3)" }} />
-            {["Letters", "Sounds", "Vocabulary", "Confidence"].map((label) => (
-              <div key={label} style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flex: 1 }}>
-                <span style={{ width: 16, height: 16, borderRadius: 999, background: "#7cc99a", border: "2px solid #0e2419" }} />
-                <span style={{ fontSize: 11, color: "#f6f3ea", fontWeight: 600, textAlign: "center" }}>{label}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        <CurriculumTrack title="How your child learns" items={P.curriculum ?? []} accent="#7cc99a" />
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -432,7 +397,7 @@ export function KidsRegister() {
             {/* Student */}
             <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(124,201,154,0.1), rgba(124,201,154,0.03))", border: "1px solid rgba(124,201,154,0.2)", padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-float-slow" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 13, height: 13 }}>
                     <div style={{ position: "absolute", top: 0, left: 3.5, width: 6, height: 6, borderRadius: 999, background: "#a9e0c0" }} />
                     <div style={{ position: "absolute", bottom: 0, left: 0, width: 13, height: 6.5, borderRadius: "6px 6px 0 0", background: "#a9e0c0" }} />
@@ -484,7 +449,7 @@ export function KidsRegister() {
             {/* Parent / guardian & contact */}
             <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(80,160,120,0.1), rgba(80,160,120,0.03))", border: "1px solid rgba(120,190,150,0.22)", padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-float-slow" style={{ animationDelay: "0.3s", width: 28, height: 28, borderRadius: 999, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 17, height: 12 }}>
                     <div style={{ position: "absolute", top: 0, left: 0.5, width: 5, height: 5, borderRadius: 999, background: "#a9e0c0" }} />
                     <div style={{ position: "absolute", top: 0, right: 0.5, width: 5, height: 5, borderRadius: 999, background: "#a9e0c0" }} />
@@ -558,7 +523,7 @@ export function KidsRegister() {
             {/* Learning background */}
             <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(143,180,201,0.1), rgba(143,180,201,0.03))", border: "1px solid rgba(143,180,201,0.22)", padding: 22 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-float-slow" style={{ animationDelay: "0.6s", width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 14, height: 11 }}>
                     <div style={{ position: "absolute", top: 0, left: 0, width: 6, height: 11, background: "#8fb4c9", borderRadius: "2px 0 0 2px" }} />
                     <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: 11, background: "#8fb4c9", borderRadius: "0 2px 2px 0", opacity: 0.7 }} />

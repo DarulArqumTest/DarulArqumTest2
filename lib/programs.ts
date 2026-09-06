@@ -188,9 +188,10 @@ export const PROGRAMS: Program[] = [
       { label: "Where", value: "At the masjid" },
     ],
     curriculum: [
-      { title: "Letters and sounds", body: "The alphabet by shape and by sound, until both are automatic." },
+      { title: "Letters", body: "The alphabet by shape — every form a letter takes in a word." },
+      { title: "Sounds", body: "The same letters by ear, until reading and hearing agree." },
       { title: "Vocabulary", body: "Words children will actually meet in the Quran and in du'a." },
-      { title: "Confidence", body: "Speaking and reading aloud in a room where getting it wrong is fine." },
+      { title: "Confidence", body: "Reading aloud in a room where getting it wrong is fine." },
     ],
     notes: [
       "Registration collects emergency and health details required by the programme's safety policy. They are shared only with the teaching team.",

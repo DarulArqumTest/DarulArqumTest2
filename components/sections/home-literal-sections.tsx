@@ -4,6 +4,7 @@ import * as React from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { X, Copy, Check } from "lucide-react";
 import { ORG, EXT, LOCATIONS } from "@/lib/links";
+import { getProgram } from "@/lib/programs";
 import {
   PROGRAM_INFO,
   PROGRAM_ACCENT,
@@ -48,6 +49,11 @@ export type GiveModalState = {
   method: "paypal" | "bank" | "etransfer" | null;
   etransferOnly: boolean;
 };
+
+// fees and schedules come from the one record, never restated here
+const PA = getProgram("aalim");
+const PH = getProgram("hifz");
+const PQ = getProgram("quran-classes");
 
 export function useGiveModal() {
   const [state, setState] = React.useState<GiveModalState>({ open: false, freq: "monthly", amount: "", method: null, etransferOnly: false });
@@ -605,7 +611,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
                 <h4 style={{ position: "relative", fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 24, color: "#f6f3ea", margin: "0 0 6px 0" }}>Aalim program</h4>
                 <p style={{ position: "relative", fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.75)", margin: "0 0 10px", maxWidth: 520 }}>Classical studies — Sarf &amp; Nahw, Quran, Hadith, Fiqh and Aqa&apos;id. A full academic path toward becoming a scholar.</p>
                 <div style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12, color: "#e3c56a", fontWeight: 600, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.35)", padding: "6px 14px", borderRadius: 999, width: "fit-content" }}>
-                  Monday–Friday <span style={{ opacity: 0.5 }}>·</span> $150/mo
+                  {PA.facts[0].value} <span style={{ opacity: 0.5 }}>·</span> {PA.facts[1].value}
                 </div>
               </div>
 
@@ -620,14 +626,14 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
                     <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d98f4a", fontWeight: 700, marginBottom: 6 }}>Full-time · flagship</div>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Hifz program</div>
                     <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.75)", margin: "0 0 8px 0" }}>Full-time memorization of the Qur&apos;an with tajweed and Islamic studies.</p>
-                    <div style={{ fontSize: 11, color: "#f3d6a8", fontWeight: 600, marginBottom: 10 }}>Monday–Friday · $75/mo</div>
+                    <div style={{ fontSize: 11, color: "#f3d6a8", fontWeight: 600, marginBottom: 10 }}>{PH.facts[0].value} · {PH.facts[1].value}</div>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#f6f3ea", fontSize: 12.5, fontWeight: 700 }}>Learn more →</span>
                   </div>
                   <div onClick={() => onOpen("quran")} style={{ flex: "1 1 200px", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "22px 24px", background: "rgba(0,0,0,0.36)", borderTop: "3px solid rgba(246,243,234,0.3)" }}>
                     <div style={{ fontSize: 10.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(246,243,234,0.6)", fontWeight: 700, marginBottom: 6 }}>Mon – Fri · ages 6+</div>
                     <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", marginBottom: 6 }}>Weekday classes</div>
                     <p style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(246,243,234,0.7)", margin: "0 0 8px 0" }}>Nazira, Hifz, Deeniyaat, Akhlaqiat and Seerah.</p>
-                    <div style={{ fontSize: 11, color: "rgba(246,243,234,0.65)", fontWeight: 600, marginBottom: 10 }}>Mon–Fri, 6–8 PM · $75/mo</div>
+                    <div style={{ fontSize: 11, color: "rgba(246,243,234,0.65)", fontWeight: 600, marginBottom: 10 }}>{PQ.cardFacts[0].value} · {PQ.facts[2].value}</div>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "#f6f3ea", fontSize: 12.5, fontWeight: 600 }}>Learn more →</span>
                   </div>
                 </div>

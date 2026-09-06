@@ -11,6 +11,7 @@ import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { EXT, R } from "@/lib/links";
+import { getProgram } from "@/lib/programs";
 import { HeroAnnouncement } from "@/components/site/west-announce-banner";
 
 const GREETINGS: { text: string; lang?: "ar" }[] = [
@@ -23,27 +24,35 @@ const GREETINGS: { text: string; lang?: "ar" }[] = [
 
 type ProgramKey = "aalim" | "hifz" | "quran" | "kids" | "welearn";
 
+// Schedules and fees come from lib/programs.ts. They used to be restated
+// here, which is how the homepage ended up advertising a weekend class at
+// $50 that the masjid does not run.
+const A = getProgram("aalim");
+const H = getProgram("hifz");
+const Q = getProgram("quran-classes");
+const W = getProgram("welearn");
+
 const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: string; body: string; logistics: string; zoomUrl?: string }> = {
   aalim: {
     eyebrow: "Al-Arif Islamic Institute",
     title: "Aalim program",
     lede: "Led by Mufti Taqi, trained in jurisprudence, Hadith, Tafsir and Arabic, Al-Arif Madrasa pairs academic excellence with spiritual grounding.",
     body: "Structured classical studies: Sarf & Nahw, Quran, Hadith, Fiqh and Aqa'id. A full academic path toward becoming a scholar of Islamic sciences.",
-    logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $150/month.",
+    logistics: `Full-time, ${A.facts[0].value.toLowerCase()}, on site at Darul Arqum · ${A.facts[1].value}.`,
   },
   hifz: {
     eyebrow: "Al-Arif Islamic Institute",
     title: "Quran Hifz",
     lede: "A dedicated, full-time track for students pursuing memorization of the Quran as their primary focus, under Mufti Taqi.",
     body: "Structured daily hours for revision and new memorization, paired with tajweed correction and continuous assessment, until the Quran is completed and preserved by heart.",
-    logistics: "Full-time program, Monday–Friday, on site at Darul Arqum · $75/month.",
+    logistics: `Full-time, ${H.facts[0].value.toLowerCase()}, on site at Darul Arqum · ${H.facts[1].value}.`,
   },
   quran: {
     eyebrow: "Madrasa · ages 6 and up",
     title: "Weekday Quran classes",
     lede: "Building recitation, memorization, and character, one structured track at a time.",
     body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
-    logistics: "Monday–Friday, 6:00–8:00 PM, at the masjid · boys 6+ · $75/month, $25 off each additional child.",
+    logistics: `${Q.facts[0].value}, at the masjid · ${Q.facts[1].value.toLowerCase()} · ${Q.facts[2].value}, ${Q.facts[3].value.toLowerCase()} each additional child.`,
   },
   kids: {
     eyebrow: "Ages 5–10",
@@ -57,7 +66,7 @@ const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: s
     title: "welearn",
     lede: "Two live classes a week with Sheikh Saud Hasan — Quran tafsir and the stories of the Prophets, over Zoom from anywhere.",
     body: "Thursday is Darsul Quran, working through Tafseer Ma'riful Quran. Wednesday is Qasas-un-Nabiyyeen, the stories of the Prophets, with basic Arabic alongside. Nothing to install beyond Zoom.",
-    logistics: "Wednesday & Thursday, 8:00 PM, live over Zoom.",
+    logistics: `${W.facts[0].value}, live over Zoom.`,
     zoomUrl: EXT.welearnZoom,
   },
 };

@@ -203,7 +203,7 @@ const PROGRAM_INFO: Record<
     eyebrow: "Weekend madrasa · ages 6+",
     lede: "Building recitation, memorization, and character, one structured track at a time.",
     body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
-    logistics: "Saturday & Sunday, at the masjid · $50/month.",
+    logistics: "Monday–Friday, 6:00–8:00 PM, at the masjid · boys 6+ · $75/month.",
     accent: "#d98f4a",
     cta: { label: "Register for weekend classes", href: "/programs/quran-classes/register" },
   },
@@ -390,7 +390,7 @@ export function ProgramsSection() {
                 <h3 className="mt-2 font-daDisplay text-xl font-semibold text-da-cream">Weekend classes</h3>
                 <p className="mt-2 text-sm leading-relaxed text-da-cream/65">Quran reading &amp; tajweed for all ages.</p>
                 <span className="mt-4 inline-block rounded-full bg-da-cream/10 px-3 py-1 text-xs font-medium text-da-cream/80">
-                  Saturday &amp; Sunday · $50/mo
+                  Mon–Fri, 6–8 PM · $75/mo
                 </span>
               </button>
             </Reveal>

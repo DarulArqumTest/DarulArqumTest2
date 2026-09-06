@@ -2823,3 +2823,144 @@ body { overflow-x: hidden; }
 }
 .da-reg button[type="submit"]:hover:not(:disabled) { filter: brightness(1.06); transform: translateY(-1px); }
 .da-reg button[type="submit"]:disabled { filter: saturate(0.5); }
+
+/* ══════════════════════════════════════════════════════════════════
+   Programme facts and curriculum
+   Two tiles that differed only by tint, and a curriculum drawn as five
+   identical dots. Each item carries its own mark and its own sentence
+   now, and the marks do not bob — a label that moves is just harder to
+   read.
+   ══════════════════════════════════════════════════════════════════ */
+.da-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.da-fact {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 18px 62px;
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse 120% 100% at 0% 0%, color-mix(in srgb, var(--tint) 16%, transparent), transparent 62%),
+    linear-gradient(160deg, rgba(246, 243, 234, 0.05), rgba(246, 243, 234, 0.02));
+  border: 1px solid color-mix(in srgb, var(--tint) 34%, transparent);
+}
+.da-fact-mark {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--tint);
+}
+.da-fact-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--tint);
+  margin-bottom: 7px;
+}
+.da-fact-value {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.15;
+  color: #f6f3ea;
+  margin-bottom: 4px;
+}
+.da-fact-note { font-size: 12.5px; line-height: 1.45; color: rgba(246, 243, 234, 0.66); }
+
+.da-track {
+  padding: 20px 22px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--tint) 11%, transparent), rgba(246, 243, 234, 0.02));
+  border: 1px solid color-mix(in srgb, var(--tint) 30%, transparent);
+}
+.da-track-title {
+  margin: 0 0 14px;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--tint);
+}
+.da-track-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.da-track-list li {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 11px 0;
+}
+.da-track-list li + li { border-top: 1px solid rgba(246, 243, 234, 0.08); }
+/* the thread running down the marks — the timeline, drawn once */
+.da-track-list li::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in srgb, var(--tint) 32%, transparent);
+}
+.da-track-list li:first-child::before { top: 22px; }
+.da-track-list li:last-child::before { bottom: calc(100% - 22px); }
+.da-track-mark {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  color: var(--tint);
+  background: #10281c;
+  border: 1px solid color-mix(in srgb, var(--tint) 42%, transparent);
+}
+.da-track-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-top: 4px; }
+.da-track-label {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: 14.5px;
+  font-weight: 650;
+  color: #f6f3ea;
+}
+.da-track-label b {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tint);
+  opacity: 0.75;
+}
+.da-track-note { font-size: 12.5px; line-height: 1.5; color: rgba(246, 243, 234, 0.6); }
+
+@media (max-width: 640px) {
+  .da-facts { grid-template-columns: 1fr; gap: 10px; margin-bottom: 12px; }
+  .da-fact { padding: 14px 16px 14px 56px; border-radius: 14px; }
+  .da-fact-mark { top: 14px; left: 15px; width: 28px; height: 28px; }
+  .da-fact-value { font-size: 18px; }
+  .da-fact-note { font-size: 11.5px; }
+  .da-track { padding: 16px; border-radius: 14px; }
+  .da-track-list li { gap: 11px; padding: 9px 0; }
+  .da-track-list li::before { left: 15px; }
+  .da-track-mark { width: 31px; height: 31px; }
+  .da-track-label { font-size: 13.5px; }
+  .da-track-note { font-size: 11.5px; line-height: 1.45; }
+}
+
+/* Section medallions are labels, not decoration: they hold still. The pages'
+   ambient lanterns keep drifting; twelve captions bobbing out of phase did
+   not read as life, it read as unfinished. */
+.da-sec-mark {
+  flex-shrink: 0;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
