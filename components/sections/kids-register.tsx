@@ -395,7 +395,7 @@ export function KidsRegister() {
             <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
             {/* Student */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(124,201,154,0.1), rgba(124,201,154,0.03))", border: "1px solid rgba(124,201,154,0.2)", padding: 22 }}>
+            <div className="da-formsec da-formsec-student">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 13, height: 13 }}>
@@ -447,7 +447,7 @@ export function KidsRegister() {
             </div>
 
             {/* Parent / guardian & contact */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(80,160,120,0.1), rgba(80,160,120,0.03))", border: "1px solid rgba(120,190,150,0.22)", padding: 22 }}>
+            <div className="da-formsec da-formsec-parents">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 17, height: 12 }}>
@@ -497,7 +497,7 @@ export function KidsRegister() {
             </div>
 
             {/* Medical condition */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(217,143,74,0.1), rgba(217,143,74,0.03))", border: "1px solid rgba(217,143,74,0.22)", padding: 22 }}>
+            <div className="da-formsec da-formsec-care">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
                 <div style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(217,143,74,0.2)", border: "1px solid rgba(217,143,74,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <span style={{ color: "#e8b06a", fontSize: 14, fontWeight: 700 }}>+</span>
@@ -521,7 +521,7 @@ export function KidsRegister() {
             </div>
 
             {/* Learning background */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(143,180,201,0.1), rgba(143,180,201,0.03))", border: "1px solid rgba(143,180,201,0.22)", padding: 22 }}>
+            <div className="da-formsec da-formsec-background">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 14, height: 11 }}>

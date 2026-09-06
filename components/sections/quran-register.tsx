@@ -218,9 +218,9 @@ export function QuranRegister() {
         <img
           src="/assets/program-quran.jpg"
           alt=""
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", filter: "saturate(0.8) brightness(0.75)" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", filter: "saturate(1.05) brightness(1)" }}
         />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(9,20,15,0.55) 0%, rgba(9,20,15,0.75) 55%, #0e2419 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(9,20,15,0.3) 0%, rgba(9,20,15,0.55) 52%, rgba(11,26,18,0.85) 82%, #0e2419 100%)" }} />
         <div className="da-page-gutter" style={{ position: "relative", zIndex: 2, maxWidth: 760, margin: "0 auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-start", padding: "24px 24px 0" }}>
           <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "rgba(246,243,234,0.8)", fontWeight: 500 }}>
             ← Back to Darul Arqum
@@ -310,7 +310,7 @@ export function QuranRegister() {
             <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
 
             {/* Student */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(201,162,39,0.1), rgba(201,162,39,0.03))", border: "1px solid rgba(201,162,39,0.2)", padding: 22 }}>
+            <div className="da-formsec da-formsec-student">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 13, height: 13 }}>
@@ -337,7 +337,7 @@ export function QuranRegister() {
             </div>
 
             {/* Parent & contact */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(80,160,120,0.1), rgba(80,160,120,0.03))", border: "1px solid rgba(120,190,150,0.22)", padding: 22 }}>
+            <div className="da-formsec da-formsec-parents">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 17, height: 12 }}>
@@ -387,7 +387,7 @@ export function QuranRegister() {
             </div>
 
             {/* Learning background */}
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(143,180,201,0.1), rgba(143,180,201,0.03))", border: "1px solid rgba(143,180,201,0.22)", padding: 22 }}>
+            <div className="da-formsec da-formsec-background">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ position: "relative", width: 14, height: 11 }}>

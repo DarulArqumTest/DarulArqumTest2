@@ -2487,19 +2487,27 @@ body { overflow-x: hidden; }
   color: #f6f3ea;
 }
 
-.da-pd-head { position: relative; overflow: hidden; padding: 116px 28px 52px; }
+.da-pd-head { position: relative; overflow: hidden; padding: 116px 28px 52px; min-height: 380px; display: flex; align-items: flex-end; }
+/* The photograph was at half opacity under a 90% scrim, which is a hero
+   image nobody can see — the page read as having none at all. It carries
+   its own weight now, and the scrim only does what it has to: keep the
+   type legible in the lower half. */
 .da-pd-photo {
   position: absolute;
   inset: 0;
   background-size: cover;
-  opacity: 0.5;
+  opacity: 1;
 }
 .da-pd-head::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(9, 24, 16, 0.9) 0%, rgba(11, 30, 20, 0.86) 45%, #0e2419 100%);
+  background:
+    radial-gradient(ellipse 70% 90% at 78% 12%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 62%),
+    linear-gradient(180deg, rgba(9, 24, 16, 0.42) 0%, rgba(10, 27, 18, 0.62) 42%, rgba(12, 32, 21, 0.88) 78%, #0e2419 100%);
 }
+/* a hairline in the programme's own colour, so the band closes on purpose */
+.da-pd-head { border-bottom: 1px solid color-mix(in srgb, var(--accent) 34%, transparent); }
 .da-pd-head-inner { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; }
 .da-pd-eyebrow {
   margin: 0 0 10px;
@@ -2963,4 +2971,70 @@ body { overflow-x: hidden; }
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Form sections: a colour and a motif of their own
+   ──────────────────────────────────────────────────────────────────
+   These were one base colour spread over three panels that ask about
+   completely different things. Each now carries its own tint and its
+   own geometry, drawn faintly behind the fields — the student panel a
+   lattice of eight-point stars, the guardians panel interlocking
+   rings, the history panel ruled lines. Nothing loud; enough that the
+   three do not read as one card recoloured.
+   ══════════════════════════════════════════════════════════════════ */
+.da-formsec {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--tint) 30%, transparent);
+  background:
+    radial-gradient(ellipse 90% 70% at 100% 0%, color-mix(in srgb, var(--tint) 14%, transparent), transparent 60%),
+    linear-gradient(140deg, color-mix(in srgb, var(--tint) 9%, transparent), rgba(246, 243, 234, 0.02));
+}
+/* the motif, tiled behind the fields */
+.da-formsec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+  background-image: var(--motif);
+  background-size: var(--motif-size, 46px 46px);
+  -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 62%);
+  mask-image: linear-gradient(135deg, #000 0%, transparent 62%);
+}
+.da-formsec .da-sec-mark { background: color-mix(in srgb, var(--tint) 22%, transparent); border-color: color-mix(in srgb, var(--tint) 46%, transparent); }
+.da-formsec > div:first-child > span { color: var(--tint) !important; }
+.da-formsec { --glyph-accent: var(--tint); }
+
+/* who the student is — the lattice the whole site is built from */
+.da-formsec-student {
+  --tint: #e3c56a;
+  --motif-size: 44px 44px;
+  --motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='none' stroke='%23e3c56a' stroke-opacity='0.16' stroke-width='1'%3E%3Crect x='11' y='11' width='22' height='22'/%3E%3Crect x='11' y='11' width='22' height='22' transform='rotate(45 22 22)'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* the people around them — rings that link */
+.da-formsec-parents {
+  --tint: #a9e0c0;
+  --motif-size: 52px 30px;
+  --motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='30'%3E%3Cg fill='none' stroke='%23a9e0c0' stroke-opacity='0.15' stroke-width='1'%3E%3Ccircle cx='19' cy='15' r='9'/%3E%3Ccircle cx='33' cy='15' r='9'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* care and safety — a soft cross-hatch, like a form already filled in */
+.da-formsec-care {
+  --tint: #e8a87c;
+  --motif-size: 26px 26px;
+  --motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Cg stroke='%23e8a87c' stroke-opacity='0.14' stroke-width='1'%3E%3Cpath d='M13 7v12M7 13h12'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* what came before — ruled lines, like a book already written in */
+.da-formsec-background {
+  --tint: #8fb4c9;
+  --motif-size: 40px 18px;
+  --motif: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='18'%3E%3Cg stroke='%238fb4c9' stroke-opacity='0.14' stroke-width='1'%3E%3Cpath d='M0 13h40'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@media (max-width: 640px) {
+  .da-formsec { padding: 16px; }
 }
