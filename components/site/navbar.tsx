@@ -76,11 +76,18 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto grid h-16 max-w-wide grid-cols-[auto_1fr_auto] items-center gap-5 px-5 md:h-[76px]">
-        <Link href={R.home} className="flex items-center gap-2.5">
-          <span className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-da-cream">
-            <Image src="/assets/logo-icon.png" alt="Darul Arqum emblem" width={28} height={28} className="h-[84%] w-[84%] object-contain" priority />
+        {/* Brand lockup: emblem and wordmark share one framed plate with a
+            gold hairline and a rule between them, so it reads as a mark rather
+            than an avatar dropped next to some text. */}
+        <Link href={R.home} className="da-brand">
+          <span className="da-brand-emblem">
+            <Image src="/assets/logo-icon.png" alt="Darul Arqum emblem" width={30} height={30} priority />
           </span>
-          <span className="font-daDisplay text-lg font-semibold text-da-cream">Darul Arqum</span>
+          <span className="da-brand-rule" aria-hidden />
+          <span className="da-brand-words">
+            <span className="da-brand-name">Darul Arqum</span>
+            <span className="da-brand-sub">Riverside South · Ottawa</span>
+          </span>
         </Link>
 
         <div className="mx-auto hidden items-center gap-3.5 xl:flex">

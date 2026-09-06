@@ -482,7 +482,6 @@ function Hero({ revealed }: { revealed: boolean }) {
             {[
               { title: "Jumu'ah", sub: "1:30 PM & 2:30 PM" },
               { title: "Daily prayers", sub: "In congregation, every day", href: R.prayer },
-              { title: "CRA charity", sub: "709549687RR0001", mono: true },
             ].map((c) => {
               const cardStyle: React.CSSProperties = {
                 flex: "1 1 220px",
@@ -502,7 +501,7 @@ function Hero({ revealed }: { revealed: boolean }) {
                   </div>
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>{c.title}</div>
-                    <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)", fontFamily: c.mono ? "monospace" : undefined }}>{c.sub}</div>
+                    <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)"}}>{c.sub}</div>
                   </div>
                   {"href" in c && c.href && (
                     <span style={{ marginLeft: "auto", color: "#e3c56a", fontSize: 15, flexShrink: 0 }} aria-hidden="true">

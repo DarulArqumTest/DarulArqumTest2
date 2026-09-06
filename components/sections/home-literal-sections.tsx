@@ -518,6 +518,26 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
               I can do that: give $60/month
             </button>
           </div>
+
+          {/* Charity number and bank coordinates belong with the ask, not in
+              the hero and the footer. Someone reading this panel is the person
+              who needs them. */}
+          <div className="da-give-details">
+            <div className="da-give-detail">
+              <span className="da-give-detail-label">CRA registered charity</span>
+              <span className="da-give-detail-value da-wrap-any">{ORG.charityReg}</span>
+            </div>
+            <div className="da-give-detail">
+              <span className="da-give-detail-label">Interac e-Transfer</span>
+              <span className="da-give-detail-value da-wrap-any">{ORG.email}</span>
+            </div>
+            <div className="da-give-detail">
+              <span className="da-give-detail-label">Bank deposit</span>
+              <span className="da-give-detail-value">
+                Institution {ORG.bank.institution} · Transit {ORG.bank.transit} · Account {ORG.bank.account}
+              </span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -736,15 +756,6 @@ export function ContactSection() {
                 </div>
               </a>
 
-              <div style={{ borderRadius: 20, padding: "24px 26px", background: "linear-gradient(120deg, #2b210c, #1a1508)", border: "1px solid rgba(201,162,39,0.45)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                  <div style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.25)", border: "1.5px solid rgba(227,197,106,0.6)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e3c56a", fontSize: 18 }}>✦</div>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 3 }}>CRA registered charity</div>
-                    <span style={{ fontSize: 19, color: "#f6f3ea", fontFamily: "monospace", fontWeight: 700, letterSpacing: "0.02em" }}>709549687RR0001</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

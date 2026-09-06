@@ -6,6 +6,7 @@ import * as React from "react";
 import { Twinkle, Lantern, GeoMedallion } from "@/components/sections/home-literal";
 import { PRAYERS, SHURUQ, nextPrayer, activePrayerKey } from "@/lib/prayer";
 import { EXT, ORG } from "@/lib/links";
+import { useIsDesktop } from "@/components/site/use-media-query";
 
 function useNow(intervalMs = 30000) {
   const [now, setNow] = React.useState<Date | null>(null);
@@ -46,27 +47,27 @@ function GeoStar({ top, left, right, size, opacity, twinkle }: { top: string; le
 const TIME_LOOK: Record<string, { bg: string; discTop: string; discSize: number; disc: string; discGlow: string; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
   fajr: {
     bg: "linear-gradient(180deg, #182238 0%, #35335c 48%, #6d4c6f 82%, #a8724f 100%)",
-    discTop: "76%", discSize: 34, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.4)",
+    discTop: "72%", discSize: 34, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.4)",
     textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.85)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)", halo: "0 0 3px rgba(12,16,32,0.95), 0 0 7px rgba(12,16,32,0.85), 0 1px 2px rgba(12,16,32,1)",
   },
   dhuhr: {
     bg: "linear-gradient(180deg, #2f6fb0 0%, #5b9bd6 55%, #a9d4ee 100%)",
-    discTop: "10%", discSize: 40, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.6)",
+    discTop: "20%", discSize: 40, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.6)",
     textPrimary: "#0e2419", textAccent: "#7a4a12", textSecondary: "rgba(14,36,25,0.78)", textMuted: "rgba(14,36,25,0.55)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)", halo: "0 0 3px rgba(255,255,255,0.95), 0 0 7px rgba(233,245,255,0.9), 0 1px 2px rgba(255,255,255,1)",
   },
   asr: {
     bg: "linear-gradient(180deg, #a8622c 0%, #cf9143 55%, #ecc57e 100%)",
-    discTop: "30%", discSize: 38, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.55)",
+    discTop: "34%", discSize: 38, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.55)",
     textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.75)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)", halo: "0 0 3px rgba(255,248,232,0.95), 0 0 7px rgba(255,244,220,0.9), 0 1px 2px rgba(255,248,232,1)",
   },
   maghrib: {
     bg: "linear-gradient(180deg, #4a2a56 0%, #a83f4a 45%, #d9722f 78%, #f0a860 100%)",
-    discTop: "68%", discSize: 42, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.55)",
+    discTop: "66%", discSize: 42, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.55)",
     textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.85)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)", halo: "0 0 3px rgba(38,12,32,0.95), 0 0 7px rgba(38,12,32,0.85), 0 1px 2px rgba(38,12,32,1)",
   },
   isha: {
     bg: "linear-gradient(180deg, #0a1220 0%, #182642 55%, #223458 100%)",
-    discTop: "14%", discSize: 16, disc: "radial-gradient(circle, #f4f6ff, #cfd8f5 70%)", discGlow: "rgba(244,246,255,0.35)",
+    discTop: "22%", discSize: 16, disc: "radial-gradient(circle, #f4f6ff, #cfd8f5 70%)", discGlow: "rgba(244,246,255,0.35)",
     textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.85)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)", halo: "0 0 3px rgba(6,10,22,0.95), 0 0 7px rgba(6,10,22,0.85), 0 1px 2px rgba(6,10,22,1)",
   },
 };
@@ -91,7 +92,7 @@ function IqamaTable() {
               className="da-iqama-cell"
               style={{
                 position: "relative",
-                padding: "30px 14px 26px",
+                padding: "58px 14px 30px",
                 textAlign: "center",
                 overflow: "visible",
                 background: `${scrim} ${look.bg}`,
@@ -151,6 +152,73 @@ function IqamaTable() {
   );
 }
 
+const TV_BASE_W = 860;
+const TV_BASE_H = Math.round((TV_BASE_W * 7.2) / 16);
+
+/**
+ * The live masjid screen, desktop only.
+ *
+ * Mawaqit chooses its layout from the device rather than from the width of
+ * the frame it is given, so on a phone it serves a narrow column that fills
+ * about a third of a landscape frame and nothing outside the iframe can
+ * change that. On desktop it serves the wide board this is built for.
+ *
+ * Mounted behind useIsDesktop rather than hidden with CSS so a phone never
+ * pays for the third-party request at all.
+ */
+function MasjidScreen() {
+  const wrapRef = React.useRef<HTMLDivElement>(null);
+  const [scale, setScale] = React.useState(1);
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const update = () => setScale(el.offsetWidth / TV_BASE_W);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div className="da-tv-outer">
+      <div className="da-tv-glass">
+        <div className="da-tv-header">
+          <div className="da-tv-live">
+            <span className="da-live-pulse" aria-hidden />
+            Live · masjid screen
+          </div>
+          <a href={EXT.mawaqitLive} target="_blank" rel="noopener noreferrer" className="da-tv-full">
+            Open full screen ↗
+          </a>
+        </div>
+        <div style={{ position: "relative" }}>
+          {!loaded && (
+            <div className="da-tv-loading">
+              <span style={{ fontSize: 24 }}>◷</span>
+              <p>Connecting to the masjid screen…</p>
+            </div>
+          )}
+          <div ref={wrapRef} style={{ position: "relative", width: "100%", height: TV_BASE_H * scale, overflow: "hidden" }}>
+            <iframe
+              src={EXT.mawaqitEmbed}
+              title="Darul Arqum live prayer times (Mawaqit)"
+              onLoad={() => setLoaded(true)}
+              loading="lazy"
+              allow="fullscreen"
+              style={{ position: "absolute", top: 0, left: 0, width: TV_BASE_W, height: TV_BASE_H, border: 0, display: "block", transform: `scale(${scale})`, transformOrigin: "top left" }}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="da-tv-plate">
+        <span /> Darul Arqum <span />
+      </div>
+    </div>
+  );
+}
+
 function IqamaPill() {
   const now = useNow();
   if (!now) return null;
@@ -175,6 +243,7 @@ function IqamaPill() {
 }
 
 export function PrayerTimesPage() {
+  const isDesktop = useIsDesktop();
 
   return (
     <div style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
@@ -223,14 +292,12 @@ export function PrayerTimesPage() {
           <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>Darul Arqum · Ottawa</div>
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.6vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 26px 0" }}>Prayer times</h1>
 
-          <div style={{ position: "relative", display: "flex", alignItems: "flex-start", gap: 20, padding: "22px 28px", borderRadius: 16, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.04))", border: "1px solid rgba(201,162,39,0.35)" }}>
-            <div style={{ width: 58, height: 58, flexShrink: 0, borderRadius: 999, background: "#f6f3ea", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
-              <span style={{ fontSize: 26 }}>📢</span>
+          <div className="da-request" style={{ position: "relative", padding: "18px 22px", borderRadius: 16, background: "linear-gradient(120deg, rgba(201,162,39,0.14), rgba(201,162,39,0.04))", border: "1px solid rgba(201,162,39,0.35)" }}>
+            <div className="da-request-icon" style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 12, background: "#f6f3ea", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}>
+              <span style={{ fontSize: 22 }}>📢</span>
             </div>
-            <div style={{ flex: 1, minWidth: 0, paddingTop: 4 }}>
-              <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 800, marginBottom: 8 }}>Special request</div>
-              <p style={{ fontSize: 14.5, lineHeight: 1.65, color: "rgba(246,243,234,0.82)", margin: 0 }}>Please arrive before iqama. Timing changes are announced in the community WhatsApp group.</p>
-            </div>
+            <div className="da-request-label" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 800 }}>Special request</div>
+            <p className="da-request-body" style={{ fontSize: 14, lineHeight: 1.55, color: "rgba(246,243,234,0.82)" }}>Please arrive before iqama. Timing changes are announced in the community WhatsApp group.</p>
           </div>
         </div>
       </section>
@@ -254,7 +321,9 @@ export function PrayerTimesPage() {
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 26, color: "#f6f3ea" }}>Today&apos;s board, straight off the screen</div>
           </div>
 
-          {/* The prayer board IS the feature now. The Mawaqit iframe used to sit
+          {isDesktop && <MasjidScreen />}
+
+          {/* The prayer board is the anchor on every device. The Mawaqit iframe used to sit
               here, but it chooses its layout from the device and so served a
               narrow column that filled a third of the frame on phones. The
               board below is ours, always legible, and the live screen is one

@@ -132,7 +132,7 @@ export function Footer() {
         <div className="mt-7 flex flex-col gap-3 text-xs text-da-cream/45 md:flex-row md:items-center md:justify-between">
           <p>CRA approved charitable organization · Reg. #{ORG.charityReg}</p>
           <p>
-            E-transfer: {ORG.email} · Bank: {ORG.bank.institution}, transit {ORG.bank.transit}, account {ORG.bank.account}
+            E-transfer: {ORG.email}
           </p>
         </div>
         <p className="mt-3 text-xs text-da-cream/35">

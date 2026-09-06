@@ -184,7 +184,7 @@ export default function OpengraphImage() {
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo} alt="" width={152} height={152} />
+            <img src={logo} alt="" width={158} height={158} />
           </div>
         </div>
 
@@ -249,17 +249,37 @@ export default function OpengraphImage() {
             A house of Allah rising in Riverside South.
           </div>
 
+          <div style={{ marginTop: 28, display: "flex", gap: 8 }}>
+            {["Prayer times", "Quran classes", "Aalim program", "Community"].map((t) => (
+              <div
+                key={t}
+                style={{
+                  display: "flex",
+                  padding: "7px 13px",
+                  borderRadius: 8,
+                  border: "1px solid rgba(201,162,39,0.42)",
+                  backgroundColor: "rgba(201,162,39,0.09)",
+                  color: "rgba(246,243,234,0.86)",
+                  fontSize: 17,
+                  fontFamily: "system-ui, sans-serif",
+                }}
+              >
+                {t}
+              </div>
+            ))}
+          </div>
+
           <div
             style={{
-              marginTop: 30,
-              fontSize: 19,
+              marginTop: 22,
+              fontSize: 18,
               letterSpacing: 3,
-              color: "rgba(227,197,106,0.72)",
+              color: "rgba(227,197,106,0.78)",
               fontFamily: "system-ui, sans-serif",
               display: "flex",
             }}
           >
-            TWO MASJIDS IN OTTAWA
+            TWO MASJIDS IN OTTAWA · darularqum.org
           </div>
         </div>
       </div>
