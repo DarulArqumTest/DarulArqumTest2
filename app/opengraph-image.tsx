@@ -29,7 +29,7 @@ export const contentType = "image/png";
  * built the way the site builds it: a square and the same square rotated 45
  * degrees, overlaid.
  */
-const CELL = 105;
+const CELL = 150;
 const COLS = Math.ceil(1200 / CELL) + 1;
 const ROWS = Math.ceil(630 / CELL) + 1;
 const CELLS = Array.from({ length: COLS * ROWS }, (_, i) => ({
@@ -67,7 +67,7 @@ export default function OpengraphImage() {
                 width: CELL * 0.62,
                 height: CELL * 0.62,
                 display: "flex",
-                border: "1.5px solid rgba(201,162,39,0.30)",
+                border: "1px solid rgba(201,162,39,0.13)",
               }}
             />
             <div
@@ -78,7 +78,7 @@ export default function OpengraphImage() {
                 width: CELL * 0.62,
                 height: CELL * 0.62,
                 display: "flex",
-                border: "1.5px solid rgba(201,162,39,0.30)",
+                border: "1px solid rgba(201,162,39,0.13)",
                 transform: "rotate(45deg)",
               }}
             />
@@ -91,7 +91,7 @@ export default function OpengraphImage() {
             inset: 0,
             display: "flex",
             backgroundImage:
-              "radial-gradient(circle at 76% 34%, rgba(201,162,39,0.26), transparent 50%), radial-gradient(circle at 6% 94%, rgba(40,120,84,0.34), transparent 52%), linear-gradient(100deg, rgba(9,26,18,0.86) 34%, rgba(9,26,18,0.40) 100%)",
+              "radial-gradient(circle at 78% 44%, rgba(201,162,39,0.20), transparent 46%), linear-gradient(96deg, rgba(9,26,18,0.97) 30%, rgba(9,26,18,0.62) 62%, rgba(9,26,18,0.30) 100%)",
           }}
         />
 
@@ -164,23 +164,27 @@ export default function OpengraphImage() {
               backgroundColor: "rgba(8,24,16,0.94)",
             }}
           />
-          {/* cream disc: the emblem is a green mark on white, so it merges
-              into this rather than sitting on the field as a pasted tile */}
+          {/* The emblem is a square plate of #f6f3ea. Seating it on a circle
+              left its corners either poking past the curve or showing as a
+              lighter square inside it, so the plate here is a rounded square
+              of the same size: no seam, and the gold rings and star still do
+              the framing. */}
           <div
             style={{
               position: "absolute",
-              width: 178,
-              height: 178,
-              borderRadius: 178,
+              width: 152,
+              height: 152,
+              borderRadius: 20,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              overflow: "hidden",
               backgroundColor: "#f6f3ea",
-              border: "2px solid rgba(201,162,39,0.75)",
+              border: "2px solid rgba(201,162,39,0.8)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={logo} alt="" width={150} height={150} />
+            <img src={logo} alt="" width={152} height={152} />
           </div>
         </div>
 
@@ -226,19 +230,19 @@ export default function OpengraphImage() {
             Darul Arqum
           </div>
 
-          <div style={{ marginTop: 26, display: "flex", alignItems: "center" }}>
+          <div style={{ marginTop: 22, display: "flex", alignItems: "center" }}>
             <div style={{ width: 9, height: 9, backgroundColor: "#c9a227", transform: "rotate(45deg)", display: "flex" }} />
             <div style={{ marginLeft: 14, width: 300, height: 1, backgroundColor: "rgba(201,162,39,0.6)", display: "flex" }} />
           </div>
 
           <div
             style={{
-              marginTop: 26,
-              fontSize: 34,
-              lineHeight: 1.32,
+              marginTop: 22,
+              fontSize: 31,
+              lineHeight: 1.34,
               color: "rgba(246,243,234,0.82)",
               fontFamily: "Georgia, serif",
-              maxWidth: 600,
+              maxWidth: 470,
               display: "flex",
             }}
           >
@@ -247,15 +251,15 @@ export default function OpengraphImage() {
 
           <div
             style={{
-              marginTop: 34,
-              fontSize: 21,
-              letterSpacing: 1.5,
-              color: "rgba(246,243,234,0.6)",
+              marginTop: 30,
+              fontSize: 19,
+              letterSpacing: 3,
+              color: "rgba(227,197,106,0.72)",
               fontFamily: "system-ui, sans-serif",
               display: "flex",
             }}
           >
-            Two masjids · Prayer times · Programs · Giving
+            TWO MASJIDS IN OTTAWA
           </div>
         </div>
       </div>

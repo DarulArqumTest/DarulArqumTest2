@@ -3,7 +3,7 @@
 import * as React from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { X, Copy, Check } from "lucide-react";
-import { ORG, EXT } from "@/lib/links";
+import { ORG, EXT, LOCATIONS } from "@/lib/links";
 import {
   PROGRAM_INFO,
   PROGRAM_ACCENT,
@@ -695,8 +695,8 @@ export function ContactSection() {
                 />
                 <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap", flexShrink: 0 }}>
                   <div>
-                    <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the masjid</div>
-                    <div style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 600 }}>4269 Limebank Rd, Ottawa, ON K1V 1G5</div>
+                    <div className="da-visit-label" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the masjid</div>
+                    <div className="da-visit-addr" style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 600 }}>{LOCATIONS.east.address}</div>
                   </div>
                   <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm" style={{ flexShrink: 0 }}>
                     Get directions ↗

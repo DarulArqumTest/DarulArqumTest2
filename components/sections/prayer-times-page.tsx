@@ -43,31 +43,31 @@ function GeoStar({ top, left, right, size, opacity, twinkle }: { top: string; le
   );
 }
 
-const TIME_LOOK: Record<string, { bg: string; discTop: string; discSize: number; disc: string; discGlow: string; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; scrim: string }> = {
+const TIME_LOOK: Record<string, { bg: string; discTop: string; discSize: number; disc: string; discGlow: string; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
   fajr: {
     bg: "linear-gradient(180deg, #182238 0%, #35335c 48%, #6d4c6f 82%, #a8724f 100%)",
     discTop: "76%", discSize: 34, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.4)",
-    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.85)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)", scrim: "linear-gradient(180deg, rgba(10,14,28,0) 0%, rgba(10,14,28,0.62) 22%, rgba(10,14,28,0.72) 100%)",
+    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.85)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)", halo: "0 0 3px rgba(12,16,32,0.95), 0 0 7px rgba(12,16,32,0.85), 0 1px 2px rgba(12,16,32,1)",
   },
   dhuhr: {
     bg: "linear-gradient(180deg, #2f6fb0 0%, #5b9bd6 55%, #a9d4ee 100%)",
     discTop: "10%", discSize: 40, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.6)",
-    textPrimary: "#0e2419", textAccent: "#7a4a12", textSecondary: "rgba(14,36,25,0.78)", textMuted: "rgba(14,36,25,0.55)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)", scrim: "linear-gradient(180deg, rgba(226,240,252,0) 0%, rgba(226,240,252,0.72) 22%, rgba(226,240,252,0.82) 100%)",
+    textPrimary: "#0e2419", textAccent: "#7a4a12", textSecondary: "rgba(14,36,25,0.78)", textMuted: "rgba(14,36,25,0.55)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)", halo: "0 0 3px rgba(255,255,255,0.95), 0 0 7px rgba(233,245,255,0.9), 0 1px 2px rgba(255,255,255,1)",
   },
   asr: {
     bg: "linear-gradient(180deg, #a8622c 0%, #cf9143 55%, #ecc57e 100%)",
     discTop: "30%", discSize: 38, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.55)",
-    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.75)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)", scrim: "linear-gradient(180deg, rgba(255,244,224,0) 0%, rgba(255,244,224,0.70) 22%, rgba(255,244,224,0.82) 100%)",
+    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.75)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)", halo: "0 0 3px rgba(255,248,232,0.95), 0 0 7px rgba(255,244,220,0.9), 0 1px 2px rgba(255,248,232,1)",
   },
   maghrib: {
     bg: "linear-gradient(180deg, #4a2a56 0%, #a83f4a 45%, #d9722f 78%, #f0a860 100%)",
     discTop: "68%", discSize: 42, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.55)",
-    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.85)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)", scrim: "linear-gradient(180deg, rgba(30,10,26,0) 0%, rgba(30,10,26,0.58) 22%, rgba(30,10,26,0.70) 100%)",
+    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.85)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)", halo: "0 0 3px rgba(38,12,32,0.95), 0 0 7px rgba(38,12,32,0.85), 0 1px 2px rgba(38,12,32,1)",
   },
   isha: {
     bg: "linear-gradient(180deg, #0a1220 0%, #182642 55%, #223458 100%)",
     discTop: "14%", discSize: 16, disc: "radial-gradient(circle, #f4f6ff, #cfd8f5 70%)", discGlow: "rgba(244,246,255,0.35)",
-    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.85)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)", scrim: "linear-gradient(180deg, rgba(6,10,22,0) 0%, rgba(6,10,22,0.60) 22%, rgba(6,10,22,0.72) 100%)",
+    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.85)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)", halo: "0 0 3px rgba(6,10,22,0.95), 0 0 7px rgba(6,10,22,0.85), 0 1px 2px rgba(6,10,22,1)",
   },
 };
 
@@ -116,20 +116,36 @@ function IqamaTable() {
                 </div>
               )}
               <div className="da-iqama-disc" style={{ position: "absolute", top: look.discTop, left: "50%", transform: "translate(-50%,-50%)", width: look.discSize, height: look.discSize, borderRadius: 999, background: look.disc, boxShadow: `0 0 22px 6px ${look.discGlow}`, zIndex: 0 }} />
-              <div className="da-iqama-text" style={{ position: "relative", zIndex: 1, background: look.scrim, borderRadius: 12, paddingBottom: 4 }}>
-                <div dir="rtl" lang="ar" className="da-iqama-arabic" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.arabic}</div>
-                <div className="da-iqama-name" style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.name}</div>
-                <div className="da-iqama-label" style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textSecondary, marginBottom: 3, fontWeight: 700, textShadow: look.labelShadow }}>Adhan</div>
-                <div className="da-iqama-adhan" style={{ fontSize: 13, color: look.textSecondary, marginBottom: 12, textShadow: "0 1px 6px rgba(0,0,0,0.3)" }}>{p.adhan}</div>
-                <div className="da-iqama-label" style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textSecondary, marginBottom: 3, fontWeight: 700, textShadow: look.labelShadow }}>Iqama</div>
-                <div className="da-iqama-value" style={{ fontSize: 16.5, fontWeight: 800, color: look.textAccent, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>{p.iqama}</div>
+              <div className="da-iqama-text" style={{ position: "relative", zIndex: 1 }}>
+                <div dir="rtl" lang="ar" className="da-iqama-arabic" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: look.halo }}>{p.arabic}</div>
+                <div className="da-iqama-name" style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: look.halo }}>{p.name}</div>
+                <div className="da-iqama-label" style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textSecondary, marginBottom: 3, fontWeight: 700, textShadow: look.halo }}>Adhan</div>
+                <div className="da-iqama-adhan" style={{ fontSize: 13, fontWeight: 600, color: look.textPrimary, marginBottom: 12, textShadow: look.halo }}>{p.adhan}</div>
+                <div className="da-iqama-label" style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: look.textSecondary, marginBottom: 3, fontWeight: 700, textShadow: look.halo }}>Iqama</div>
+                <div className="da-iqama-value" style={{ fontSize: 16.5, fontWeight: 800, color: look.textAccent, textShadow: look.halo }}>{p.iqama}</div>
               </div>
             </div>
           );
         })}
       </div>
-      <p style={{ margin: "18px 0 0 0", fontSize: 12.5, color: "rgba(246,243,234,0.5)", display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ color: "#c9a227" }}>✦</span> Shurûq {SHURUQ} · Iqama schedule — confirm live on the masjid screen. Changes are announced in the WhatsApp group.
+      {/* Sits inside the board, on a band tinted from the twilight end of the
+          prayer gradients so it reads as the board's own footer rather than a
+          slab of section-green under it. */}
+      <p className="da-board-note">
+        <span className="da-board-note-mark" aria-hidden>✦</span>
+        <span>
+          Shurûq {SHURUQ} · Changes are announced in the{" "}
+          <a
+            href="#whatsapp-join"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("whatsapp-join")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }}
+          >
+            WhatsApp group
+          </a>
+          .
+        </span>
       </p>
     </div>
   );
@@ -284,7 +300,7 @@ export function PrayerTimesPage() {
 
       {/* ============ WHATSAPP HERO ============ */}
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 100px", overflow: "hidden", background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(120,190,150,0.10), transparent 72%)" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", position: "relative", overflow: "hidden", borderRadius: 22 }}>
+        <div id="whatsapp-join" style={{ maxWidth: 760, margin: "0 auto", position: "relative", overflow: "hidden", borderRadius: 22, scrollMarginTop: 90 }}>
           <a
             href={EXT.whatsapp}
             target="_blank"
