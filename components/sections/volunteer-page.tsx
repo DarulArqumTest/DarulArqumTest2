@@ -7,72 +7,20 @@
  */
 
 import * as React from "react";
-import { Glyph } from "@/components/site/program-glyphs";
-import { Breadcrumbs } from "@/components/site/breadcrumbs";
-import { VolunteerHero } from "@/components/site/volunteer-hero";
-import Link from "next/link";
-import { motion } from "motion/react";
-import { CheckCircle2, Loader2, Mail } from "lucide-react";
-import { submitForm } from "@/app/actions/submit";
-import { ORG } from "@/lib/links";
-import { isValidEmail, isValidPhone } from "@/lib/validate";
-
-const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
-
-const inputStyle: React.CSSProperties = {
-  background: "rgba(246,243,234,0.06)",
-  border: "1px solid rgba(246,243,234,0.2)",
-  borderRadius: 8,
-  padding: "11px 13px",
-  color: "#f6f3ea",
-  fontSize: 14,
-  fontFamily: "inherit",
-  width: "100%",
-};
-
-const labelStyle: React.CSSProperties = {
-  fontSize: 11.5,
-  textTransform: "uppercase",
-  letterSpacing: "0.06em",
-  color: "rgba(246,243,234,0.55)",
-  minHeight: "2.6em",
-  display: "block",
-};
+import { DaForm, type Section } from "@/components/site/da-form";
 
 const dotGrid: React.CSSProperties = {
   backgroundImage: "radial-gradient(rgba(246,243,234,0.05) 1px, transparent 1px)",
   backgroundSize: "22px 22px",
 };
+import { Glyph } from "@/components/site/program-glyphs";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { VolunteerHero } from "@/components/site/volunteer-hero";
+import Link from "next/link";
+import { motion } from "motion/react";
+import { ORG } from "@/lib/links";
 
-function GenderSelect() {
-  const chevron =
-    "url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22%3E%3Cpath d=%22M1 1l4 4 4-4%22 stroke=%22%23e8b06a%22 stroke-width=%221.6%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
-  return (
-    <select
-      name="Gender"
-      required
-      defaultValue=""
-      style={{
-        ...inputStyle,
-        appearance: "none",
-        WebkitAppearance: "none",
-        background: `rgba(246,243,234,0.06) ${chevron} no-repeat right 14px center`,
-        padding: "11px 34px 11px 13px",
-        cursor: "pointer",
-      }}
-    >
-      <option value="" disabled style={{ background: "#0e2419", color: "rgba(246,243,234,0.55)" }}>
-        Select…
-      </option>
-      <option value="Male" style={{ background: "#0e2419", color: "#f6f3ea" }}>
-        Male
-      </option>
-      <option value="Female" style={{ background: "#0e2419", color: "#f6f3ea" }}>
-        Female
-      </option>
-    </select>
-  );
-}
+
 
 function CheckboxRow({ name, label, accent }: { name: string; label: string; accent: string }) {
   return (
@@ -85,43 +33,42 @@ function CheckboxRow({ name, label, accent }: { name: string; label: string; acc
 const AVAILABILITY = ["Weekday mornings", "Weekday evenings", "Weekends", "Jumu'ah & special events"];
 const INTERESTS = ["Event organizing", "Maintenance & facilities", "Madrasa teaching assistant", "IT & media", "Fundraising", "Kitchen & hospitality"];
 
+/** what this page asks for; everything else lives in DaForm */
+const FORM_SECTIONS: Section[] = [
+  {
+    kind: "student",
+    title: "Your details",
+    glyph: "student",
+    fields: [
+      { name: "Full name", label: "Full name", required: true, half: true },
+      { name: "Gender", label: "Gender", type: "select", required: true, half: true, options: ["Male", "Female"] },
+      { name: "email", label: "Email", type: "email", required: true, half: true, placeholder: "you@example.com" },
+      { name: "Phone", label: "Phone number", type: "tel", required: true, half: true, placeholder: "(613) 555-0123" },
+    ],
+  },
+  {
+    kind: "parents",
+    title: "Your availability",
+    glyph: "calendar",
+    lede: "Select every option that works for you.",
+    fields: [
+      { name: "Availability", label: "When you are free", type: "checkboxes", options: ["Weekday mornings", "Weekday evenings", "Weekends", "Jumu'ah & special events"] },
+    ],
+  },
+  {
+    kind: "background",
+    title: "Where you'd like to help",
+    glyph: "character",
+    lede: "Pick as many as you like — the team will find you a place.",
+    fields: [
+      { name: "Interest", label: "Areas of interest", type: "checkboxes", options: ["Event organizing", "Maintenance & facilities", "Madrasa teaching assistant", "IT & media", "Fundraising", "Kitchen & hospitality"] },
+      { name: "Notes", label: "Skills or notes (optional)", type: "textarea", rows: 3, placeholder: "Anything else you'd like us to know" },
+      { name: "Newsletter", label: "Newsletter", type: "checkboxes", options: ["Subscribe me to the Darul Arqum newsletter"] },
+    ],
+  },
+];
+
 export function VolunteerPage() {
-  const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
-  const [delivered, setDelivered] = React.useState(false);
-  const [values, setValues] = React.useState<Record<string, string>>({});
-  const [emailError, setEmailError] = React.useState("");
-  const [phoneError, setPhoneError] = React.useState("");
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-    fd.forEach((v, k) => {
-      data[k] = data[k] ? `${data[k]}, ${v}` : String(v);
-    });
-
-    const emailOk = isValidEmail(data.email ?? "");
-    const phoneOk = isValidPhone(data.Phone ?? "");
-    setEmailError(emailOk ? "" : "Enter a valid email address.");
-    setPhoneError(phoneOk ? "" : "Enter a valid phone number.");
-    if (!emailOk || !phoneOk) return;
-
-    setState("busy");
-    setValues(data);
-    const res = await submitForm("volunteer", data);
-    if (res.ok) {
-      setDelivered(res.delivered);
-      setState("done");
-    } else setState("error");
-  }
-
-  const mailtoBody = encodeURIComponent(
-    Object.entries(values)
-      .filter(([k, v]) => !k.startsWith("_") && v)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("\n"),
-  );
-  const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("Volunteer Application")}&body=${mailtoBody}`;
 
   return (
     <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
@@ -189,148 +136,16 @@ export function VolunteerPage() {
           you&apos;d like to help and the team will find you a place.
         </p>
 
-        {state === "done" ? (
-          <motion.div className="da-card-pad" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} style={{ borderRadius: 20, border: "1px solid rgba(217,143,74,0.25)", background: "rgba(217,143,74,0.07)", padding: 32 }}>
-            <CheckCircle2 className="h-6 w-6" style={{ color: "#e8b06a" }} aria-hidden />
-            <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>{delivered ? "Application sent" : "Application recorded"}</p>
-            <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>
-              {delivered ? "The Darul Arqum team has received your application and will follow up." : "To make sure it reaches the team right away, you can also send it directly from your email app — everything is prefilled."}
-            </p>
-            {!delivered && (
-              <a href={mailto} style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 8, borderRadius: 999, background: "#e8b06a", padding: "12px 20px", fontSize: 14, fontWeight: 500, color: "#0e2419" }}>
-                <Mail className="h-4 w-4" aria-hidden />
-                Send via your email app
-              </a>
-            )}
-          </motion.div>
-        ) : (
-          <form
-            onSubmit={onSubmit}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-              background: "rgba(246,243,234,0.035)",
-              border: "1px solid rgba(246,243,234,0.12)",
-              borderRadius: 20,
-              padding: 8,
-              boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)",
-            }}
-          >
-            <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
-
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(217,143,74,0.14), rgba(217,143,74,0.02))", border: "1px solid rgba(217,143,74,0.3)", padding: 22, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: -24, right: -24, width: 80, height: 80, borderRadius: 999, background: "radial-gradient(circle, rgba(217,143,74,0.16), transparent 70%)", pointerEvents: "none" }} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, position: "relative" }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: "rgba(217,143,74,0.2)", border: "1px solid rgba(217,143,74,0.45)", display: "flex", alignItems: "center", justifyContent: "center", color: "#e8b06a", fontSize: 13, fontWeight: 700, fontFamily: "'Cormorant Garamond',serif" }}>1</div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700 }}>Your details</span>
-              </div>
-              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Full name</span>
-                  <input name="Full name" required style={inputStyle} />
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Gender</span>
-                  <GenderSelect />
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Email</span>
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                    style={inputStyle}
-                    onBlur={(e) => setEmailError(isValidEmail(e.currentTarget.value) ? "" : "Enter a valid email address.")}
-                    onChange={() => emailError && setEmailError("")}
-                  />
-                  {emailError && <span style={errorStyle}>{emailError}</span>}
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Phone number</span>
-                  <input
-                    name="Phone"
-                    type="tel"
-                    required
-                    pattern="[0-9+()\-\s]{7,15}"
-                    placeholder="(613) 555-0123"
-                    style={inputStyle}
-                    onBlur={(e) => setPhoneError(isValidPhone(e.currentTarget.value) ? "" : "Enter a valid phone number.")}
-                    onChange={() => phoneError && setPhoneError("")}
-                  />
-                  {phoneError && <span style={errorStyle}>{phoneError}</span>}
-                </label>
-              </div>
-            </div>
-
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(80,160,120,0.12), rgba(80,160,120,0.02))", border: "1px solid rgba(120,190,150,0.3)", padding: 22, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: -24, left: -24, width: 80, height: 80, borderRadius: 999, background: "radial-gradient(circle, rgba(120,190,150,0.14), transparent 70%)", pointerEvents: "none" }} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, position: "relative" }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#a9e0c0", fontSize: 13, fontWeight: 700, fontFamily: "'Cormorant Garamond',serif" }}>2</div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Your availability</span>
-              </div>
-              <p style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)", margin: "0 0 14px 0" }}>Select every option that works for you.</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                {AVAILABILITY.map((a) => (
-                  <CheckboxRow key={a} name="Availability" label={a} accent="#7cc99a" />
-                ))}
-              </div>
-            </div>
-
-            <div style={{ borderRadius: 14, background: "linear-gradient(120deg, rgba(143,180,201,0.12), rgba(143,180,201,0.02))", border: "1px solid rgba(143,180,201,0.3)", padding: 22, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", bottom: -24, right: -24, width: 80, height: 80, borderRadius: 999, background: "radial-gradient(circle, rgba(143,180,201,0.14), transparent 70%)", pointerEvents: "none" }} />
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, position: "relative" }}>
-                <div style={{ width: 28, height: 28, borderRadius: 8, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "#8fb4c9", fontSize: 13, fontWeight: 700, fontFamily: "'Cormorant Garamond',serif" }}>3</div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8fb4c9", fontWeight: 700 }}>Joining options</span>
-              </div>
-              <p style={{ fontSize: 12.5, color: "rgba(246,243,234,0.6)", margin: "0 0 14px 0" }}>Where would you like to lend a hand?</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                {INTERESTS.map((it) => (
-                  <CheckboxRow key={it} name="Interest" label={it} accent="#8fb4c9" />
-                ))}
-              </div>
-              <label style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 14 }}>
-                <span style={labelStyle}>Skills or notes (optional)</span>
-                <textarea name="Notes" rows={3} placeholder="Anything else you'd like us to know" style={{ ...inputStyle, resize: "vertical" }} />
-              </label>
-            </div>
-
-            <label style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 22px", fontSize: 13.5, color: "rgba(246,243,234,0.75)", cursor: "pointer" }}>
-              <input type="checkbox" name="Newsletter" style={{ width: 16, height: 16, accentColor: "#c9a227" }} /> I&apos;d also like to subscribe to the Darul Arqum newsletter
-            </label>
-
-            <button
-              type="submit"
-              disabled={state === "busy"}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 9,
-                textAlign: "center",
-                background: "linear-gradient(135deg,#f3c98a,#e8b06a)",
-                color: "#0e2419",
-                fontWeight: 800,
-                fontSize: 15.5,
-                padding: "17px 0",
-                borderRadius: 999,
-                margin: "6px 8px 8px",
-                boxShadow: "0 12px 28px -8px rgba(217,143,74,0.5)",
-                border: "none",
-                cursor: state === "busy" ? "default" : "pointer",
-                opacity: state === "busy" ? 0.7 : 1,
-              }}
-            >
-              {state === "busy" && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
-              {state === "busy" ? "Sending…" : "Submit application"}
-              {state !== "busy" && <span aria-hidden="true">→</span>}
-            </button>
-            {state === "error" && (
-              <p style={{ textAlign: "center", fontSize: 13, color: "#e08a8a", margin: 0 }}>Something needs attention — check the fields and try again.</p>
-            )}
-          </form>
-        )}
+        <DaForm
+          formName="volunteer"
+          subject="Volunteer application"
+          submitLabel="Submit application"
+          doneTitle="Application received"
+          emailField="email"
+          phoneField="Phone"
+          sections={FORM_SECTIONS}
+          note="We'll be in touch about what is coming up and where an extra pair of hands would help most."
+        />
       </div>
     </div>
   );

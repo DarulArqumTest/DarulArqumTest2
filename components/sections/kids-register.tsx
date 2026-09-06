@@ -10,68 +10,19 @@
  */
 
 import * as React from "react";
+import { DaForm, type Section } from "@/components/site/da-form";
 import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { CheckCircle2, Loader2, Mail } from "lucide-react";
-import { submitForm } from "@/app/actions/submit";
 import { ORG, R } from "@/lib/links";
-import { isValidEmail, isValidPhone } from "@/lib/validate";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
-const inputStyle: React.CSSProperties = {
-  background: "rgba(246,243,234,0.06)",
-  border: "1px solid rgba(246,243,234,0.2)",
-  borderRadius: 8,
-  padding: "11px 13px",
-  color: "#f6f3ea",
-  fontSize: 14,
-  fontFamily: "inherit",
-  width: "100%",
-};
 
-const labelStyle: React.CSSProperties = {
-  fontSize: 11.5,
-  textTransform: "uppercase",
-  letterSpacing: "0.06em",
-  color: "rgba(246,243,234,0.55)",
-  minHeight: "2.6em",
-  display: "block",
-};
 
-function GenderSelect() {
-  const chevron =
-    "url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22%3E%3Cpath d=%22M1 1l4 4 4-4%22 stroke=%22%23a9e0c0%22 stroke-width=%221.6%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
-  return (
-    <select
-      name="gender"
-      required
-      defaultValue=""
-      style={{
-        ...inputStyle,
-        appearance: "none",
-        WebkitAppearance: "none",
-        background: `rgba(246,243,234,0.06) ${chevron} no-repeat right 14px center`,
-        padding: "11px 34px 11px 13px",
-        cursor: "pointer",
-      }}
-    >
-      <option value="" disabled style={{ background: "#0e2419", color: "rgba(246,243,234,0.55)" }}>
-        Select…
-      </option>
-      <option value="Male" style={{ background: "#0e2419", color: "#f6f3ea" }}>
-        Male
-      </option>
-      <option value="Female" style={{ background: "#0e2419", color: "#f6f3ea" }}>
-        Female
-      </option>
-    </select>
-  );
-}
 
 /** the one record behind this programme, so a fee cannot drift here */
 const P = getProgram("kids-arabic");
@@ -123,55 +74,85 @@ function Lantern({ l }: { l: (typeof LANTERNS)[number] }) {
   );
 }
 
+const TODAY = new Date().toISOString().slice(0, 10);
+
+/**
+ * Whole years completed, counted the way a birthday is: the month and day
+ * have to have come round, not just the year. Out-of-range ages are noted,
+ * never blocked — a family with a nine- and an eleven-year-old should not
+ * hit a wall.
+ */
+function deriveAge(dob: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) return null;
+  const [y, m, d] = dob.split("-").map(Number);
+  const now = new Date();
+  let age = now.getFullYear() - y;
+  if (now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d)) age -= 1;
+  if (age < 0 || age > 130) return null;
+  const ok = age >= 5 && age <= 10;
+  return {
+    ok,
+    value: String(age),
+    text: ok
+      ? `Age ${age} — inside the 5–10 range.`
+      : `Age ${age}. The class is built for 5–10; send it anyway and the team will advise.`,
+  };
+}
+
+/** what this page asks for; everything else lives in DaForm */
+const FORM_SECTIONS: Section[] = [
+    {
+      kind: "student",
+      title: "Student",
+      glyph: "student",
+      fields: [
+        { name: "studentName", label: "Child's full name", required: true },
+        {
+          name: "dateOfBirth",
+          label: "Date of birth",
+          type: "date",
+          required: true,
+          half: true,
+          max: TODAY,
+          derive: deriveAge,
+          deriveTo: "age",
+        },
+        { name: "gender", label: "Gender", type: "select", required: true, half: true, options: ["Male", "Female"] },
+      ],
+    },
+    {
+      kind: "parents",
+      title: "Parent / guardian & contact",
+      glyph: "parents",
+      lede: "So we can confirm a place and reach someone quickly if we need to.",
+      fields: [
+        { name: "parentName", label: "Parent / guardian name", required: true },
+        { name: "parentEmail", label: "Email", type: "email", required: true, half: true, placeholder: "you@example.com" },
+        { name: "emergencyContact", label: "Emergency contact number", type: "tel", required: true, half: true, placeholder: "(613) 555-0123" },
+      ],
+    },
+    {
+      kind: "care",
+      title: "Care & safety",
+      glyph: "character",
+      lede: "Shared only with the teaching team, and only used if it is needed.",
+      fields: [
+        { name: "medical", label: "Allergies or medical conditions (if any)", type: "textarea", rows: 2 },
+        { name: "healthCard", label: "Student health card number (optional)", half: true },
+      ],
+    },
+    {
+      kind: "background",
+      title: "Before now",
+      glyph: "history",
+      fields: [
+        { name: "background", label: "Has your child attended Arabic or Quran classes before? (optional)", type: "textarea", rows: 2 },
+        { name: "note", label: "Anything else we should know (optional)", type: "textarea", rows: 2 },
+      ],
+    },
+];
+
 export function KidsRegister() {
-  const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
-  const [delivered, setDelivered] = React.useState(false);
-  const [values, setValues] = React.useState<Record<string, string>>({});
-  const [emailError, setEmailError] = React.useState("");
-  const [phoneError, setPhoneError] = React.useState("");
-  const [dob, setDob] = React.useState("");
-
-  const todayISO = React.useMemo(() => new Date().toISOString().slice(0, 10), []);
-  // Whole years completed, counted the way a birthday is: the month and day
-  // have to have come round, not just the year.
-  const derivedAge = React.useMemo(() => {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) return null;
-    const [y, m, d] = dob.split("-").map(Number);
-    const now = new Date();
-    let age = now.getFullYear() - y;
-    const beforeBirthday = now.getMonth() + 1 < m || (now.getMonth() + 1 === m && now.getDate() < d);
-    if (beforeBirthday) age -= 1;
-    return age >= 0 && age < 130 ? age : null;
-  }, [dob]);
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-    fd.forEach((v, k) => (data[k] = String(v)));
-
-    const emailOk = isValidEmail(data.parentEmail ?? "");
-    const phoneOk = isValidPhone(data.emergencyContact ?? "");
-    setEmailError(emailOk ? "" : "Enter a valid email address.");
-    setPhoneError(phoneOk ? "" : "Enter a valid phone number.");
-    if (!emailOk || !phoneOk) return;
-
-    setState("busy");
-    setValues(data);
-    const res = await submitForm("kids-arabic", data);
-    if (res.ok) {
-      setDelivered(res.delivered);
-      setState("done");
-    } else setState("error");
-  }
-
-  const mailtoBody = encodeURIComponent(
-    Object.entries(values)
-      .filter(([k, v]) => !k.startsWith("_") && v)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("\n"),
-  );
-  const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("KidsLearnArabic registration")}&body=${mailtoBody}`;
 
   return (
     <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
@@ -347,232 +328,16 @@ export function KidsRegister() {
           </p>
         </motion.div>
 
-        {state === "done" ? (
-          <motion.div
-            className="da-card-pad" initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ borderRadius: 20, border: "1px solid rgba(124,201,154,0.25)", background: "rgba(124,201,154,0.07)", padding: 32 }}
-          >
-            <CheckCircle2 className="h-6 w-6" style={{ color: "#a9e0c0" }} aria-hidden />
-            <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>
-              {delivered ? "Registration sent" : "Registration recorded"}
-            </p>
-            <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>
-              {delivered
-                ? "The Darul Arqum team has received the registration and will follow up."
-                : "To make sure it reaches the team right away, you can also send it directly from your email app — everything is prefilled."}
-            </p>
-            {!delivered && (
-              <a
-                href={mailto}
-                style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 8, borderRadius: 999, background: "#c9a227", padding: "12px 20px", fontSize: 14, fontWeight: 500, color: "#0e2419" }}
-              >
-                <Mail className="h-4 w-4" aria-hidden />
-                Send via your email app
-              </a>
-            )}
-          </motion.div>
-        ) : (
-          <motion.form
-            onSubmit={onSubmit}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.18 }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-              background: "rgba(246,243,234,0.035)",
-              border: "1px solid rgba(246,243,234,0.12)",
-              borderRadius: 20,
-              padding: 8,
-              boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)",
-            }}
-          >
-            <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
-
-            {/* Student */}
-            <div className="da-formsec da-formsec-student">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(124,201,154,0.2)", border: "1px solid rgba(124,201,154,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ position: "relative", width: 13, height: 13 }}>
-                    <div style={{ position: "absolute", top: 0, left: 3.5, width: 6, height: 6, borderRadius: 999, background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", bottom: 0, left: 0, width: 13, height: 6.5, borderRadius: "6px 6px 0 0", background: "#a9e0c0" }} />
-                  </div>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Student</span>
-              </div>
-              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
-                  <span style={labelStyle}>Child&apos;s full name</span>
-                  <input name="studentName" required style={inputStyle} />
-                </label>
-                {/* The live site asks for a date of birth rather than an age,
-                    which is right: an age is stale the day after it is given,
-                    and a birthday is what the safety policy actually needs on
-                    file. The age is derived from it below. */}
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Date of birth</span>
-                  <input
-                    name="dateOfBirth"
-                    type="date"
-                    required
-                    max={todayISO}
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    style={inputStyle}
-                  />
-                  {derivedAge !== null && (
-                    <span style={{ fontSize: 11.5, color: derivedAge >= 5 && derivedAge <= 10 ? "rgba(169,224,192,0.9)" : "#e8a87c" }}>
-                      {derivedAge >= 5 && derivedAge <= 10
-                        ? `Age ${derivedAge} — inside the 5–10 range.`
-                        : `Age ${derivedAge}. The class is built for 5–10; send it anyway and the team will advise.`}
-                    </span>
-                  )}
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Gender</span>
-                  <GenderSelect />
-                </label>
-                {/* carried through so the submission still reads as an age */}
-                <input type="hidden" name="age" value={derivedAge ?? ""} />
-                <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
-                  <span style={labelStyle}>Student health card number</span>
-                  <input name="healthCard" style={inputStyle} />
-                </label>
-              </div>
-            </div>
-
-            {/* Parent / guardian & contact */}
-            <div className="da-formsec da-formsec-parents">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ position: "relative", width: 17, height: 12 }}>
-                    <div style={{ position: "absolute", top: 0, left: 0.5, width: 5, height: 5, borderRadius: 999, background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", top: 0, right: 0.5, width: 5, height: 5, borderRadius: 999, background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", bottom: 0, left: 0, width: 6.5, height: 6, borderRadius: "5px 5px 0 0", background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", bottom: 0, right: 0, width: 6.5, height: 6, borderRadius: "5px 5px 0 0", background: "#a9e0c0" }} />
-                  </div>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Parent / guardian &amp; contact</span>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Parent / guardian name</span>
-                  <input name="parentName" style={inputStyle} />
-                </label>
-                <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                  <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <span style={labelStyle}>Email</span>
-                    <input
-                      name="parentEmail"
-                      type="email"
-                      required
-                      placeholder="you@example.com"
-                      style={inputStyle}
-                      onBlur={(e) => setEmailError(isValidEmail(e.currentTarget.value) ? "" : "Enter a valid email address.")}
-                      onChange={() => emailError && setEmailError("")}
-                    />
-                    {emailError && <span style={errorStyle}>{emailError}</span>}
-                  </label>
-                  <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <span style={labelStyle}>Emergency contact number</span>
-                    <input
-                      name="emergencyContact"
-                      type="tel"
-                      required
-                      pattern="[0-9+()\-\s]{7,15}"
-                      placeholder="(613) 555-0123"
-                      style={inputStyle}
-                      onBlur={(e) => setPhoneError(isValidPhone(e.currentTarget.value) ? "" : "Enter a valid phone number.")}
-                      onChange={() => phoneError && setPhoneError("")}
-                    />
-                    {phoneError && <span style={errorStyle}>{phoneError}</span>}
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            {/* Medical condition */}
-            <div className="da-formsec da-formsec-care">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(217,143,74,0.2)", border: "1px solid rgba(217,143,74,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ color: "#e8b06a", fontSize: 14, fontWeight: 700 }}>+</span>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e8b06a", fontWeight: 700 }}>Student medical condition (if any)</span>
-              </div>
-              <p style={{ fontSize: 12.5, lineHeight: 1.65, color: "rgba(246,243,234,0.65)", margin: "0 0 16px 0" }}>
-                It is very important that we are made aware of any medical conditions your child may have, and what needs to
-                be done in the event of an emergency other than a call to 911 (please include any allergies and first aid
-                remedies as known). We regret that we are unable to accommodate any special needs at this time.
-              </p>
-              <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={labelStyle}>Medical conditions, allergies &amp; emergency care instructions (if any)</span>
-                <textarea
-                  name="medical"
-                  rows={3}
-                  placeholder="e.g. peanut allergy – carries EpiPen; asthma – inhaler in backpack; none"
-                  style={{ ...inputStyle, resize: "vertical" }}
-                />
-              </label>
-            </div>
-
-            {/* Learning background */}
-            <div className="da-formsec da-formsec-background">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ position: "relative", width: 14, height: 11 }}>
-                    <div style={{ position: "absolute", top: 0, left: 0, width: 6, height: 11, background: "#8fb4c9", borderRadius: "2px 0 0 2px" }} />
-                    <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: 11, background: "#8fb4c9", borderRadius: "0 2px 2px 0", opacity: 0.7 }} />
-                    <div style={{ position: "absolute", top: 0, left: 6.5, width: 1, height: 11, background: "#0e2419" }} />
-                  </div>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8fb4c9", fontWeight: 700 }}>Learning background</span>
-              </div>
-              <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={labelStyle}>Has your child attended Arabic or Quran classes before? (optional)</span>
-                <textarea
-                  name="background"
-                  rows={3}
-                  placeholder="e.g. knows some letters, attended a class before, complete beginner..."
-                  style={{ ...inputStyle, resize: "vertical" }}
-                />
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              disabled={state === "busy"}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 9,
-                textAlign: "center",
-                background: "linear-gradient(135deg,#a9e0c0,#7cc99a)",
-                color: "#0e2419",
-                fontWeight: 800,
-                fontSize: 15.5,
-                padding: "17px 0",
-                borderRadius: 999,
-                margin: "6px 8px 8px",
-                boxShadow: "0 12px 28px -8px rgba(124,201,154,0.5)",
-                border: "none",
-                cursor: state === "busy" ? "default" : "pointer",
-                opacity: state === "busy" ? 0.7 : 1,
-              }}
-            >
-              {state === "busy" && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
-              {state === "busy" ? "Sending…" : "Submit registration"}
-              {state !== "busy" && <span aria-hidden="true">→</span>}
-            </button>
-            {state === "error" && (
-              <p style={{ textAlign: "center", fontSize: 13, color: "#e08a8a", margin: 0 }}>
-                Something needs attention — check the fields and try again.
-              </p>
-            )}
-          </motion.form>
-        )}
+        <DaForm
+          formName="kids-arabic"
+          subject="KidsLearnArabic registration"
+          submitLabel="Submit registration"
+          doneTitle="Registration received"
+          emailField="parentEmail"
+          phoneField="emergencyContact"
+          sections={FORM_SECTIONS}
+          note="Emergency and health details are collected per the programme\u2019s safety policy and shared only with the teaching team."
+        />
       </div>
     </div>
   );

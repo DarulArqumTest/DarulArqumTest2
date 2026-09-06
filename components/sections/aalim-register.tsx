@@ -8,68 +8,19 @@
  */
 
 import * as React from "react";
+import { DaForm, type Section } from "@/components/site/da-form";
 import { Glyph } from "@/components/site/program-glyphs";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { getProgram } from "@/lib/programs";
 import { FactTiles, CurriculumTrack } from "@/components/site/program-track";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { CheckCircle2, Loader2, Mail } from "lucide-react";
-import { submitForm } from "@/app/actions/submit";
 import { ORG, R } from "@/lib/links";
-import { isValidEmail, isValidPhone } from "@/lib/validate";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
-const inputStyle: React.CSSProperties = {
-  background: "rgba(246,243,234,0.06)",
-  border: "1px solid rgba(246,243,234,0.2)",
-  borderRadius: 8,
-  padding: "11px 13px",
-  color: "#f6f3ea",
-  fontSize: 14,
-  fontFamily: "inherit",
-  width: "100%",
-};
 
-const labelStyle: React.CSSProperties = {
-  fontSize: 11.5,
-  textTransform: "uppercase",
-  letterSpacing: "0.06em",
-  color: "rgba(246,243,234,0.55)",
-  minHeight: "2.6em",
-  display: "block",
-};
 
-function GenderSelect() {
-  const chevron =
-    "url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22%3E%3Cpath d=%22M1 1l4 4 4-4%22 stroke=%22%23e3c56a%22 stroke-width=%221.6%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E')";
-  return (
-    <select
-      name="gender"
-      required
-      defaultValue=""
-      style={{
-        ...inputStyle,
-        appearance: "none",
-        WebkitAppearance: "none",
-        background: `rgba(246,243,234,0.06) ${chevron} no-repeat right 14px center`,
-        padding: "11px 34px 11px 13px",
-        cursor: "pointer",
-      }}
-    >
-      <option value="" disabled style={{ background: "#0e2419", color: "rgba(246,243,234,0.55)" }}>
-        Select…
-      </option>
-      <option value="Male" style={{ background: "#0e2419", color: "#f6f3ea" }}>
-        Male
-      </option>
-      <option value="Female" style={{ background: "#0e2419", color: "#f6f3ea" }}>
-        Female
-      </option>
-    </select>
-  );
-}
 
 /** the one record behind this programme, so a fee cannot drift here */
 const P = getProgram("aalim");
@@ -114,41 +65,41 @@ function Lantern({ l }: { l: (typeof LANTERNS)[number] }) {
 }
 
 
+/** what this page asks for; everything else lives in DaForm */
+const FORM_SECTIONS: Section[] = [
+    {
+      kind: "student",
+      title: "Student",
+      glyph: "student",
+      fields: [
+        { name: "studentName", label: "Student's full name", required: true },
+        { name: "age", label: "Age", required: true, half: true, placeholder: "e.g. 17" },
+        { name: "gender", label: "Gender", type: "select", required: true, half: true, options: ["Male", "Female"] },
+      ],
+    },
+    {
+      kind: "parents",
+      title: "Parent / guardian & contact",
+      glyph: "parents",
+      lede: "So we can confirm placement and reach someone if we need to.",
+      fields: [
+        { name: "parentName", label: "Parent / guardian name (if applicable)" },
+        { name: "parentEmail", label: "Email", type: "email", required: true, half: true, placeholder: "you@example.com" },
+        { name: "emergencyContact", label: "Emergency contact number", type: "tel", required: true, half: true, placeholder: "(613) 555-0123" },
+      ],
+    },
+    {
+      kind: "background",
+      title: "Academic background",
+      glyph: "history",
+      fields: [
+        { name: "background", label: "Prior Arabic or Islamic studies background (optional)", type: "textarea", rows: 3, placeholder: "e.g. completed Hifz, studied Nazira, prior madrasa experience…" },
+        { name: "note", label: "Anything else we should know (optional)", type: "textarea", rows: 2 },
+      ],
+    },
+];
+
 export function AalimRegister() {
-  const [state, setState] = React.useState<"idle" | "busy" | "done" | "error">("idle");
-  const [delivered, setDelivered] = React.useState(false);
-  const [values, setValues] = React.useState<Record<string, string>>({});
-  const [emailError, setEmailError] = React.useState("");
-  const [phoneError, setPhoneError] = React.useState("");
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const data: Record<string, string> = {};
-    fd.forEach((v, k) => (data[k] = String(v)));
-
-    const emailOk = isValidEmail(data.parentEmail ?? "");
-    const phoneOk = isValidPhone(data.emergencyContact ?? "");
-    setEmailError(emailOk ? "" : "Enter a valid email address.");
-    setPhoneError(phoneOk ? "" : "Enter a valid phone number.");
-    if (!emailOk || !phoneOk) return;
-
-    setState("busy");
-    setValues(data);
-    const res = await submitForm("aalim", data);
-    if (res.ok) {
-      setDelivered(res.delivered);
-      setState("done");
-    } else setState("error");
-  }
-
-  const mailtoBody = encodeURIComponent(
-    Object.entries(values)
-      .filter(([k, v]) => !k.startsWith("_") && v)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("\n"),
-  );
-  const mailto = `mailto:${ORG.email}?subject=${encodeURIComponent("Aalim program registration")}&body=${mailtoBody}`;
 
   return (
     <div className="da-reg" style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
@@ -263,179 +214,16 @@ export function AalimRegister() {
           </p>
         </motion.div>
 
-        {state === "done" ? (
-          <motion.div
-            className="da-card-pad" initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ borderRadius: 20, border: "1px solid rgba(201,162,39,0.25)", background: "rgba(201,162,39,0.07)", padding: 32 }}
-          >
-            <CheckCircle2 className="h-6 w-6" style={{ color: "#e3c56a" }} aria-hidden />
-            <p style={{ marginTop: 12, fontWeight: 500, color: "#f6f3ea" }}>{delivered ? "Registration sent" : "Registration recorded"}</p>
-            <p style={{ marginTop: 6, maxWidth: 420, fontSize: 14, lineHeight: 1.6, color: "rgba(246,243,234,0.6)" }}>
-              {delivered
-                ? "The Darul Arqum team has received the registration and will follow up."
-                : "To make sure it reaches the team right away, you can also send it directly from your email app — everything is prefilled."}
-            </p>
-            {!delivered && (
-              <a
-                href={mailto}
-                style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 8, borderRadius: 999, background: "#c9a227", padding: "12px 20px", fontSize: 14, fontWeight: 500, color: "#0e2419" }}
-              >
-                <Mail className="h-4 w-4" aria-hidden />
-                Send via your email app
-              </a>
-            )}
-          </motion.div>
-        ) : (
-          <motion.form
-            onSubmit={onSubmit}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.18 }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-              background: "rgba(246,243,234,0.035)",
-              border: "1px solid rgba(246,243,234,0.12)",
-              borderRadius: 20,
-              padding: 8,
-              boxShadow: "0 30px 70px -30px rgba(0,0,0,0.5)",
-            }}
-          >
-            <input type="text" name="_honeypot" tabIndex={-1} autoComplete="off" style={{ display: "none" }} aria-hidden="true" />
-
-            {/* Student */}
-            <div className="da-formsec da-formsec-student">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(201,162,39,0.2)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ position: "relative", width: 13, height: 13 }}>
-                    <div style={{ position: "absolute", top: 0, left: 3.5, width: 6, height: 6, borderRadius: 999, background: "#e3c56a" }} />
-                    <div style={{ position: "absolute", bottom: 0, left: 0, width: 13, height: 6.5, borderRadius: "6px 6px 0 0", background: "#e3c56a" }} />
-                  </div>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700 }}>Student</span>
-              </div>
-              <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6, gridColumn: "1 / -1" }}>
-                  <span style={labelStyle}>Student&apos;s full name</span>
-                  <input name="studentName" required style={inputStyle} />
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Age</span>
-                  <input name="age" type="number" min={13} max={60} placeholder="e.g. 17" style={inputStyle} />
-                </label>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Gender</span>
-                  <GenderSelect />
-                </label>
-              </div>
-            </div>
-
-            {/* Parent / guardian & contact */}
-            <div className="da-formsec da-formsec-parents">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(80,160,120,0.2)", border: "1px solid rgba(120,190,150,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ position: "relative", width: 17, height: 12 }}>
-                    <div style={{ position: "absolute", top: 0, left: 0.5, width: 5, height: 5, borderRadius: 999, background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", top: 0, right: 0.5, width: 5, height: 5, borderRadius: 999, background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", bottom: 0, left: 0, width: 6.5, height: 6, borderRadius: "5px 5px 0 0", background: "#a9e0c0" }} />
-                    <div style={{ position: "absolute", bottom: 0, right: 0, width: 6.5, height: 6, borderRadius: "5px 5px 0 0", background: "#a9e0c0" }} />
-                  </div>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700 }}>Parent / guardian &amp; contact</span>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <span style={labelStyle}>Parent / guardian name (if applicable)</span>
-                  <input name="parentName" style={inputStyle} />
-                </label>
-                <div className="da-field-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                  <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <span style={labelStyle}>Email</span>
-                    <input
-                      name="parentEmail"
-                      type="email"
-                      required
-                      placeholder="you@example.com"
-                      style={inputStyle}
-                      onBlur={(e) => setEmailError(isValidEmail(e.currentTarget.value) ? "" : "Enter a valid email address.")}
-                      onChange={() => emailError && setEmailError("")}
-                    />
-                    {emailError && <span style={errorStyle}>{emailError}</span>}
-                  </label>
-                  <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <span style={labelStyle}>Emergency contact number</span>
-                    <input
-                      name="emergencyContact"
-                      type="tel"
-                      required
-                      pattern="[0-9+()\-\s]{7,15}"
-                      placeholder="(613) 555-0123"
-                      style={inputStyle}
-                      onBlur={(e) => setPhoneError(isValidPhone(e.currentTarget.value) ? "" : "Enter a valid phone number.")}
-                      onChange={() => phoneError && setPhoneError("")}
-                    />
-                    {phoneError && <span style={errorStyle}>{phoneError}</span>}
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            {/* Academic background */}
-            <div className="da-formsec da-formsec-background">
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <div className="da-sec-mark" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(143,180,201,0.2)", border: "1px solid rgba(143,180,201,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ position: "relative", width: 14, height: 11 }}>
-                    <div style={{ position: "absolute", top: 0, left: 0, width: 6, height: 11, background: "#8fb4c9", borderRadius: "2px 0 0 2px" }} />
-                    <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: 11, background: "#8fb4c9", borderRadius: "0 2px 2px 0", opacity: 0.7 }} />
-                    <div style={{ position: "absolute", top: 0, left: 6.5, width: 1, height: 11, background: "#0e2419" }} />
-                  </div>
-                </div>
-                <span style={{ fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8fb4c9", fontWeight: 700 }}>Academic background</span>
-              </div>
-              <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={labelStyle}>Prior Arabic or Islamic studies background (optional)</span>
-                <textarea
-                  name="background"
-                  rows={3}
-                  placeholder="e.g. completed Hifz, studied Nazira, prior madrasa experience..."
-                  style={{ ...inputStyle, resize: "vertical" }}
-                />
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              disabled={state === "busy"}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 9,
-                textAlign: "center",
-                background: "linear-gradient(135deg,#e3c56a,#c9a227)",
-                color: "#2e1a0d",
-                fontWeight: 800,
-                fontSize: 15.5,
-                padding: "17px 0",
-                borderRadius: 999,
-                margin: "6px 8px 8px",
-                boxShadow: "0 12px 28px -8px rgba(201,162,39,0.5)",
-                border: "none",
-                cursor: state === "busy" ? "default" : "pointer",
-                opacity: state === "busy" ? 0.7 : 1,
-              }}
-            >
-              {state === "busy" && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
-              {state === "busy" ? "Sending…" : "Submit registration"}
-              {state !== "busy" && <span aria-hidden="true">→</span>}
-            </button>
-            {state === "error" && (
-              <p style={{ textAlign: "center", fontSize: 13, color: "#e08a8a", margin: 0 }}>Something needs attention — check the fields and try again.</p>
-            )}
-          </motion.form>
-        )}
+        <DaForm
+          formName="aalim"
+          subject="Aalim program registration"
+          submitLabel="Submit registration"
+          doneTitle="Registration received"
+          emailField="parentEmail"
+          phoneField="emergencyContact"
+          sections={FORM_SECTIONS}
+          note="Submitting this form starts registration. The team follows up by email or phone to confirm placement and fees. Nothing is charged here."
+        />
       </div>
     </div>
   );
