@@ -236,15 +236,7 @@ body { overflow-x: hidden; }
     gap: 6px;
   }
 
-  /* fact cards two-up, the odd one spanning the row */
-  .da-hero-stats {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px !important;
-  }
-  .da-hero-stats > * { flex: none !important; padding: 12px 13px !important; gap: 10px !important; }
-  .da-hero-stats > *:last-child { grid-column: 1 / -1; }
-  .da-hero-stats > * > div:first-child { width: 28px !important; height: 28px !important; font-size: 12px !important; }
+  /* the fact cards get their own phone layout further down the file */
 }
 
 @media (max-width: 420px) {
@@ -274,45 +266,58 @@ body { overflow-x: hidden; }
   .da-hero-stats > * {
     flex: none !important;
     width: 100%;
+    max-width: 100%;
     min-height: 48px;
     align-items: center !important;
-    padding: 10px 14px !important;
-    gap: 11px !important;
+    padding: 10px 12px !important;
+    gap: 9px !important;
     border-radius: 12px !important;
+    /* nothing inside may be drawn past the card's own edge */
+    overflow: hidden;
   }
   .da-hero-stats > * > div:first-child {
-    width: 26px !important;
-    height: 26px !important;
-    font-size: 11px !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 10px !important;
   }
   .da-hero-stats > * > div:nth-child(2) {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
   }
   .da-hero-stats > * > div:nth-child(2) > div { margin-bottom: 0 !important; }
+  /* The value is the content; the label is the caption, so if anything has
+     to give it is the label. It should never actually come to that — the
+     copy is short enough to fit — but the guard keeps a longer future label
+     from pushing the value out of the card. */
   .da-hero-stats > * > div:nth-child(2) > div:first-child {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 9.5px !important;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     opacity: 0.72;
     white-space: nowrap;
   }
   .da-hero-stats > * > div:nth-child(2) > div:last-child {
+    flex: 0 0 auto;
     font-size: 12.5px !important;
     font-weight: 650;
     color: #f6f3ea !important;
     white-space: nowrap;
     text-align: right;
   }
-  /* the "Daily prayers" card carries a trailing arrow; without a reserved
-     column the value ran straight under it */
-  .da-hero-stats > a > span:last-child,
-  .da-hero-stats > a > span[aria-hidden] { flex-shrink: 0; margin-left: 4px !important; }
-  .da-hero-stats > a > div:nth-child(2) { padding-right: 2px; }
+  /* the "Daily prayers" card carries a trailing arrow, which needs a column
+     of its own or the value runs straight under it */
+  .da-hero-stats > a > span[aria-hidden] {
+    flex: 0 0 auto;
+    margin-left: 10px !important;
+  }
 
   /* ── Visit the masjid: the address on one line ──
      The postal code was tipping it onto a second row and stretching the card.
@@ -393,13 +398,23 @@ body { overflow-x: hidden; }
 .da-request-label { grid-area: label; margin: 0 !important; }
 .da-request-body { grid-area: body; margin: 0 !important; }
 @media (min-width: 761px) {
+  /* Sized to its sentence, not to the page. A one-line message in a card
+     stretched the full 980px measure left a lawn of empty green to the
+     right of it. `fit-content` shrinks the card to what the text needs and
+     `max-width` keeps it inside the column, so it still starts on the same
+     left edge as the "Prayer times" heading above it. */
   .da-request {
-    grid-template-columns: auto 1fr;
+    width: fit-content;
+    max-width: 100%;
+    padding: 16px 24px 16px 18px !important;
+    grid-template-columns: auto auto;
     grid-template-areas: "icon label" "icon body";
+    justify-content: start;
     align-items: start;
-    row-gap: 6px;
+    row-gap: 5px;
   }
   .da-request-icon { align-self: center; }
+  .da-request-body { max-width: 62ch; }
 }
 
 /* ── Prayer times: WhatsApp hero ──
@@ -521,15 +536,66 @@ body { overflow-x: hidden; }
    reserves for it, so it never lands on the sun or the Arabic name. */
 .da-board .da-iqama-now { top: 14px !important; }
 
-/* ── the masjid screen (desktop only) ── */
+/* ══════════════════════════════════════════════════════════════════
+   The masjid screen (desktop only)
+   A cabinet, a bezel, a nameplate and a stand. What hangs in the bezel
+   is our own board — the Jumu'ah banner and the five prayers — so the
+   screen shows the masjid's times at full width instead of a cropped
+   third-party embed.
+   ══════════════════════════════════════════════════════════════════ */
+.da-tv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+}
 .da-tv-outer {
+  width: 100%;
   max-width: 980px;
-  margin: 0 auto 26px;
+  margin: 0 auto;
   padding: 18px 18px 14px;
   border-radius: 26px;
   background: linear-gradient(155deg, #333029, #171512);
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-shadow: 0 40px 90px -34px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* the board, mounted: it gives up its own frame to the bezel */
+.da-tv-screen .da-board {
+  max-width: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* the stand — a tapered neck into a wide foot, with a floor shadow */
+.da-tv-neck {
+  width: 92px;
+  height: 26px;
+  background: linear-gradient(180deg, #2b2925, #1a1815);
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-top: 0;
+  border-radius: 0 0 6px 6px;
+  clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+}
+.da-tv-base {
+  position: relative;
+  width: 250px;
+  height: 11px;
+  background: linear-gradient(180deg, #3a3730, #191713);
+  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-radius: 4px 4px 7px 7px;
+  box-shadow: 0 16px 26px -14px rgba(0, 0, 0, 0.85);
+}
+.da-tv-base::after {
+  content: "";
+  position: absolute;
+  left: -22%;
+  right: -22%;
+  top: 100%;
+  height: 26px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0, 0, 0, 0.5), transparent 70%);
+  pointer-events: none;
 }
 .da-tv-glass {
   border-radius: 14px;
@@ -615,10 +681,11 @@ body { overflow-x: hidden; }
 
 /* quiet link out to the live Mawaqit board */
 .da-board-link {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
   gap: 7px;
-  margin: 16px auto 0;
+  margin: 26px auto 0;
   padding: 8px 14px;
   border-radius: 9px;
   font-size: 12.5px;
@@ -643,23 +710,141 @@ body { overflow-x: hidden; }
   .da-jumuah-text { font-size: 11.5px; }
 }
 
-/* ── Contact: call row ──
-   Not shrunk to fit. The number keeps its full size and the actions move
-   onto their own line beneath it, so the card reads as a deliberate
-   two-row block instead of a squeezed one-row one. */
+/* ══════════════════════════════════════════════════════════════════
+   Contact cards
+   Two short lines each, standing next to a tall map, left both cards
+   looking half-empty. Each is now built from divided regions that use
+   the width they are given rather than huddling at the left edge.
+   ══════════════════════════════════════════════════════════════════ */
+.da-contact-side { display: grid; grid-template-rows: 1fr 1fr; gap: 20px; height: 100%; }
+
+.da-contact-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 26px;
+  border-radius: 20px;
+}
+.da-contact-call {
+  background: linear-gradient(150deg, rgba(80, 160, 120, 0.22), rgba(80, 160, 120, 0.06));
+  border: 1px solid rgba(120, 190, 150, 0.35);
+}
+.da-contact-email {
+  justify-content: center;
+  background: linear-gradient(150deg, rgba(201, 162, 39, 0.22), rgba(201, 162, 39, 0.06));
+  border: 1px solid rgba(227, 197, 106, 0.35);
+  transition: border-color 0.2s ease;
+}
+.da-contact-email:hover { border-color: rgba(227, 197, 106, 0.7); }
+
+.da-contact-main { display: flex; align-items: center; gap: 18px; flex: 1; min-width: 0; }
+.da-contact-icon {
+  display: block;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.da-contact-icon-lg { width: 66px; height: 66px; }
+.da-contact-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.da-contact-text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.da-contact-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a9e0c0;
+  font-weight: 700;
+}
+.da-contact-label-gold { color: #e3c56a; }
+.da-call-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #f6f3ea;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.da-email-value {
+  font-size: 19px;
+  font-weight: 700;
+  color: #f6f3ea;
+  white-space: nowrap;
+}
+
+/* the full-height rule that separates each card's regions */
+.da-contact-div {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 1px;
+  min-height: 56px;
+  background: linear-gradient(180deg, transparent, rgba(246, 243, 234, 0.22) 18%, rgba(246, 243, 234, 0.22) 82%, transparent);
+}
+.da-contact-email .da-contact-div {
+  background: linear-gradient(180deg, transparent, rgba(227, 197, 106, 0.4) 18%, rgba(227, 197, 106, 0.4) 82%, transparent);
+}
+
+/* Copy over Call, stacked in their own bay past the rule. */
+.da-contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  width: 108px;
+}
+.da-copy-btn,
+.da-call-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.da-copy-btn {
+  background: transparent;
+  color: #a9e0c0;
+  border: 1px solid rgba(120, 190, 150, 0.4);
+}
+.da-copy-btn:hover { background: rgba(120, 190, 150, 0.12); border-color: rgba(120, 190, 150, 0.7); }
+.da-call-btn { background: #7cc99a; color: #0e2419; font-weight: 700; border: 1px solid transparent; }
+.da-call-btn:hover { background: #93d9ad; }
+
+/* Phones: the rules and the side-by-side bays are a wide-layout idea. Here
+   the number keeps its full size on its own line and the two actions share
+   the row beneath it. */
 @media (max-width: 760px) {
-  .da-call-row {
-    flex-wrap: wrap !important;
-    row-gap: 10px !important;
+  .da-contact-side { grid-template-rows: auto auto; gap: 12px; }
+  .da-contact-card {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 16px;
   }
-  .da-call-number {
-    flex: 1 1 100%;
-    font-size: 17px !important;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
+  .da-contact-email { justify-content: flex-start; }
+  .da-contact-main { flex: 1 1 100%; gap: 13px; }
+  .da-contact-icon { width: 42px; height: 42px; }
+  .da-contact-icon-lg { width: 46px; height: 46px; }
+  .da-contact-text { gap: 3px; }
+  .da-contact-label { font-size: 9.5px; letter-spacing: 0.1em; }
+  .da-call-number { font-size: 19px; }
+  .da-email-value { font-size: 14.5px; }
+  .da-contact-call .da-contact-div { display: none; }
+  .da-contact-email .da-contact-div {
+    align-self: center;
+    min-height: 34px;
+    background: linear-gradient(180deg, transparent, rgba(227, 197, 106, 0.4), transparent);
   }
-  .da-call-row > div:last-child { flex: 1 1 100%; }
-  .da-call-row > div:last-child > * { flex: 1; justify-content: center; }
+  .da-contact-actions { flex-direction: row; width: 100%; }
+  .da-contact-actions > * { flex: 1; }
 }
 
 /* ── Section rhythm ──
@@ -1288,39 +1473,53 @@ body { overflow-x: hidden; }
   background: linear-gradient(90deg, transparent, rgba(227, 197, 106, 0.75), transparent);
 }
 
-/* ── Giving details strip ──
-   Charity number and bank coordinates, sat with the ask rather than in the
-   hero and the footer. Quiet by design: reference material for the person
-   who has already decided. */
+/* ── Giving details ──
+   Charity number and bank coordinates, set as fine print under the CTAs.
+   Deliberately unstyled: no card, no fill, no border but one hairline
+   above — the panel opposite carries the persuasion and this is the
+   reference someone reaches for once they have already decided. */
 .da-give-details {
-  display: grid;
-  gap: 1px;
-  background: rgba(246, 243, 234, 0.1);
-  border-top: 1px solid rgba(201, 162, 39, 0.28);
+  margin: 30px 0 0;
+  padding-top: 18px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border-top: 1px solid rgba(246, 243, 234, 0.11);
 }
 .da-give-detail {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 12px 20px;
-  background: #0c2016;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
 }
-.da-give-detail-label {
+.da-give-detail dt {
+  /* sized so "CRA REGISTERED CHARITY" holds one line — it was wrapping and
+     making the three rows uneven */
+  flex: 0 0 146px;
   font-size: 9.5px;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
-  color: rgba(227, 197, 106, 0.75);
-  font-weight: 800;
+  color: rgba(246, 243, 234, 0.4);
+  font-weight: 700;
+  line-height: 1.5;
 }
-.da-give-detail-value {
-  font-size: 12.5px;
-  line-height: 1.4;
-  color: rgba(246, 243, 234, 0.82);
-  font-weight: 600;
+.da-give-detail dd {
+  margin: 0;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(246, 243, 234, 0.62);
+  font-variant-numeric: tabular-nums;
 }
-@media (max-width: 440px) {
-  .da-give-detail { padding: 10px 15px; }
-  .da-give-detail-value { font-size: 11.5px; }
+/* On a phone the label column has to be 136px wide to hold "CRA REGISTERED
+   CHARITY" on one line, which leaves the bank coordinates too little room and
+   wraps them instead. Stacked, every row is clean at full wording. */
+@media (max-width: 760px) {
+  .da-give-details { margin-top: 22px; padding-top: 14px; gap: 11px; }
+  .da-give-detail { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .da-give-detail dt { flex: none; font-size: 8.5px; letter-spacing: 0.1em; }
+  .da-give-detail dd { font-size: 11.5px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1401,46 +1600,123 @@ body { overflow-x: hidden; }
    stretched box instead of on the button, which is what made the menu
    hang off to one side of its trigger.
    ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════
+   Footer lockup
+   Deliberately not the navbar's. There the emblem and the name sit side
+   by side in a compact plate because the bar is 76px tall; here there is
+   room, so the emblem stands above the name on a starred rule with the
+   locality letterspaced underneath.
+   ══════════════════════════════════════════════════════════════════ */
+.da-fbrand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 11px;
+}
+.da-fbrand-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #fbfaf4, #e8e3d2);
+  border: 1px solid rgba(201, 162, 39, 0.55);
+  box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.da-fbrand-emblem img { width: 38px; height: 38px; object-fit: contain; }
+.da-fbrand:hover .da-fbrand-emblem { border-color: rgba(227, 197, 106, 0.95); transform: translateY(-2px); }
+
+.da-fbrand-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 176px;
+  margin-top: 2px;
+}
+.da-fbrand-rule i { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201, 162, 39, 0.75), rgba(201, 162, 39, 0.15)); }
+.da-fbrand-rule i:last-child { background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.75)); }
+.da-fbrand-rule b { font-size: 8px; color: #c9a227; font-weight: 400; line-height: 1; }
+
+.da-fbrand-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  color: #f6f3ea;
+}
+.da-fbrand-sub {
+  font-size: 9.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(227, 197, 106, 0.85);
+  font-weight: 700;
+}
+
 .da-loc-menu { position: relative; display: inline-flex; }
 
+/* A folded paper map, not a neon capsule.
+   The old trigger was one saturated green wash with a glow and a counter
+   badge, which shouted louder than the nav beside it. This is a scrap of
+   old chart paper: a warm parchment tint, a faint grid, two vertical fold
+   creases catching the light, a squared-off corner where it has been
+   folded back — and a red pin dropped on it. */
 .da-loc-trigger {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   height: 40px;
-  padding: 0 15px;
-  border-radius: 999px;
+  padding: 0 14px;
+  border-radius: 8px 3px 8px 3px;
+  overflow: hidden;
   font-size: 13.5px;
   font-weight: 650;
   white-space: nowrap;
-  color: #a9e0c0;
-  background: linear-gradient(180deg, rgba(124, 201, 154, 0.16), rgba(124, 201, 154, 0.06));
-  border: 1px solid rgba(169, 224, 192, 0.42);
-  box-shadow: inset 0 1px 0 rgba(214, 245, 227, 0.22), 0 8px 20px -12px rgba(124, 201, 154, 0.7);
-  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  color: rgba(246, 243, 234, 0.9);
+  background-color: rgba(233, 224, 198, 0.09);
+  background-image:
+    /* fold creases */
+    linear-gradient(90deg, transparent 31%, rgba(246, 243, 234, 0.12) 31.5%, transparent 32%),
+    linear-gradient(90deg, transparent 68%, rgba(0, 0, 0, 0.18) 68.5%, transparent 69%),
+    /* chart grid */
+    repeating-linear-gradient(90deg, rgba(246, 243, 234, 0.05) 0 1px, transparent 1px 11px),
+    repeating-linear-gradient(0deg, rgba(246, 243, 234, 0.05) 0 1px, transparent 1px 11px),
+    /* paper warmth */
+    linear-gradient(140deg, rgba(214, 176, 108, 0.14), rgba(120, 190, 150, 0.08));
+  border: 1px solid rgba(233, 224, 198, 0.26);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+/* the turned-back corner */
+.da-loc-trigger::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  background: linear-gradient(225deg, rgba(11, 30, 20, 0.95) 50%, rgba(246, 243, 234, 0.22) 50%);
 }
 .da-loc-trigger:hover,
 .da-loc-trigger[data-open] {
-  color: #cdf3de;
-  border-color: rgba(169, 224, 192, 0.85);
-  box-shadow: inset 0 1px 0 rgba(214, 245, 227, 0.32), 0 12px 26px -12px rgba(124, 201, 154, 0.9);
+  color: #fbf7ec;
+  background-color: rgba(233, 224, 198, 0.15);
+  border-color: rgba(233, 224, 198, 0.48);
   transform: translateY(-1px);
 }
-
-.da-loc-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  border-radius: 999px;
-  background: rgba(169, 224, 192, 0.9);
-  color: #0b2416;
-  font-size: 10.5px;
-  font-weight: 800;
+.da-loc-pin {
+  flex-shrink: 0;
+  margin-top: -1px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.da-loc-caret { font-size: 9px; opacity: 0.8; transition: transform 0.2s ease; }
+.da-loc-trigger:hover .da-loc-pin,
+.da-loc-trigger[data-open] .da-loc-pin { transform: translateY(-2px); }
+
+.da-loc-caret { font-size: 9px; opacity: 0.6; transition: transform 0.2s ease; }
 .da-loc-trigger[data-open] .da-loc-caret { transform: rotate(180deg); }
 
 /* Anchored to the trigger's own centre. NOTE: the -50% pull-back is applied
@@ -1734,4 +2010,78 @@ body { overflow-x: hidden; }
   .da-shine {
     animation: none !important;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Phone density, second pass
+   ──────────────────────────────────────────────────────────────────
+   Blocks that were still carrying desktop proportions onto a 375px
+   screen: the giving lede, the hadith panel, and the donation page's
+   cards. Each gets phone-sized type and spacing rather than the wide
+   layout scaled down around it.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Giving: the lede ──
+   Eyebrow, a two-line display heading at 32px, a paragraph at 16/1.7 and
+   36px of air before the buttons ran to most of a phone screen before the
+   reader reached the ask. Tightened as a set. */
+@media (max-width: 760px) {
+  #giving-section h2 {
+    font-size: 30px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 14px !important;
+  }
+  #giving-section > div > div:first-child > p {
+    font-size: 14.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 22px !important;
+  }
+  #giving-section > div { gap: 30px !important; }
+  .da-giving-stats-grid > .da-geo-tile { padding: 18px 12px !important; }
+  .da-giving-stats-grid .da-money { font-size: 24px !important; margin-bottom: 4px !important; }
+  .da-giving-stats-grid > .da-geo-tile > div:last-child { font-size: 10.5px !important; line-height: 1.3 !important; }
+}
+
+/* ── Prayer times: the hadith ──
+   The Arabic at 22px on a 2.0 leading and the translation at 21px filled
+   two full phone screens for one narration. Same words, a third of the
+   scroll. */
+@media (max-width: 760px) {
+  .da-hadith { padding: 26px 18px !important; margin-top: 34px !important; border-radius: 16px !important; }
+  .da-hadith-ar { font-size: 17px !important; line-height: 1.85 !important; margin-bottom: 16px !important; }
+  .da-hadith-rule { margin-bottom: 16px !important; }
+  .da-hadith-en { font-size: 15.5px !important; line-height: 1.5 !important; margin-bottom: 10px !important; }
+  .da-hadith-src { font-size: 10.5px !important; }
+}
+
+/* ── Donation page ──
+   Same complaint as the WhatsApp card: an icon on a row of its own with the
+   heading beneath it, and three money tiles squeezed into three columns.
+   Icon and heading share the top row; the tiles go two-up with the last
+   spanning. */
+@media (max-width: 760px) {
+  .da-pledge-goals { grid-template-columns: 1fr 1fr !important; }
+  .da-pledge-goals > *:last-child { grid-column: 1 / -1; }
+  .da-pledge-goals > * { padding: 11px 13px !important; }
+
+  .da-pledge-funfact { gap: 8px 10px !important; padding: 11px 13px !important; }
+  .da-pledge-funfact > div:nth-child(2) { display: none; }
+  .da-pledge-funfact > div:last-of-type { min-width: 0 !important; font-size: 11.5px !important; }
+  .da-pledge-funfact > button { width: 100%; }
+
+  .da-receipt-cta {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon head" "body body" "cta cta";
+    align-items: center;
+    gap: 10px 13px !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+  .da-receipt-cta > span:first-child { grid-area: icon; width: 42px !important; height: 42px !important; }
+  .da-receipt-body { display: contents; min-width: 0 !important; }
+  .da-receipt-eyebrow { display: none !important; }
+  .da-receipt-title { grid-area: head; align-self: center; font-size: 16px !important; line-height: 1.2 !important; margin: 0 !important; }
+  .da-receipt-note { grid-area: body; font-size: 12px !important; line-height: 1.45 !important; }
+  .da-receipt-cta > a:last-child { grid-area: cta; width: 100%; justify-content: center; }
 }

@@ -55,17 +55,21 @@ export function Footer() {
         <Reveal>
           <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
             <div>
-              <div className="flex items-center gap-3">
-                <Image
-                  src={EXT.logo}
-                  alt="Darul Arqum logo"
-                  width={44}
-                  height={44}
-                  className="h-11 w-11 rounded-full object-cover ring-1 ring-da-gold/40"
-                />
-                <p className="font-daDisplay text-2xl tracking-tight text-da-cream">Darul Arqum</p>
-              </div>
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-da-cream/55">
+              {/* The footer's own lockup. Where the navbar sets the emblem and
+                  the name side by side inside a plate, this one stands the
+                  emblem above the name on a struck rule with the locality
+                  spread beneath it — the same identity, given room. */}
+              <Link href={R.home} className="da-fbrand">
+                <span className="da-fbrand-emblem">
+                  <Image src="/assets/logo-icon.png" alt="Darul Arqum emblem" width={38} height={38} />
+                </span>
+                <span className="da-fbrand-rule" aria-hidden>
+                  <i /><b>✦</b><i />
+                </span>
+                <span className="da-fbrand-name">Darul Arqum</span>
+                <span className="da-fbrand-sub">Riverside South · Ottawa</span>
+              </Link>
+              <p className="mt-4 max-w-xs text-sm leading-relaxed text-da-cream/55">
                 {ORG.tagline}. The first masjid in Riverside South. Let&apos;s build it together.
               </p>
               <ul className="mt-6 space-y-2.5 text-sm text-da-cream/70">

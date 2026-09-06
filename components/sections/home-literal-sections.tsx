@@ -482,6 +482,32 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
               Set up a monthly pledge
             </button>
           </motion.div>
+
+          {/* Charity number and bank coordinates. Reference material for
+              someone who has already decided, so it sits under the buttons as
+              fine print — the panel opposite is doing the persuading and this
+              must not compete with it. */}
+          <motion.dl
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.45, ease }}
+            className="da-give-details"
+          >
+            <div className="da-give-detail">
+              <dt>CRA registered charity</dt>
+              <dd className="da-wrap-any">{ORG.charityReg}</dd>
+            </div>
+            <div className="da-give-detail">
+              <dt>Interac e-Transfer</dt>
+              <dd className="da-wrap-any">{ORG.email}</dd>
+            </div>
+            <div className="da-give-detail">
+              <dt>Bank deposit</dt>
+              <dd>
+                Inst. {ORG.bank.institution} · Transit {ORG.bank.transit} · Acct {ORG.bank.account}
+              </dd>
+            </div>
+          </motion.dl>
         </div>
 
         <motion.div
@@ -519,25 +545,6 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
             </button>
           </div>
 
-          {/* Charity number and bank coordinates belong with the ask, not in
-              the hero and the footer. Someone reading this panel is the person
-              who needs them. */}
-          <div className="da-give-details">
-            <div className="da-give-detail">
-              <span className="da-give-detail-label">CRA registered charity</span>
-              <span className="da-give-detail-value da-wrap-any">{ORG.charityReg}</span>
-            </div>
-            <div className="da-give-detail">
-              <span className="da-give-detail-label">Interac e-Transfer</span>
-              <span className="da-give-detail-value da-wrap-any">{ORG.email}</span>
-            </div>
-            <div className="da-give-detail">
-              <span className="da-give-detail-label">Bank deposit</span>
-              <span className="da-give-detail-value">
-                Institution {ORG.bank.institution} · Transit {ORG.bank.transit} · Account {ORG.bank.account}
-              </span>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>
@@ -678,7 +685,7 @@ function CopyBtn({ label, value }: { label: string; value: string }) {
           setTimeout(() => setCopied(false), 2000);
         });
       }}
-      style={{ display: "inline-flex", alignItems: "center", minHeight: 34, background: "transparent", color: "#a9e0c0", border: "1px solid rgba(120,190,150,0.4)", fontSize: 11.5, fontWeight: 600, padding: "6px 13px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap" }}
+      className="da-copy-btn"
     >
       {copied ? "Copied ✓" : label}
     </button>
@@ -725,37 +732,44 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 20 }}>
-              <div style={{ borderRadius: 20, padding: 22, background: "linear-gradient(150deg, rgba(80,160,120,0.22), rgba(80,160,120,0.06))", border: "1px solid rgba(120,190,150,0.35)", display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 999, overflow: "hidden" }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/phone-icon.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            {/* Beside a tall map these two cards had a single short line each
+                and floated in a lot of empty green. Both are now built in
+                divided regions that use the width: the call card puts its
+                identity on the left and stacks its two actions in their own
+                bay on the right, and the email card centres its whole lockup
+                behind a full-height rule. */}
+            <div className="da-contact-side">
+              <div className="da-contact-card da-contact-call">
+                <div className="da-contact-main">
+                  <span className="da-contact-icon">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/assets/phone-icon.png" alt="" />
+                  </span>
+                  <span className="da-contact-text">
+                    <span className="da-contact-label">Call us</span>
+                    <span className="da-call-number">613-709-2329</span>
+                  </span>
                 </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#a9e0c0", fontWeight: 700, marginBottom: 6 }}>Call us</div>
-                  <div className="da-call-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                    <span className="da-call-number" style={{ fontSize: 15, color: "#f6f3ea", fontWeight: 700 }}>613-709-2329</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
-                      <CopyBtn label="Copy" value="613-709-2329" />
-                      <a href="tel:+16137092329" style={{ display: "inline-flex", alignItems: "center", minHeight: 34, background: "#7cc99a", color: "#0e2419", fontWeight: 700, fontSize: 11.5, padding: "6px 14px", borderRadius: 999, whiteSpace: "nowrap" }}>
-                        Call ↗
-                      </a>
-                    </div>
-                  </div>
+                <span className="da-contact-div" aria-hidden />
+                <div className="da-contact-actions">
+                  <CopyBtn label="Copy" value="613-709-2329" />
+                  <a href="tel:+16137092329" className="da-call-btn">
+                    Call <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
               </div>
 
-              <a href="mailto:admin@darularqum.org" style={{ borderRadius: 20, padding: 22, background: "linear-gradient(150deg, rgba(201,162,39,0.22), rgba(201,162,39,0.06))", border: "1px solid rgba(227,197,106,0.35)", display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ width: 46, height: 46, flexShrink: 0, borderRadius: 999, overflow: "hidden" }}>
+              <a href="mailto:admin@darularqum.org" className="da-contact-card da-contact-email">
+                <span className="da-contact-icon da-contact-icon-lg">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/assets/email-icon.png" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 4 }}>Email us</div>
-                  <div style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 700, whiteSpace: "nowrap" }}>admin@darularqum.org</div>
-                </div>
+                  <img src="/assets/email-icon.png" alt="" />
+                </span>
+                <span className="da-contact-div" aria-hidden />
+                <span className="da-contact-text">
+                  <span className="da-contact-label da-contact-label-gold">Email us</span>
+                  <span className="da-email-value">admin@darularqum.org</span>
+                </span>
               </a>
-
             </div>
           </div>
         </div>

@@ -306,7 +306,7 @@ export function PledgePage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "rgba(246,243,234,0.12)", border: "1px solid rgba(201,162,39,0.28)", borderRadius: 14, overflow: "hidden", marginBottom: 32 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
+          <div className="da-pledge-goals" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
             {[
               { value: ORG.finances.monthlyExpenses, label: "Monthly maintenance target" },
               { value: ORG.finances.parkingLot, label: "Parking lot renovation" },
@@ -318,7 +318,7 @@ export function PledgePage() {
               </div>
             ))}
           </div>
-          <div style={{ background: "linear-gradient(120deg, rgba(201,162,39,0.22), rgba(201,162,39,0.1))", padding: "12px 16px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+          <div className="da-pledge-funfact" style={{ background: "linear-gradient(120deg, rgba(201,162,39,0.22), rgba(201,162,39,0.1))", padding: "12px 16px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, whiteSpace: "nowrap" }}>Fun fact</div>
             <div style={{ width: 1, alignSelf: "stretch", background: "rgba(201,162,39,0.35)" }} />
             <div style={{ fontSize: 12, lineHeight: 1.4, color: "rgba(246,243,234,0.8)", flex: 1, minWidth: 200 }}>
@@ -332,6 +332,7 @@ export function PledgePage() {
 
         {/* TAX RECEIPT CTA */}
         <div
+          className="da-receipt-cta"
           style={{
             position: "relative",
             display: "flex",
@@ -366,16 +367,16 @@ export function PledgePage() {
               <path d="M5.5 11.5 L8.5 14.5 L14.5 8" stroke="#f6f3ea" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
-          <div style={{ flex: 1, minWidth: 220 }}>
-            <div style={{ fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#f0a89f", fontWeight: 800, marginBottom: 5 }}>Reminder</div>
-            <p style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", margin: "0 0 3px 0" }}>Already gave, or need a receipt for last year?</p>
-            <p style={{ fontSize: 13, lineHeight: 1.55, color: "rgba(246,243,234,0.75)", margin: 0 }}>
+          <div className="da-receipt-body" style={{ flex: 1, minWidth: 220 }}>
+            <div className="da-receipt-eyebrow" style={{ fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "#f0a89f", fontWeight: 800, marginBottom: 5 }}>Reminder</div>
+            <p className="da-receipt-title" style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 20, color: "#f6f3ea", margin: "0 0 3px 0" }}>Already gave, or need a receipt for last year?</p>
+            <p className="da-receipt-note" style={{ fontSize: 13, lineHeight: 1.55, color: "rgba(246,243,234,0.75)", margin: 0 }}>
               Request or update the mailing address on file so your official CRA tax receipt reaches you — issued every February.
             </p>
           </div>
           <Link
             href={R.taxReceipt}
-            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#e56b60,#c94c42)", color: "#fff", fontWeight: 700, fontSize: 13.5, padding: "13px 24px", borderRadius: 999, boxShadow: "0 12px 26px -8px rgba(201,76,66,0.6)" }}
+            style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#e56b60,#c94c42)", color: "#fff", fontWeight: 700, fontSize: 13.5, padding: "13px 24px", borderRadius: 12, boxShadow: "0 12px 26px -8px rgba(201,76,66,0.6)" }}
           >
             Get your tax receipt <span aria-hidden="true">→</span>
           </Link>

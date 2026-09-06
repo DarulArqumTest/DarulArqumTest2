@@ -59,12 +59,13 @@ export function LocationsMenu() {
         className="da-loc-trigger"
         data-open={open || undefined}
       >
-        <svg width="13" height="15" viewBox="0 0 15 18" aria-hidden style={{ flexShrink: 0 }}>
-          <path d="M7.5 1C4.46 1 2 3.46 2 6.5c0 4.1 5.5 10 5.5 10S13 10.6 13 6.5C13 3.46 10.54 1 7.5 1Z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-          <circle cx="7.5" cy="6.4" r="2.1" fill="currentColor" />
+        {/* A real map pin, in map-pin red, dropped on the fold */}
+        <svg className="da-loc-pin" width="14" height="17" viewBox="0 0 15 18" aria-hidden>
+          <ellipse cx="7.5" cy="16.4" rx="3.6" ry="1.2" fill="rgba(0,0,0,0.32)" />
+          <path d="M7.5 1C4.6 1 2.2 3.35 2.2 6.25c0 3.9 5.3 9.3 5.3 9.3s5.3-5.4 5.3-9.3C12.8 3.35 10.4 1 7.5 1Z" fill="#d4483f" stroke="#f0a89f" strokeWidth="0.9" strokeLinejoin="round" />
+          <circle cx="7.5" cy="6.2" r="2" fill="#fbeee9" />
         </svg>
         Locations
-        <span className="da-loc-count" aria-hidden>2</span>
         <span className="da-loc-caret" aria-hidden>▾</span>
       </Link>
 
@@ -85,8 +86,12 @@ export function LocationsMenu() {
               <Link
                 key={loc.key}
                 href={`${R.locations}#${loc.key}`}
-                style={{ display: "block", padding: "12px 14px", borderRadius: 11, transition: "background 0.16s ease" }}
-                className="hover:bg-da-gold/10"
+                // Each site carries its own colour rather than sharing one
+                // green wash: gold for the masjid that is open, mint for the
+                // one still coming. Applied as light falling across the row,
+                // not as a bar down its edge.
+                style={{ display: "block", padding: "12px 14px", borderRadius: 11, backgroundImage: `linear-gradient(100deg, ${loc.accent}1f, transparent 62%)`, transition: "background-color 0.16s ease" }}
+                className="hover:bg-da-cream/[0.07]"
               >
                 <span style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
                   <StatusDot open={loc.status === "open"} />

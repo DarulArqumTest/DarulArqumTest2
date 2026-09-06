@@ -152,69 +152,56 @@ function IqamaTable() {
   );
 }
 
-const TV_BASE_W = 860;
-const TV_BASE_H = Math.round((TV_BASE_W * 7.2) / 16);
-
 /**
- * The live masjid screen, desktop only.
+ * The masjid screen: a cabinet, a bezel and a stand, desktop only.
  *
- * Mawaqit chooses its layout from the device rather than from the width of
- * the frame it is given, so on a phone it serves a narrow column that fills
- * about a third of a landscape frame and nothing outside the iframe can
- * change that. On desktop it serves the wide board this is built for.
+ * What used to hang in the bezel was the Mawaqit iframe. Mawaqit picks its
+ * layout from the device rather than from the frame it is handed, so it
+ * arrived cropped and there is nothing outside an iframe that can fix that.
+ * The board below is ours, carries exactly the same times, and is legible at
+ * any width — so it is what the screen shows, and Mawaqit's own calendar is
+ * one link away underneath.
  *
- * Mounted behind useIsDesktop rather than hidden with CSS so a phone never
- * pays for the third-party request at all.
+ * Mounted behind useIsDesktop rather than hidden with CSS: the cabinet and
+ * its stand are a desktop conceit, and a phone gets the bare board instead.
  */
-function MasjidScreen() {
-  const wrapRef = React.useRef<HTMLDivElement>(null);
-  const [scale, setScale] = React.useState(1);
-  const [loaded, setLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const update = () => setScale(el.offsetWidth / TV_BASE_W);
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
+function MasjidScreen({ children }: { children: React.ReactNode }) {
   return (
-    <div className="da-tv-outer">
-      <div className="da-tv-glass">
-        <div className="da-tv-header">
-          <div className="da-tv-live">
-            <span className="da-live-pulse" aria-hidden />
-            Live · masjid screen
-          </div>
-          <a href={EXT.mawaqitLive} target="_blank" rel="noopener noreferrer" className="da-tv-full">
-            Open full screen ↗
-          </a>
-        </div>
-        <div style={{ position: "relative" }}>
-          {!loaded && (
-            <div className="da-tv-loading">
-              <span style={{ fontSize: 24 }}>◷</span>
-              <p>Connecting to the masjid screen…</p>
+    <div className="da-tv">
+      <div className="da-tv-outer">
+        <div className="da-tv-glass">
+          <div className="da-tv-header">
+            <div className="da-tv-live">
+              <span className="da-live-pulse" aria-hidden />
+              Live · masjid screen
             </div>
-          )}
-          <div ref={wrapRef} style={{ position: "relative", width: "100%", height: TV_BASE_H * scale, overflow: "hidden" }}>
-            <iframe
-              src={EXT.mawaqitEmbed}
-              title="Darul Arqum live prayer times (Mawaqit)"
-              onLoad={() => setLoaded(true)}
-              loading="lazy"
-              allow="fullscreen"
-              style={{ position: "absolute", top: 0, left: 0, width: TV_BASE_W, height: TV_BASE_H, border: 0, display: "block", transform: `scale(${scale})`, transformOrigin: "top left" }}
-            />
+            <a href={EXT.mawaqitLive} target="_blank" rel="noopener noreferrer" className="da-tv-full">
+              Open full screen ↗
+            </a>
           </div>
+          <div className="da-tv-screen">{children}</div>
+        </div>
+        <div className="da-tv-plate">
+          <span /> Darul Arqum <span />
         </div>
       </div>
-      <div className="da-tv-plate">
-        <span /> Darul Arqum <span />
+      {/* the stand */}
+      <div className="da-tv-neck" aria-hidden />
+      <div className="da-tv-base" aria-hidden />
+    </div>
+  );
+}
+
+/** Jumu'ah banner, the five prayers, and the board's own footnote. */
+function Board() {
+  return (
+    <div className="da-board">
+      <div className="da-board-jumuah">
+        <span className="da-live-pulse da-board-dot" aria-hidden />
+        <span className="da-board-jumuah-label">Jumu&apos;ah</span>
+        <span className="da-jumuah-text">1st Khutbah {ORG.jumua.first} &amp; 2nd Khutbah {ORG.jumua.second}</span>
       </div>
+      <IqamaTable />
     </div>
   );
 }
@@ -321,23 +308,16 @@ export function PrayerTimesPage() {
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 26, color: "#f6f3ea" }}>Today&apos;s board, straight off the screen</div>
           </div>
 
-          {isDesktop && <MasjidScreen />}
-
-          {/* The prayer board is the anchor on every device. The Mawaqit iframe used to sit
-              here, but it chooses its layout from the device and so served a
-              narrow column that filled a third of the frame on phones. The
-              board below is ours, always legible, and the live screen is one
-              tap away underneath. The Jumu'ah banner is joined to the top of
-              the board rather than floating above it. */}
-          <div className="da-board">
-            <div className="da-board-jumuah">
-              <span className="da-live-pulse da-board-dot" aria-hidden />
-              <span className="da-board-jumuah-label">Jumu&apos;ah</span>
-              <span className="da-jumuah-text">1st Khutbah {ORG.jumua.first} &amp; 2nd Khutbah {ORG.jumua.second}</span>
-            </div>
-
-            <IqamaTable />
-          </div>
+          {/* The board is the anchor on every device: mounted in the cabinet on
+              desktop, bare on a phone where a drawn television would be a
+              picture frame around nothing. */}
+          {isDesktop ? (
+            <MasjidScreen>
+              <Board />
+            </MasjidScreen>
+          ) : (
+            <Board />
+          )}
 
           <a
             className="da-board-link"
@@ -348,21 +328,21 @@ export function PrayerTimesPage() {
             View the Mawaqit calendar <span aria-hidden="true">↗</span>
           </a>
 
-          <div style={{ maxWidth: 980, margin: "54px auto 0", position: "relative", overflow: "hidden", textAlign: "center", borderRadius: 20, padding: "52px 32px", background: "radial-gradient(ellipse 80% 100% at 50% 0%, rgba(201,162,39,0.12), transparent 70%), linear-gradient(180deg, #123321, #0d2419)", border: "1px solid rgba(201,162,39,0.22)" }}>
+          <div className="da-hadith" style={{ maxWidth: 980, margin: "54px auto 0", position: "relative", overflow: "hidden", textAlign: "center", borderRadius: 20, padding: "52px 32px", background: "radial-gradient(ellipse 80% 100% at 50% 0%, rgba(201,162,39,0.12), transparent 70%), linear-gradient(180deg, #123321, #0d2419)", border: "1px solid rgba(201,162,39,0.22)" }}>
             <div style={{ position: "absolute", top: -70, left: -70, width: 220, height: 220, opacity: 0.3, pointerEvents: "none" }}>
               <GeoMedallion size={220} opacity={1} />
             </div>
             <div style={{ position: "absolute", bottom: -80, right: -80, width: 240, height: 240, opacity: 0.3, pointerEvents: "none" }}>
               <GeoMedallion size={240} opacity={1} />
             </div>
-            <p dir="rtl" lang="ar" style={{ position: "relative", fontFamily: "'Amiri',serif", fontWeight: 700, fontSize: "clamp(22px,3vw,30px)", lineHeight: 2, margin: "0 0 26px 0", unicodeBidi: "plaintext", backgroundImage: "linear-gradient(100deg, #f3d98a, #c9a227 55%, #8a6a1e)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+            <p dir="rtl" lang="ar" className="da-hadith-ar" style={{ position: "relative", fontFamily: "'Amiri',serif", fontWeight: 700, fontSize: "clamp(22px,3vw,30px)", lineHeight: 2, margin: "0 0 26px 0", unicodeBidi: "plaintext", backgroundImage: "linear-gradient(100deg, #f3d98a, #c9a227 55%, #8a6a1e)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
               مَنْ تَوَضَّأَ لِلصَّلاَةِ فَأَسْبَغَ الْوُضُوءَ ثُمَّ مَشَى إِلَى الصَّلاَةِ الْمَكْتُوبَةِ فَصَلاَّهَا مَعَ النَّاسِ أَوْ مَعَ الْجَمَاعَةِ أَوْ فِي الْمَسْجِدِ غَفَرَ اللَّهُ لَهُ ذُنُوبَهُ
             </p>
-            <span style={{ position: "relative", display: "block", width: 44, height: 1, background: "rgba(201,162,39,0.5)", margin: "0 auto 26px" }} />
-            <p style={{ position: "relative", fontFamily: "'Cormorant Garamond',serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.65, color: "#f6f3ea", margin: "0 auto 16px", maxWidth: 600 }}>
-              &quot;Salat is the key to Paradise. Whoever performs wudu and does it well, then walks to the obligatory prayer and offers it with the congregation, or in the masjid — Allah will forgive his sins.&quot;
+            <span className="da-hadith-rule" style={{ position: "relative", display: "block", width: 44, height: 1, background: "rgba(201,162,39,0.5)", margin: "0 auto 26px" }} />
+            <p className="da-hadith-en" style={{ position: "relative", fontFamily: "'Cormorant Garamond',serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.65, color: "#f6f3ea", margin: "0 auto 16px", maxWidth: 600 }}>
+              &quot;Salat is the key to Paradise. Whoever performs wudu and does it well, then walks to the obligatory prayer and offers it with the congregation, or in the masjid, Allah will forgive his sins.&quot;
             </p>
-            <p style={{ position: "relative", fontSize: 12.5, color: "rgba(246,243,234,0.5)", margin: 0 }}>Sahih Muslim, Vol 1, No. 549</p>
+            <p className="da-hadith-src" style={{ position: "relative", fontSize: 12.5, color: "rgba(246,243,234,0.5)", margin: 0 }}>Sahih Muslim, Vol 1, No. 549</p>
           </div>
         </div>
       </section>

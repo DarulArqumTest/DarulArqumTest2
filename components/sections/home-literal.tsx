@@ -478,13 +478,20 @@ function Hero({ revealed }: { revealed: boolean }) {
             </Link>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} className="da-hero-stats" style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} className="da-hero-stats" style={{ display: "flex", flexWrap: "wrap", gap: 12, maxWidth: 820 }}>
             {[
               { title: "Jumu'ah", sub: "1:30 PM & 2:30 PM" },
-              { title: "Daily prayers", sub: "In congregation, every day", href: R.prayer },
+              // "every day" only repeated what the title already says, and
+              // those two words were the difference between the row fitting on
+              // one line and the label being clipped to "DAILY PRAYE…".
+              { title: "Daily prayers", sub: "In congregation", href: R.prayer },
             ].map((c) => {
+              // "Jumu'ah · 1:30 PM & 2:30 PM" is far shorter than "Daily
+              // prayers · In congregation, every day", so an equal split left
+              // the first card padded with air and pushed the second past the
+              // headline's measure. Each is sized to its own content instead.
               const cardStyle: React.CSSProperties = {
-                flex: "1 1 220px",
+                flex: "0 1 auto",
                 display: "flex",
                 alignItems: "center",
                 gap: 13,
@@ -499,12 +506,12 @@ function Hero({ revealed }: { revealed: boolean }) {
                   <div style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.16)", border: "1px solid rgba(201,162,39,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "#f6f3ea", fontSize: 14 }}>
                     ✦
                   </div>
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#f6f3ea", marginBottom: 2 }}>{c.title}</div>
                     <div style={{ fontSize: 12.5, color: "rgba(246,243,234,0.62)"}}>{c.sub}</div>
                   </div>
                   {"href" in c && c.href && (
-                    <span style={{ marginLeft: "auto", color: "#e3c56a", fontSize: 15, flexShrink: 0 }} aria-hidden="true">
+                    <span style={{ marginLeft: 14, color: "#e3c56a", fontSize: 15, flexShrink: 0 }} aria-hidden="true">
                       →
                     </span>
                   )}
