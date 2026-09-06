@@ -86,48 +86,52 @@ function Moon() {
 /**
  * Each prayer's sky.
  *
- * Two things have to be true at once: the sun has to sit where it sits at
- * that hour, and the times have to be readable. Those fought each other
- * while the disc was positioned against the whole cell — Fajr's and
- * Maghrib's suns landed directly behind "IQAMA" — so the disc is now
- * positioned inside a sky band that occupies only the top of the cell, and
- * the text sits on a `ground` wash that fades in below it. The art keeps
- * its full height; the type gets a surface.
+ * The gradients are the original ones and they stay untouched, top to
+ * bottom. An earlier attempt at legibility laid a heavy wash over the lower
+ * half of every cell, which did make the type readable and destroyed the
+ * palette doing it — Dhuhr faded to near-white, Maghrib to near-black. The
+ * type is carried by a one-pixel outline in the cell's own ink plus a soft
+ * glow, which is how type survives over imagery — it costs the colour
+ * nothing, and it works even where cream sits on light orange at the bottom
+ * of Maghrib.
  *
- * `skyTop` is a percentage of that band, so the arc is preserved: Fajr low
- * and rising, Dhuhr overhead, Asr past its peak, Maghrib setting, and the
- * moon high over Isha.
+ * What actually made the times hard to read was never contrast: it was the
+ * sun sitting behind them. Fajr's and Maghrib's discs are low, and
+ * positioned against the whole cell they landed on "IQAMA". They now live in
+ * a sky band above the type, and travel it as a real arc — low in the east
+ * at Fajr, overhead at Dhuhr, past the meridian at Asr, low in the west at
+ * Maghrib, the moon high at Isha.
  */
-const TIME_LOOK: Record<string, { bg: string; skyFrac: number; discSize: number; disc: string; discGlow: string; moon?: boolean; ground: string; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
+const TIME_LOOK: Record<string, { bg: string; skyFrac: number; skyX: string; discSize: number; disc: string; discGlow: string; moon?: boolean; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
   fajr: {
     bg: "linear-gradient(180deg, #182238 0%, #35335c 48%, #6d4c6f 82%, #a8724f 100%)",
-    skyFrac: 0.88, discSize: 38, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.45)",
-    ground: "linear-gradient(180deg, rgba(10,8,24,0) 16%, rgba(10,8,24,0.55) 38%, rgba(8,6,20,0.78) 100%)",
-    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.88)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)", halo: "0 1px 3px rgba(8,6,20,0.95)",
+    skyFrac: 0.94, skyX: "30%", discSize: 38, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.45)",
+    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.88)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)",
+    halo: "0 1px 0 rgba(10,14,30,0.95), 0 -1px 0 rgba(10,14,30,0.7), 1px 0 0 rgba(10,14,30,0.7), -1px 0 0 rgba(10,14,30,0.7), 0 0 4px rgba(10,14,30,0.95), 0 0 9px rgba(10,14,30,0.7)",
   },
   dhuhr: {
     bg: "linear-gradient(180deg, #2f6fb0 0%, #5b9bd6 55%, #a9d4ee 100%)",
-    skyFrac: 0.06, discSize: 48, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.65)",
-    ground: "linear-gradient(180deg, rgba(240,248,255,0) 16%, rgba(240,248,255,0.62) 38%, rgba(247,251,255,0.88) 100%)",
-    textPrimary: "#10261b", textAccent: "#7a4a12", textSecondary: "rgba(16,38,27,0.85)", textMuted: "rgba(16,38,27,0.6)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)", halo: "0 1px 2px rgba(255,255,255,0.9)",
+    skyFrac: 0.02, skyX: "50%", discSize: 46, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.65)",
+    textPrimary: "#0e2419", textAccent: "#7a4a12", textSecondary: "rgba(14,36,25,0.8)", textMuted: "rgba(14,36,25,0.55)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)",
+    halo: "0 1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(240,250,255,0.8), 1px 0 0 rgba(240,250,255,0.8), -1px 0 0 rgba(240,250,255,0.8), 0 0 4px rgba(255,255,255,0.95), 0 0 9px rgba(240,250,255,0.8)",
   },
   asr: {
     bg: "linear-gradient(180deg, #a8622c 0%, #cf9143 55%, #ecc57e 100%)",
-    skyFrac: 0.42, discSize: 44, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.6)",
-    ground: "linear-gradient(180deg, rgba(255,247,230,0) 16%, rgba(255,247,230,0.6) 38%, rgba(255,250,238,0.87) 100%)",
-    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.82)", textMuted: "rgba(42,22,8,0.55)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)", halo: "0 1px 2px rgba(255,251,240,0.9)",
+    skyFrac: 0.4, skyX: "62%", discSize: 42, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.6)",
+    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.78)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)",
+    halo: "0 1px 0 rgba(255,250,238,0.95), 0 -1px 0 rgba(255,246,226,0.8), 1px 0 0 rgba(255,246,226,0.8), -1px 0 0 rgba(255,246,226,0.8), 0 0 4px rgba(255,250,238,0.95), 0 0 9px rgba(255,246,226,0.8)",
   },
   maghrib: {
     bg: "linear-gradient(180deg, #4a2a56 0%, #a83f4a 45%, #d9722f 78%, #f0a860 100%)",
-    skyFrac: 0.9, discSize: 46, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.6)",
-    ground: "linear-gradient(180deg, rgba(26,5,20,0) 16%, rgba(26,5,20,0.58) 38%, rgba(22,4,17,0.8) 100%)",
-    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.88)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)", halo: "0 1px 3px rgba(22,4,17,0.95)",
+    skyFrac: 0.96, skyX: "72%", discSize: 44, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.6)",
+    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.88)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)",
+    halo: "0 1px 0 rgba(46,10,24,0.98), 0 -1px 0 rgba(46,10,24,0.8), 1px 0 0 rgba(46,10,24,0.8), -1px 0 0 rgba(46,10,24,0.8), 0 0 4px rgba(46,10,24,0.98), 0 0 9px rgba(46,10,24,0.8)",
   },
   isha: {
     bg: "linear-gradient(180deg, #0a1220 0%, #182642 55%, #223458 100%)",
-    skyFrac: 0.32, discSize: 52, disc: "", discGlow: "", moon: true,
-    ground: "linear-gradient(180deg, rgba(3,6,16,0) 16%, rgba(3,6,16,0.45) 38%, rgba(2,5,14,0.68) 100%)",
-    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.88)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)", halo: "0 1px 3px rgba(2,5,14,0.95)",
+    skyFrac: 0.16, skyX: "68%", discSize: 46, disc: "", discGlow: "", moon: true,
+    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.88)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)",
+    halo: "0 1px 0 rgba(4,8,20,0.95), 0 -1px 0 rgba(4,8,20,0.7), 1px 0 0 rgba(4,8,20,0.7), -1px 0 0 rgba(4,8,20,0.7), 0 0 4px rgba(4,8,20,0.95), 0 0 9px rgba(4,8,20,0.7)",
   },
 };
 
@@ -176,15 +180,14 @@ function IqamaTable() {
                   </div>
                 </div>
               )}
-              {/* The sky band: bounded to the clear space above the type, and
-                  the disc is lerped *inside* it — `(100% - size) * f` puts
-                  the sun's own box, not its centre, at the fraction — so it
-                  physically cannot reach the times however tall a cell gets.
-                  Positioning by centre is what let Fajr's and Maghrib's suns
-                  land on top of "IQAMA". */}
+              {/* The sky band: bounded to the clear space between the "Now"
+                  badge and the type, so neither the badge nor the times can
+                  ever be behind a sun. The disc is lerped *inside* the band —
+                  `(100% - size) * f` moves its box, not its centre — so it
+                  reaches the horizon and the zenith without leaving. */}
               <div
                 className="da-iqama-sky"
-                style={{ "--disc": `${look.discSize}px`, "--f": look.skyFrac } as React.CSSProperties}
+                style={{ "--disc": `${look.discSize}px`, "--f": look.skyFrac, "--x": look.skyX } as React.CSSProperties}
                 aria-hidden
               >
                 <div
@@ -198,8 +201,6 @@ function IqamaTable() {
                   {look.moon && <Moon />}
                 </div>
               </div>
-              {/* the ground the type stands on */}
-              <div className="da-iqama-ground" style={{ background: look.ground }} aria-hidden />
               <div className="da-iqama-text" style={{ position: "relative", zIndex: 1 }}>
                 <div dir="rtl" lang="ar" className="da-iqama-arabic" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: look.halo }}>{p.arabic}</div>
                 <div className="da-iqama-name" style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: look.halo }}>{p.name}</div>
