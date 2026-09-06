@@ -66,6 +66,7 @@ const DURATION: Record<SuccessScene, number> = {
   coin: 2700,
   stamp: 2600,
   envelope: 3400,
+  brick: 2800,
 };
 
 const CAPTION: Record<SuccessScene, string> = {
@@ -74,6 +75,16 @@ const CAPTION: Record<SuccessScene, string> = {
   coin: "Pledge received",
   stamp: "Details recorded",
   envelope: "Successfully subscribed",
+  /**
+   * Not "thank you for your donation" — nothing here knows that any money
+   * has moved. The transfer is sent from the person's own banking app. This
+   * marks the intention, which is the part that just happened.
+   */
+  brick: "May Allah accept it",
+};
+
+const SUBTITLE: Partial<Record<SuccessScene, string>> = {
+  brick: "Send the transfer from your banking app, with your name in the message.",
 };
 
 /* ── the scenes ───────────────────────────────────────────────────── */
@@ -268,6 +279,71 @@ function Stamp({ t }: { t: number }) {
   );
 }
 
+/** one more brick, lowered into the gap in the top course */
+function Brick({ t }: { t: number }) {
+  const enter = easeOut(span(t, 0, 0.18));
+  const drop = span(t, 0.2, 0.7);
+  const land = settle(drop);
+  const y = -110 + land * 110;
+  // it swings a little on the way down, and stops swinging when it lands
+  const swing = Math.sin(drop * Math.PI * 3) * 5 * (1 - drop);
+  const dust = span(t, 0.66, 1);
+  const glint = span(t, 0.74, 1);
+
+  const rows = [
+    { y: 88, off: 0 },
+    { y: 72, off: 18 },
+    { y: 56, off: 0 },
+  ];
+
+  return (
+    <g opacity={enter}>
+      {/* the wall as it stands */}
+      {rows.map((row) =>
+        [0, 1, 2, 3, 4].map((i) => (
+          <rect key={`${row.y}-${i}`} x={20 + i * 34 - row.off} y={row.y} width="31" height="13" rx="2" fill={C.woodDeep} />
+        )),
+      )}
+      {/* the course being laid, with a gap in it */}
+      <g fill={C.brass} opacity="0.55">
+        <rect x="20" y="40" width="31" height="13" rx="2" />
+        <rect x="54" y="40" width="31" height="13" rx="2" />
+        <rect x="122" y="40" width="31" height="13" rx="2" />
+        <rect x="156" y="40" width="31" height="13" rx="2" />
+      </g>
+      {/* the empty socket, until it is filled */}
+      <rect x="88" y="40" width="31" height="13" rx="2" fill="#0a1a12" opacity={1 - land} />
+
+      {/* the line it comes down on */}
+      <path d={`M103.5 -20 V ${38 + y}`} stroke={C.gold} strokeOpacity={0.45 * (1 - land)} strokeWidth="1.4" />
+
+      {/* the brick */}
+      <g transform={`translate(0 ${y}) rotate(${swing} 103.5 46)`}>
+        <rect x="88" y="40" width="31" height="13" rx="2" fill={C.gold} />
+        <rect x="88" y="40" width="31" height="5" rx="2" fill="#f6e2ab" opacity="0.75" />
+        <path {...L} d="M88 40h31v13H88z" />
+      </g>
+
+      {/* the puff it knocks off the course */}
+      <g fill={C.cream} opacity={0.5 * Math.sin(dust * Math.PI)}>
+        <circle cx={84 - dust * 10} cy={54 - dust * 8} r={2 + dust * 3} />
+        <circle cx={123 + dust * 10} cy={54 - dust * 7} r={2 + dust * 3} />
+      </g>
+
+      {/* it catches the light once it is in */}
+      <path
+        d={`M${90 + glint * 26} 41 l4 11`}
+        stroke="#fffaf0"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        opacity={0.85 * Math.sin(glint * Math.PI)}
+      />
+
+      <path d="M12 103h180" stroke={C.cream} strokeOpacity="0.28" strokeWidth="2.4" strokeLinecap="round" />
+    </g>
+  );
+}
+
 /* ── the overlay ──────────────────────────────────────────────────── */
 
 export function SuccessOverlay({ scene, onClose }: { scene: SuccessScene; onClose: () => void }) {
@@ -354,17 +430,18 @@ export function SuccessOverlay({ scene, onClose }: { scene: SuccessScene; onClos
             {scene === "chair" && <Chair t={t} />}
             {scene === "coin" && <Coin t={t} />}
             {scene === "stamp" && <Stamp t={t} />}
+            {scene === "brick" && <Brick t={t} />}
           </svg>
         )}
 
-        <motion.p
-          className="da-sx-caption"
+        <motion.div
           initial={reduce ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: t > 0.82 ? 1 : 0, y: t > 0.82 ? 0 : 8 }}
           transition={{ duration: 0.45 }}
         >
-          {CAPTION[scene]}
-        </motion.p>
+          <p className="da-sx-caption">{CAPTION[scene]}</p>
+          {SUBTITLE[scene] && <p className="da-sx-sub">{SUBTITLE[scene]}</p>}
+        </motion.div>
       </motion.div>
 
       <button type="button" className="da-sx-skip" onClick={() => setLeaving(true)}>

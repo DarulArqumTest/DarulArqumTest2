@@ -25,9 +25,10 @@ const daBody = Work_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], va
  * serve them yet, so Discord, WhatsApp and iMessage fetched nothing and showed
  * no preview at all.
  */
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.darularqum.org");
+/* the one definition now lives in lib/links.ts, where the sitemap, the
+   robots file and the structured data all read it too */
+import { SITE_URL } from "@/lib/links";
+import { StructuredData } from "@/components/site/structured-data";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${display.variable} ${body.variable} ${arabic.variable} ${daDisplay.variable} ${daBody.variable}`}
     >
       <body className="bg-da-bg font-body text-ink antialiased">
+        <StructuredData />
         <EdgeMargin side="left" />
         <EdgeMargin side="right" />
         <Navbar />

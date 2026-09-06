@@ -12,7 +12,7 @@
  * that is fidgeting.
  */
 
-export type SuccessScene = "register" | "chair" | "coin" | "stamp" | "envelope";
+export type SuccessScene = "register" | "chair" | "coin" | "stamp" | "envelope" | "brick";
 
 const C = {
   cream: "#f6f3ea",
@@ -139,6 +139,37 @@ const SCENES: Record<SuccessScene, React.ReactNode> = {
       </g>
       {/* the drop */}
       <path d="M100 36v6" stroke={C.gold} strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+    </>
+  ),
+
+  /* one more brick in the wall, gold where the new one went */
+  brick: (
+    <>
+      {[
+        { y: 88, off: 0 },
+        { y: 72, off: 18 },
+        { y: 56, off: 0 },
+      ].map((row) =>
+        [0, 1, 2, 3, 4].map((i) => (
+          <rect
+            key={`${row.y}-${i}`}
+            x={20 + i * 34 - row.off}
+            y={row.y}
+            width="31"
+            height="13"
+            rx="2"
+            fill={C.woodDeep}
+          />
+        )),
+      )}
+      <rect x="88" y="40" width="31" height="13" rx="2" fill={C.gold} />
+      <g fill={C.brass} opacity="0.5">
+        <rect x="20" y="40" width="31" height="13" rx="2" />
+        <rect x="54" y="40" width="31" height="13" rx="2" />
+        <rect x="122" y="40" width="31" height="13" rx="2" />
+        <rect x="156" y="40" width="31" height="13" rx="2" />
+      </g>
+      <path d="M12 103h180" stroke={C.cream} strokeOpacity="0.28" strokeWidth="2.4" strokeLinecap="round" />
     </>
   ),
 

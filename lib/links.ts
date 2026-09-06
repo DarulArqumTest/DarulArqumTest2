@@ -176,3 +176,15 @@ export const R = {
   newsletterDec2020: "/newsletters/december-2020",
   contact: "/contact",
 } as const;
+
+/**
+ * Where this site lives, for anything that needs an absolute URL — the
+ * sitemap, the structured data, the share cards.
+ *
+ * ADMIN NOTE: set NEXT_PUBLIC_SITE_URL in the hosting environment once the
+ * real domain points here. Without it, preview deployments fall back to
+ * their own Vercel URL, and production falls back to the domain below.
+ */
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.darularqum.org");

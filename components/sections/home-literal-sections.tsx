@@ -17,6 +17,7 @@ import {
 } from "@/components/sections/home-literal";
 import { SectionSpotlight, HomeHighlightContext } from "@/components/site/use-scroll-highlight";
 import { MasjidProgress } from "@/components/site/masjid-progress";
+import { SuccessOverlay } from "@/components/site/success-overlay";
 
 /* ── animated counter ─────────────────────────────────────────── */
 
@@ -69,12 +70,20 @@ export function useGiveModal() {
 
 export function GiveModal({ state, setState, close }: { state: GiveModalState; setState: React.Dispatch<React.SetStateAction<GiveModalState>>; close: () => void }) {
   const [copiedEmail, setCopiedEmail] = React.useState(false);
+  /**
+   * The one point in the giving flow where a person has decided, is about to
+   * send, and is still on our page. PayPal and pre-authorized debit both
+   * navigate away, so this is where the moment belongs — and it marks the
+   * intention, not a receipt, because nothing here knows any money moved.
+   */
+  const [laidBrick, setLaidBrick] = React.useState(false);
   const amountMin = state.freq === "monthly" ? 20 : 1;
   const amountTooLow = state.amount !== "" && Number(state.amount) < amountMin;
 
   function copyEmail() {
     navigator.clipboard.writeText(ORG.email).then(() => {
       setCopiedEmail(true);
+      setLaidBrick(true);
       setTimeout(() => setCopiedEmail(false), 2000);
     });
   }
@@ -83,6 +92,8 @@ export function GiveModal({ state, setState, close }: { state: GiveModalState; s
   const padContinueUrl = `/give/pledge?method=bank&amount=${encodeURIComponent(state.amount || "0")}&freq=${state.freq}`;
 
   return (
+    <>
+    {laidBrick && <SuccessOverlay scene="brick" onClose={() => setLaidBrick(false)} />}
     <AnimatePresence>
       {state.open && (
         <motion.div
@@ -212,6 +223,7 @@ export function GiveModal({ state, setState, close }: { state: GiveModalState; s
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   );
 }
 

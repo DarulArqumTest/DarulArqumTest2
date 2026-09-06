@@ -97,16 +97,10 @@ export function ProgramsPage() {
         </p>
       </div>
 
-      <div className="da-prog-grid">
-        {PROGRAMS.map((p, i) => (
-          <ProgramCard key={p.slug} p={p} index={i} />
-        ))}
-      </div>
-
-      {/* The panel a person lands on when none of the five cards obviously
-          describes their child. It gets a fingerpost, because the question is
-          about direction, and the number on a plate rather than on the same
-          gold slab as every other action on the page. */}
+      {/* Above the five cards, not under them. Someone who does not already
+          know which class their child belongs in should not have to read
+          five of them and reach the bottom of the page to find that out —
+          the offer to help is the first thing on offer. */}
       <div className="da-prog-help da-panel da-panel-flush">
         <span className="da-prog-help-art" aria-hidden>
           <SignpostArt />
@@ -123,6 +117,12 @@ export function ProgramsPage() {
           <CallPlate />
           <WhatsAppButton label="Ask on WhatsApp" />
         </div>
+      </div>
+
+      <div className="da-prog-grid">
+        {PROGRAMS.map((p, i) => (
+          <ProgramCard key={p.slug} p={p} index={i} />
+        ))}
       </div>
     </div>
   );
