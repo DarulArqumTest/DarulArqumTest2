@@ -8,6 +8,7 @@ import { ramadanState, type RamadanState } from "@/lib/ramadan";
 import { MoonPhase } from "@/components/site/moon-phase";
 import { RamadanLanterns } from "@/components/site/ramadan-lanterns";
 import { R } from "@/lib/links";
+import { useSettings } from "@/components/site/settings-provider";
 
 /**
  * Ramadan mode.
@@ -92,38 +93,29 @@ function useCountdown(state: RamadanState) {
 
 export function RamadanBanner() {
   const times = usePrayerTimes();
-  const [forced, setForced] = React.useState<{ on: boolean; night: number } | null>(null);
+  const { modes } = useSettings();
+  /** the URL switch still works, and still wins, for a quick look */
+  const [urlForced, setUrlForced] = React.useState<number | null>(null);
 
-  // the preview switch, read once on mount so the server render is unaffected
   React.useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    if (q.get("ramadan") === "1") {
-      setForced({ on: true, night: Math.min(30, Math.max(1, Number(q.get("night")) || 12)) });
-    }
+    if (q.get("ramadan") === "1") setUrlForced(Math.min(30, Math.max(1, Number(q.get("night")) || 12)));
   }, []);
 
   const [now, setNow] = React.useState<Date | null>(null);
   React.useEffect(() => setNow(new Date()), []);
 
   const state = React.useMemo<RamadanState>(() => {
-    if (forced?.on) {
-      const n = forced.night;
-      return {
-        active: true,
-        night: n,
-        year: 0,
-        lastTen: n >= 21,
-        qadrNight: n >= 21 && n % 2 === 1,
-        eid: false,
-        phase: ((n - 0.5) / 29.53) % 1,
-      };
-    }
     if (!now) return { active: false, night: 0, year: 0, lastTen: false, qadrNight: false, eid: false, phase: 0 };
     const maghrib = times.prayers.find((p) => p.key === "maghrib");
     const mAt = maghrib ? toMinutes(maghrib.adhan) : null;
     const past = mAt !== null && minutesNowInZone(now, times.timezone) >= mAt;
-    return ramadanState(now, times.timezone, past);
-  }, [forced, now, times]);
+    return ramadanState(now, times.timezone, past, {
+      mode: urlForced !== null ? "on" : modes.ramadan,
+      dayOffset: modes.ramadanDayOffset,
+      forcedNight: urlForced ?? modes.ramadanNight,
+    });
+  }, [urlForced, modes, now, times]);
 
   const countdown = useCountdown(state);
 

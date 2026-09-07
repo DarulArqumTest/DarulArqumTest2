@@ -81,7 +81,7 @@ export function usePrayerTimes(): PrayerTimes {
    * prayer time — the homepage strip, the board, the Ramadan countdown —
    * shows the same one.
    */
-  const { prayers: stored, followMawaqit } = useSettings();
+  const { prayers: stored, followMawaqit, jumua } = useSettings();
   const overrides = followMawaqit ? undefined : stored;
 
   React.useEffect(() => {
@@ -107,11 +107,13 @@ export function usePrayerTimes(): PrayerTimes {
   }, []);
 
   return React.useMemo(() => {
-    if (!overrides || Object.keys(overrides).length === 0) return times;
+    // Jumu'ah is never Mawaqit's to give; the masjid sets both khutbahs
+    const base = { ...times, jumua };
+    if (!overrides || Object.keys(overrides).length === 0) return base;
     return {
-      ...times,
+      ...base,
       prayers: applyPrayerOverrides(times.prayers, overrides),
       tomorrow: applyPrayerOverrides(times.tomorrow, overrides),
     };
-  }, [times, overrides]);
+  }, [times, overrides, jumua]);
 }

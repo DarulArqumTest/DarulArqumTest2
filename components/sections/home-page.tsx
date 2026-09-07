@@ -7,7 +7,6 @@ import { WestAnnounceDock } from "@/components/site/west-announce-banner";
 import { HomeHighlightProvider } from "@/components/site/use-scroll-highlight";
 import { RamadanBanner } from "@/components/site/ramadan-banner";
 import { JumuaBanner } from "@/components/site/jumua-banner";
-import { ORG } from "@/lib/links";
 
 export function HomePage({ skipIntro }: { skipIntro: boolean }) {
   const { phase, index } = useIntroPhase(skipIntro);
@@ -25,7 +24,7 @@ export function HomePage({ skipIntro }: { skipIntro: boolean }) {
         <RamadanBanner />
         {/* Fridays only, and it stands down during Ramadan. `?jumua=1`
             previews it. */}
-        <JumuaBanner jumua={ORG.jumua} />
+        <JumuaBanner />
         <GivingSection onOpenOnce={give.openOnce} onOpenMonthly={() => give.openMonthly()} onOpenMonthly60={(amount) => give.openMonthly(amount)} />
         <ProgramsSection onOpen={setOpenProgram} />
         <ContactSection />

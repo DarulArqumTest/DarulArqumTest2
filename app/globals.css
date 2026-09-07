@@ -4356,6 +4356,87 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
   .da-adm-sky-board { grid-template-columns: 1fr; }
 }
 
+.da-adm-h3 { margin: 0 0 6px; font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 22px; color: #f4faf6; }
+
+/* Jumu'ah, under the board and outside the switch */
+.da-adm-jumua {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 13px;
+  background: linear-gradient(150deg, #123024, #0d2117);
+  border: 1px solid rgba(124, 201, 154, 0.24);
+}
+.da-adm-jumua > div:first-child { flex: 1 1 300px; min-width: 0; }
+.da-adm-jumua-fields { display: flex; gap: 14px; flex: 0 0 auto; }
+.da-adm-jumua-fields .da-adm-field { margin-top: 0; width: 150px; }
+
+/* ── the seasons ── */
+.da-adm-modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+.da-adm-mode { padding: 20px; border-radius: 13px; border: 1px solid rgba(124, 201, 154, 0.2); }
+/* each band carries its own colour, the one it wears on the site */
+.da-adm-mode-jumua { background: linear-gradient(160deg, #123024, #0c1f16); }
+.da-adm-mode-ramadan { background: linear-gradient(160deg, #131f3c, #0d1a2c); border-color: rgba(227, 197, 106, 0.3); }
+.da-adm-mode-head { display: flex; align-items: center; gap: 13px; margin-bottom: 16px; }
+.da-adm-mode-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.da-adm-mode-head b { display: block; font-size: 15px; font-weight: 800; color: #f4faf6; }
+.da-adm-mode-head small { font-size: 12px; line-height: 1.4; color: rgba(234, 243, 236, 0.55); }
+
+.da-adm-choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.da-adm-choices button {
+  padding: 11px 9px;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(234, 243, 236, 0.7);
+  cursor: pointer;
+  text-align: left;
+}
+.da-adm-choices button.on { background: #1f4a33; border-color: #7cc99a; color: #f4faf6; }
+.da-adm-mode-ramadan .da-adm-choices button.on { background: #3d3a1d; border-color: #e3c56a; }
+.da-adm-choices b { display: block; font-size: 12.5px; font-weight: 800; }
+.da-adm-choices small { display: block; margin-top: 2px; font-size: 10.5px; line-height: 1.3; opacity: 0.75; }
+
+.da-adm-qadr { font-style: normal; color: #e3c56a; font-weight: 800; }
+.da-adm-offset { margin-top: 16px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.da-adm-offset > span b { display: block; font-size: 12.5px; font-weight: 800; color: #f4faf6; margin-bottom: 3px; }
+.da-adm-offset > span small { display: block; font-size: 11.5px; line-height: 1.45; color: rgba(234, 243, 236, 0.5); }
+.da-adm-offset-btns { display: flex; gap: 7px; margin-top: 11px; flex-wrap: wrap; }
+.da-adm-offset-btns button {
+  flex: 1 1 auto;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(234, 243, 236, 0.7);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.da-adm-offset-btns button.on { background: #3d3a1d; border-color: #e3c56a; color: #f4faf6; }
+
+@media (max-width: 640px) {
+  .da-adm-jumua-fields { width: 100%; }
+  .da-adm-jumua-fields .da-adm-field { width: auto; flex: 1; }
+  /* three choices on one row become unreadable stubs on a phone */
+  .da-adm-choices { grid-template-columns: 1fr; }
+  .da-adm-offset-btns button { flex: 1 1 100%; }
+}
+
 /* ── the board ── */
 .da-adm-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
 .da-adm-cell {

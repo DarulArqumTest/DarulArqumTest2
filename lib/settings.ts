@@ -28,6 +28,25 @@ export type FinanceSettings = {
 /** an iqama override for one prayer; adhan times stay with Mawaqit */
 export type PrayerOverride = { adhan?: string; iqama?: string };
 
+/** both khutbahs; these do not come from Mawaqit, the masjid sets them */
+export type JumuaSettings = { first: string; second: string };
+
+/**
+ * The two bands that appear on their own, and the switches for them.
+ *
+ * "auto" is the real behaviour — Friday for Jumu'ah, the Hijri month for
+ * Ramadan. "on" and "off" exist so the band can be looked at in September,
+ * and so it can be pulled down in a hurry if something is wrong with it.
+ */
+export type ModeSettings = {
+  jumua: "auto" | "on" | "off";
+  ramadan: "auto" | "on" | "off";
+  /** which night to show while Ramadan is forced on */
+  ramadanNight: number;
+  /** shift the calculated Hijri date to match the local sighting */
+  ramadanDayOffset: number;
+};
+
 export type SiteSettings = {
   finances: FinanceSettings;
   /** keyed by prayer key: fajr, dhuhr, asr, maghrib, isha */
@@ -38,6 +57,8 @@ export type SiteSettings = {
    * restores whatever was typed rather than losing it.
    */
   followMawaqit: boolean;
+  jumua: JumuaSettings;
+  modes: ModeSettings;
   /** who changed it last and when, so a wrong number can be traced */
   updatedAt?: string;
 };
@@ -52,6 +73,8 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   },
   prayers: {},
   followMawaqit: true,
+  jumua: { first: ORG.jumua.first, second: ORG.jumua.second },
+  modes: { jumua: "auto", ramadan: "auto", ramadanNight: 12, ramadanDayOffset: 0 },
 };
 
 /** stored overrides on top of the defaults, with anything invalid ignored */
@@ -80,10 +103,33 @@ export function mergeSettings(stored: Partial<SiteSettings> | null | undefined):
     if (out.adhan || out.iqama) prayers[key] = out;
   }
 
+  const j = stored?.jumua;
+  const jumua: JumuaSettings = {
+    first: isClockTime(j?.first) ? j!.first : DEFAULT_SETTINGS.jumua.first,
+    second: isClockTime(j?.second) ? j!.second : DEFAULT_SETTINGS.jumua.second,
+  };
+
+  const m = stored?.modes;
+  const mode = (v: unknown): ModeSettings["jumua"] =>
+    v === "on" || v === "off" || v === "auto" ? v : "auto";
+  const modes: ModeSettings = {
+    jumua: mode(m?.jumua),
+    ramadan: mode(m?.ramadan),
+    ramadanNight: num(m?.ramadanNight, DEFAULT_SETTINGS.modes.ramadanNight),
+    // a sighting is a day either side at most; anything else is a typo
+    ramadanDayOffset:
+      typeof m?.ramadanDayOffset === "number" && Math.abs(m.ramadanDayOffset) <= 1
+        ? Math.round(m.ramadanDayOffset)
+        : 0,
+  };
+  modes.ramadanNight = Math.min(30, Math.max(1, modes.ramadanNight));
+
   return {
     finances,
     prayers,
     followMawaqit: stored?.followMawaqit !== false,
+    jumua,
+    modes,
     updatedAt: stored?.updatedAt,
   };
 }

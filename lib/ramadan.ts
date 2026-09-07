@@ -80,11 +80,21 @@ const OFF: RamadanState = {
  * night is the evening of the 26th. `pastMaghrib` carries that in from
  * whoever knows today's maghrib time.
  */
-export function ramadanState(date: Date, timeZone: string, pastMaghrib = false): RamadanState {
-  if (OVERRIDE.mode === "off") return OFF;
+export function ramadanState(
+  date: Date,
+  timeZone: string,
+  pastMaghrib = false,
+  /**
+   * What the admin panel says. It wins over the constant above, so the
+   * organisers can shift the month for the local sighting, or force the
+   * band on to look at it, without anyone editing this file.
+   */
+  override: RamadanOverride = OVERRIDE,
+): RamadanState {
+  if (override.mode === "off") return OFF;
 
-  if (OVERRIDE.mode === "on") {
-    const night = Math.min(30, Math.max(1, OVERRIDE.forcedNight));
+  if (override.mode === "on") {
+    const night = Math.min(30, Math.max(1, override.forcedNight));
     const h = hijriDate(date, timeZone);
     return {
       active: true,
@@ -101,7 +111,7 @@ export function ramadanState(date: Date, timeZone: string, pastMaghrib = false):
   if (!h) return OFF;
 
   // roll the date forward for maghrib and for the local sighting
-  let day = h.day + OVERRIDE.dayOffset + (pastMaghrib ? 1 : 0);
+  let day = h.day + override.dayOffset + (pastMaghrib ? 1 : 0);
   let month = h.month;
   let year = h.year;
   if (day > 30) {

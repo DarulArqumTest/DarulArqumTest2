@@ -321,6 +321,31 @@ function PrayerEditor({ setDraft, draft }: { draft: SiteSettings; setDraft: (s: 
         {!times.live && " Mawaqit is not answering right now, so these are the built-in fallback times."}
       </p>
 
+      {/* Jumu'ah is never Mawaqit's to give, so it sits outside the switch */}
+      <div className="da-adm-jumua">
+        <div>
+          <p className="da-adm-eyebrow">Friday</p>
+          <h3 className="da-adm-h3">Jumu&apos;ah</h3>
+          <p className="da-adm-copy" style={{ marginBottom: 0 }}>
+            Both khutbahs. These are always the masjid&apos;s own — the switch above does not
+            touch them.
+          </p>
+        </div>
+        <div className="da-adm-jumua-fields">
+          {(["first", "second"] as const).map((k) => (
+            <label key={k} className="da-adm-field">
+              <span>{k === "first" ? "First khutbah" : "Second khutbah"}</span>
+              <input
+                className="da-adm-input da-adm-input-time"
+                value={draft.jumua[k]}
+                onChange={(e) => setDraft({ ...draft, jumua: { ...draft.jumua, [k]: e.target.value } })}
+                inputMode="text"
+              />
+            </label>
+          ))}
+        </div>
+      </div>
+
       {warning && (
         <div className="da-adm-confirm" role="dialog" aria-label="Take over the prayer times">
           <div className="da-adm-confirm-box">
@@ -442,9 +467,124 @@ function MoneyEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: S
   );
 }
 
+/* ── the two bands that come and go ───────────────────────────────── */
+
+const MODE_CHOICES = [
+  { v: "auto", label: "Automatic", note: "The normal behaviour" },
+  { v: "on", label: "Force on", note: "Show it now, whatever the date" },
+  { v: "off", label: "Force off", note: "Hide it, even when it is due" },
+] as const;
+
+function ModesEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: SiteSettings) => void }) {
+  const m = draft.modes;
+  const set = (patch: Partial<SiteSettings["modes"]>) => setDraft({ ...draft, modes: { ...m, ...patch } });
+
+  return (
+    <div className="da-adm-panel">
+      <p className="da-adm-eyebrow">Seasons</p>
+      <h2 className="da-adm-h2">The bands that come and go</h2>
+      <p className="da-adm-copy">
+        Both of these appear on their own — Friday for Jumu&apos;ah, the Hijri month for Ramadan.
+        The switches are here so you can look at either one out of season, and pull it down in a
+        hurry if something is wrong with it.
+      </p>
+
+      <div className="da-adm-modes">
+        <div className="da-adm-mode da-adm-mode-jumua">
+          <div className="da-adm-mode-head">
+            <span className="da-adm-mode-mark" aria-hidden>
+              <Glyph name="minbar" size={20} />
+            </span>
+            <div>
+              <b>Friday band</b>
+              <small>Both khutbah times and the parking note</small>
+            </div>
+          </div>
+          <div className="da-adm-choices">
+            {MODE_CHOICES.map((c) => (
+              <button
+                key={c.v}
+                type="button"
+                className={m.jumua === c.v ? "on" : ""}
+                onClick={() => set({ jumua: c.v })}
+              >
+                <b>{c.label}</b>
+                <small>{c.note}</small>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="da-adm-mode da-adm-mode-ramadan">
+          <div className="da-adm-mode-head">
+            <span className="da-adm-mode-mark" aria-hidden>
+              <Glyph name="star8" size={20} />
+            </span>
+            <div>
+              <b>Ramadan band</b>
+              <small>The moon, the night, and the countdown to iftar</small>
+            </div>
+          </div>
+          <div className="da-adm-choices">
+            {MODE_CHOICES.map((c) => (
+              <button
+                key={c.v}
+                type="button"
+                className={m.ramadan === c.v ? "on" : ""}
+                onClick={() => set({ ramadan: c.v })}
+              >
+                <b>{c.label}</b>
+                <small>{c.note}</small>
+              </button>
+            ))}
+          </div>
+
+          {m.ramadan === "on" && (
+            <label className="da-adm-slider">
+              <span>
+                Show night <b>{m.ramadanNight}</b> of 30
+                {m.ramadanNight >= 21 && m.ramadanNight % 2 === 1 && <em className="da-adm-qadr"> Laylat al-Qadr</em>}
+              </span>
+              <input
+                type="range"
+                min={1}
+                max={30}
+                value={m.ramadanNight}
+                onChange={(e) => set({ ramadanNight: Number(e.target.value) })}
+              />
+            </label>
+          )}
+
+          <div className="da-adm-offset">
+            <span>
+              <b>Moon sighting</b>
+              <small>
+                The calendar is arithmetic. If the masjid announced Ramadan a day either side of
+                it, shift it here and every night number follows.
+              </small>
+            </span>
+            <div className="da-adm-offset-btns">
+              {[-1, 0, 1].map((o) => (
+                <button
+                  key={o}
+                  type="button"
+                  className={m.ramadanDayOffset === o ? "on" : ""}
+                  onClick={() => set({ ramadanDayOffset: o })}
+                >
+                  {o === 0 ? "As calculated" : o > 0 ? "A day later" : "A day earlier"}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── the panel ────────────────────────────────────────────────────── */
 
-type Tab = "prayer" | "money";
+type Tab = "prayer" | "money" | "modes";
 
 export function AdminPage({
   initial,
@@ -473,6 +613,39 @@ export function AdminPage({
         out.push({ label: m.label, from: fmt(saved.finances[m.key]), to: fmt(draft.finances[m.key]) });
       }
     }
+    for (const k of ["first", "second"] as const) {
+      if (saved.jumua[k] !== draft.jumua[k]) {
+        out.push({
+          label: k === "first" ? "First khutbah" : "Second khutbah",
+          from: saved.jumua[k],
+          to: draft.jumua[k],
+        });
+      }
+    }
+
+    const modeWord = (v: string) => (v === "auto" ? "Automatic" : v === "on" ? "Forced on" : "Forced off");
+    if (saved.modes.jumua !== draft.modes.jumua) {
+      out.push({ label: "Friday band", from: modeWord(saved.modes.jumua), to: modeWord(draft.modes.jumua) });
+    }
+    if (saved.modes.ramadan !== draft.modes.ramadan) {
+      out.push({ label: "Ramadan band", from: modeWord(saved.modes.ramadan), to: modeWord(draft.modes.ramadan) });
+    }
+    if (draft.modes.ramadan === "on" && saved.modes.ramadanNight !== draft.modes.ramadanNight) {
+      out.push({
+        label: "Ramadan night shown",
+        from: `Night ${saved.modes.ramadanNight}`,
+        to: `Night ${draft.modes.ramadanNight}`,
+      });
+    }
+    if (saved.modes.ramadanDayOffset !== draft.modes.ramadanDayOffset) {
+      const word = (o: number) => (o === 0 ? "As calculated" : o > 0 ? "A day later" : "A day earlier");
+      out.push({
+        label: "Moon sighting",
+        from: word(saved.modes.ramadanDayOffset),
+        to: word(draft.modes.ramadanDayOffset),
+      });
+    }
+
     if (saved.followMawaqit !== draft.followMawaqit) {
       out.push({
         label: "Follow the Mawaqit schedule",
@@ -548,13 +721,14 @@ export function AdminPage({
         <button type="button" className={tab === "money" ? "on" : ""} onClick={() => setTab("money")}>
           <Glyph name="tuition" size={17} /> Giving &amp; the loan
         </button>
+        <button type="button" className={tab === "modes" ? "on" : ""} onClick={() => setTab("modes")}>
+          <Glyph name="star8" size={17} /> Seasons
+        </button>
       </nav>
 
-      {tab === "prayer" ? (
-        <PrayerEditor draft={draft} setDraft={setDraft} />
-      ) : (
-        <MoneyEditor draft={draft} setDraft={setDraft} />
-      )}
+      {tab === "prayer" && <PrayerEditor draft={draft} setDraft={setDraft} />}
+      {tab === "money" && <MoneyEditor draft={draft} setDraft={setDraft} />}
+      {tab === "modes" && <ModesEditor draft={draft} setDraft={setDraft} />}
 
       <div className="da-adm-bar">
         <span className="da-adm-bar-count">

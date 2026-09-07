@@ -6,6 +6,7 @@ import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
 import { minutesNowInZone, toMinutes } from "@/lib/prayer";
 import { ramadanState } from "@/lib/ramadan";
 import { LOCATION_LIST, R } from "@/lib/links";
+import { useSettings } from "@/components/site/settings-provider";
 
 /**
  * Friday.
@@ -50,10 +51,11 @@ function Minbar() {
   );
 }
 
-export function JumuaBanner({ jumua }: { jumua: { first: string; second: string } }) {
+export function JumuaBanner() {
   const times = usePrayerTimes();
+  const { jumua, modes } = useSettings();
   const [now, setNow] = React.useState<Date | null>(null);
-  const [forced, setForced] = React.useState(false);
+  const [urlForced, setUrlForced] = React.useState(false);
 
   React.useEffect(() => {
     setNow(new Date());
@@ -62,29 +64,35 @@ export function JumuaBanner({ jumua }: { jumua: { first: string; second: string 
   }, []);
 
   React.useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("jumua") === "1") setForced(true);
+    if (new URLSearchParams(window.location.search).get("jumua") === "1") setUrlForced(true);
   }, []);
 
   const state = React.useMemo(() => {
     if (!now) return null;
+    if (modes.jumua === "off" && !urlForced) return null;
 
     // Friday in the masjid's own zone, not the reader's
     const weekday = new Intl.DateTimeFormat("en-GB", { timeZone: times.timezone, weekday: "short" }).format(now);
-    const isFriday = weekday === "Fri";
-    if (!isFriday && !forced) return null;
+    const forced = urlForced || modes.jumua === "on";
+    if (weekday !== "Fri" && !forced) return null;
 
     // Ramadan's band already owns this slot
     const maghrib = times.prayers.find((p) => p.key === "maghrib");
     const mAt = maghrib ? toMinutes(maghrib.adhan) : null;
     const cur = minutesNowInZone(now, times.timezone);
     const past = mAt !== null && cur >= mAt;
-    if (ramadanState(now, times.timezone, past).active) return null;
+    const ram = ramadanState(now, times.timezone, past, {
+      mode: modes.ramadan,
+      dayOffset: modes.ramadanDayOffset,
+      forcedNight: modes.ramadanNight,
+    });
+    if (ram.active) return null;
 
-    const first = toMinutes(times.jumua.first);
-    const second = toMinutes(times.jumua.second);
+    const first = toMinutes(jumua.first);
+    const second = toMinutes(jumua.second);
     const next = first !== null && cur < first ? "first" : second !== null && cur < second ? "second" : "done";
     return { next, cur };
-  }, [now, forced, times]);
+  }, [now, urlForced, modes, times, jumua]);
 
   if (!state) return null;
 
@@ -105,8 +113,8 @@ export function JumuaBanner({ jumua }: { jumua: { first: string; second: string 
         <div className="da-jm-times">
           {(
             [
-              { key: "first", label: "First khutbah", at: times.jumua.first },
-              { key: "second", label: "Second khutbah", at: times.jumua.second },
+              { key: "first", label: "First khutbah", at: jumua.first },
+              { key: "second", label: "Second khutbah", at: jumua.second },
             ] as const
           ).map((k) => (
             <div key={k.key} className={`da-jm-slot${state.next === k.key ? " da-jm-slot-next" : ""}`}>
