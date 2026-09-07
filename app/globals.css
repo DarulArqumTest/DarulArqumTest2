@@ -4818,6 +4818,73 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
   .da-adm-sub-flag { justify-self: start; margin-top: 4px; }
 }
 
+/* ── deleting a submission, and the bin it waits in ── */
+
+/* head and actions share the row; the head is already a button, so the
+   actions have to be siblings rather than sit inside it */
+.da-adm-sub-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+.da-adm-sub-actions {
+  display: flex;
+  gap: 7px;
+  padding-right: 13px;
+  flex: none;
+}
+
+.da-adm-row-btn {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(124, 201, 154, 0.3);
+  background: transparent;
+  color: #a9e0c0;
+  font-family: "Work Sans", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+.da-adm-row-btn:hover:not(:disabled) { background: rgba(124, 201, 154, 0.14); border-color: rgba(124, 201, 154, 0.55); }
+.da-adm-row-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* destroying something is not the same colour as filing it */
+.da-adm-row-btn-danger { border-color: rgba(231, 111, 111, 0.4); color: #e98d8d; }
+.da-adm-row-btn-danger:hover:not(:disabled) { background: rgba(231, 111, 111, 0.14); border-color: rgba(231, 111, 111, 0.7); }
+/* armed: it now does the thing on the next press, so it stops looking quiet */
+.da-adm-row-btn-danger.is-armed { background: #8f2f2f; border-color: #c25b5b; color: #ffecec; }
+.da-adm-row-btn-danger.is-armed:hover:not(:disabled) { background: #a13636; }
+
+.da-adm-filter-bin {
+  margin-left: auto;
+  border-color: rgba(231, 111, 111, 0.35) !important;
+  color: #e98d8d !important;
+}
+.da-adm-filter-bin.on {
+  background: rgba(231, 111, 111, 0.18) !important;
+  border-color: rgba(231, 111, 111, 0.7) !important;
+}
+
+/* the countdown, in the same slot the "not emailed" flag uses */
+.da-adm-sub-flag-bin {
+  background: rgba(231, 111, 111, 0.18);
+  border-color: rgba(231, 111, 111, 0.5);
+  color: #e98d8d;
+}
+
+@media (max-width: 860px) {
+  /* the actions drop under the row rather than squeezing it — two buttons
+     and a six-field head do not share 360px */
+  .da-adm-sub-row { grid-template-columns: minmax(0, 1fr); }
+  .da-adm-sub-actions {
+    padding: 0 13px 12px;
+    justify-content: flex-start;
+  }
+  .da-adm-filter-bin { margin-left: 0; }
+}
+
 /* ── the board ── */
 .da-adm-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
 .da-adm-cell {

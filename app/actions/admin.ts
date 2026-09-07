@@ -5,7 +5,15 @@ import { revalidatePath } from "next/cache";
 import { ADMIN_COOKIE, checkPassword, createSession, isConfigured, readSession } from "@/lib/admin-auth";
 import { readSettings, writeSettings, STORE_IS_PERSISTENT } from "@/lib/settings-store";
 import { mergeSettings, type SiteSettings } from "@/lib/settings";
-import { readSubmissions, SUBMISSIONS_PERSISTENT, type Submission } from "@/lib/submissions-store";
+import {
+  readSubmissions,
+  trashSubmission,
+  restoreSubmission,
+  purgeSubmission,
+  SUBMISSIONS_PERSISTENT,
+  TRASH_DAYS,
+  type Submission,
+} from "@/lib/submissions-store";
 import { countSubscribers, listSubscribers, type Subscriber } from "@/lib/subscribers";
 import { sendNewsletterAnnouncement, type SendReport } from "@/lib/newsletter-send";
 import { MAIL_CONFIGURED } from "@/lib/mailer";
@@ -69,9 +77,43 @@ export async function loadSettings(): Promise<SiteSettings> {
  * public endpoint, so the check happens here and not in the component that
  * calls it.
  */
-export async function loadSubmissions(): Promise<{ ok: boolean; rows: Submission[]; persistent: boolean }> {
-  if (!(await signedIn())) return { ok: false, rows: [], persistent: SUBMISSIONS_PERSISTENT };
-  return { ok: true, rows: await readSubmissions(150), persistent: SUBMISSIONS_PERSISTENT };
+export async function loadSubmissions(): Promise<{
+  ok: boolean;
+  rows: Submission[];
+  persistent: boolean;
+  trashDays: number;
+}> {
+  if (!(await signedIn()))
+    return { ok: false, rows: [], persistent: SUBMISSIONS_PERSISTENT, trashDays: TRASH_DAYS };
+  return {
+    ok: true,
+    rows: await readSubmissions(150),
+    persistent: SUBMISSIONS_PERSISTENT,
+    trashDays: TRASH_DAYS,
+  };
+}
+
+/**
+ * Moving a submission in and out of the bin, and emptying it.
+ *
+ * All three re-check the session. These are somebody's registration — a
+ * child's name, a parent's phone number, health notes on the kids' form —
+ * and a server action is a public endpoint whatever the panel is showing.
+ */
+export async function trashSubmissionAction(id: string): Promise<{ ok: boolean }> {
+  if (!(await signedIn())) return { ok: false };
+  return { ok: await trashSubmission(id) };
+}
+
+export async function restoreSubmissionAction(id: string): Promise<{ ok: boolean }> {
+  if (!(await signedIn())) return { ok: false };
+  return { ok: await restoreSubmission(id) };
+}
+
+/** irreversible; only offered from inside the bin */
+export async function purgeSubmissionAction(id: string): Promise<{ ok: boolean }> {
+  if (!(await signedIn())) return { ok: false };
+  return { ok: await purgeSubmission(id) };
 }
 
 /* ── the mailing list ─────────────────────────────────────────────── */

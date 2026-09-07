@@ -9,6 +9,9 @@ import {
   loadSubmissions,
   loadSubscribers,
   sendNewsletterEmail,
+  trashSubmissionAction,
+  restoreSubmissionAction,
+  purgeSubmissionAction,
 } from "@/app/actions/admin";
 import type { Submission } from "@/lib/submissions-store";
 import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
@@ -626,22 +629,52 @@ function when(iso: string) {
 function SubmissionsEditor() {
   const [rows, setRows] = React.useState<Submission[] | null>(null);
   const [persistent, setPersistent] = React.useState(true);
+  const [trashDays, setTrashDays] = React.useState(30);
   const [filter, setFilter] = React.useState<string>("all");
   const [open, setOpen] = React.useState<string | null>(null);
+  /** the id awaiting a second press before it is destroyed for good */
+  const [confirmPurge, setConfirmPurge] = React.useState<string | null>(null);
+  const [busy, setBusy] = React.useState<string | null>(null);
 
-  React.useEffect(() => {
-    loadSubmissions().then((r) => {
+  const refresh = React.useCallback(() => {
+    return loadSubmissions().then((r) => {
       setRows(r.rows);
       setPersistent(r.persistent);
+      setTrashDays(r.trashDays);
     });
   }, []);
 
-  const forms = React.useMemo(() => {
-    const set = new Set((rows ?? []).map((r) => r.form));
-    return ["all", ...Array.from(set)];
-  }, [rows]);
+  React.useEffect(() => {
+    refresh();
+  }, [refresh]);
 
-  const shown = (rows ?? []).filter((r) => filter === "all" || r.form === filter);
+  const live = (rows ?? []).filter((r) => !r.deletedAt);
+  const binned = (rows ?? []).filter((r) => r.deletedAt);
+
+  const forms = React.useMemo(() => {
+    const set = new Set(live.map((r) => r.form));
+    return ["all", ...Array.from(set)];
+  }, [rows]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const inBin = filter === "bin";
+  const shown = inBin ? binned : live.filter((r) => filter === "all" || r.form === filter);
+
+  /* how long this one has left before the bin empties itself */
+  const daysLeft = (deletedAt: string) => {
+    const gone = Date.parse(deletedAt);
+    if (!Number.isFinite(gone)) return trashDays;
+    const used = (Date.now() - gone) / 86_400_000;
+    return Math.max(0, Math.ceil(trashDays - used));
+  };
+
+  async function act(id: string, fn: (id: string) => Promise<{ ok: boolean }>) {
+    setBusy(id);
+    await fn(id);
+    await refresh();
+    setBusy(null);
+    setConfirmPurge(null);
+    setOpen(null);
+  }
 
   return (
     <div className="da-adm-panel">
@@ -676,46 +709,133 @@ function SubmissionsEditor() {
           <div className="da-adm-filters">
             {forms.map((f) => (
               <button key={f} type="button" className={filter === f ? "on" : ""} onClick={() => setFilter(f)}>
-                {f === "all" ? `All (${rows.length})` : `${FORM_LABEL[f] ?? f} (${rows.filter((r) => r.form === f).length})`}
+                {f === "all" ? `All (${live.length})` : `${FORM_LABEL[f] ?? f} (${live.filter((r) => r.form === f).length})`}
               </button>
             ))}
+            {/* the bin sits apart from the form filters — it is a different
+                place, not another slice of the same list */}
+            <button
+              type="button"
+              className={`da-adm-filter-bin ${inBin ? "on" : ""}`}
+              onClick={() => setFilter("bin")}
+            >
+              Deleted ({binned.length})
+            </button>
           </div>
 
-          <ul className="da-adm-subs">
-            {shown.map((r) => {
-              const name = r.fields.studentName || r.fields["Full name"] || r.fields.parentName || r.fields.name || "—";
-              const contact = r.fields.parentEmail || r.fields.email || r.fields.Phone || r.fields.emergencyContact || "";
-              const isOpen = open === r.id;
-              return (
-                <li key={r.id} className={isOpen ? "is-open" : undefined}>
-                  <button type="button" className="da-adm-sub-head" onClick={() => setOpen(isOpen ? null : r.id)}>
-                    <span className="da-adm-sub-form">{FORM_LABEL[r.form] ?? r.form}</span>
-                    <span className="da-adm-sub-name">{name}</span>
-                    <span className="da-adm-sub-contact">{contact}</span>
-                    <span className="da-adm-sub-when">{when(r.at)}</span>
-                    {!r.delivered && (
-                      <span className="da-adm-sub-flag" title="The email did not go out; this is the only copy">
-                        Not emailed
-                      </span>
+          {inBin && (
+            <p className="da-adm-copy">
+              These are kept for {trashDays} days and then removed for good. Restoring one puts it
+              back exactly where it was, with its original date.
+            </p>
+          )}
+
+          {shown.length === 0 ? (
+            <div className="da-adm-empty">
+              <span aria-hidden>
+                <Glyph name="envelope" size={26} />
+              </span>
+              <div>
+                <b>{inBin ? "The bin is empty" : "Nothing here"}</b>
+                <small>
+                  {inBin
+                    ? "Deleted submissions wait here before they go for good."
+                    : "Nothing matches this filter."}
+                </small>
+              </div>
+            </div>
+          ) : (
+            <ul className="da-adm-subs">
+              {shown.map((r) => {
+                const name = r.fields.studentName || r.fields["Full name"] || r.fields.parentName || r.fields.name || "—";
+                const contact = r.fields.parentEmail || r.fields.email || r.fields.Phone || r.fields.emergencyContact || "";
+                const isOpen = open === r.id;
+                const working = busy === r.id;
+                return (
+                  <li key={r.id} className={isOpen ? "is-open" : undefined}>
+                    {/* the head is a button, so the actions cannot live inside
+                        it — they sit beside it on the same row */}
+                    <div className="da-adm-sub-row">
+                      <button type="button" className="da-adm-sub-head" onClick={() => setOpen(isOpen ? null : r.id)}>
+                        <span className="da-adm-sub-form">{FORM_LABEL[r.form] ?? r.form}</span>
+                        <span className="da-adm-sub-name">{name}</span>
+                        <span className="da-adm-sub-contact">{contact}</span>
+                        <span className="da-adm-sub-when">{when(r.at)}</span>
+                        {r.deletedAt ? (
+                          <span className="da-adm-sub-flag da-adm-sub-flag-bin">
+                            {daysLeft(r.deletedAt)} day{daysLeft(r.deletedAt) === 1 ? "" : "s"} left
+                          </span>
+                        ) : (
+                          !r.delivered && (
+                            <span className="da-adm-sub-flag" title="The email did not go out; this is the only copy">
+                              Not emailed
+                            </span>
+                          )
+                        )}
+                        <span className="da-adm-sub-chevron" aria-hidden>
+                          {isOpen ? "−" : "+"}
+                        </span>
+                      </button>
+
+                      <div className="da-adm-sub-actions">
+                        {r.deletedAt ? (
+                          <>
+                            <button
+                              type="button"
+                              className="da-adm-row-btn"
+                              disabled={working}
+                              onClick={() => act(r.id, restoreSubmissionAction)}
+                            >
+                              Restore
+                            </button>
+                            {confirmPurge === r.id ? (
+                              <button
+                                type="button"
+                                className="da-adm-row-btn da-adm-row-btn-danger is-armed"
+                                disabled={working}
+                                onClick={() => act(r.id, purgeSubmissionAction)}
+                              >
+                                {working ? "Deleting…" : "Yes, delete for good"}
+                              </button>
+                            ) : (
+                              <button
+                                type="button"
+                                className="da-adm-row-btn da-adm-row-btn-danger"
+                                disabled={working}
+                                onClick={() => setConfirmPurge(r.id)}
+                              >
+                                Delete for good
+                              </button>
+                            )}
+                          </>
+                        ) : (
+                          <button
+                            type="button"
+                            className="da-adm-row-btn"
+                            disabled={working}
+                            onClick={() => act(r.id, trashSubmissionAction)}
+                          >
+                            {working ? "Deleting…" : "Delete"}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {isOpen && (
+                      <dl className="da-adm-sub-body">
+                        {Object.entries(r.fields).map(([k, v]) => (
+                          <div key={k}>
+                            <dt>{k}</dt>
+                            <dd>{v || "—"}</dd>
+                          </div>
+                        ))}
+                      </dl>
                     )}
-                    <span className="da-adm-sub-chevron" aria-hidden>
-                      {isOpen ? "−" : "+"}
-                    </span>
-                  </button>
-                  {isOpen && (
-                    <dl className="da-adm-sub-body">
-                      {Object.entries(r.fields).map(([k, v]) => (
-                        <div key={k}>
-                          <dt>{k}</dt>
-                          <dd>{v || "—"}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </>
       )}
     </div>
