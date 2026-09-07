@@ -13,6 +13,8 @@
  * domain) in the hosting environment to activate direct email delivery.
  */
 
+import { recordSubmission } from "@/lib/submissions-store";
+
 export type SubmitResult =
   | { ok: true; delivered: boolean }
   | { ok: false; error: string };
@@ -43,29 +45,43 @@ export async function submitForm(
       return { ok: false, error: "Add some details before sending." };
     if (data._honeypot) return { ok: true, delivered: false };
 
-    const key = process.env.RESEND_API_KEY;
-    if (!key) return { ok: true, delivered: false };
-
     const body = entries
       .filter(([k]) => !k.startsWith("_"))
       .map(([k, v]) => `${k}: ${v}`)
       .join("\n");
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${key}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "Darul Arqum Website <forms@darularqum.org>",
-        to: [to],
-        reply_to: data.email || undefined,
-        subject: `[darularqum.org] ${formName} submission`,
-        text: body,
-      }),
-    });
-    return { ok: true, delivered: res.ok };
+    let delivered = false;
+    const key = process.env.RESEND_API_KEY;
+    if (key) {
+      try {
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${key}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Darul Arqum Website <forms@darularqum.org>",
+            to: [to],
+            reply_to: data.email || undefined,
+            subject: `[darularqum.org] ${formName} submission`,
+            text: body,
+          }),
+        });
+        delivered = res.ok;
+      } catch {
+        delivered = false;
+      }
+    }
+
+    /**
+     * Written whether or not the email went. This is the copy that does not
+     * depend on a mail provider being reachable, and the admin panel reads
+     * it — so a submission is never only in an inbox.
+     */
+    await recordSubmission(formName, data, delivered);
+
+    return { ok: true, delivered };
   } catch {
     return { ok: true, delivered: false };
   }

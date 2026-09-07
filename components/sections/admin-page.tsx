@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { adminLogin, adminLogout, saveSettings } from "@/app/actions/admin";
+import { adminLogin, adminLogout, saveSettings, loadSubmissions } from "@/app/actions/admin";
+import type { Submission } from "@/lib/submissions-store";
 import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
 import { applyPrayerOverrides, repaidFraction, type SiteSettings } from "@/lib/settings";
 import { MasjidProgress } from "@/components/site/masjid-progress";
@@ -582,9 +583,134 @@ function ModesEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: S
   );
 }
 
+/* ── what people have sent in ─────────────────────────────────────── */
+
+const FORM_LABEL: Record<string, string> = {
+  aalim: "Aalim program",
+  hifz: "Quran Hifz",
+  "quran-classes": "Quran classes",
+  "kids-arabic": "KidsLearnArabic",
+  volunteer: "Volunteer",
+  "mailing-list": "Newsletter",
+  pledge: "Monthly pledge",
+  "tax-receipt": "Tax receipt",
+  contact: "Contact",
+};
+
+function when(iso: string) {
+  try {
+    return new Intl.DateTimeFormat("en-CA", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: "America/Toronto",
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
+
+function SubmissionsEditor() {
+  const [rows, setRows] = React.useState<Submission[] | null>(null);
+  const [persistent, setPersistent] = React.useState(true);
+  const [filter, setFilter] = React.useState<string>("all");
+  const [open, setOpen] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    loadSubmissions().then((r) => {
+      setRows(r.rows);
+      setPersistent(r.persistent);
+    });
+  }, []);
+
+  const forms = React.useMemo(() => {
+    const set = new Set((rows ?? []).map((r) => r.form));
+    return ["all", ...Array.from(set)];
+  }, [rows]);
+
+  const shown = (rows ?? []).filter((r) => filter === "all" || r.form === filter);
+
+  return (
+    <div className="da-adm-panel">
+      <p className="da-adm-eyebrow">Submissions</p>
+      <h2 className="da-adm-h2">What people have sent in</h2>
+      <p className="da-adm-copy">
+        Every form on the site is written here the moment it is submitted, whether or not the
+        email went out. This is the copy that does not depend on an inbox.
+      </p>
+
+      {!persistent && (
+        <p className="da-adm-warn">
+          <b>Nothing is being kept yet.</b> Without a settings store connected, submissions live
+          only until the server restarts. Connect Vercel KV and this fills up on its own.
+        </p>
+      )}
+
+      {rows === null ? (
+        <p className="da-adm-hint">Loading…</p>
+      ) : rows.length === 0 ? (
+        <div className="da-adm-empty">
+          <span aria-hidden>
+            <Glyph name="envelope" size={26} />
+          </span>
+          <div>
+            <b>Nothing yet</b>
+            <small>Registrations, volunteer applications and newsletter signups turn up here.</small>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="da-adm-filters">
+            {forms.map((f) => (
+              <button key={f} type="button" className={filter === f ? "on" : ""} onClick={() => setFilter(f)}>
+                {f === "all" ? `All (${rows.length})` : `${FORM_LABEL[f] ?? f} (${rows.filter((r) => r.form === f).length})`}
+              </button>
+            ))}
+          </div>
+
+          <ul className="da-adm-subs">
+            {shown.map((r) => {
+              const name = r.fields.studentName || r.fields["Full name"] || r.fields.parentName || r.fields.name || "—";
+              const contact = r.fields.parentEmail || r.fields.email || r.fields.Phone || r.fields.emergencyContact || "";
+              const isOpen = open === r.id;
+              return (
+                <li key={r.id} className={isOpen ? "is-open" : undefined}>
+                  <button type="button" className="da-adm-sub-head" onClick={() => setOpen(isOpen ? null : r.id)}>
+                    <span className="da-adm-sub-form">{FORM_LABEL[r.form] ?? r.form}</span>
+                    <span className="da-adm-sub-name">{name}</span>
+                    <span className="da-adm-sub-contact">{contact}</span>
+                    <span className="da-adm-sub-when">{when(r.at)}</span>
+                    {!r.delivered && (
+                      <span className="da-adm-sub-flag" title="The email did not go out; this is the only copy">
+                        Not emailed
+                      </span>
+                    )}
+                    <span className="da-adm-sub-chevron" aria-hidden>
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <dl className="da-adm-sub-body">
+                      {Object.entries(r.fields).map(([k, v]) => (
+                        <div key={k}>
+                          <dt>{k}</dt>
+                          <dd>{v || "—"}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+}
+
 /* ── the panel ────────────────────────────────────────────────────── */
 
-type Tab = "prayer" | "money" | "modes";
+type Tab = "prayer" | "money" | "modes" | "subs";
 
 export function AdminPage({
   initial,
@@ -724,11 +850,15 @@ export function AdminPage({
         <button type="button" className={tab === "modes" ? "on" : ""} onClick={() => setTab("modes")}>
           <Glyph name="star8" size={17} /> Seasons
         </button>
+        <button type="button" className={tab === "subs" ? "on" : ""} onClick={() => setTab("subs")}>
+          <Glyph name="envelope" size={17} /> Submissions
+        </button>
       </nav>
 
       {tab === "prayer" && <PrayerEditor draft={draft} setDraft={setDraft} />}
       {tab === "money" && <MoneyEditor draft={draft} setDraft={setDraft} />}
       {tab === "modes" && <ModesEditor draft={draft} setDraft={setDraft} />}
+      {tab === "subs" && <SubmissionsEditor />}
 
       <div className="da-adm-bar">
         <span className="da-adm-bar-count">

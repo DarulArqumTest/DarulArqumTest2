@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { ADMIN_COOKIE, checkPassword, createSession, isConfigured, readSession } from "@/lib/admin-auth";
 import { readSettings, writeSettings, STORE_IS_PERSISTENT } from "@/lib/settings-store";
 import { mergeSettings, type SiteSettings } from "@/lib/settings";
+import { readSubmissions, SUBMISSIONS_PERSISTENT, type Submission } from "@/lib/submissions-store";
 
 /**
  * Everything the admin panel is allowed to do, and nothing else.
@@ -55,6 +56,19 @@ export async function adminLogout() {
 
 export async function loadSettings(): Promise<SiteSettings> {
   return readSettings();
+}
+
+/**
+ * Form submissions, for the panel.
+ *
+ * Gated on the session because these are people's names, emails, phone
+ * numbers and, on the kids form, health details. A server action is a
+ * public endpoint, so the check happens here and not in the component that
+ * calls it.
+ */
+export async function loadSubmissions(): Promise<{ ok: boolean; rows: Submission[]; persistent: boolean }> {
+  if (!(await signedIn())) return { ok: false, rows: [], persistent: SUBMISSIONS_PERSISTENT };
+  return { ok: true, rows: await readSubmissions(150), persistent: SUBMISSIONS_PERSISTENT };
 }
 
 export async function saveSettings(next: SiteSettings): Promise<{ ok: boolean; persisted: boolean; error?: string }> {
