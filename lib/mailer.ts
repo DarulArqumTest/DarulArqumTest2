@@ -59,11 +59,14 @@ export async function sendMail({
   subject,
   text,
   replyTo,
+  headers,
 }: {
   to: string;
   subject: string;
   text: string;
   replyTo?: string;
+  /** extra headers; used for List-Unsubscribe on newsletter sends */
+  headers?: Record<string, string>;
 }): Promise<{ sent: boolean; error?: string }> {
   if (!MAIL_CONFIGURED) return { sent: false, error: "not configured" };
   try {
@@ -74,6 +77,7 @@ export async function sendMail({
       text,
       // so hitting reply in the inbox answers the person who filled the form
       replyTo: replyTo || undefined,
+      headers,
     });
     return { sent: true };
   } catch (e) {

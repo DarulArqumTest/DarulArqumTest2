@@ -73,8 +73,11 @@ export function Navbar() {
       initial={reduce ? false : { y: -70, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+      /* sits below the closure band when there is one, at the top when there
+         is not; the band publishes its own height as --da-notice-h */
+      style={{ top: "var(--da-notice-h, 0px)" }}
       className={cn(
-        "inset-x-0 top-0 border-b border-da-gold/[0.22] font-daBody backdrop-blur-md backdrop-saturate-150",
+        "inset-x-0 border-b border-da-gold/[0.22] font-daBody backdrop-blur-md backdrop-saturate-150",
         onHome ? "fixed z-50 bg-da-bg/[0.72]" : "sticky z-50 bg-da-bg/[0.85]",
       )}
     >

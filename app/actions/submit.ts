@@ -14,6 +14,7 @@
  */
 
 import { recordSubmission } from "@/lib/submissions-store";
+import { addSubscriber } from "@/lib/subscribers";
 import { sendMail } from "@/lib/mailer";
 
 export type SubmitResult =
@@ -67,6 +68,16 @@ export async function submitForm(
      * it — so a submission is never only in an inbox.
      */
     await recordSubmission(formName, data, delivered);
+
+    /**
+     * A newsletter signup is also a person joining the list, which is a
+     * different thing from a form having been submitted. The log above is
+     * capped and gets cleared; the list must not be, or clearing out test
+     * rows would quietly delete the congregation.
+     */
+    if (formName === "mailing-list" && data.email) {
+      await addSubscriber(data.email, data["Full name"] ?? data.name ?? "");
+    }
 
     return { ok: true, delivered };
   } catch {

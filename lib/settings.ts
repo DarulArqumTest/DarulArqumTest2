@@ -47,10 +47,32 @@ export type ModeSettings = {
   ramadanDayOffset: number;
 };
 
+/**
+ * The band for the day something is wrong.
+ *
+ * Snow, a burst pipe, a jamaat that is not happening. This is the only thing
+ * on the site that outranks the hero, so it is deliberately awkward to leave
+ * running: `until` is a date after which it takes itself down. A closure
+ * notice still up in April is worse than none at all — people stop reading
+ * the band, and then miss the one that matters.
+ */
+export type NoticeSettings = {
+  on: boolean;
+  /** "notice" is a change of plan; "urgent" is the masjid being shut */
+  tone: "notice" | "urgent";
+  /** one line, the thing itself: "Masjid closed today" */
+  title: string;
+  /** one sentence of detail; may be empty */
+  detail: string;
+  /** YYYY-MM-DD in the masjid's zone. Empty means no self-expiry. */
+  until: string;
+};
+
 export type SiteSettings = {
   finances: FinanceSettings;
   /** keyed by prayer key: fajr, dhuhr, asr, maghrib, isha */
   prayers: Record<string, PrayerOverride>;
+  notice: NoticeSettings;
   /**
    * While true, Mawaqit is the schedule and the overrides above are ignored
    * entirely — they are kept, not deleted, so turning the switch back off
@@ -72,6 +94,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     perFamily: ORG.finances.perFamily,
   },
   prayers: {},
+  notice: { on: false, tone: "notice", title: "", detail: "", until: "" },
   followMawaqit: true,
   jumua: { first: ORG.jumua.first, second: ORG.jumua.second },
   modes: { jumua: "auto", ramadan: "auto", ramadanNight: 12, ramadanDayOffset: 0 },
@@ -124,14 +147,66 @@ export function mergeSettings(stored: Partial<SiteSettings> | null | undefined):
   };
   modes.ramadanNight = Math.min(30, Math.max(1, modes.ramadanNight));
 
+  const n = stored?.notice;
+  const dn = DEFAULT_SETTINGS.notice;
+  // falls back to the default the same way every other field here does
+  const text = (v: unknown, max: number, fallback: string) =>
+    typeof v === "string" ? v.trim().slice(0, max) : fallback;
+  const title = text(n?.title, 90, dn.title);
+  const notice: NoticeSettings = {
+    // an empty headline cannot be shown, whatever the switch says
+    on: (typeof n?.on === "boolean" ? n.on : dn.on) && title.length > 0,
+    tone: (n?.tone ?? dn.tone) === "urgent" ? "urgent" : "notice",
+    title,
+    detail: text(n?.detail, 220, dn.detail),
+    until: isDateStamp(n?.until) ? n!.until : isDateStamp(dn.until) ? dn.until : "",
+  };
+
   return {
     finances,
     prayers,
+    notice,
     followMawaqit: stored?.followMawaqit !== false,
     jumua,
     modes,
     updatedAt: stored?.updatedAt,
   };
+}
+
+/** "2026-03-14" and nothing else */
+export function isDateStamp(v: unknown): v is string {
+  return typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v.trim());
+}
+
+/**
+ * Today's date where the masjid is, as YYYY-MM-DD.
+ *
+ * `en-CA` formats as 2026-03-14 already, which is the one locale that gives
+ * this for free. Ottawa, not the reader's machine: a notice that expires
+ * "today" should turn off when today ends in Ottawa.
+ */
+export function todayInZone(now: Date = new Date(), timeZone = "America/Toronto"): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
+}
+
+/**
+ * Whether the band should be on screen right now.
+ *
+ * Kept out of the component so the server and the browser cannot disagree
+ * about it, and so the admin panel can show the same verdict it will get.
+ * `todayStamp` is the masjid's local date, not the reader's — someone opening
+ * the site from another timezone should see what Ottawa sees.
+ */
+export function noticeIsLive(n: NoticeSettings, todayStamp: string): boolean {
+  if (!n.on || !n.title) return false;
+  // `until` is inclusive: "until the 14th" means it is still up on the 14th
+  if (n.until && todayStamp > n.until) return false;
+  return true;
 }
 
 /** "1:30 PM" and nothing else */

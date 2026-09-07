@@ -1082,6 +1082,288 @@ body { overflow-x: hidden; }
   .da-nowrap-desktop { white-space: normal !important; }
 }
 
+/* ── admin: the notice editor and the newsletter sender ──────────── */
+
+/* a live closure, flagged on the tab so it is visible from any other screen */
+.da-adm-tab-live {
+  width: 7px;
+  height: 7px;
+  margin-left: 7px;
+  border-radius: 50%;
+  background: #ef6b6b;
+  box-shadow: 0 0 0 3px rgba(239, 107, 107, 0.2);
+  display: inline-block;
+  flex: none;
+}
+
+.da-adm-notice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 22px;
+  margin: 22px 0 6px;
+}
+/* the headline and the detail are full-width; they are sentences, not fields */
+.da-adm-notice-grid > .da-adm-field:nth-child(1),
+.da-adm-notice-grid > .da-adm-field:nth-child(2) {
+  grid-column: 1 / -1;
+}
+@media (max-width: 720px) {
+  .da-adm-notice-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .da-adm-notice-grid > .da-adm-field { grid-column: auto; }
+}
+
+.da-adm-field-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(246, 243, 234, 0.9);
+}
+
+.da-adm-notice-grid textarea,
+.da-adm-notice-grid input[type="text"],
+.da-adm-notice-grid input[type="date"] {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(246, 243, 234, 0.18);
+  background: rgba(8, 20, 14, 0.6);
+  color: #f6f3ea;
+  font-family: "Work Sans", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.da-adm-notice-grid textarea { resize: vertical; min-height: 78px; }
+.da-adm-notice-grid input:focus-visible,
+.da-adm-notice-grid textarea:focus-visible {
+  outline: 2px solid #a9e0c0;
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.da-adm-hint {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: rgba(246, 243, 234, 0.55);
+}
+
+.da-adm-notice-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* the preview is the real band, so it must not pin inside the panel */
+.da-adm-notice-preview {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(246, 243, 234, 0.14);
+}
+.da-adm-notice-preview .da-cn { position: static; backdrop-filter: none; }
+
+.da-adm-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+.da-adm-presets button {
+  text-align: left;
+  padding: 13px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(246, 243, 234, 0.16);
+  background: rgba(246, 243, 234, 0.04);
+  color: #f6f3ea;
+  cursor: pointer;
+  display: grid;
+  gap: 3px;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+.da-adm-presets button:hover {
+  border-color: rgba(246, 243, 234, 0.3);
+  background: rgba(246, 243, 234, 0.07);
+}
+.da-adm-presets b { font-size: 14px; font-weight: 600; line-height: 1.35; }
+.da-adm-presets small {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(246, 243, 234, 0.5);
+}
+
+/* what the email will actually say */
+.da-adm-mail-preview {
+  border-radius: 12px;
+  border: 1px solid rgba(246, 243, 234, 0.16);
+  background: rgba(8, 20, 14, 0.55);
+  overflow: hidden;
+  margin: 12px 0 18px;
+}
+.da-adm-mail-subject {
+  margin: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(246, 243, 234, 0.12);
+  font-size: 14px;
+  color: #f6f3ea;
+}
+.da-adm-mail-subject span {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(246, 243, 234, 0.45);
+  margin-right: 9px;
+}
+.da-adm-mail-body {
+  margin: 0;
+  padding: 16px;
+  /* it is a plain-text email; showing it in anything else would be a lie
+     about what lands in the inbox */
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: rgba(246, 243, 234, 0.8);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.da-adm-send-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.da-adm-fail-list {
+  margin: 12px 0 18px;
+  padding: 0 0 0 20px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(246, 243, 234, 0.75);
+}
+
+/* The unsubscribe envelope is a squarer drawing than the fallen lantern it
+   borrows this layout from, so it wants less width to sit at the same
+   optical size beside the heading. */
+.da-unsub-art { max-width: 132px; }
+@media (max-width: 720px) { .da-unsub-art { max-width: 104px; } }
+
+/* ══════════════════════════════════════════════════════════════════
+   Closure notice — the band for the day something is wrong
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Read by the navbar, which is fixed on the home page and sticky elsewhere;
+   both need to sit below this band rather than under it. Zero whenever the
+   band is absent or dismissed, so nothing shifts on an ordinary day. */
+:root { --da-notice-h: 0px; }
+
+.da-cn {
+  position: sticky;
+  top: 0;
+  /* above the navbar's z-50 — this is the one thing that outranks it */
+  z-index: 60;
+  overflow: hidden;
+  border-bottom: 1px solid var(--cn-line);
+  background: var(--cn-bg);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+
+/* A change of plan. */
+.da-cn[data-tone="notice"] {
+  --cn-ink: #f0c14b;
+  --cn-bg: rgba(38, 32, 15, 0.94);
+  --cn-line: rgba(240, 193, 75, 0.34);
+}
+/* The masjid is shut. */
+.da-cn[data-tone="urgent"] {
+  --cn-ink: #ef6b6b;
+  --cn-bg: rgba(42, 17, 19, 0.95);
+  --cn-line: rgba(239, 107, 107, 0.4);
+}
+
+.da-cn-inner {
+  max-width: var(--wide, 1200px);
+  margin: 0 auto;
+  padding: 11px 16px 12px;
+  display: grid;
+  /* art | words | dismiss — the words are the only column that flexes */
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 13px;
+}
+
+.da-cn-art {
+  width: 42px;
+  height: 42px;
+  display: block;
+  flex: none;
+}
+
+.da-cn-text {
+  min-width: 0;
+}
+
+.da-cn-title {
+  margin: 0;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1.3;
+  letter-spacing: 0.005em;
+  color: var(--cn-ink);
+}
+
+.da-cn-detail {
+  margin: 3px 0 0;
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(246, 243, 234, 0.76);
+}
+
+.da-cn-x {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--cn-line);
+  background: transparent;
+  color: var(--cn-ink);
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+.da-cn-x svg { width: 15px; height: 15px; display: block; }
+.da-cn-x:hover { background: rgba(246, 243, 234, 0.07); }
+.da-cn-x:focus-visible {
+  outline: 2px solid var(--cn-ink);
+  outline-offset: 2px;
+}
+
+/* Phone: not the desktop row squeezed. The art shrinks and moves up beside
+   the headline, and the detail runs full width underneath both — a 38px
+   column stealing width from a sentence on a 360px screen is what makes
+   these bands wrap to five lines. */
+@media (max-width: 560px) {
+  .da-cn-inner {
+    padding: 10px 13px 11px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "art  title  x"
+      "det  det    det";
+    column-gap: 10px;
+    row-gap: 0;
+    align-items: center;
+  }
+  .da-cn-art { grid-area: art; width: 34px; height: 34px; }
+  .da-cn-text { grid-area: title; display: contents; }
+  .da-cn-title { grid-area: title; font-size: 13.8px; }
+  .da-cn-detail { grid-area: det; margin-top: 6px; font-size: 12.5px; }
+  .da-cn-x { grid-area: x; width: 28px; height: 28px; }
+}
+
 /* ══════════════════════════════════════════════════════════════════
    "New location" announcement — megaphone + comic speech bubble
    ══════════════════════════════════════════════════════════════════ */

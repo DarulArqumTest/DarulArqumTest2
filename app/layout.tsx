@@ -30,6 +30,7 @@ const daBody = Work_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], va
 import { SITE_URL } from "@/lib/links";
 import { StructuredData } from "@/components/site/structured-data";
 import { SettingsProvider } from "@/components/site/settings-provider";
+import { ClosureNotice } from "@/components/site/closure-notice";
 import { readSettings } from "@/lib/settings-store";
 
 export const metadata: Metadata = {
@@ -68,6 +69,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SettingsProvider value={settings}>
           <EdgeMargin side="left" />
           <EdgeMargin side="right" />
+          {/* Above the navbar, and above everything else. Renders nothing at
+              all unless the masjid has switched it on, so an ordinary day
+              costs the page one component that returns null. */}
+          <ClosureNotice />
           <Navbar />
           {children}
           <Footer />

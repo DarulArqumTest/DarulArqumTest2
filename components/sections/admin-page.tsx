@@ -2,13 +2,27 @@
 
 import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { adminLogin, adminLogout, saveSettings, loadSubmissions } from "@/app/actions/admin";
+import {
+  adminLogin,
+  adminLogout,
+  saveSettings,
+  loadSubmissions,
+  loadSubscribers,
+  sendNewsletterEmail,
+} from "@/app/actions/admin";
 import type { Submission } from "@/lib/submissions-store";
 import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
-import { applyPrayerOverrides, repaidFraction, type SiteSettings } from "@/lib/settings";
+import {
+  applyPrayerOverrides,
+  noticeIsLive,
+  repaidFraction,
+  todayInZone,
+  type SiteSettings,
+} from "@/lib/settings";
 import { MasjidProgress } from "@/components/site/masjid-progress";
+import { NoticeDoor } from "@/components/site/closure-notice";
 import { Glyph } from "@/components/site/program-glyphs";
-import { ORG } from "@/lib/links";
+import { ORG, R } from "@/lib/links";
 import { TIME_LOOK, PrayerSky } from "@/components/prayer/prayer-look";
 
 /**
@@ -708,9 +722,389 @@ function SubmissionsEditor() {
   );
 }
 
+/* ── the closure band ─────────────────────────────────────────────── */
+
+const TONE_CHOICES = [
+  { v: "notice" as const, label: "Notice", note: "A change of plan" },
+  { v: "urgent" as const, label: "Urgent", note: "The masjid is closed" },
+];
+
+/** a handful of openings, so nobody has to invent wording in a hurry */
+const NOTICE_PRESETS = [
+  {
+    tone: "urgent" as const,
+    title: "Masjid closed today",
+    detail: "The building is closed due to weather. All jamaat are cancelled. Follow the WhatsApp group for updates.",
+  },
+  {
+    tone: "urgent" as const,
+    title: "No Fajr jamaat tomorrow",
+    detail: "Fajr jamaat is cancelled tomorrow morning only. Every other prayer is at its usual time.",
+  },
+  {
+    tone: "notice" as const,
+    title: "Iqama times have changed",
+    detail: "New iqama times start this week. The prayer times page has the full schedule.",
+  },
+];
+
+function NoticeEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: SiteSettings) => void }) {
+  const n = draft.notice;
+  const set = (patch: Partial<SiteSettings["notice"]>) =>
+    setDraft({ ...draft, notice: { ...n, ...patch } });
+
+  const today = todayInZone();
+  const live = noticeIsLive(n, today);
+  const expired = n.on && Boolean(n.title) && Boolean(n.until) && today > n.until;
+
+  return (
+    <div className="da-adm-panel">
+      <p className="da-adm-eyebrow">Notice</p>
+      <h2 className="da-adm-h2">The band for the day something is wrong</h2>
+      <p className="da-adm-copy">
+        Snow, a burst pipe, a jamaat that is not happening. This sits above everything on
+        every page and stays put until the reader dismisses it — it is the only thing on the
+        site that outranks the front page, so switch it on for things that actually change
+        somebody&apos;s morning.
+      </p>
+
+      <div className="da-adm-notice-grid">
+        <div className="da-adm-field">
+          <label htmlFor="da-nt-title">
+            The headline <small>One line. What is happening.</small>
+          </label>
+          <input
+            id="da-nt-title"
+            type="text"
+            maxLength={90}
+            value={n.title}
+            placeholder="Masjid closed today"
+            onChange={(e) => set({ title: e.target.value })}
+          />
+        </div>
+
+        <div className="da-adm-field">
+          <label htmlFor="da-nt-detail">
+            The detail <small>One sentence. Optional.</small>
+          </label>
+          <textarea
+            id="da-nt-detail"
+            rows={3}
+            maxLength={220}
+            value={n.detail}
+            placeholder="The building is closed due to weather. All jamaat are cancelled."
+            onChange={(e) => set({ detail: e.target.value })}
+          />
+        </div>
+
+        <div className="da-adm-field">
+          <span className="da-adm-field-label">How serious</span>
+          <div className="da-adm-choices">
+            {TONE_CHOICES.map((c) => (
+              <button
+                key={c.v}
+                type="button"
+                className={n.tone === c.v ? "on" : ""}
+                onClick={() => set({ tone: c.v })}
+              >
+                <b>{c.label}</b>
+                <small>{c.note}</small>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="da-adm-field">
+          <label htmlFor="da-nt-until">
+            Take it down after <small>Leave empty and it stays until you switch it off.</small>
+          </label>
+          <input
+            id="da-nt-until"
+            type="date"
+            value={n.until}
+            min={today}
+            onChange={(e) => set({ until: e.target.value })}
+          />
+          <p className="da-adm-hint">
+            The band removes itself the day after this. A closure notice still up in April is
+            worse than none at all — people stop reading the band, and then miss the one that
+            matters.
+          </p>
+        </div>
+      </div>
+
+      <div className="da-adm-notice-switch">
+        <button
+          type="button"
+          className={n.on ? "da-adm-go" : "da-adm-ghost"}
+          onClick={() => set({ on: !n.on })}
+          disabled={!n.title.trim()}
+        >
+          {n.on ? "Band is on — switch it off" : "Switch the band on"}
+        </button>
+        {!n.title.trim() && <span className="da-adm-hint">Write a headline first.</span>}
+        {expired && (
+          <span className="da-adm-hint">
+            The end date has passed, so this is switched on but not showing. Change the date to
+            bring it back.
+          </span>
+        )}
+      </div>
+
+      <p className="da-adm-eyebrow" style={{ marginTop: 26 }}>
+        {live ? "On the site right now" : "Not showing — this is how it would look"}
+      </p>
+      {/* the real band, same classes, so what is approved is what ships */}
+      <div className="da-adm-notice-preview">
+        <div className="da-cn" data-tone={n.tone} style={{ position: "static" }}>
+          <div className="da-cn-inner">
+            <NoticeDoor tone={n.tone} />
+            <div className="da-cn-text">
+              <p className="da-cn-title">{n.title || "Your headline goes here"}</p>
+              {n.detail && <p className="da-cn-detail">{n.detail}</p>}
+            </div>
+            <span className="da-cn-x" aria-hidden>
+              <svg viewBox="0 0 16 16">
+                <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" fill="none" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p className="da-adm-eyebrow" style={{ marginTop: 26 }}>Starting points</p>
+      <div className="da-adm-presets">
+        {NOTICE_PRESETS.map((p) => (
+          <button
+            key={p.title}
+            type="button"
+            onClick={() => set({ tone: p.tone, title: p.title, detail: p.detail })}
+          >
+            <b>{p.title}</b>
+            <small>{p.tone === "urgent" ? "Urgent" : "Notice"}</small>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── telling the list ─────────────────────────────────────────────── */
+
+/**
+ * The one thing in this panel that leaves the building.
+ *
+ * A saved prayer time can be corrected in thirty seconds. A sent email
+ * cannot be recalled from four hundred inboxes, so this is two presses with
+ * the recipient count spelled out in between, and the second press carries
+ * that count back to the server — if somebody signs up while the preview is
+ * on screen, the send is refused rather than going to a list the sender did
+ * not agree to.
+ */
+function NewsletterSender() {
+  const [count, setCount] = React.useState<number | null>(null);
+  const [mailReady, setMailReady] = React.useState(true);
+  const [title, setTitle] = React.useState("");
+  const [blurb, setBlurb] = React.useState("");
+  // R.newsletters is a literal type, so the state has to be widened or the
+  // field cannot be edited
+  const [link, setLink] = React.useState<string>(R.newsletters);
+  const [stage, setStage] = React.useState<"edit" | "confirm" | "done">("edit");
+  const [busy, setBusy] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [report, setReport] = React.useState<{ sent: number; failed: number; failures: string[] } | null>(null);
+
+  React.useEffect(() => {
+    loadSubscribers().then((r) => {
+      if (!r.ok) return;
+      setCount(r.count);
+      setMailReady(r.mailReady);
+    });
+  }, []);
+
+  const preview = async () => {
+    setError("");
+    setBusy(true);
+    const r = await sendNewsletterEmail({ title, blurb, link });
+    setBusy(false);
+    if (r.error) {
+      setError(r.error);
+      return;
+    }
+    setCount(r.attempted);
+    setStage("confirm");
+  };
+
+  const send = async () => {
+    if (count === null) return;
+    setError("");
+    setBusy(true);
+    const r = await sendNewsletterEmail({ title, blurb, link, confirm: count });
+    setBusy(false);
+    if (r.error) {
+      setError(r.error);
+      setStage("edit");
+      return;
+    }
+    setReport({ sent: r.sent, failed: r.failed, failures: r.failures });
+    setStage("done");
+  };
+
+  if (stage === "done" && report) {
+    return (
+      <div className="da-adm-panel">
+        <p className="da-adm-eyebrow">Newsletter</p>
+        <h2 className="da-adm-h2">Sent to {report.sent} {report.sent === 1 ? "person" : "people"}</h2>
+        {report.failed > 0 ? (
+          <>
+            <p className="da-adm-copy">
+              {report.failed} did not go through. These addresses are still on the list — nothing
+              was removed — so they can be tried again or checked for typos.
+            </p>
+            <ul className="da-adm-fail-list">
+              {report.failures.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p className="da-adm-copy">Every address went through. Nothing else to do.</p>
+        )}
+        <button type="button" className="da-adm-ghost" onClick={() => { setStage("edit"); setReport(null); }}>
+          Write another
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="da-adm-panel">
+      <p className="da-adm-eyebrow">Newsletter</p>
+      <h2 className="da-adm-h2">Tell the list there&apos;s a new edition</h2>
+      <p className="da-adm-copy">
+        The newsletter itself lives on the site. This only says &ldquo;there is a new one, here
+        it is&rdquo; and links to it — so put the edition up first, then send this.
+      </p>
+
+      {!mailReady && (
+        <p className="da-adm-warn da-adm-warn-wide">
+          <b>Mail is not configured on this deployment.</b> Nothing can be sent until SMTP_USER
+          and SMTP_PASS are set.
+        </p>
+      )}
+
+      <p className="da-adm-copy">
+        <b>{count === null ? "Counting…" : `${count} ${count === 1 ? "person is" : "people are"} on the list.`}</b>{" "}
+        Everyone here typed their address into the signup form themselves. Every message carries
+        the masjid&apos;s address and a working unsubscribe link, which the law requires and
+        which this sends automatically.
+      </p>
+
+      {stage === "edit" ? (
+        <>
+          <div className="da-adm-notice-grid">
+            <div className="da-adm-field">
+              <label htmlFor="da-nl-title">
+                What&apos;s new <small>Becomes the subject line.</small>
+              </label>
+              <input
+                id="da-nl-title"
+                type="text"
+                maxLength={120}
+                value={title}
+                placeholder="March 2026 newsletter is up"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className="da-adm-field">
+              <label htmlFor="da-nl-blurb">
+                A line or two <small>Optional. What&apos;s in it.</small>
+              </label>
+              <textarea
+                id="da-nl-blurb"
+                rows={3}
+                maxLength={400}
+                value={blurb}
+                placeholder="Ramadan timetable, the new Hifz intake, and an update on the West masjid."
+                onChange={(e) => setBlurb(e.target.value)}
+              />
+            </div>
+            <div className="da-adm-field">
+              <label htmlFor="da-nl-link">
+                Where it is <small>The page to send them to.</small>
+              </label>
+              <input
+                id="da-nl-link"
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {error && <p className="da-adm-warn da-adm-warn-wide">{error}</p>}
+
+          <button
+            type="button"
+            className="da-adm-go"
+            onClick={preview}
+            disabled={busy || !title.trim() || !mailReady || count === 0}
+          >
+            {busy ? "Checking…" : "Review before sending"}
+          </button>
+        </>
+      ) : (
+        <div className="da-adm-send-confirm">
+          <p className="da-adm-eyebrow">This is what they get</p>
+          <div className="da-adm-mail-preview">
+            <p className="da-adm-mail-subject">
+              <span>Subject</span> {ORG.name} — {title}
+            </p>
+            <pre className="da-adm-mail-body">{`Assalamu alaikum,
+
+There's something new in the ${ORG.name} newsletter:
+
+${title}${blurb.trim() ? `\n\n${blurb.trim()}` : ""}
+
+Read it here:
+${link}
+
+—
+${ORG.name} — ${ORG.tagline}
+${ORG.address}
+Registered charity ${ORG.charityReg}
+
+You're getting this because you signed up for the newsletter.
+To stop receiving these, unsubscribe here:
+(a link that belongs to their address)`}</pre>
+          </div>
+
+          <p className="da-adm-copy">
+            <b>
+              This goes to {count} {count === 1 ? "person" : "people"} and cannot be taken back.
+            </b>{" "}
+            Read the subject line once more — it is the part everybody sees.
+          </p>
+
+          {error && <p className="da-adm-warn da-adm-warn-wide">{error}</p>}
+
+          <div className="da-adm-send-actions">
+            <button type="button" className="da-adm-ghost" onClick={() => setStage("edit")} disabled={busy}>
+              Go back and edit
+            </button>
+            <button type="button" className="da-adm-go" onClick={send} disabled={busy}>
+              {busy ? "Sending…" : `Send it to ${count}`}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── the panel ────────────────────────────────────────────────────── */
 
-type Tab = "prayer" | "money" | "modes" | "subs";
+type Tab = "prayer" | "money" | "modes" | "notice" | "news" | "subs";
 
 export function AdminPage({
   initial,
@@ -770,6 +1164,28 @@ export function AdminPage({
         from: word(saved.modes.ramadanDayOffset),
         to: word(draft.modes.ramadanDayOffset),
       });
+    }
+
+    /* The closure band. Listed before the Mawaqit early return below, or a
+       closure edited while the schedule switch is on would be saved without
+       ever appearing on the confirm screen. */
+    const sn = saved.notice;
+    const dn = draft.notice;
+    if (sn.on !== dn.on) {
+      out.push({ label: "Closure band", from: sn.on ? "Showing" : "Hidden", to: dn.on ? "Showing" : "Hidden" });
+    }
+    if (sn.tone !== dn.tone) {
+      const toneWord = (t: string) => (t === "urgent" ? "Urgent" : "Notice");
+      out.push({ label: "Notice tone", from: toneWord(sn.tone), to: toneWord(dn.tone) });
+    }
+    if (sn.title !== dn.title) {
+      out.push({ label: "Notice headline", from: sn.title || "—", to: dn.title || "—" });
+    }
+    if (sn.detail !== dn.detail) {
+      out.push({ label: "Notice detail", from: sn.detail || "—", to: dn.detail || "—" });
+    }
+    if (sn.until !== dn.until) {
+      out.push({ label: "Notice ends after", from: sn.until || "No end date", to: dn.until || "No end date" });
     }
 
     if (saved.followMawaqit !== draft.followMawaqit) {
@@ -850,14 +1266,24 @@ export function AdminPage({
         <button type="button" className={tab === "modes" ? "on" : ""} onClick={() => setTab("modes")}>
           <Glyph name="star8" size={17} /> Seasons
         </button>
+        <button type="button" className={tab === "notice" ? "on" : ""} onClick={() => setTab("notice")}>
+          <Glyph name="minbar" size={17} /> Notice
+          {/* a live closure is the one state worth flagging on the tab itself */}
+          {noticeIsLive(saved.notice, todayInZone()) && <i className="da-adm-tab-live" aria-label="live" />}
+        </button>
+        <button type="button" className={tab === "news" ? "on" : ""} onClick={() => setTab("news")}>
+          <Glyph name="envelope" size={17} /> Newsletter
+        </button>
         <button type="button" className={tab === "subs" ? "on" : ""} onClick={() => setTab("subs")}>
-          <Glyph name="envelope" size={17} /> Submissions
+          <Glyph name="calendar" size={17} /> Submissions
         </button>
       </nav>
 
       {tab === "prayer" && <PrayerEditor draft={draft} setDraft={setDraft} />}
       {tab === "money" && <MoneyEditor draft={draft} setDraft={setDraft} />}
       {tab === "modes" && <ModesEditor draft={draft} setDraft={setDraft} />}
+      {tab === "notice" && <NoticeEditor draft={draft} setDraft={setDraft} />}
+      {tab === "news" && <NewsletterSender />}
       {tab === "subs" && <SubmissionsEditor />}
 
       <div className="da-adm-bar">
