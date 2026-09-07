@@ -8,6 +8,7 @@ import { applyPrayerOverrides, repaidFraction, type SiteSettings } from "@/lib/s
 import { MasjidProgress } from "@/components/site/masjid-progress";
 import { Glyph } from "@/components/site/program-glyphs";
 import { ORG } from "@/lib/links";
+import { TIME_LOOK, PrayerSky } from "@/components/prayer/prayer-look";
 
 /**
  * The admin panel.
@@ -204,18 +205,12 @@ const PRAYER_LABEL: Record<string, string> = {
   isha: "Isha",
 };
 
-function PrayerEditor({
-  settings,
-  setDraft,
-  draft,
-}: {
-  settings: SiteSettings;
-  draft: SiteSettings;
-  setDraft: (s: SiteSettings) => void;
-}) {
+function PrayerEditor({ setDraft, draft }: { draft: SiteSettings; setDraft: (s: SiteSettings) => void }) {
   const times = usePrayerTimes();
-  const live = applyPrayerOverrides(times.prayers, settings.prayers);
-  const shown = applyPrayerOverrides(times.prayers, draft.prayers);
+  const [warning, setWarning] = React.useState(false);
+  const locked = draft.followMawaqit;
+  // while locked the board shows Mawaqit; unlocked it shows what you typed
+  const shown = applyPrayerOverrides(times.prayers, locked ? {} : draft.prayers);
 
   function set(key: string, field: "adhan" | "iqama", value: string) {
     const next = { ...draft, prayers: { ...draft.prayers } };
@@ -230,61 +225,92 @@ function PrayerEditor({
   }
 
   return (
-    <div className="da-adm-panel">
-      <p className="da-adm-eyebrow">Prayer times</p>
-      <h2 className="da-adm-h2">The board</h2>
-      <p className="da-adm-copy">
-        These come from the masjid&apos;s Mawaqit schedule automatically. Anything you type here
-        overrides it on the website until you clear it again. Leave a box empty to go back to the
-        Mawaqit time.
-      </p>
+    <div className="da-adm-panel da-adm-panel-sky">
+      <div className="da-adm-panel-head">
+        <div>
+          <p className="da-adm-eyebrow">Prayer times</p>
+          <h2 className="da-adm-h2">The board</h2>
+          <p className="da-adm-copy">
+            This is the board as the website shows it. While the switch is on, the masjid&apos;s
+            Mawaqit schedule is the schedule and nothing here can be typed over.
+          </p>
+        </div>
 
-      <div className="da-adm-board">
+        {/* the switch, and the whole point of it */}
+        <div className="da-adm-switch-wrap">
+          <button
+            type="button"
+            role="switch"
+            aria-checked={locked}
+            className={`da-adm-switch${locked ? " on" : ""}`}
+            onClick={() => {
+              if (locked) setWarning(true);
+              else setDraft({ ...draft, followMawaqit: true });
+            }}
+          >
+            <span className="da-adm-switch-track">
+              <span className="da-adm-switch-knob" />
+            </span>
+            <span className="da-adm-switch-text">
+              <b>Follow the Mawaqit schedule</b>
+              <small>{locked ? "On — times update themselves" : "Off — you are setting them by hand"}</small>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div className={`da-adm-sky-board${locked ? " is-locked" : ""}`}>
         {shown.map((p) => {
+          const look = TIME_LOOK[p.key];
           const base = times.prayers.find((x) => x.key === p.key);
           const o = draft.prayers[p.key] ?? {};
-          const changed = Boolean(o.adhan || o.iqama);
+          const changed = !locked && Boolean(o.adhan || o.iqama);
           return (
-            <div key={p.key} className={`da-adm-cell${changed ? " da-adm-cell-on" : ""}`}>
-              <div className="da-adm-cell-head">
-                <span className="da-adm-cell-name">{PRAYER_LABEL[p.key] ?? p.key}</span>
-                <span className="da-adm-cell-ar" dir="rtl">
+            <div
+              key={p.key}
+              className={`da-adm-sky-cell${changed ? " is-changed" : ""}`}
+              style={{
+                background: `linear-gradient(180deg, rgba(8,10,18,0.42), rgba(8,10,18,0.16) 45%, rgba(8,10,18,0.52)), ${look.bg}`,
+              }}
+            >
+              <PrayerSky look={look} />
+              <div className="da-adm-sky-text">
+                <div dir="rtl" lang="ar" style={{ fontFamily: "'Amiri',serif", fontSize: 19, color: look.textAccent, textShadow: look.halo }}>
                   {p.arabic}
-                </span>
+                </div>
+                <div className="da-adm-sky-name" style={{ color: look.textPrimary, textShadow: look.halo }}>
+                  {PRAYER_LABEL[p.key] ?? p.key}
+                </div>
+
+                {(["adhan", "iqama"] as const).map((field) => (
+                  <label key={field} className="da-adm-sky-field">
+                    <span style={{ color: look.textSecondary, textShadow: look.halo }}>{field}</span>
+                    <input
+                      className="da-adm-sky-input"
+                      value={locked ? (base?.[field] ?? p[field]) : (o[field] ?? "")}
+                      placeholder={base?.[field] ?? p[field]}
+                      onChange={(e) => set(p.key, field, e.target.value)}
+                      disabled={locked}
+                      inputMode="text"
+                      aria-label={`${PRAYER_LABEL[p.key]} ${field}`}
+                    />
+                  </label>
+                ))}
+
+                {changed && (
+                  <button
+                    type="button"
+                    className="da-adm-sky-clear"
+                    onClick={() => {
+                      const next = { ...draft, prayers: { ...draft.prayers } };
+                      delete next.prayers[p.key];
+                      setDraft(next);
+                    }}
+                  >
+                    Clear
+                  </button>
+                )}
               </div>
-              <label className="da-adm-time">
-                <span>Adhan</span>
-                <input
-                  className="da-adm-input da-adm-input-time"
-                  value={o.adhan ?? ""}
-                  placeholder={base?.adhan ?? p.adhan}
-                  onChange={(e) => set(p.key, "adhan", e.target.value)}
-                  inputMode="text"
-                />
-              </label>
-              <label className="da-adm-time">
-                <span>Iqama</span>
-                <input
-                  className="da-adm-input da-adm-input-time"
-                  value={o.iqama ?? ""}
-                  placeholder={base?.iqama ?? p.iqama}
-                  onChange={(e) => set(p.key, "iqama", e.target.value)}
-                  inputMode="text"
-                />
-              </label>
-              {changed && (
-                <button
-                  type="button"
-                  className="da-adm-clear"
-                  onClick={() => {
-                    const next = { ...draft, prayers: { ...draft.prayers } };
-                    delete next.prayers[p.key];
-                    setDraft(next);
-                  }}
-                >
-                  Back to Mawaqit
-                </button>
-              )}
             </div>
           );
         })}
@@ -292,9 +318,38 @@ function PrayerEditor({
 
       <p className="da-adm-hint">
         Times go in as they read on the board: <code>1:30 PM</code>. Anything else is ignored.
-        {!times.live && " (Mawaqit is not answering right now, so the placeholders are the built-in fallback.)"}
+        {!times.live && " Mawaqit is not answering right now, so these are the built-in fallback times."}
       </p>
-      <input type="hidden" readOnly value={live.map((p) => p.iqama).join(",")} />
+
+      {warning && (
+        <div className="da-adm-confirm" role="dialog" aria-label="Take over the prayer times">
+          <div className="da-adm-confirm-box">
+            <p className="da-adm-eyebrow">Before you switch this off</p>
+            <h2 className="da-adm-h2">You will be setting the times by hand</h2>
+            <p className="da-adm-copy" style={{ marginBottom: 0 }}>
+              Any time you type will show on the website instead of the Mawaqit one, and it will
+              keep showing even when Mawaqit changes — through Ramadan, and every time the
+              schedule shifts with the season. It stays that way until you turn this switch back
+              on. Anything you leave blank keeps following Mawaqit.
+            </p>
+            <div className="da-adm-confirm-actions">
+              <button type="button" className="da-adm-ghost" onClick={() => setWarning(false)}>
+                Leave it on
+              </button>
+              <button
+                type="button"
+                className="da-adm-go da-adm-go-warn"
+                onClick={() => {
+                  setDraft({ ...draft, followMawaqit: false });
+                  setWarning(false);
+                }}
+              >
+                I understand, let me set them
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -418,6 +473,17 @@ export function AdminPage({
         out.push({ label: m.label, from: fmt(saved.finances[m.key]), to: fmt(draft.finances[m.key]) });
       }
     }
+    if (saved.followMawaqit !== draft.followMawaqit) {
+      out.push({
+        label: "Follow the Mawaqit schedule",
+        from: saved.followMawaqit ? "On" : "Off",
+        to: draft.followMawaqit ? "On" : "Off",
+      });
+    }
+    // while the switch is on the overrides are dormant, so listing them as
+    // changes would be describing something the website will not do
+    if (draft.followMawaqit) return out;
+
     const keys = new Set([...Object.keys(saved.prayers), ...Object.keys(draft.prayers)]);
     for (const k of keys) {
       const base = times.prayers.find((p) => p.key === k);
@@ -485,7 +551,7 @@ export function AdminPage({
       </nav>
 
       {tab === "prayer" ? (
-        <PrayerEditor settings={saved} draft={draft} setDraft={setDraft} />
+        <PrayerEditor draft={draft} setDraft={setDraft} />
       ) : (
         <MoneyEditor draft={draft} setDraft={setDraft} />
       )}

@@ -10,6 +10,7 @@ import { nextPrayer, activePrayerKey } from "@/lib/prayer";
 import { usePrayerTimes } from "@/components/prayer/use-prayer-times";
 import { EXT } from "@/lib/links";
 import { useIsDesktop } from "@/components/site/use-media-query";
+import { TIME_LOOK, PrayerSky } from "@/components/prayer/prayer-look";
 
 function useNow(intervalMs = 30000) {
   const [now, setNow] = React.useState<Date | null>(null);
@@ -47,95 +48,9 @@ function GeoStar({ top, left, right, size, opacity, twinkle }: { top: string; le
   );
 }
 
-/**
- * A waxing crescent, drawn rather than approximated.
- *
- * Isha's "moon" used to be a 16px dot — the right idea at the wrong size
- * with none of the shape that makes a moon read as a moon. This carves a
- * real crescent out of a lit disc with a mask, and puts craters on the lit
- * limb where they catch the light. IDs are scoped with useId because three
- * copies of this can be in the document at once and a duplicate mask id
- * resolves to whichever one the browser saw first.
- */
-function Moon() {
-  const uid = React.useId().replace(/:/g, "");
-  return (
-    <svg width="100%" height="100%" viewBox="0 0 40 40" aria-hidden style={{ display: "block", overflow: "visible", filter: "drop-shadow(0 0 6px rgba(198,214,255,0.5))" }}>
-      <defs>
-        <mask id={`mk${uid}`}>
-          <rect width="40" height="40" fill="#000" />
-          <circle cx="19" cy="20" r="17" fill="#fff" />
-          <circle cx="31.5" cy="13.5" r="15" fill="#000" />
-        </mask>
-        <radialGradient id={`gr${uid}`} cx="34%" cy="64%" r="72%">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="62%" stopColor="#eaeefc" />
-          <stop offset="100%" stopColor="#c2cae6" />
-        </radialGradient>
-      </defs>
-      <g mask={`url(#mk${uid})`}>
-        <circle cx="19" cy="20" r="17" fill={`url(#gr${uid})`} />
-        <circle cx="11.5" cy="14.5" r="2.7" fill="#a9b3d2" opacity="0.5" />
-        <circle cx="8.6" cy="23.5" r="1.9" fill="#a9b3d2" opacity="0.42" />
-        <circle cx="14.6" cy="28.5" r="1.4" fill="#a9b3d2" opacity="0.38" />
-        <circle cx="7.6" cy="18.2" r="1.05" fill="#a9b3d2" opacity="0.34" />
-        <circle cx="13.4" cy="21.6" r="1.15" fill="#a9b3d2" opacity="0.3" />
-      </g>
-    </svg>
-  );
-}
-
-/**
- * Each prayer's sky.
- *
- * The gradients are the original ones and they stay untouched, top to
- * bottom. An earlier attempt at legibility laid a heavy wash over the lower
- * half of every cell, which did make the type readable and destroyed the
- * palette doing it — Dhuhr faded to near-white, Maghrib to near-black. The
- * type is carried by a one-pixel outline in the cell's own ink plus a soft
- * glow, which is how type survives over imagery — it costs the colour
- * nothing, and it works even where cream sits on light orange at the bottom
- * of Maghrib.
- *
- * What actually made the times hard to read was never contrast: it was the
- * sun sitting behind them. Fajr's and Maghrib's discs are low, and
- * positioned against the whole cell they landed on "IQAMA". They now live in
- * a sky band above the type, and travel it as a real arc — low in the east
- * at Fajr, overhead at Dhuhr, past the meridian at Asr, low in the west at
- * Maghrib, the moon high at Isha.
- */
-const TIME_LOOK: Record<string, { bg: string; skyFrac: number; skyX: string; discSize: number; disc: string; discGlow: string; moon?: boolean; textPrimary: string; textAccent: string; textSecondary: string; textMuted: string; labelShadow: string; halo: string }> = {
-  fajr: {
-    bg: "linear-gradient(180deg, #182238 0%, #35335c 48%, #6d4c6f 82%, #a8724f 100%)",
-    skyFrac: 0.94, skyX: "50%", discSize: 38, disc: "radial-gradient(circle, #f7dfa6, #e3a25f 70%)", discGlow: "rgba(247,223,166,0.45)",
-    textPrimary: "#fdf6e6", textAccent: "#ffe3a3", textSecondary: "rgba(253,246,230,0.88)", textMuted: "rgba(253,246,230,0.5)", labelShadow: "0 1px 6px rgba(0,0,0,0.75)",
-    halo: "0 1px 0 rgba(10,14,30,0.95), 0 -1px 0 rgba(10,14,30,0.7), 1px 0 0 rgba(10,14,30,0.7), -1px 0 0 rgba(10,14,30,0.7), 0 0 4px rgba(10,14,30,0.95), 0 0 9px rgba(10,14,30,0.7)",
-  },
-  dhuhr: {
-    bg: "linear-gradient(180deg, #2f6fb0 0%, #5b9bd6 55%, #a9d4ee 100%)",
-    skyFrac: 0.02, skyX: "50%", discSize: 46, disc: "radial-gradient(circle, #fffbe8, #ffe9a0 70%)", discGlow: "rgba(255,251,232,0.65)",
-    textPrimary: "#0e2419", textAccent: "#7a4a12", textSecondary: "rgba(14,36,25,0.8)", textMuted: "rgba(14,36,25,0.55)", labelShadow: "0 1px 5px rgba(255,255,255,0.85)",
-    halo: "0 1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(240,250,255,0.8), 1px 0 0 rgba(240,250,255,0.8), -1px 0 0 rgba(240,250,255,0.8), 0 0 4px rgba(255,255,255,0.95), 0 0 9px rgba(240,250,255,0.8)",
-  },
-  asr: {
-    bg: "linear-gradient(180deg, #a8622c 0%, #cf9143 55%, #ecc57e 100%)",
-    skyFrac: 0.4, skyX: "50%", discSize: 42, disc: "radial-gradient(circle, #fff2cf, #ffd27a 70%)", discGlow: "rgba(255,242,207,0.6)",
-    textPrimary: "#2a1608", textAccent: "#5c2c0a", textSecondary: "rgba(42,22,8,0.78)", textMuted: "rgba(42,22,8,0.5)", labelShadow: "0 1px 5px rgba(255,240,214,0.8)",
-    halo: "0 1px 0 rgba(255,250,238,0.95), 0 -1px 0 rgba(255,246,226,0.8), 1px 0 0 rgba(255,246,226,0.8), -1px 0 0 rgba(255,246,226,0.8), 0 0 4px rgba(255,250,238,0.95), 0 0 9px rgba(255,246,226,0.8)",
-  },
-  maghrib: {
-    bg: "linear-gradient(180deg, #4a2a56 0%, #a83f4a 45%, #d9722f 78%, #f0a860 100%)",
-    skyFrac: 0.96, skyX: "50%", discSize: 44, disc: "radial-gradient(circle, #fff0d2, #ffb35c 70%)", discGlow: "rgba(255,179,92,0.6)",
-    textPrimary: "#fff3e4", textAccent: "#ffd9a0", textSecondary: "rgba(255,243,228,0.88)", textMuted: "rgba(255,243,228,0.55)", labelShadow: "0 1px 6px rgba(0,0,0,0.7)",
-    halo: "0 1px 0 rgba(46,10,24,0.98), 0 -1px 0 rgba(46,10,24,0.8), 1px 0 0 rgba(46,10,24,0.8), -1px 0 0 rgba(46,10,24,0.8), 0 0 4px rgba(46,10,24,0.98), 0 0 9px rgba(46,10,24,0.8)",
-  },
-  isha: {
-    bg: "linear-gradient(180deg, #0a1220 0%, #182642 55%, #223458 100%)",
-    skyFrac: 0.16, skyX: "50%", discSize: 46, disc: "", discGlow: "", moon: true,
-    textPrimary: "#f6f3ea", textAccent: "#e3c56a", textSecondary: "rgba(246,243,234,0.88)", textMuted: "rgba(246,243,234,0.45)", labelShadow: "0 1px 6px rgba(0,0,0,0.8)",
-    halo: "0 1px 0 rgba(4,8,20,0.95), 0 -1px 0 rgba(4,8,20,0.7), 1px 0 0 rgba(4,8,20,0.7), -1px 0 0 rgba(4,8,20,0.7), 0 0 4px rgba(4,8,20,0.95), 0 0 9px rgba(4,8,20,0.7)",
-  },
-};
+/* The Moon, TIME_LOOK and the sky band now live in
+ * components/prayer/prayer-look.tsx, because the admin panel edits this
+ * same board and needed the real thing rather than a copy of it. */
 
 function IqamaTable() {
   const now = useNow(60000);
@@ -187,22 +102,7 @@ function IqamaTable() {
                   ever be behind a sun. The disc is lerped *inside* the band —
                   `(100% - size) * f` moves its box, not its centre — so it
                   reaches the horizon and the zenith without leaving. */}
-              <div
-                className="da-iqama-sky"
-                style={{ "--disc": `${look.discSize}px`, "--f": look.skyFrac, "--x": look.skyX } as React.CSSProperties}
-                aria-hidden
-              >
-                <div
-                  className="da-iqama-disc"
-                  style={{
-                    borderRadius: look.moon ? 0 : 999,
-                    background: look.moon ? undefined : look.disc,
-                    boxShadow: look.moon ? undefined : `0 0 26px 8px ${look.discGlow}`,
-                  }}
-                >
-                  {look.moon && <Moon />}
-                </div>
-              </div>
+              <PrayerSky look={look} />
               <div className="da-iqama-text" style={{ position: "relative", zIndex: 1 }}>
                 <div dir="rtl" lang="ar" className="da-iqama-arabic" style={{ fontFamily: "'Amiri',serif", fontSize: 20, color: look.textAccent, margin: "14px 0 8px 0", textShadow: look.halo }}>{p.arabic}</div>
                 <div className="da-iqama-name" style={{ fontSize: 14, fontWeight: 700, color: look.textPrimary, marginBottom: 16, textShadow: look.halo }}>{p.name}</div>

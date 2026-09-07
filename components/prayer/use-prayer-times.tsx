@@ -81,7 +81,8 @@ export function usePrayerTimes(): PrayerTimes {
    * prayer time — the homepage strip, the board, the Ramadan countdown —
    * shows the same one.
    */
-  const { prayers: overrides } = useSettings();
+  const { prayers: stored, followMawaqit } = useSettings();
+  const overrides = followMawaqit ? undefined : stored;
 
   React.useEffect(() => {
     let alive = true;

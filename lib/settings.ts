@@ -32,6 +32,12 @@ export type SiteSettings = {
   finances: FinanceSettings;
   /** keyed by prayer key: fajr, dhuhr, asr, maghrib, isha */
   prayers: Record<string, PrayerOverride>;
+  /**
+   * While true, Mawaqit is the schedule and the overrides above are ignored
+   * entirely — they are kept, not deleted, so turning the switch back off
+   * restores whatever was typed rather than losing it.
+   */
+  followMawaqit: boolean;
   /** who changed it last and when, so a wrong number can be traced */
   updatedAt?: string;
 };
@@ -45,6 +51,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     perFamily: ORG.finances.perFamily,
   },
   prayers: {},
+  followMawaqit: true,
 };
 
 /** stored overrides on top of the defaults, with anything invalid ignored */
@@ -73,7 +80,12 @@ export function mergeSettings(stored: Partial<SiteSettings> | null | undefined):
     if (out.adhan || out.iqama) prayers[key] = out;
   }
 
-  return { finances, prayers, updatedAt: stored?.updatedAt };
+  return {
+    finances,
+    prayers,
+    followMawaqit: stored?.followMawaqit !== false,
+    updatedAt: stored?.updatedAt,
+  };
 }
 
 /** "1:30 PM" and nothing else */
