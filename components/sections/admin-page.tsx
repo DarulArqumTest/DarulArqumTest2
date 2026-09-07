@@ -109,6 +109,16 @@ function SignIn({ onIn, configured }: { onIn: () => void; configured: boolean })
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  /* Enter submits. Implicit form submission ought to cover
+                     this on its own, but this is the one control on the
+                     site where a person types and presses Enter without
+                     looking, so it is worth not leaving to the browser. */
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && password && !busy) {
+                      e.preventDefault();
+                      e.currentTarget.form?.requestSubmit();
+                    }
+                  }}
                   autoFocus
                   autoComplete="current-password"
                   className="da-adm-input"
