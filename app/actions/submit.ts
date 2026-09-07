@@ -3,22 +3,24 @@
 /**
  * Shared form submission action for every form on the site.
  *
- * Delivery: if RESEND_API_KEY is set, submissions are emailed to the
- * destination address via Resend's REST API. Without the key (e.g. local
- * preview), the action still validates and succeeds gracefully, and the
- * client offers a prefilled "send via your email app" fallback — so the
- * form is never dead UI.
+ * Two copies, in this order. The submission is emailed through the masjid's
+ * own Google Workspace (see lib/mailer.ts) and written to the store either
+ * way — so a form is never lost because a mail server was having a bad
+ * afternoon, and the admin panel is always the authoritative record.
  *
- * ADMIN-ACCESS FOLLOW-UP: set RESEND_API_KEY (and verify the sending
- * domain) in the hosting environment to activate direct email delivery.
+ * If mail is not configured the form still succeeds, and the visitor is
+ * offered a prefilled "send from my email app" fallback rather than a dead
+ * end.
  */
 
 import { recordSubmission } from "@/lib/submissions-store";
+import { sendMail } from "@/lib/mailer";
 
 export type SubmitResult =
   | { ok: true; delivered: boolean }
   | { ok: false; error: string };
 
+/** where each form lands; one address today, but per-form when they want it */
 const DESTINATIONS: Record<string, string> = {
   contact: "admin@darularqum.org",
   "quran-classes": "admin@darularqum.org",
@@ -50,29 +52,14 @@ export async function submitForm(
       .map(([k, v]) => `${k}: ${v}`)
       .join("\n");
 
-    let delivered = false;
-    const key = process.env.RESEND_API_KEY;
-    if (key) {
-      try {
-        const res = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${key}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from: "Darul Arqum Website <forms@darularqum.org>",
-            to: [to],
-            reply_to: data.email || undefined,
-            subject: `[darularqum.org] ${formName} submission`,
-            text: body,
-          }),
-        });
-        delivered = res.ok;
-      } catch {
-        delivered = false;
-      }
-    }
+    const res = await sendMail({
+      to,
+      subject: `[darularqum.org] ${formName} submission`,
+      text: body,
+      // replying in the inbox answers whoever filled the form
+      replyTo: data.parentEmail || data.email || undefined,
+    });
+    const delivered = res.sent;
 
     /**
      * Written whether or not the email went. This is the copy that does not
