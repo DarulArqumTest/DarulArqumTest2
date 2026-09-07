@@ -70,11 +70,12 @@ function AnnounceBody({ onClose, compact }: { onClose?: () => void; compact?: bo
         We have a new location
       </div>
       <h2 className="da-comic-title">
-        Introducing <em>Darul Arqum West</em>
+        <em>Darul Arqum West</em> is open
       </h2>
       {!compact && (
         <p className="da-comic-copy">
-          The community has acquired a second masjid at {west.street}. Opening details are on the way.
+          The community&apos;s second masjid, at {west.street}, is now open. Prayer timings and
+          programs are announced on the locations page and in the WhatsApp group.
         </p>
       )}
       <div className="da-comic-actions">

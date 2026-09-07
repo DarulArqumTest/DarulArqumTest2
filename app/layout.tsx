@@ -31,6 +31,7 @@ import { SITE_URL } from "@/lib/links";
 import { StructuredData } from "@/components/site/structured-data";
 import { SettingsProvider } from "@/components/site/settings-provider";
 import { ClosureNotice } from "@/components/site/closure-notice";
+import { LegacySwCleanup } from "@/components/site/legacy-sw-cleanup";
 import { readSettings } from "@/lib/settings-store";
 
 export const metadata: Metadata = {
@@ -66,6 +67,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <body className="bg-da-bg font-body text-ink antialiased">
         <StructuredData />
+        {/* removes the old Wix site's service worker from phones that still
+            have one; renders nothing */}
+        <LegacySwCleanup />
         <SettingsProvider value={settings}>
           <EdgeMargin side="left" />
           <EdgeMargin side="right" />

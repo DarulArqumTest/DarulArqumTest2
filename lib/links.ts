@@ -89,9 +89,13 @@ export const ORG = {
  * The two masjids. The original Limebank property is now "Darul Arqum East";
  * the newly acquired Old Richmond Rd property is "Darul Arqum West".
  *
- * ADMIN-ACCESS FOLLOW-UP: West has no Google Business listing yet, so its
- * `mapsUrl` is an address search rather than a place link. Opening date and
- * prayer timings are still pending.
+ * West opened on 2026-09-07.
+ *
+ * ADMIN-ACCESS FOLLOW-UP: West still has no Google Business listing, so its
+ * `mapsUrl` is an address search rather than a place link — worth creating,
+ * because a masjid that is open and unfindable on Maps is a masjid people
+ * drive past. Its prayer timings are also still unstated; see the note on
+ * the `west` entry before writing any.
  */
 export type LocationKey = "east" | "west";
 
@@ -143,10 +147,19 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     photo: "/assets/location-west.webp",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=6050+Old+Richmond+Rd+Ottawa+ON+K0A+2Z0",
     embedQuery: "6050 Old Richmond Rd, Ottawa, ON K0A 2Z0",
-    status: "coming-soon",
-    statusLabel: "Opening soon",
+    status: "open",
+    statusLabel: "Now open",
+    /**
+     * Opened 2026-09-07, confirmed by the board.
+     *
+     * ADMIN NOTE: the prayer schedule for West is deliberately not stated
+     * here, because nobody has given one. Saying "five daily prayers" the way
+     * the East entry does would be inventing a timetable that people would
+     * turn up for. When the timings are confirmed, put them in — until then
+     * this points at the group where they are actually announced.
+     */
     blurb:
-      "Our second masjid, newly acquired by the community. Prayer timings, programs and an opening date will be announced here and in the WhatsApp group.",
+      "Our second masjid, acquired by the community and now open. Prayer timings and programs are announced here and in the WhatsApp group.",
     accent: "#a9e0c0",
   },
 };
