@@ -17,14 +17,15 @@ export function HomePage({ skipIntro }: { skipIntro: boolean }) {
     <HomeHighlightProvider>
       <GreetingSplash phase={phase} index={index} />
       <main style={{ position: "relative", width: "100%", minHeight: "100vh", fontFamily: "'Work Sans',sans-serif", background: "#0e2419", overflow: "hidden" }}>
-        <Hero revealed={phase !== "intro"} />
-        {/* Renders nothing outside Ramadan. During it, it is the first thing
-            under the hero, because for that month it is what people came
-            for. `?ramadan=1` previews it. */}
+        {/* Above the hero, not under it.
+            Both of these render nothing at all on an ordinary day, so they
+            cost the front page nothing. On the days they do appear they are
+            the reason someone opened the site — how long until iftar, which
+            khutbah is next — and that answer should not be a scroll below a
+            hero they have already seen. */}
         <RamadanBanner />
-        {/* Fridays only, and it stands down during Ramadan. `?jumua=1`
-            previews it. */}
         <JumuaBanner />
+        <Hero revealed={phase !== "intro"} />
         <GivingSection onOpenOnce={give.openOnce} onOpenMonthly={() => give.openMonthly()} onOpenMonthly60={(amount) => give.openMonthly(amount)} />
         <ProgramsSection onOpen={setOpenProgram} />
         <ContactSection />

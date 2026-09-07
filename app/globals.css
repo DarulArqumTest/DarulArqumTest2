@@ -4670,7 +4670,8 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 .da-jm {
   position: relative;
   width: 100%;
-  padding: 34px 24px 32px;
+  /* clears the fixed navbar, since this band leads the page */
+  padding: 108px 24px 34px;
   background:
     radial-gradient(ellipse 70% 130% at 14% 0%, rgba(124, 201, 154, 0.16), transparent 62%),
     linear-gradient(180deg, #123024 0%, #0e2419 76%);
@@ -4760,7 +4761,7 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 .da-jm-link:hover { color: #d7f0e2; }
 
 @media (max-width: 780px) {
-  .da-jm { padding: 26px 16px 26px; }
+  .da-jm { padding: 96px 16px 26px; }
   .da-jm-inner { gap: 16px; }
   .da-jm-art { width: 74px; }
   .da-jm-mid { flex: 1 1 180px; }
@@ -4779,9 +4780,10 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
   position: relative;
   width: 100%;
   overflow: hidden;
-  /* the top of this band sits under the fixed navbar when you scroll onto
-     it, so the lanterns start below the bar rather than behind it */
-  padding: 116px 24px 32px;
+  /* This band is the first thing on the page, and the navbar is fixed over
+     the top 77px of it. The padding and the lantern strip below both clear
+     that, so the line the lanterns hang from is not behind the bar. */
+  padding: 152px 24px 34px;
   background:
     radial-gradient(ellipse 70% 120% at 18% 0%, rgba(227, 197, 106, 0.16), transparent 60%),
     linear-gradient(180deg, #0a1a2c 0%, #0c2033 42%, #0e2419 100%);
@@ -4794,7 +4796,7 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 }
 .da-ram-lanterns {
   position: absolute;
-  top: 34px;
+  top: 74px;
   left: 0;
   width: 100%;
   height: 118px;
@@ -4901,7 +4903,7 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 .da-ram-cta { flex: 0 0 auto; }
 
 @media (max-width: 860px) {
-  .da-ram { padding: 104px 16px 24px; }
+  .da-ram { padding: 140px 16px 26px; }
   .da-ram-inner { gap: 18px; }
   .da-ram-moon { flex: 0 0 auto; }
   .da-ram-mid { flex: 1 1 190px; }

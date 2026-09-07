@@ -56,6 +56,8 @@ export function JumuaBanner() {
   const { jumua, modes } = useSettings();
   const [now, setNow] = React.useState<Date | null>(null);
   const [urlForced, setUrlForced] = React.useState(false);
+  /** ?ramadan=1 has to stand this band down too, or both appear at once */
+  const [ramadanPreview, setRamadanPreview] = React.useState(false);
 
   React.useEffect(() => {
     setNow(new Date());
@@ -64,7 +66,9 @@ export function JumuaBanner() {
   }, []);
 
   React.useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("jumua") === "1") setUrlForced(true);
+    const q = new URLSearchParams(window.location.search);
+    if (q.get("jumua") === "1") setUrlForced(true);
+    if (q.get("ramadan") === "1") setRamadanPreview(true);
   }, []);
 
   const state = React.useMemo(() => {
@@ -82,7 +86,7 @@ export function JumuaBanner() {
     const cur = minutesNowInZone(now, times.timezone);
     const past = mAt !== null && cur >= mAt;
     const ram = ramadanState(now, times.timezone, past, {
-      mode: modes.ramadan,
+      mode: ramadanPreview ? "on" : modes.ramadan,
       dayOffset: modes.ramadanDayOffset,
       forcedNight: modes.ramadanNight,
     });
@@ -92,7 +96,7 @@ export function JumuaBanner() {
     const second = toMinutes(jumua.second);
     const next = first !== null && cur < first ? "first" : second !== null && cur < second ? "second" : "done";
     return { next, cur };
-  }, [now, urlForced, modes, times, jumua]);
+  }, [now, urlForced, ramadanPreview, modes, times, jumua]);
 
   if (!state) return null;
 
