@@ -18,6 +18,7 @@ import {
 import { SectionSpotlight, HomeHighlightContext } from "@/components/site/use-scroll-highlight";
 import { MasjidProgress } from "@/components/site/masjid-progress";
 import { SuccessOverlay } from "@/components/site/success-overlay";
+import { useFinances } from "@/components/site/settings-provider";
 
 /* ── animated counter ─────────────────────────────────────────── */
 
@@ -467,11 +468,13 @@ function WelearnDesk({ onClick }: { onClick: () => void }) {
 
 /* ── Giving section ──────────────────────────────────────────── */
 
-export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { onOpenOnce: () => void; onOpenMonthly: () => void; onOpenMonthly60: () => void }) {
+export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { onOpenOnce: () => void; onOpenMonthly: () => void; onOpenMonthly60: (amount: number) => void }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.25 });
+  // one set of numbers, so the admin panel moves all of them at once
+  const fin = useFinances();
   const [monthly, parking, qard, total] = useCountUp(
-    [ORG.finances.monthlyExpenses, ORG.finances.parkingLot, ORG.finances.loanRemaining, ORG.finances.loanTotal],
+    [fin.monthlyExpenses, fin.parkingLot, fin.loanRemaining, fin.loanTotal],
     inView,
   );
   const ease = [0.16, 0.8, 0.4, 1] as const;
@@ -543,8 +546,8 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
               the numbers it is made of. */}
           <div className="da-geo-tile da-mp-tile">
             <MasjidProgress
-              repaid={ORG.finances.loanTotal - ORG.finances.loanRemaining}
-              total={ORG.finances.loanTotal}
+              repaid={fin.repaid}
+              total={fin.loanTotal}
               history={ORG.finances.loanHistory}
             />
           </div>
@@ -568,13 +571,13 @@ export function GivingSection({ onOpenOnce, onOpenMonthly, onOpenMonthly60 }: { 
               <span aria-hidden style={{ display: "flex", color: "#e3c56a" }}><Glyph name="star8" size={12} /></span>
               Fun fact
             </span>
-            <div className="da-money da-money-cream" style={{ fontSize: "clamp(44px,5vw,58px)", lineHeight: 1, marginBottom: 12 }}>$60</div>
+            <div className="da-money da-money-cream" style={{ fontSize: "clamp(44px,5vw,58px)", lineHeight: 1, marginBottom: 12 }}>${fin.perFamily}</div>
             <div className="da-funfact-rule" aria-hidden />
             <p style={{ fontSize: 13.8, lineHeight: 1.6, color: "rgba(246,243,234,0.86)", fontWeight: 500, margin: "0 auto 20px", maxWidth: 340 }}>
-              If every family gave just $60 a month, it would cover the loan and running costs, together.
+              If every family gave just ${fin.perFamily} a month, it would cover the loan and running costs, together.
             </p>
-            <button type="button" onClick={onOpenMonthly60} className="da-btn da-btn-forest da-btn-sm">
-              I can do that: give $60/month
+            <button type="button" onClick={() => onOpenMonthly60(fin.perFamily)} className="da-btn da-btn-forest da-btn-sm">
+              I can do that: give ${fin.perFamily}/month
             </button>
           </div>
 

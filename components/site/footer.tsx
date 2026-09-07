@@ -8,6 +8,7 @@ import { Reveal, DrawnRule } from "@/components/site/reveal";
 import { DaAmbient } from "@/components/site/da-motifs";
 import { Glyph } from "@/components/site/program-glyphs";
 import { requestSectionScroll, type ScrollTargetId } from "@/components/site/use-scroll-highlight";
+import { AdminKnock } from "@/components/site/admin-knock";
 
 const COLUMNS = [
   {
@@ -144,9 +145,8 @@ export function Footer() {
             E-transfer: {ORG.email}
           </p>
         </div>
-        <p className="mt-3 text-xs text-da-cream/35">
-          © {new Date().getFullYear()} Darul Arqum. All rights reserved.
-        </p>
+        {/* five taps here opens the admin panel; see admin-knock.tsx */}
+        <AdminKnock>© {new Date().getFullYear()} Darul Arqum. All rights reserved.</AdminKnock>
       </div>
     </footer>
   );

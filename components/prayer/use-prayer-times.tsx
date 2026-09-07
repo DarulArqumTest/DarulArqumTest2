@@ -3,6 +3,8 @@
 import * as React from "react";
 import { PRAYERS, SHURUQ, type Prayer } from "@/lib/prayer";
 import { ORG } from "@/lib/links";
+import { useSettings } from "@/components/site/settings-provider";
+import { applyPrayerOverrides } from "@/lib/settings";
 
 /**
  * The masjid's live schedule, with the built-in constants as a floor.
@@ -73,6 +75,13 @@ async function load(): Promise<PrayerTimes | null> {
 
 export function usePrayerTimes(): PrayerTimes {
   const [times, setTimes] = React.useState<PrayerTimes>(cache ?? FALLBACK);
+  /**
+   * Anything the masjid has typed into the admin panel wins over Mawaqit.
+   * Applied here rather than in each board, so every screen that shows a
+   * prayer time — the homepage strip, the board, the Ramadan countdown —
+   * shows the same one.
+   */
+  const { prayers: overrides } = useSettings();
 
   React.useEffect(() => {
     let alive = true;
@@ -96,5 +105,12 @@ export function usePrayerTimes(): PrayerTimes {
     };
   }, []);
 
-  return times;
+  return React.useMemo(() => {
+    if (!overrides || Object.keys(overrides).length === 0) return times;
+    return {
+      ...times,
+      prayers: applyPrayerOverrides(times.prayers, overrides),
+      tomorrow: applyPrayerOverrides(times.tomorrow, overrides),
+    };
+  }, [times, overrides]);
 }

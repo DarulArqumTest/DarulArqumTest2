@@ -15,6 +15,7 @@ import { submitForm } from "@/app/actions/submit";
 import { isValidEmail, isValidPhone } from "@/lib/validate";
 import { SuccessArt } from "@/components/site/success-art";
 import { SuccessOverlay } from "@/components/site/success-overlay";
+import { useFinances } from "@/components/site/settings-provider";
 
 const errorStyle: React.CSSProperties = { marginTop: 5, fontSize: 12, color: "#e08a8a" };
 
@@ -133,6 +134,9 @@ export function PledgePage() {
   /** the full-screen coin, played once */
   const [padScene, setPadScene] = React.useState(false);
   const [padDelivered, setPadDelivered] = React.useState(false);
+
+  // the same numbers the homepage and the admin panel use
+  const fin = useFinances();
 
   const fillTimer = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -316,9 +320,9 @@ export function PledgePage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "rgba(246,243,234,0.12)", border: "1px solid rgba(201,162,39,0.28)", borderRadius: 14, overflow: "hidden", marginBottom: 32 }}>
           <div className="da-pledge-goals" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "rgba(246,243,234,0.12)" }}>
             {[
-              { value: ORG.finances.monthlyExpenses, label: "Monthly maintenance target" },
-              { value: ORG.finances.parkingLot, label: "Parking lot renovation" },
-              { value: ORG.finances.loanRemaining, label: "Qard-e-Hasan remaining" },
+              { value: fin.monthlyExpenses, label: "Monthly maintenance target" },
+              { value: fin.parkingLot, label: "Parking lot renovation" },
+              { value: fin.loanRemaining, label: "Qard-e-Hasan remaining" },
             ].map((g) => (
               <div key={g.label} style={{ background: "#0e2419", padding: "14px 16px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                 <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#c9a227", marginBottom: 3, fontVariantNumeric: "tabular-nums", lineHeight: 1 }}>${g.value.toLocaleString()}</div>
@@ -330,7 +334,7 @@ export function PledgePage() {
             <div style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, whiteSpace: "nowrap" }}>Fun fact</div>
             <div style={{ width: 1, alignSelf: "stretch", background: "rgba(201,162,39,0.35)" }} />
             <div style={{ fontSize: 12, lineHeight: 1.4, color: "rgba(246,243,234,0.8)", flex: 1, minWidth: 200 }}>
-              <strong style={{ color: "#f6f3ea" }}>${ORG.finances.perFamily}/mo</strong> per family would cover the loan and running costs — together.
+              <strong style={{ color: "#f6f3ea" }}>${fin.perFamily}/mo</strong> per family would cover the loan and running costs — together.
             </div>
             <button type="button" onClick={fillSixtyMonthly} style={{ flexShrink: 0, background: "#c9a227", color: "#0e2419", fontWeight: 700, fontSize: 12, padding: "8px 16px", borderRadius: 999, border: "none", cursor: "pointer", whiteSpace: "nowrap" }}>
               Sure, let&apos;s do this →

@@ -29,6 +29,8 @@ const daBody = Work_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], va
    robots file and the structured data all read it too */
 import { SITE_URL } from "@/lib/links";
 import { StructuredData } from "@/components/site/structured-data";
+import { SettingsProvider } from "@/components/site/settings-provider";
+import { readSettings } from "@/lib/settings-store";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -53,7 +55,9 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // read once per request, handed to every component that shows money
+  const settings = await readSettings();
   return (
     <html
       lang="en"
@@ -61,11 +65,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="bg-da-bg font-body text-ink antialiased">
         <StructuredData />
-        <EdgeMargin side="left" />
-        <EdgeMargin side="right" />
-        <Navbar />
-        {children}
-        <Footer />
+        <SettingsProvider value={settings}>
+          <EdgeMargin side="left" />
+          <EdgeMargin side="right" />
+          <Navbar />
+          {children}
+          <Footer />
+        </SettingsProvider>
       </body>
     </html>
   );

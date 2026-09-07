@@ -26,7 +26,7 @@ export function HomePage({ skipIntro }: { skipIntro: boolean }) {
         {/* Fridays only, and it stands down during Ramadan. `?jumua=1`
             previews it. */}
         <JumuaBanner jumua={ORG.jumua} />
-        <GivingSection onOpenOnce={give.openOnce} onOpenMonthly={() => give.openMonthly()} onOpenMonthly60={() => give.openMonthly(60)} />
+        <GivingSection onOpenOnce={give.openOnce} onOpenMonthly={() => give.openMonthly()} onOpenMonthly60={(amount) => give.openMonthly(amount)} />
         <ProgramsSection onOpen={setOpenProgram} />
         <ContactSection />
       </main>
