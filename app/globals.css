@@ -2535,15 +2535,9 @@ body { overflow-x: hidden; }
 }
 
 /* ── Ambient motion (pure CSS = cheap, pausable) ── */
-@keyframes drift-a { 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(40px,-30px,0)} 100%{transform:translate3d(0,0,0)} }
-@keyframes drift-b { 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(-50px,24px,0)} 100%{transform:translate3d(0,0,0)} }
-@keyframes lattice-pan { 0%{transform:translate3d(0,0,0)} 100%{transform:translate3d(-50px,-50px,0)} }
 @keyframes shimmer { 0%,86%{transform:translateX(-120%)} 100%{transform:translateX(220%)} }
 @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-.orb-a { animation: drift-a 38s ease-in-out infinite; }
-.orb-b { animation: drift-b 46s ease-in-out infinite; }
-.lattice-pan { animation: lattice-pan 60s linear infinite; }
 .live-dot { animation: pulse-dot 2.2s ease-in-out infinite; }
 
 .shimmer-frame { position: relative; overflow: hidden; }

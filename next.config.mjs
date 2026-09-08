@@ -73,6 +73,29 @@ const nextConfig = {
       // Wix leftovers that were never real pages
       ["/home-1", "/"],
       ["/blank-page", "/"],
+
+      /**
+       * Not Wix — ours.
+       *
+       * /give and /contact were standalone pages from before the 2026
+       * redesign, still on the old palette and the old masthead, and the
+       * lattice behind their titles rendered at three times its intended
+       * size and full opacity instead of 4.5%. Nothing in the navigation
+       * pointed at either: the nav sends "Contact us" to the front page
+       * section and Donate to the pledge form. They survived only in
+       * Google's index, which is exactly where the board found them, under
+       * a search for the masjid's own fundraising.
+       *
+       * The content lives on the front page now, so that is where they go.
+       * A fragment in a Location header is honoured by browsers, so these
+       * land on the right section rather than the top of the page.
+       *
+       * Note these match /give and /contact exactly — /give/pledge,
+       * /give/tax-receipt and /give/pad-form are current pages and are not
+       * touched.
+       */
+      ["/give", "/#giving-section"],
+      ["/contact", "/#contact-us"],
     ];
     return map.map(([source, destination]) => ({
       source,

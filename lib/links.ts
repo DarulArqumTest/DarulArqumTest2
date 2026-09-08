@@ -178,7 +178,22 @@ export const R = {
   aalim: "/programs/aalim",
   kidsArabic: "/programs/kids-arabic",
   welearn: "/programs/welearn",
-  give: "/give",
+  /**
+   * Giving and contact are sections of the front page, not pages.
+   *
+   * Both used to be standalone pages left over from the pre-2026 site, on
+   * the old palette with the old masthead — the eight-point lattice behind
+   * the title rendered three times its intended size and at full opacity
+   * instead of 4.5%, which is what made them look broken rather than merely
+   * dated. Nothing in the navigation pointed at either one; they survived
+   * only in Google's index, which is where the board found them.
+   *
+   * They are gone, and these anchors are where their traffic goes. Kept in
+   * `R` so breadcrumbs and the error pages resolve to the real destination
+   * rather than bouncing through a redirect.
+   */
+  give: "/#giving-section",
+  contactSection: "/#contact-us",
   pledge: "/give/pledge",
   taxReceipt: "/give/tax-receipt",
   padForm: "/give/pad-form",
@@ -187,7 +202,7 @@ export const R = {
   community: "/community",
   newsletters: "/newsletters",
   newsletterDec2020: "/newsletters/december-2020",
-  contact: "/contact",
+  contact: "/#contact-us",
 } as const;
 
 /**
