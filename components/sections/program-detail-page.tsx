@@ -177,12 +177,21 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
               // each card carries that programme's own banner, so the four
               // are told apart by their subject rather than by a stripe
               <Link key={o.slug} href={o.href} className="da-pd-other" style={{ "--accent": o.accent } as React.CSSProperties}>
-                {o.photo && (
+                {o.photo ? (
                   <span
                     className="da-pd-other-art"
                     style={{ backgroundImage: `url('${o.photo}')`, backgroundPosition: o.focus }}
                     aria-hidden
                   />
+                ) : (
+                  /* welearn has no photograph — it is the online one. It has
+                     a drawing instead, and the other two places that show a
+                     programme already fall back to it. This card did not, so
+                     welearn alone sat with its text flush against the edge
+                     and no banner to tell it apart. */
+                  <span className="da-pd-other-art da-pd-other-art-drawn" aria-hidden>
+                    <WelearnArt />
+                  </span>
                 )}
                 <span className="da-pd-other-text">
                   <span className="da-pd-other-name">{o.name}</span>
