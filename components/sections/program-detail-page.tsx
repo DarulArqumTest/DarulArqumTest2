@@ -190,7 +190,7 @@ export function ProgramDetailPage({ program: p }: { program: Program }) {
                      welearn alone sat with its text flush against the edge
                      and no banner to tell it apart. */
                   <span className="da-pd-other-art da-pd-other-art-drawn" aria-hidden>
-                    <WelearnArt />
+                    <WelearnArt crop="screen" />
                   </span>
                 )}
                 <span className="da-pd-other-text">

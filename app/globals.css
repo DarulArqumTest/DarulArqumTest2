@@ -4223,9 +4223,9 @@ body { overflow-x: hidden; }
   background: linear-gradient(90deg, rgba(8, 20, 14, 0.2), rgba(16, 36, 26, 0.75));
 }
 /* welearn's banner is drawn rather than photographed, so this slot holds an
-   inline svg instead of a background image. The drawing crops itself via
-   preserveAspectRatio="slice" — object-fit does nothing to an inline svg —
-   and centred lands on the screen, which is the half worth showing. */
+   inline svg instead of a background image. Where it crops is set by
+   preserveAspectRatio on the svg — object-fit does nothing to an inline one
+   — so the component takes crop="screen" for this width. */
 .da-pd-other-art-drawn { overflow: hidden; }
 .da-pd-other-art-drawn svg { width: 100%; height: 100%; display: block; }
 .da-pd-other-text { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 3px; min-width: 0; padding: 12px 0; }

@@ -12,10 +12,36 @@
  * card on the homepage; as SVG it scales into a 168px card banner and a
  * 380px masthead without being rebuilt for each.
  */
-export function WelearnArt({ className }: { className?: string }) {
+export function WelearnArt({
+  className,
+  crop = "desk",
+}: {
+  className?: string;
+  /**
+   * Which part survives when the box is narrower than the drawing.
+   *
+   * "desk" keeps the whole scene and is right for a wide banner. "screen"
+   * is for the 96px-wide card in the other-programmes panel: at that width
+   * barely half the drawing fits, and centring the full scene leaves the
+   * screen falling off the right-hand edge — a sliver of monitor and a lot
+   * of empty desk.
+   *
+   * So that crop gets its own window rather than an anchor. The screen is
+   * drawn from x=180 to x=292 and y=12 to y=92 — centred on (236, 52) — and
+   * this window is centred on the same point: 135 x 104 starting at (168, 0).
+   * That is also the card's own 96x74 aspect, so nothing is cropped away a
+   * second time and the screen lands dead centre on both axes with an even
+   * margin of desk around it.
+   *
+   * Its height is 104 rather than the full 120 because the window has to
+   * stay inside the drawing: centred on y=52, anything taller would hang off
+   * the top edge and show a band of nothing.
+   */
+  crop?: "desk" | "screen";
+}) {
   return (
     <svg
-      viewBox="0 0 320 120"
+      viewBox={crop === "screen" ? "168 0 135 104" : "0 0 320 120"}
       preserveAspectRatio="xMidYMid slice"
       className={className}
       aria-hidden
