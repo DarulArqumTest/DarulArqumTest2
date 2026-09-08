@@ -15,7 +15,16 @@ const COLUMNS = [
     heading: "Worship",
     items: [
       { label: "Live prayer times", href: R.prayer },
-      { label: "WhatsApp iqama alerts", href: EXT.whatsapp },
+      /**
+       * Goes to the card on the front page, not straight out to WhatsApp.
+       *
+       * Sending someone from the footer into a group invite skips the part
+       * that says what the group is for and who is in it — and it leaves the
+       * site entirely, which is a lot to spring on someone who clicked a link
+       * in a footer. The card explains it, sits beside the volunteer route,
+       * and lights up when you arrive so it is obvious what you were sent to.
+       */
+      { label: "WhatsApp iqama alerts", href: `${R.home}#whatsapp-section`, sectionId: "whatsapp-section" as ScrollTargetId },
       { label: "Visit the masjid", href: `${R.home}#map-section`, sectionId: "map-section" as ScrollTargetId },
     ],
   },

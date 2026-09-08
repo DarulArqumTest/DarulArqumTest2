@@ -23,11 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     at(R.prayer, 0.9, "daily"),
     at(R.locations, 0.8, "monthly"),
     at(R.programs, 0.8, "monthly"),
-    /* Giving and contact are sections of the front page now, not pages of
-       their own. The old /give and /contact URLs redirect there, and a
-       redirect does not belong in a sitemap — listing one asks Google to
-       index a page that no longer exists. The pledge and receipt forms
-       below are the real giving pages. */
+    at(R.contact, 0.7, "monthly"),
+    /* Giving has no page of its own any more — the front page says it
+       better, and /give redirects to that section. A redirect does not
+       belong in a sitemap: listing one asks Google to index a page that is
+       not there. The pledge and receipt forms below are the real giving
+       pages. */
     at(R.community, 0.6, "monthly"),
     at(R.story, 0.6, "yearly"),
     at(R.gallery, 0.5, "monthly"),

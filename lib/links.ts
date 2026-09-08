@@ -188,12 +188,14 @@ export const R = {
    * dated. Nothing in the navigation pointed at either one; they survived
    * only in Google's index, which is where the board found them.
    *
-   * They are gone, and these anchors are where their traffic goes. Kept in
-   * `R` so breadcrumbs and the error pages resolve to the real destination
-   * rather than bouncing through a redirect.
+   * Giving is gone for good — the front page says it better. `contact` has
+   * since been rebuilt as a real page (see `contact` below); the anchor here
+   * is kept for links that specifically want the front page's strip, like
+   * the footer's WhatsApp card.
    */
   give: "/#giving-section",
   contactSection: "/#contact-us",
+  whatsappSection: "/#whatsapp-section",
   pledge: "/give/pledge",
   taxReceipt: "/give/tax-receipt",
   padForm: "/give/pad-form",
@@ -202,7 +204,7 @@ export const R = {
   community: "/community",
   newsletters: "/newsletters",
   newsletterDec2020: "/newsletters/december-2020",
-  contact: "/#contact-us",
+  contact: "/contact",
 } as const;
 
 /**

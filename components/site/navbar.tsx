@@ -23,7 +23,9 @@ const NAV: NavItem[] = [
   // the volunteer page — could only be reached from a single link at the
   // foot of the gallery. It is a nav destination now.
   { label: "Community", href: R.community },
-  { label: "Contact us", sectionId: "contact-us" },
+  // was a scroll to the front page's contact strip, which made this the only
+  // item in the bar without a page behind it
+  { label: "Contact us", href: R.contact },
 ];
 
 function NavLink({ item, className, onNavigate }: { item: NavItem; className?: string; onNavigate?: () => void }) {

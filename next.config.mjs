@@ -90,12 +90,16 @@ const nextConfig = {
        * A fragment in a Location header is honoured by browsers, so these
        * land on the right section rather than the top of the page.
        *
-       * Note these match /give and /contact exactly — /give/pledge,
-       * /give/tax-receipt and /give/pad-form are current pages and are not
-       * touched.
+       * Note this matches /give exactly — /give/pledge, /give/tax-receipt
+       * and /give/pad-form are current pages and are not touched.
+       *
+       * /contact is NOT here. It was redirected alongside /give, and then
+       * rebuilt as a real page: every other item in the navigation has one,
+       * and reaching the masjid deserves more room than a strip at the foot
+       * of the front page. A redirect would take precedence over the page
+       * file and make it unreachable.
        */
       ["/give", "/#giving-section"],
-      ["/contact", "/#contact-us"],
     ];
     return map.map(([source, destination]) => ({
       source,
