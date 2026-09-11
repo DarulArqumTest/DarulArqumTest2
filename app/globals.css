@@ -1121,6 +1121,7 @@ body { overflow-x: hidden; }
 }
 
 .da-adm-notice-grid textarea,
+.da-adm-notice-grid select,
 .da-adm-notice-grid input[type="text"],
 .da-adm-notice-grid input[type="date"] {
   width: 100%;
@@ -1134,6 +1135,8 @@ body { overflow-x: hidden; }
   line-height: 1.5;
 }
 .da-adm-notice-grid textarea { resize: vertical; min-height: 78px; }
+/* the button label is meaningless until a destination is picked */
+.da-adm-notice-grid input:disabled { opacity: 0.45; cursor: not-allowed; }
 .da-adm-notice-grid input:focus-visible,
 .da-adm-notice-grid textarea:focus-visible {
   outline: 2px solid #a9e0c0;
@@ -1660,17 +1663,44 @@ body { overflow-x: hidden; }
   --cn-bg: rgba(42, 17, 19, 0.95);
   --cn-line: rgba(239, 107, 107, 0.4);
 }
+/* Something is happening, and it is good. The site's own gold on its own
+   green, so it reads as the masjid announcing something rather than the
+   site warning about it. */
+.da-cn[data-tone="good"] {
+  --cn-ink: #e3c56a;
+  --cn-bg: rgba(13, 40, 27, 0.96);
+  --cn-line: rgba(201, 162, 39, 0.45);
+}
 
 .da-cn-inner {
   max-width: var(--wide, 1200px);
   margin: 0 auto;
   padding: 11px 16px 12px;
   display: grid;
-  /* art | words | dismiss — the words are the only column that flexes */
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  /* art | words | link | dismiss — the words are the only column that flexes.
+     The link column collapses to nothing when there is no link, so a notice
+     without one keeps exactly the layout it had before. */
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 13px;
 }
+
+.da-cn-link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 15px;
+  border-radius: 9px;
+  background: var(--cn-ink);
+  color: #0a1a12;
+  font-size: 12.8px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+.da-cn-link:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.da-cn-link:focus-visible { outline: 2px solid var(--cn-ink); outline-offset: 2px; }
 
 .da-cn-art {
   width: 42px;
@@ -1731,7 +1761,8 @@ body { overflow-x: hidden; }
     grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
       "art  title  x"
-      "det  det    det";
+      "det  det    det"
+      "link link   link";
     column-gap: 10px;
     row-gap: 0;
     align-items: center;
@@ -1741,6 +1772,14 @@ body { overflow-x: hidden; }
   .da-cn-title { grid-area: title; font-size: 13.8px; }
   .da-cn-detail { grid-area: det; margin-top: 6px; font-size: 12.5px; }
   .da-cn-x { grid-area: x; width: 28px; height: 28px; }
+  /* full width on its own row rather than a 90px stub squeezed beside the
+     dismiss button */
+  .da-cn-link {
+    grid-area: link;
+    margin-top: 11px;
+    justify-content: center;
+    padding: 10px 15px;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════════════

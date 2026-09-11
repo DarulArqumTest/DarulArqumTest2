@@ -58,12 +58,29 @@ export type ModeSettings = {
  */
 export type NoticeSettings = {
   on: boolean;
-  /** "notice" is a change of plan; "urgent" is the masjid being shut */
-  tone: "notice" | "urgent";
+  /**
+   * What kind of news it is, which decides the colour and the drawing.
+   *
+   * "notice" is a change of plan, "urgent" is the masjid being shut. "good"
+   * was added for the first Jumu'ah at the West masjid: the band was built
+   * for things going wrong, and announcing a first Jumu'ah in the same amber
+   * as a burst pipe reads as a warning. Same slot, same prominence, opposite
+   * feeling — gold, and a minbar catching its first light rather than a door
+   * with a notice taped to it.
+   */
+  tone: "notice" | "urgent" | "good";
   /** one line, the thing itself: "Masjid closed today" */
   title: string;
   /** one sentence of detail; may be empty */
   detail: string;
+  /**
+   * Somewhere to send people, for a notice that is about something rather
+   * than just warning about it — the West masjid's page, a programme, the
+   * prayer times. Empty for a notice with nowhere to go.
+   */
+  href: string;
+  /** what the link says; ignored when there is no href */
+  linkLabel: string;
   /** YYYY-MM-DD in the masjid's zone. Empty means no self-expiry. */
   until: string;
 };
@@ -94,7 +111,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     perFamily: ORG.finances.perFamily,
   },
   prayers: {},
-  notice: { on: false, tone: "notice", title: "", detail: "", until: "" },
+  notice: { on: false, tone: "notice", title: "", detail: "", href: "", linkLabel: "", until: "" },
   followMawaqit: true,
   jumua: { first: ORG.jumua.first, second: ORG.jumua.second },
   modes: { jumua: "auto", ramadan: "auto", ramadanNight: 12, ramadanDayOffset: 0 },
@@ -156,9 +173,17 @@ export function mergeSettings(stored: Partial<SiteSettings> | null | undefined):
   const notice: NoticeSettings = {
     // an empty headline cannot be shown, whatever the switch says
     on: (typeof n?.on === "boolean" ? n.on : dn.on) && title.length > 0,
-    tone: (n?.tone ?? dn.tone) === "urgent" ? "urgent" : "notice",
+    tone: isTone(n?.tone) ? n!.tone : dn.tone,
     title,
     detail: text(n?.detail, 220, dn.detail),
+    /**
+     * Only somewhere on this site. A notice is typed into a box in an admin
+     * panel and rendered into an anchor on every page, so letting it carry
+     * an arbitrary URL would turn that box into a way to point the whole
+     * congregation at anything at all.
+     */
+    href: isInternalPath(n?.href) ? n!.href.trim() : "",
+    linkLabel: text(n?.linkLabel, 40, dn.linkLabel),
     until: isDateStamp(n?.until) ? n!.until : isDateStamp(dn.until) ? dn.until : "",
   };
 
@@ -171,6 +196,23 @@ export function mergeSettings(stored: Partial<SiteSettings> | null | undefined):
     modes,
     updatedAt: stored?.updatedAt,
   };
+}
+
+export function isTone(v: unknown): v is NoticeSettings["tone"] {
+  return v === "notice" || v === "urgent" || v === "good";
+}
+
+/**
+ * A path on this site, and nothing else.
+ *
+ * Must start with a single "/" — which rules out "//evil.example.com",
+ * a protocol-relative URL that browsers treat as another origin, and any
+ * "https://…" or "javascript:" typed into the box.
+ */
+export function isInternalPath(v: unknown): v is string {
+  if (typeof v !== "string") return false;
+  const s = v.trim();
+  return s.startsWith("/") && !s.startsWith("//") && s.length <= 120;
 }
 
 /** "2026-03-14" and nothing else */

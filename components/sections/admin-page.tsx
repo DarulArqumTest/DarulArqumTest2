@@ -844,13 +844,42 @@ function SubmissionsEditor() {
 
 /* ── the closure band ─────────────────────────────────────────────── */
 
+/**
+ * Where a notice is allowed to send people.
+ *
+ * A list rather than a free text box. The value ends up as an anchor on
+ * every page of the site, so it is chosen from the pages that exist instead
+ * of typed — which also means nobody can put a link to somewhere else
+ * entirely in front of the whole congregation. The server re-checks it.
+ */
+const NOTICE_LINKS = [
+  { href: "", name: "Nowhere — no button", label: "" },
+  { href: R.locations, name: "Both masjids", label: "See the masjid" },
+  { href: R.prayer, name: "Prayer times", label: "Prayer times" },
+  { href: R.programs, name: "Programmes", label: "See programmes" },
+  { href: R.community, name: "Community & volunteering", label: "Get involved" },
+  { href: R.contact, name: "Contact & visit", label: "Contact us" },
+  { href: R.newsletters, name: "Newsletters", label: "Read it" },
+  { href: R.pledge, name: "Monthly pledge", label: "Give" },
+];
+
 const TONE_CHOICES = [
+  { v: "good" as const, label: "Good news", note: "Something is happening" },
   { v: "notice" as const, label: "Notice", note: "A change of plan" },
   { v: "urgent" as const, label: "Urgent", note: "The masjid is closed" },
 ];
 
 /** a handful of openings, so nobody has to invent wording in a hurry */
 const NOTICE_PRESETS = [
+  {
+    tone: "good" as const,
+    title: "First Jumu'ah at Darul Arqum West",
+    /* the day and the time are deliberately left as blanks: nobody should
+       publish a prayer time the website guessed at */
+    detail: "Our second masjid holds its first Jumu'ah this Friday. Khutbah at —:— PM at 6050 Old Richmond Rd. Everyone is welcome.",
+    href: R.locations,
+    linkLabel: "See the masjid",
+  },
   {
     tone: "urgent" as const,
     title: "Masjid closed today",
@@ -935,6 +964,43 @@ function NoticeEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: 
         </div>
 
         <div className="da-adm-field">
+          <label htmlFor="da-nt-href">
+            Send people to <small>A page on this site. Leave empty for no button.</small>
+          </label>
+          <select
+            id="da-nt-href"
+            value={n.href}
+            onChange={(e) => {
+              const href = e.target.value;
+              const match = NOTICE_LINKS.find((l) => l.href === href);
+              // the label follows the destination unless one was typed
+              set({ href, linkLabel: href ? n.linkLabel || match?.label || "Details" : "" });
+            }}
+          >
+            {NOTICE_LINKS.map((l) => (
+              <option key={l.href || "none"} value={l.href}>
+                {l.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="da-adm-field">
+          <label htmlFor="da-nt-linklabel">
+            What the button says <small>Two or three words.</small>
+          </label>
+          <input
+            id="da-nt-linklabel"
+            type="text"
+            maxLength={40}
+            value={n.linkLabel}
+            placeholder="See the masjid"
+            disabled={!n.href}
+            onChange={(e) => set({ linkLabel: e.target.value })}
+          />
+        </div>
+
+        <div className="da-adm-field">
           <label htmlFor="da-nt-until">
             Take it down after <small>Leave empty and it stays until you switch it off.</small>
           </label>
@@ -983,6 +1049,11 @@ function NoticeEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: 
               <p className="da-cn-title">{n.title || "Your headline goes here"}</p>
               {n.detail && <p className="da-cn-detail">{n.detail}</p>}
             </div>
+            {n.href && (
+              <span className="da-cn-link">
+                {n.linkLabel || "Details"} <span aria-hidden="true">→</span>
+              </span>
+            )}
             <span className="da-cn-x" aria-hidden>
               <svg viewBox="0 0 16 16">
                 <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" fill="none" />
@@ -998,10 +1069,19 @@ function NoticeEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: 
           <button
             key={p.title}
             type="button"
-            onClick={() => set({ tone: p.tone, title: p.title, detail: p.detail })}
+            onClick={() =>
+              set({
+                tone: p.tone,
+                title: p.title,
+                detail: p.detail,
+                // a preset without a link must clear whatever was there
+                href: "href" in p ? (p.href as string) : "",
+                linkLabel: "linkLabel" in p ? (p.linkLabel as string) : "",
+              })
+            }
           >
             <b>{p.title}</b>
-            <small>{p.tone === "urgent" ? "Urgent" : "Notice"}</small>
+            <small>{TONE_CHOICES.find((t) => t.v === p.tone)?.label ?? p.tone}</small>
           </button>
         ))}
       </div>
@@ -1295,8 +1375,15 @@ export function AdminPage({
       out.push({ label: "Closure band", from: sn.on ? "Showing" : "Hidden", to: dn.on ? "Showing" : "Hidden" });
     }
     if (sn.tone !== dn.tone) {
-      const toneWord = (t: string) => (t === "urgent" ? "Urgent" : "Notice");
+      const toneWord = (t: string) => TONE_CHOICES.find((c) => c.v === t)?.label ?? t;
       out.push({ label: "Notice tone", from: toneWord(sn.tone), to: toneWord(dn.tone) });
+    }
+    if (sn.href !== dn.href) {
+      const where = (h: string) => NOTICE_LINKS.find((l) => l.href === h)?.name ?? h ?? "Nowhere";
+      out.push({ label: "Notice button goes to", from: where(sn.href), to: where(dn.href) });
+    }
+    if (sn.linkLabel !== dn.linkLabel) {
+      out.push({ label: "Notice button says", from: sn.linkLabel || "—", to: dn.linkLabel || "—" });
     }
     if (sn.title !== dn.title) {
       out.push({ label: "Notice headline", from: sn.title || "—", to: dn.title || "—" });
