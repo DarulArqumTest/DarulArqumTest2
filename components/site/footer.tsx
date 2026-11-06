@@ -156,6 +156,12 @@ export function Footer() {
         </div>
         {/* five taps here opens the admin panel; see admin-knock.tsx */}
         <AdminKnock>© {new Date().getFullYear()} Darul Arqum. All rights reserved.</AdminKnock>
+        {/* and a plain link, because the five-tap knock is unfindable if you
+            do not already know it is there. The panel asks for the password
+            either way, so the link gives nothing away. */}
+        <Link href="/admin" className="text-da-cream/35 transition-colors hover:text-da-goldL">
+          Admin
+        </Link>
       </div>
     </footer>
   );

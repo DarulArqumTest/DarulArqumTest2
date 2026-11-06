@@ -15,6 +15,7 @@ import { EXT, R } from "@/lib/links";
 import { getProgram } from "@/lib/programs";
 import { HeroAnnouncement } from "@/components/site/west-announce-banner";
 import { NewsletterEnvelopeArt } from "@/components/site/newsletter-envelope-art";
+import { useSettings } from "@/components/site/settings-provider";
 
 const GREETINGS: { text: string; lang?: "ar" }[] = [
   { text: "السَّلَامُ عَلَيْكُمْ", lang: "ar" },
@@ -323,6 +324,7 @@ function NewsletterEnvelope() {
 /* ── Hero ─────────────────────────────────────────────────────── */
 
 function Hero({ revealed }: { revealed: boolean }) {
+  const { jumua } = useSettings();
   return (
     <section style={{ position: "relative", width: "100%", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
@@ -433,7 +435,9 @@ function Hero({ revealed }: { revealed: boolean }) {
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.28 }} className="da-hero-stats" style={{ display: "flex", flexWrap: "wrap", gap: 12, maxWidth: 820 }}>
             {[
-              { title: "Jumu'ah", sub: "1:30 PM & 2:30 PM" },
+              // from the admin panel, not typed here — this card was the one
+              // place still printing the old 1:30/2:30 after the times changed
+              { title: "Jumu'ah", sub: `${jumua.first} & ${jumua.second}`, href: R.prayer },
               // "every day" only repeated what the title already says, and
               // those two words were the difference between the row fitting on
               // one line and the label being clipped to "DAILY PRAYE…".

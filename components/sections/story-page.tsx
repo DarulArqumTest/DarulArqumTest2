@@ -9,12 +9,13 @@ import { motion } from "motion/react";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
 import { LOCATIONS, ORG } from "@/lib/links";
 import { StoryVignette, type StoryScene } from "@/components/site/story-vignettes";
+import { useSettings } from "@/components/site/settings-provider";
+import { repaidFraction } from "@/lib/settings";
 
 /**
- * How much of the Qard-e-Hasan is repaid, worked out rather than written
- * down. This ring used to be a hardcoded 42 while the homepage derived the
- * same figure from the same record and showed 67 — two pages of one site
- * disagreeing about the community's own loan.
+ * The starting shape only. The live figure comes from the admin panel via
+ * repaidFraction() in StoryPage — this constant is what the "today"
+ * milestone is built from before that override is applied.
  */
 const LOAN_REPAID_PCT = Math.round(
   ((ORG.finances.loanTotal - ORG.finances.loanRemaining) / ORG.finances.loanTotal) * 100,
@@ -27,7 +28,7 @@ const MILESTONES = [
   { key: "knowledge", year: "2025", title: "A house of knowledge", body: "Al-Arif Islamic Institute launches the Aalim program and full-time Hifz under Mufti Taqi, joining the weekday madrasa, KidsLearnArabic and WeLearn online." },
   { key: "second", year: "2026", title: "A second masjid", body: `The community acquires ${LOCATIONS.west.street} — a second home in Ottawa. ${LOCATIONS.east.name} continues at ${LOCATIONS.east.street}; ${LOCATIONS.west.name} opens insha'Allah, with details to follow.` },
   { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: LOAN_REPAID_PCT },
-] as const;
+];
 
 const THEMES: Record<string, { accent: string; accentSoft: string; tag: string }> = {
   founding: { accent: "#e3c56a", accentSoft: "rgba(227,197,106,0.16)", tag: "Est. 2019 · Incorporated" },
@@ -127,7 +128,7 @@ function MilestoneRow({ m, index, activeIdx }: { m: (typeof MILESTONES)[number];
           }}
         >
           <div style={{ position: "absolute", top: 22, right: 22, width: 44, height: 44, borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center", background: t.accentSoft, border: `1.5px solid ${t.accent}` }}>
-            <Badge milestoneKey={m.key} accent={t.accent} progressPct={"progressPct" in m ? m.progressPct : 0} />
+            <Badge milestoneKey={m.key} accent={t.accent} progressPct={m.progressPct ?? 0} />
           </div>
 
           {/* the milestone, drawn: the table it was decided at, the key that
@@ -231,6 +232,27 @@ export function StoryPage() {
   const timelineRef = React.useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = React.useState(0);
 
+  /**
+   * The loan figures come from the admin panel, not from the constant above.
+   * Only the "today" milestone depends on them — the rest are history and do
+   * not move — so the list is patched here rather than threaded through the
+   * scroll handlers, which only ever want its length and years.
+   */
+  const { finances } = useSettings();
+  const milestones = React.useMemo(
+    () =>
+      MILESTONES.map((m) =>
+        m.key === "today"
+          ? {
+              ...m,
+              body: `The masjid carries ~$${finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`,
+              progressPct: Math.round(repaidFraction(finances) * 100),
+            }
+          : m,
+      ),
+    [finances],
+  );
+
   React.useEffect(() => {
     function update() {
       const el = timelineRef.current;
@@ -305,7 +327,7 @@ export function StoryPage() {
           <div className="da-story-spine" style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: 2, background: "rgba(201,162,39,0.18)" }}>
             <SpineFillTracked timelineRef={timelineRef} />
           </div>
-          {MILESTONES.map((m, i) => (
+          {milestones.map((m, i) => (
             <MilestoneRow key={m.key} m={m} index={i} activeIdx={activeIdx} />
           ))}
         </div>

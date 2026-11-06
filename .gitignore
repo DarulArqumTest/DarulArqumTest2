@@ -32,3 +32,4 @@ graphify-out/
 
 # locally rendered preview of the generated OG card
 social-share-preview.png
+.base/

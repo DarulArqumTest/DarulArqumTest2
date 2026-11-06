@@ -359,6 +359,12 @@ function PrayerEditor({ setDraft, draft }: { draft: SiteSettings; setDraft: (s: 
                 onChange={(e) => setDraft({ ...draft, jumua: { ...draft.jumua, [k]: e.target.value } })}
                 inputMode="text"
               />
+              {/* Jumu'ah is the Friday midday prayer, so an AM time is always
+                  a slip of the finger. 12:30 AM went live once and the whole
+                  site faithfully showed half past midnight. */}
+              {/AM$/i.test(draft.jumua[k].trim()) && (
+                <small className="da-adm-timewarn">That is before noon — did you mean PM?</small>
+              )}
             </label>
           ))}
         </div>
