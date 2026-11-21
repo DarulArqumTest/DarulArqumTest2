@@ -695,7 +695,7 @@ export function ProgramsSection({ onOpen }: { onOpen: (p: ProgramKey) => void })
             </div>
             <div className="da-wa-card-body" style={{ flex: 1, minWidth: 240 }}>
               <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 19, color: "#f6f3ea", margin: "0 0 4px 0" }}>New to the community?</h3>
-              <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements, or come see the masjid. Everyone is welcome.</p>
+              <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.68)", margin: 0 }}>Join the WhatsApp group for Iqama alerts and announcements, or come see the community center. Everyone is welcome.</p>
             </div>
             <div className="da-wa-card-actions">
               <a href={EXT.whatsapp} target="_blank" rel="noopener noreferrer" className="da-btn da-btn-green da-btn-sm" style={{ flexShrink: 0 }}>
@@ -765,7 +765,7 @@ export function ContactSection() {
                 />
                 <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap", flexShrink: 0 }}>
                   <div>
-                    <div className="da-visit-label" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the masjid</div>
+                    <div className="da-visit-label" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 6 }}>Visit the community center</div>
                     <div className="da-visit-addr" style={{ fontSize: 16, color: "#f6f3ea", fontWeight: 600 }}>{LOCATIONS.east.address}</div>
                   </div>
                   <a href="https://maps.app.goo.gl/7WWyowUrajYGgNv16" target="_blank" rel="noopener noreferrer" className="da-btn da-btn-gold da-btn-sm" style={{ flexShrink: 0 }}>

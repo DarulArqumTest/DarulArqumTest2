@@ -2,7 +2,7 @@
  * The community's story, as six scenes through a window.
  *
  * The first pass was objects dropped on a ground line — a key, a book, two
- * copies of the same masjid — and it looked exactly like what it was. You
+ * copies of the same community center — and it looked exactly like what it was. You
  * had to squint to work out what you were looking at, and the 2026 card was
  * one building duplicated with a dotted line between it and itself.
  *
@@ -13,7 +13,7 @@
  * the building the story is about, and the sky carries the hour — dawn for
  * the founding, night for the first Taraweeh, sunrise for today.
  *
- * The two masjids in 2026 are two different buildings, on one horizon, with
+ * The two community centers in 2026 are two different buildings, on one horizon, with
  * the road between them actually joining them.
  */
 

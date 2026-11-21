@@ -11,7 +11,7 @@ import { useSettings } from "@/components/site/settings-provider";
 /**
  * Friday.
  *
- * The busiest few hours of the masjid's week, and the site said nothing
+ * The busiest few hours of the community center's week, and the site said nothing
  * about them that it did not also say on a Tuesday. This appears on Fridays
  * only: both khutbah times, which one is next, and the thing people actually
  * get wrong, which is parking.
@@ -75,7 +75,7 @@ export function JumuaBanner() {
     if (!now) return null;
     if (modes.jumua === "off" && !urlForced) return null;
 
-    // Friday in the masjid's own zone, not the reader's
+    // Friday in the community center's own zone, not the reader's
     const weekday = new Intl.DateTimeFormat("en-GB", { timeZone: times.timezone, weekday: "short" }).format(now);
     const forced = urlForced || modes.jumua === "on";
     if (weekday !== "Fri" && !forced) return null;
@@ -109,7 +109,7 @@ export function JumuaBanner() {
           <p className="da-jm-kicker">Friday</p>
           <h2 className="da-jm-title">Jumu&apos;ah today</h2>
           <p className="da-jm-note">
-            Two khutbahs, both at {LOCATION_LIST[0]?.street ?? "the masjid"}. The lot fills for the
+            Two khutbahs, both at {LOCATION_LIST[0]?.street ?? "the community center"}. The lot fills for the
             first — come early, or park on the street and walk in.
           </p>
         </div>

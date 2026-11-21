@@ -44,7 +44,7 @@ const FORM_SECTIONS: Section[] = [
 const CONTENTS = [
   { glyph: "announce" as const, label: "Announcements", note: "Closures, new locations, community notices" },
   { glyph: "calendar" as const, label: "What is coming up", note: "Programmes, events and registration windows" },
-  { glyph: "tuition" as const, label: "Fundraising", note: "Where the masjid stands and what is still needed" },
+  { glyph: "tuition" as const, label: "Fundraising", note: "Where the community center stands and what is still needed" },
 ];
 
 export function NewsletterPage() {
@@ -96,7 +96,7 @@ export function NewsletterPage() {
           phoneField={null}
           sections={FORM_SECTIONS}
           doneScene="envelope"
-          note="One list, run by the masjid. Your address is not shared with anyone, and every issue has a way off it."
+          note="One list, run by the community center. Your address is not shared with anyone, and every issue has a way off it."
           onSuccess={() => setSent(true)}
           renderDone={({ delivered, mailto }) => (
             <motion.div
@@ -132,7 +132,7 @@ export function NewsletterPage() {
           </span>
           <span className="da-nl-past-text">
             <b>December 2020 — the first edition</b>
-            <span>Rabi-at-thani 1442. Reminders, community stories and updates from the masjid.</span>
+            <span>Rabi-at-thani 1442. Reminders, community stories and updates from the community center.</span>
           </span>
           <span className="da-nl-past-go" aria-hidden>
             →

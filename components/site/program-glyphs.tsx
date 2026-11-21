@@ -1,5 +1,5 @@
 /**
- * A drawn mark for each thing the masjid teaches, in the colours that thing
+ * A drawn mark for each thing the community center teaches, in the colours that thing
  * actually is.
  *
  * The first version of these was a mistake worth naming: every mark was drawn

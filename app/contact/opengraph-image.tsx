@@ -9,7 +9,7 @@ export default function Image() {
   return pageCard({
     eyebrow: "Contact & visit",
     title: "The door is open",
-    lede: "Call, email, or join the group. Visit either masjid — everyone is welcome.",
+    lede: "Call, email, or join the group. Come and visit — everyone is welcome.",
     facts: [ORG.phone, ORG.email, "Riverside South · Ottawa"],
     accent: "#e3c56a",
   });

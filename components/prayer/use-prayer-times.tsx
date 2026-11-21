@@ -7,7 +7,7 @@ import { useSettings } from "@/components/site/settings-provider";
 import { applyPrayerOverrides } from "@/lib/settings";
 
 /**
- * The masjid's live schedule, with the built-in constants as a floor.
+ * The community center's live schedule, with the built-in constants as a floor.
  *
  * Every board on the site draws from this. It returns the fallback
  * immediately so nothing ever renders empty or shifts layout, then swaps in
@@ -76,7 +76,7 @@ async function load(): Promise<PrayerTimes | null> {
 export function usePrayerTimes(): PrayerTimes {
   const [times, setTimes] = React.useState<PrayerTimes>(cache ?? FALLBACK);
   /**
-   * Anything the masjid has typed into the admin panel wins over Mawaqit.
+   * Anything the community center has typed into the admin panel wins over Mawaqit.
    * Applied here rather than in each board, so every screen that shows a
    * prayer time — the homepage strip, the board, the Ramadan countdown —
    * shows the same one.
@@ -90,7 +90,7 @@ export function usePrayerTimes(): PrayerTimes {
       if (alive && t) setTimes(t);
     });
 
-    // The schedule changes at midnight in the masjid's zone. Rather than
+    // The schedule changes at midnight in the community center's zone. Rather than
     // work out when that is on the client, drop the cache hourly and ask
     // again; the upstream page is cached server-side so this is nearly free.
     const id = setInterval(() => {
@@ -107,7 +107,7 @@ export function usePrayerTimes(): PrayerTimes {
   }, []);
 
   return React.useMemo(() => {
-    // Jumu'ah is never Mawaqit's to give; the masjid sets both khutbahs
+    // Jumu'ah is never Mawaqit's to give; the community center sets both khutbahs
     const base = { ...times, jumua };
     if (!overrides || Object.keys(overrides).length === 0) return base;
     return {

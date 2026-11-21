@@ -19,7 +19,7 @@
  *   exactly the people who were paying attention to the first.
  *
  *   It is not green. The palette here comes from the subject, and the subject
- *   is a door that is shut. Amber for a change of plan, red for the masjid
+ *   is a door that is shut. Amber for a change of plan, red for the community center
  *   being closed.
  *
  * The height is published as `--da-notice-h` so the navbar — fixed on the
@@ -45,7 +45,7 @@ function keyFor(n: NoticeSettings) {
 }
 
 /**
- * A notice taped to the masjid door.
+ * A notice taped to the community center door.
  *
  * The arch is the same shape as the one on the minbar in the Jumu'ah band, so
  * the two read as coming from the same hand. The paper hangs slightly askew
@@ -151,7 +151,7 @@ export function ClosureNotice() {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   /**
-   * Rendered only after mount. The expiry is judged against the masjid's
+   * Rendered only after mount. The expiry is judged against the community center's
    * today, and the dismissal lives in this browser — neither is knowable
    * while rendering on the server, and guessing produces a band that flashes
    * on and then vanishes.

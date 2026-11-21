@@ -25,7 +25,7 @@ const COLUMNS = [
        * and lights up when you arrive so it is obvious what you were sent to.
        */
       { label: "WhatsApp iqama alerts", href: `${R.home}#whatsapp-section`, sectionId: "whatsapp-section" as ScrollTargetId },
-      { label: "Visit the masjid", href: `${R.home}#map-section`, sectionId: "map-section" as ScrollTargetId },
+      { label: "Visit the community center", href: `${R.home}#map-section`, sectionId: "map-section" as ScrollTargetId },
     ],
   },
   {
@@ -85,7 +85,7 @@ export function Footer() {
                 <span className="da-fbrand-sub">Riverside South · Ottawa</span>
               </Link>
               <p className="da-foot-tagline mt-4 max-w-xs text-sm leading-relaxed text-da-cream/55">
-                {ORG.tagline}. The first masjid in Riverside South. Let&apos;s build it together.
+                {ORG.tagline}. The first community center in Riverside South. Let&apos;s build it together.
               </p>
               <ul className="da-foot-contact mt-6 space-y-2.5 text-sm text-da-cream/70">
                 <li className="flex items-start gap-2.5">

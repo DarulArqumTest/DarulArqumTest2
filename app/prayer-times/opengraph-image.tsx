@@ -10,7 +10,7 @@ export default async function Image() {
   return pageCard({
     eyebrow: "Five daily prayers",
     title: "Prayer times",
-    lede: "Live iqama times straight from the masjid's own board, updated every day.",
+    lede: "Live iqama times straight from the community center's own board, updated every day.",
     facts: [`Jumu'ah ${jumua.first}`, `and ${jumua.second}`, "In congregation"],
     accent: "#a9e0c0",
   });

@@ -193,7 +193,7 @@ export function QuranRegister() {
 
         <FactTiles
           schedule={P.facts[0].value}
-          scheduleNote="Evening madrasa at the masjid"
+          scheduleNote="Evening madrasa at the community center"
           tuition={P.facts[2].value}
           tuitionNote="$25 off for each additional child of the same parents"
           accent="#d98f4a"

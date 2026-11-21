@@ -309,7 +309,7 @@ export function PledgePage() {
           >
             support
           </span>{" "}
-          your masjid.
+          your community center.
         </h1>
 
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 12 }}>
@@ -637,7 +637,7 @@ export function PledgePage() {
           </p>
           <span style={{ position: "relative", display: "block", width: 36, height: 1, background: "rgba(201,162,39,0.5)", margin: "0 auto 18px" }} />
           <p style={{ position: "relative", fontFamily: "'Cormorant Garamond',serif", fontSize: 19, fontStyle: "italic", lineHeight: 1.6, color: "#f6f3ea", margin: "0 auto 10px", maxWidth: 480 }}>
-            &quot;Whoever builds a mosque for Allah, Allah will build for him a house like it in Paradise.&quot;
+            &quot;Whoever builds a community center for Allah, Allah will build for him a house like it in Paradise.&quot;
           </p>
           <p style={{ position: "relative", fontSize: 11.5, color: "rgba(246,243,234,0.5)", margin: 0 }}>Uthman ibn Affan · Sahih al-Bukhari 450, Sahih Muslim 533</p>
         </div>

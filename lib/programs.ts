@@ -1,5 +1,5 @@
 /**
- * Every programme the masjid runs, in one place.
+ * Every programme the community center runs, in one place.
  *
  * The details used to live in three: a modal record on the homepage, a set of
  * `facts` arrays inside each route file, and the footer's link labels. They
@@ -70,7 +70,7 @@ export const PROGRAMS: Program[] = [
       { label: "Runs", value: "Mon – Fri, full time" },
       { label: "Fee", value: "$150 / month" },
       { label: "Teacher", value: "Mufti Taqi" },
-      { label: "Where", value: "At the masjid" },
+      { label: "Where", value: "At the community center" },
     ],
     curriculum: [
       { title: "Sarf & Nahw", body: "Arabic morphology and grammar — the tools every later subject depends on." },
@@ -108,7 +108,7 @@ export const PROGRAMS: Program[] = [
       { label: "Runs", value: "Mon – Fri, full time" },
       { label: "Fee", value: "$75 / month" },
       { label: "Teacher", value: "Mufti Taqi" },
-      { label: "Where", value: "At the masjid" },
+      { label: "Where", value: "At the community center" },
     ],
     curriculum: [
       { title: "New memorization", body: "A set portion each day, heard and corrected before it is counted." },
@@ -130,7 +130,7 @@ export const PROGRAMS: Program[] = [
     name: "Weekday Quran classes",
     eyebrow: "Madrasa · ages 6 and up",
     lede:
-      "Evening madrasa at the masjid, Monday to Friday — recitation, memorization and character, five nights a week.",
+      "Evening madrasa at the community center, Monday to Friday — recitation, memorization and character, five nights a week.",
     about:
       "Students move through structured tracks rather than a single undifferentiated class: Nazira for reading, Hifz for memorization, Deeniyaat for Islamic studies, Akhlaqiat for character, and Seerah for the life of the Prophet ﷺ. A student is placed in the track that fits where they actually are, and moves on when they are ready.",
     facts: [
@@ -175,7 +175,7 @@ export const PROGRAMS: Program[] = [
     lede:
       "A dedicated Arabic track for young learners: playful, structured, and rooted in the language of the Quran.",
     about:
-      "Children aged five to ten build letters, sounds, vocabulary and confidence in small groups at the masjid, taught by teachers who are used to this age. The point is not to rush them into grammar but to make the language familiar enough that the Quran sounds like something they are beginning to understand rather than something they are only reciting.",
+      "Children aged five to ten build letters, sounds, vocabulary and confidence in small groups at the community center, taught by teachers who are used to this age. The point is not to rush them into grammar but to make the language familiar enough that the Quran sounds like something they are beginning to understand rather than something they are only reciting.",
     facts: [
       { label: "Ages", value: "5 – 10" },
       { label: "Class size", value: "Small groups" },
@@ -185,7 +185,7 @@ export const PROGRAMS: Program[] = [
     cardFacts: [
       { label: "Ages", value: "5 – 10" },
       { label: "Class size", value: "Small groups" },
-      { label: "Where", value: "At the masjid" },
+      { label: "Where", value: "At the community center" },
     ],
     curriculum: [
       { title: "Letters", body: "The alphabet by shape — every form a letter takes in a word." },

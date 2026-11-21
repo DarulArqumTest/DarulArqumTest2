@@ -4,7 +4,7 @@
  * The contact page's own mark. Every rebuilt page has one drawing that
  * belongs to it and nowhere else — the fallen lantern on the 500, the
  * envelope on the newsletter, the minbar on Friday — and this is the
- * contact page's: a masjid doorway with one leaf swung out and the light
+ * contact page's: a community center doorway with one leaf swung out and the light
  * from inside falling across the step.
  *
  * It is drawn from the outside, at night, which is the position of the

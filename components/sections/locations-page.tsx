@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Locations page — one panel per masjid, each with its own map, address,
+ * Locations page — one panel per community center, each with its own map, address,
  * status and directions link. Built to take a third site without changes:
  * everything renders from LOCATION_LIST in lib/links.ts.
  */
@@ -81,7 +81,7 @@ function LocationPanel({ loc, index }: { loc: Location; index: number }) {
             {loc.blurb}
           </p>
 
-          {/* Map card — same construction as the homepage "Visit the masjid"
+          {/* Map card — same construction as the homepage "Visit the community center"
               panel: live map on top, address and actions banded underneath. */}
           <div style={{ borderRadius: 18, overflow: "hidden", background: "rgba(246,243,234,0.04)", border: "1px solid rgba(246,243,234,0.14)" }}>
             <iframe
@@ -92,7 +92,7 @@ function LocationPanel({ loc, index }: { loc: Location; index: number }) {
             />
             <div style={{ padding: "18px 20px", background: "rgba(8,22,15,0.5)" }}>
               <div style={{ fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: loc.accent, fontWeight: 800, marginBottom: 6 }}>
-                {isOpen ? "Visit the masjid" : "Find the property"}
+                {isOpen ? "Visit the community center" : "Find the property"}
               </div>
               <div className="da-wrap-any" style={{ fontSize: "clamp(14px,1.5vw,16px)", color: "#f6f3ea", fontWeight: 700, lineHeight: 1.4, marginBottom: 14 }}>
                 {loc.address}
@@ -145,7 +145,7 @@ export function LocationsPage() {
             transition={{ duration: 0.9, delay: 0.06, ease }}
             style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(36px,6vw,68px)", lineHeight: 1.06, color: "#f6f3ea", margin: "0 0 20px 0", maxWidth: 760 }}
           >
-            Two masjids, <span style={{ color: "#c9a227", fontStyle: "italic" }}>one community.</span>
+            One home, <span style={{ color: "#c9a227", fontStyle: "italic" }}>one community.</span>
           </motion.h1>
 
           <motion.p
@@ -154,8 +154,8 @@ export function LocationsPage() {
             transition={{ duration: 0.9, delay: 0.12, ease }}
             style={{ fontSize: "clamp(15px,1.7vw,17.5px)", lineHeight: 1.7, color: "rgba(246,243,234,0.76)", maxWidth: 620, margin: 0 }}
           >
-            Darul Arqum East has served Riverside South since 2020. Darul Arqum West is our second
-            masjid, newly acquired on Old Richmond Road.
+            Darul Arqum has served Riverside South since 2020. Everyone is welcome — come for a
+            prayer, a class, or just to see the place.
           </motion.p>
         </div>
       </section>

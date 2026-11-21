@@ -2,7 +2,7 @@
  * The moon, at the phase it is actually at tonight.
  *
  * Not a crescent glyph reused for thirty nights. Ramadan begins and ends on
- * a thin crescent and is full in the middle, and a masjid's own page ought
+ * a thin crescent and is full in the middle, and a community center's own page ought
  * to know that — on the fourteenth night the moon on the page is the moon
  * outside.
  *

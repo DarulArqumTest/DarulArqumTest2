@@ -4,7 +4,7 @@
  * The newsletter page has an envelope that springs open and launches a paper
  * plane. This is the same envelope at the other end of the relationship: flap
  * shut, and once it is done, sealed. Not sad about it — the seal carries the
- * masjid's arch, so it reads as closed properly rather than thrown away.
+ * community center's arch, so it reads as closed properly rather than thrown away.
  *
  * No animation. This page is the last thing someone sees on their way out;
  * making it perform would be the wrong note.

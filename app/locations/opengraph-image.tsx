@@ -7,7 +7,7 @@ export const contentType = OG_CONTENT_TYPE;
 
 export default function Image() {
   return pageCard({
-    eyebrow: "Two masjids in Ottawa",
+    eyebrow: "Find us in Ottawa",
     title: "Find us",
     lede: "Darul Arqum East in Riverside South, and Darul Arqum West on Old Richmond Road.",
     facts: LOCATION_LIST.map((l) => l.street),

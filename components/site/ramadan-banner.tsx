@@ -13,15 +13,15 @@ import { useSettings } from "@/components/site/settings-provider";
 /**
  * Ramadan mode.
  *
- * For one month a year the question people bring to a masjid's website
+ * For one month a year the question people bring to a community center's website
  * changes completely. It stops being "when is Asr" and becomes "how long
  * until I can eat" and "how long have I got to eat". This answers both, on
- * the masjid's own times, counting down live.
+ * the community center's own times, counting down live.
  *
  * It appears on its own — nobody has to remember to switch it on. The month
  * is worked out from the Hijri calendar in lib/ramadan.ts, which is also
  * where the sighting offset lives for the years the calculation lands a day
- * off from what the masjid actually announced.
+ * off from what the community center actually announced.
  *
  * `?ramadan=1` forces it on for a preview out of season, and `?night=27`
  * picks the night, so the board can be shown to people in September.
@@ -166,7 +166,7 @@ export function RamadanBanner() {
           </h2>
           <p className="da-ram-note">
             {state.lastTen
-              ? "The last ten nights. Taraweeh and qiyam every night at the masjid."
+              ? "The last ten nights. Taraweeh and qiyam every night at the community center."
               : "Taraweeh every night after Isha. Everyone is welcome."}
           </p>
         </div>

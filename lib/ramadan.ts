@@ -3,7 +3,7 @@
  *
  * The Hijri date comes from the browser's own Umm al-Qura calendar via Intl,
  * so there is no library and no table to maintain. But a calculated calendar
- * is not what a masjid follows — Darul Arqum starts and ends the month on a
+ * is not what a community center follows — Darul Arqum starts and ends the month on a
  * sighting, which can land a day either side of the arithmetic. So the
  * calculated answer is only the default, and OVERRIDE below wins over it.
  *
@@ -29,7 +29,7 @@ export const OVERRIDE: RamadanOverride = {
 
 export type HijriDate = { year: number; month: number; day: number };
 
-/** the Hijri date for a moment, in the masjid's own timezone */
+/** the Hijri date for a moment, in the community center's own timezone */
 export function hijriDate(date: Date, timeZone: string): HijriDate | null {
   try {
     const parts = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura", {

@@ -139,7 +139,7 @@ function IqamaTable() {
 }
 
 /**
- * The masjid screen: a cabinet, a bezel and a stand, desktop only.
+ * The community center screen: a cabinet, a bezel and a stand, desktop only.
  *
  * What used to hang in the bezel was the Mawaqit iframe. Mawaqit picks its
  * layout from the device rather than from the frame it is handed, so it
@@ -159,7 +159,7 @@ function MasjidScreen({ children }: { children: React.ReactNode }) {
           <div className="da-tv-header">
             <div className="da-tv-live">
               <span className="da-live-pulse" aria-hidden />
-              Live · masjid screen
+              Live · community center screen
             </div>
             <a href={EXT.mawaqitLive} target="_blank" rel="noopener noreferrer" className="da-tv-full">
               Open full screen ↗
@@ -297,7 +297,7 @@ export function PrayerTimesPage() {
 
         <div style={{ position: "relative", maxWidth: 960, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 22 }}>
-            <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(246,243,234,0.5)", fontWeight: 700, marginBottom: 8 }}>Live from the masjid</div>
+            <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(246,243,234,0.5)", fontWeight: 700, marginBottom: 8 }}>Live from the community center</div>
             <div style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 26, color: "#f6f3ea" }}>Today&apos;s board, straight off the screen</div>
           </div>
 
@@ -333,7 +333,7 @@ export function PrayerTimesPage() {
             </p>
             <span className="da-hadith-rule" style={{ position: "relative", display: "block", width: 44, height: 1, background: "rgba(201,162,39,0.5)", margin: "0 auto 26px" }} />
             <p className="da-hadith-en" style={{ position: "relative", fontFamily: "'Cormorant Garamond',serif", fontSize: 21, fontStyle: "italic", lineHeight: 1.65, color: "#f6f3ea", margin: "0 auto 16px", maxWidth: 600 }}>
-              &quot;Salat is the key to Paradise. Whoever performs wudu and does it well, then walks to the obligatory prayer and offers it with the congregation, or in the masjid, Allah will forgive his sins.&quot;
+              &quot;Salat is the key to Paradise. Whoever performs wudu and does it well, then walks to the obligatory prayer and offers it with the congregation, or in the community center, Allah will forgive his sins.&quot;
             </p>
             <p className="da-hadith-src" style={{ position: "relative", fontSize: 12.5, color: "rgba(246,243,234,0.5)", margin: 0 }}>Sahih Muslim, Vol 1, No. 549</p>
           </div>

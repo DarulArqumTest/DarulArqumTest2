@@ -74,7 +74,7 @@ function AnnounceBody({ onClose, compact }: { onClose?: () => void; compact?: bo
       </h2>
       {!compact && (
         <p className="da-comic-copy">
-          The community&apos;s second masjid, at {west.street}, is now open. Prayer timings and
+          The community&apos;s second community center, at {west.street}, is now open. Prayer timings and
           programs are announced on the locations page and in the WhatsApp group.
         </p>
       )}
@@ -96,6 +96,8 @@ function AnnounceBody({ onClose, compact }: { onClose?: () => void; compact?: bo
 
 export function HeroAnnouncement() {
   const reduce = useReducedMotion();
+  // nothing to announce while the property is withheld; see lib/links.ts
+  if (!west.published) return null;
   return (
     <aside className="da-hero-announce" aria-label="New location announcement">
       <motion.div
@@ -143,6 +145,10 @@ export function WestAnnounceDock() {
     return () => window.removeEventListener("keydown", onKey);
   }, [expanded]);
 
+  // see HeroAnnouncement — an announcement is the one thing that must not
+  // reappear by accident, so it is gated on the same flag. Below the hooks,
+  // not above them.
+  if (!west.published) return null;
   if (!shown || dismissed) return null;
 
   return (

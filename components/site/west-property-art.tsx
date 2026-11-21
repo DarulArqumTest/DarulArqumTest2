@@ -7,7 +7,7 @@
  * carries the site's night-green/gold palette, and needs no asset pipeline.
  *
  * ADMIN-ACCESS FOLLOW-UP: swap for a real photograph of the property once
- * the masjid has one it owns the rights to — drop it in `public/assets/` and
+ * the community center has one it owns the rights to — drop it in `public/assets/` and
  * replace the WestPropertyArt call sites with a plain image tag.
  */
 

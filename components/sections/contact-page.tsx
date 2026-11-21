@@ -4,10 +4,10 @@
  * Contact & visit.
  *
  * Every other item in the navigation has a page behind it; this one used to
- * scroll to a strip at the foot of the front page. Reaching a masjid is not
+ * scroll to a strip at the foot of the front page. Reaching a community center is not
  * a strip — it is the page someone opens when they have a question nobody
  * has answered, or a child to enrol, or an afternoon to give, or they have
- * never been inside a masjid and want to know what happens if they walk in.
+ * never been inside a community center and want to know what happens if they walk in.
  *
  * The front page's contact section still exists and still does its job: a
  * map, a number, an address, for someone already scrolling. This page is for
@@ -326,7 +326,7 @@ export function ContactPage() {
         <motion.div {...rise(0)}>
           <p className="da-ct-eyebrow">Lend a hand</p>
           <h2 className="da-ct-h2">
-            The masjid runs on people who <em>turned up.</em>
+            The community center runs on people who <em>turned up.</em>
           </h2>
           <p className="da-ct-band-lede">
             Nobody here is paid to set out chairs. If you have an afternoon a month, there is
@@ -358,11 +358,11 @@ export function ContactPage() {
         </motion.div>
       </section>
 
-      {/* ── both masjids ── */}
+      {/* ── where to find us ── */}
       <section className="da-ct-band">
         <motion.div {...rise(0)}>
           <p className="da-ct-eyebrow">Come and see</p>
-          <h2 className="da-ct-h2">Two masjids, both open.</h2>
+          <h2 className="da-ct-h2">Come and see us.</h2>
         </motion.div>
 
         <div className="da-ct-places">
@@ -380,7 +380,7 @@ export function ContactPage() {
                   Get directions <span aria-hidden="true">↗</span>
                 </a>
                 <Link href={R.locations} className="da-ct-copy" style={{ ["--tint" as string]: loc.accent }}>
-                  More about this masjid
+                  More about this community center
                 </Link>
               </div>
             </motion.div>
@@ -405,7 +405,7 @@ export function ContactPage() {
             <li>
               <b>Prayer times change through the year.</b>{" "}
               <Link href={R.prayer}>The board shows today&apos;s</Link>, straight from the screen
-              inside the masjid.
+              inside the community center.
             </li>
           </ul>
         </motion.div>

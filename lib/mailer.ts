@@ -2,7 +2,7 @@ import "server-only";
 import nodemailer, { type Transporter } from "nodemailer";
 
 /**
- * Sending mail, through the masjid's own Google Workspace.
+ * Sending mail, through the community center's own Google Workspace.
  *
  * The site used to point at Resend, which was never set up. Workspace is
  * already paying for itself and already owns the domain's reputation, so

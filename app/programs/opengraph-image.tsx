@@ -7,7 +7,7 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return pageCard({
     eyebrow: "Al-Arif Islamic Institute",
-    title: "Learning at the masjid",
+    title: "Learning at the community center",
     lede: "From first surah to Aalim: five programmes, taught at Darul Arqum.",
     facts: ["Aalim & Hifz", "Evening madrasa", "Online classes"],
     accent: "#c9a227",

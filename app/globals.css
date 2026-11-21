@@ -102,7 +102,7 @@ body { overflow-x: hidden; }
   .da-iqama-now { transform: translateX(-50%) scale(0.7) !important; }
 }
 
-/* Prayer times "TV": the masjid-screen embed is rendered at a fixed
+/* Prayer times "TV": the community center-screen embed is rendered at a fixed
    desktop-like width (so it keeps its horizontal landscape layout) and then
    visually scaled down to fit via MawaqitScreen — same technique as the
    iqama sun/moon disc. Just shrink the surrounding chrome on phones. */
@@ -456,7 +456,7 @@ body { overflow-x: hidden; }
     margin-left: 10px !important;
   }
 
-  /* ── Visit the masjid: the address on one line ──
+  /* ── Visit the community center: the address on one line ──
      The postal code was tipping it onto a second row and stretching the card.
      Sized to hold the full address, label and button scaled to match so it
      reads as a set rather than one shrunken element. */
@@ -703,10 +703,10 @@ body { overflow-x: hidden; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   The masjid screen (desktop only)
+   The community center screen (desktop only)
    A cabinet, a bezel, a nameplate and a stand. What hangs in the bezel
    is our own board — the Jumu'ah banner and the five prayers — so the
-   screen shows the masjid's times at full width instead of a cropped
+   screen shows the community center's times at full width instead of a cropped
    third-party embed.
    ══════════════════════════════════════════════════════════════════ */
 .da-tv {
@@ -1258,7 +1258,7 @@ body { overflow-x: hidden; }
    Each band carries its own subject and its own colour: the three
    channels are gold / green / WhatsApp-green because that is what
    they are, the six volunteer areas each take a different tint, and
-   the two masjids use the accent already assigned to them in
+   the two community centers use the accent already assigned to them in
    lib/links.ts. Nothing here recolours a card to match the page.
    ══════════════════════════════════════════════════════════════════ */
 
@@ -1512,7 +1512,7 @@ body { overflow-x: hidden; }
   color: rgba(246, 243, 234, 0.6);
 }
 
-/* ── the two masjids ── */
+/* ── the two community centers ── */
 
 .da-ct-places {
   display: grid;
@@ -1657,14 +1657,14 @@ body { overflow-x: hidden; }
   --cn-bg: rgba(38, 32, 15, 0.94);
   --cn-line: rgba(240, 193, 75, 0.34);
 }
-/* The masjid is shut. */
+/* The community center is shut. */
 .da-cn[data-tone="urgent"] {
   --cn-ink: #ef6b6b;
   --cn-bg: rgba(42, 17, 19, 0.95);
   --cn-line: rgba(239, 107, 107, 0.4);
 }
 /* Something is happening, and it is good. The site's own gold on its own
-   green, so it reads as the masjid announcing something rather than the
+   green, so it reads as the community center announcing something rather than the
    site warning about it. */
 .da-cn[data-tone="good"] {
   --cn-ink: #e3c56a;
@@ -2351,7 +2351,7 @@ body { overflow-x: hidden; }
   color: #c9a227;
 }
 .da-mp-art { display: block; width: 100%; height: auto; }
-/* the years, running under the masjid as the gold rises */
+/* the years, running under the community center as the gold rises */
 .da-mp-years {
   display: flex;
   align-items: center;
@@ -2625,7 +2625,7 @@ body { overflow-x: hidden; }
 /* ══════════════════════════════════════════════════════════════════
    Locations nav
    ──────────────────────────────────────────────────────────────────
-   With two masjids, location is a top-level decision, so it sits
+   With two community centers, location is a top-level decision, so it sits
    OUTSIDE the nav pill as its own mint capsule — visually its own
    object rather than one more link in the row.
 
@@ -4746,7 +4746,7 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
    ──────────────────────────────────────────────────────────────────
    The way in is a terminal: scanline, phosphor green, a caret. Once
    you are through, it stops performing and becomes large plain
-   controls, because the people using it are the masjid's organisers
+   controls, because the people using it are the community center's organisers
    and nothing here should be a puzzle.
    ══════════════════════════════════════════════════════════════════ */
 

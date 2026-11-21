@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Locations navigation. The masjid now runs two sites, so location is a
+ * Locations navigation. The community center now runs two sites, so location is a
  * top-level decision rather than a line in the contact section: a hover/focus
  * dropdown on desktop, and a flat labelled list inside the mobile sheet.
  */
@@ -87,7 +87,7 @@ export function LocationsMenu() {
                 key={loc.key}
                 href={`${R.locations}#${loc.key}`}
                 // Each site carries its own colour rather than sharing one
-                // green wash: gold for the masjid that is open, mint for the
+                // green wash: gold for the community center that is open, mint for the
                 // one still coming. Applied as light falling across the row,
                 // not as a bar down its edge.
                 style={{ display: "block", padding: "12px 14px", borderRadius: 11, backgroundImage: `linear-gradient(100deg, ${loc.accent}1f, transparent 62%)`, transition: "background-color 0.16s ease" }}

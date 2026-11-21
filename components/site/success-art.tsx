@@ -121,7 +121,7 @@ const SCENES: Record<SuccessScene, React.ReactNode> = {
       <rect x="42" y="42" width="116" height="12" rx="3" fill={C.woodDeep} />
       {/* the slot */}
       <rect x="86" y="45" width="28" height="5" rx="2.5" fill="#150c05" />
-      {/* a gold band, because a masjid box has one */}
+      {/* a gold band, because a community center box has one */}
       <rect x="46" y="76" width="108" height="8" fill={C.goldDeep} opacity="0.85" />
       <path {...L} d="M46 52h108v46a6 6 0 0 1-6 6H52a6 6 0 0 1-6-6Z" />
       <path {...L} d="M42 42h116v12H42z" />

@@ -4,7 +4,7 @@ import { NewsletterArchivePage } from "@/components/sections/newsletter-archive-
 export const metadata: Metadata = {
   title: "The Newsletter, December 2020",
   description:
-    "Darul Arqum's first community newsletter, December 2020 / Rabi-at-thani 1442 AH. Reminders, community stories, and updates from the masjid.",
+    "Darul Arqum's first community newsletter, December 2020 / Rabi-at-thani 1442 AH. Reminders, community stories, and updates from the community center.",
 };
 
 export default function NewsletterDecember2020Route() {

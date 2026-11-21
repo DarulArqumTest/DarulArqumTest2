@@ -7,9 +7,9 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return pageCard({
     eyebrow: "Since 2019",
-    title: "How this masjid came to be",
+    title: "How this community center came to be",
     lede: "From a handful of Riverside South families to a home of worship and learning.",
-    facts: ["Incorporated 2019", "Property 2020", "A second masjid"],
+    facts: ["Incorporated 2019", "Property 2020", "Serving Riverside South"],
     accent: "#e88a6a",
   });
 }

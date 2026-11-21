@@ -131,7 +131,7 @@ export async function loadSubscribers(): Promise<{
 /**
  * Email the list that a new edition is up.
  *
- * The only action in this panel that reaches people outside the masjid, and
+ * The only action in this panel that reaches people outside the community center, and
  * the only one that cannot be undone — a sent email cannot be recalled. So it
  * is deliberately two steps: the panel calls this with `dryRun` to find out
  * how many it would reach and to show the wording back, and only a second,

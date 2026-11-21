@@ -29,7 +29,7 @@ type ProgramKey = "aalim" | "hifz" | "quran" | "kids" | "welearn";
 
 // Schedules and fees come from lib/programs.ts. They used to be restated
 // here, which is how the homepage ended up advertising a weekend class at
-// $50 that the masjid does not run.
+// $50 that the community center does not run.
 const A = getProgram("aalim");
 const H = getProgram("hifz");
 const Q = getProgram("quran-classes");
@@ -55,13 +55,13 @@ const PROGRAM_INFO: Record<ProgramKey, { eyebrow: string; title: string; lede: s
     title: "Weekday Quran classes",
     lede: "Building recitation, memorization, and character, one structured track at a time.",
     body: "Students progress through five tracks: Nazira (reading), Hifz (memorization), Deeniyaat (Islamic studies), Akhlaqiat (character) and Seerah.",
-    logistics: `${Q.facts[0].value}, at the masjid · ${Q.facts[1].value.toLowerCase()} · ${Q.facts[2].value}, ${Q.facts[3].value.toLowerCase()} each additional child.`,
+    logistics: `${Q.facts[0].value}, at the community center · ${Q.facts[1].value.toLowerCase()} · ${Q.facts[2].value}, ${Q.facts[3].value.toLowerCase()} each additional child.`,
   },
   kids: {
     eyebrow: "Ages 5–10",
     title: "KidsLearnArabic",
     lede: "A dedicated Arabic track for young learners: playful, structured, and rooted in the language of the Quran.",
-    body: "Children aged 5–10 build letters, sounds, vocabulary and confidence in a nurturing environment at the masjid, taught by teachers experienced with young learners.",
+    body: "Children aged 5–10 build letters, sounds, vocabulary and confidence in a nurturing environment at the community center, taught by teachers experienced with young learners.",
     logistics: "Ages 5–10, on site at Darul Arqum.",
   },
   welearn: {
@@ -312,7 +312,7 @@ function NewsletterEnvelope() {
         <span className="da-env-lead">
           to our <em>newsletter</em>
         </span>
-        <span className="da-env-note">Programs, fundraising milestones &amp; masjid news</span>
+        <span className="da-env-note">Programs, fundraising milestones &amp; community center news</span>
         <span className="da-env-go">
           Sign me up <span aria-hidden="true">→</span>
         </span>
@@ -331,7 +331,7 @@ function Hero({ revealed }: { revealed: boolean }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/assets/hero-house.jpg"
-          alt="Darul Arqum masjid house"
+          alt="Darul Arqum community center house"
           className="da-kenburns"
           style={{ width: "100%", height: "100%", objectFit: "cover", transformOrigin: "center", filter: "saturate(0.75) brightness(0.78) blur(2.5px)" }}
         />
@@ -414,7 +414,7 @@ function Hero({ revealed }: { revealed: boolean }) {
           </motion.h1>
 
           <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.16 }} style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(246,243,234,0.78)", maxWidth: 560, margin: "0 0 40px 0" }}>
-            The first masjid in the community, at 4269 Limebank Rd, Ottawa. Acquired by its people in 2020, sustained by its people every month since. Let&apos;s build it together.
+            The first community center in the community, at 4269 Limebank Rd, Ottawa. Acquired by its people in 2020, sustained by its people every month since. Let&apos;s build it together.
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.22 }} className="da-hero-cta" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 48 }}>
@@ -429,7 +429,7 @@ function Hero({ revealed }: { revealed: boolean }) {
               Programs &amp; news <span aria-hidden="true">→</span>
             </a>
             <Link href={R.locations} className="da-btn da-btn-ghost da-btn-lg">
-              Our two locations <span aria-hidden="true">→</span>
+              Where to find us <span aria-hidden="true">→</span>
             </Link>
           </motion.div>
 

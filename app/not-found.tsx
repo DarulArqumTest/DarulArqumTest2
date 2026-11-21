@@ -13,13 +13,13 @@ export const metadata: Metadata = {
  * visitor onto a page that looks like a different website.
  *
  * The links below are the four things people actually arrive looking for,
- * plus both masjid addresses, so the page is a way onward rather than a
+ * plus both community center addresses, so the page is a way onward rather than a
  * dead end.
  */
 export default function NotFound() {
   const links = [
     { href: R.prayer, label: "Prayer times", note: "Daily iqama and Jumu'ah" },
-    { href: R.locations, label: "Locations", note: "Both masjids and directions" },
+    { href: R.locations, label: "Locations", note: "Where to find us, and directions" },
     { href: R.programs, label: "Programs", note: "Madrasa, Hifz and weekend classes" },
     { href: R.give, label: "Give", note: "Donate or set up a monthly pledge" },
   ];

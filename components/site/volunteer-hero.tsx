@@ -1,9 +1,9 @@
 /**
- * The volunteer page's hero: the masjid on the night of an event, being set up.
+ * The volunteer page's hero: the community center on the night of an event, being set up.
  *
  * What was here before was three abstract line-drawings of raised hands under
  * an arch — which reads as prayer, not as volunteering, and did not say what
- * the page is for. Volunteering at a masjid is a concrete thing: the tables
+ * the page is for. Volunteering at a community center is a concrete thing: the tables
  * are out, the chairs are being carried in, the urn is on, the lights are
  * strung, and somebody is up a ladder doing it before anyone else arrives.
  *

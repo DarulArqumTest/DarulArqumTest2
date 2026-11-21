@@ -11,7 +11,7 @@ import "server-only";
  *
  * Every message carries an unsubscribe link that belongs to that address, so
  * they cannot be batched into a single BCC. That costs one SMTP round trip
- * per subscriber, which for a masjid mailing list is nothing, and buys a
+ * per subscriber, which for a community center mailing list is nothing, and buys a
  * one-click unsubscribe that works without asking anyone to type their own
  * address into a form to prove who they are.
  *
@@ -23,7 +23,7 @@ import "server-only";
  *
  *   1. Consent. Everyone here typed their address into the signup form
  *      themselves, which is express consent.
- *   2. Identification. The masjid's name and postal address are in the
+ *   2. Identification. The community center's name and postal address are in the
  *      footer of every message.
  *   3. Unsubscribe. A working mechanism, honoured promptly. The link is in
  *      the footer and in a List-Unsubscribe header, and it takes effect the
@@ -117,7 +117,7 @@ export async function sendNewsletterAnnouncement(opts: {
         to: person.email,
         subject,
         text: body({ title, blurb: opts.blurb.trim(), link, unsubscribe: unsub }),
-        // so a reply reaches the masjid rather than vanishing
+        // so a reply reaches the community center rather than vanishing
         replyTo: ORG.email,
         headers: {
           // lets Gmail and Outlook show their own one-click unsubscribe

@@ -22,13 +22,24 @@ const LOAN_REPAID_PCT = Math.round(
 );
 
 const MILESTONES = [
-  { key: "founding", year: "2019", title: "A community organizes", body: "Darul Arqum incorporates (Feb 23, 2019) as a non-profit charitable organization — Riverside South families uniting to establish the area's first masjid, Islamic education, and community services." },
+  { key: "founding", year: "2019", title: "A community organizes", body: "Darul Arqum incorporates (Feb 23, 2019) as a non-profit charitable organization — Riverside South families uniting to establish the area's first community center, Islamic education, and community services." },
   { key: "home", year: "2020", title: "A home of our own", body: "On July 30, 2020 the community acquires 4269 Limebank Rd for CA$665,000 — an extraordinary act of collective giving through donations and an interest-free Qard-e-Hasan." },
   { key: "worship", year: "2021", title: "Doors open for worship", body: "Five daily prayers in congregation, Jumu'ah with two khutbahs, and the community's first Taraweeh at home in Ramadhan 1442." },
   { key: "knowledge", year: "2025", title: "A house of knowledge", body: "Al-Arif Islamic Institute launches the Aalim program and full-time Hifz under Mufti Taqi, joining the weekday madrasa, KidsLearnArabic and WeLearn online." },
-  { key: "second", year: "2026", title: "A second masjid", body: `The community acquires ${LOCATIONS.west.street} — a second home in Ottawa. ${LOCATIONS.east.name} continues at ${LOCATIONS.east.street}; ${LOCATIONS.west.name} opens insha'Allah, with details to follow.` },
-  { key: "today", year: "Today", title: "Building, together", body: `The masjid carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: LOAN_REPAID_PCT },
+  { key: "second", year: "2026", title: "A second community center", body: `The community acquires ${LOCATIONS.west.street} — a second home in Ottawa. ${LOCATIONS.east.name} continues at ${LOCATIONS.east.street}; ${LOCATIONS.west.name} opens insha'Allah, with details to follow.` },
+  { key: "today", year: "Today", title: "Building, together", body: `The community center carries ~$${ORG.finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(ORG.finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`, progressPct: LOAN_REPAID_PCT },
 ];
+
+/**
+ * The milestones the site actually shows.
+ *
+ * The 2026 entry is about the West property, which is withheld from the
+ * public site; it comes back on its own when that is published again. This
+ * has to be the one list everything reads — the year indicator and the
+ * scroll maths used the unfiltered array and so pointed at a milestone that
+ * was no longer on the page.
+ */
+const VISIBLE_MILESTONES = MILESTONES.filter((m) => m.key !== "second" || LOCATIONS.west.published);
 
 const THEMES: Record<string, { accent: string; accentSoft: string; tag: string }> = {
   founding: { accent: "#e3c56a", accentSoft: "rgba(227,197,106,0.16)", tag: "Est. 2019 · Incorporated" },
@@ -175,7 +186,7 @@ function YearIndicator({ timelineRef }: { timelineRef: React.RefObject<HTMLDivEl
       const scrolled = Math.min(Math.max(vh * 0.5 - rect.top, 0), total);
       const frac = total > 0 ? scrolled / total : 0;
       const iv = rect.top < vh && rect.bottom > 0;
-      let idx = Math.min(MILESTONES.length - 1, Math.floor(frac * MILESTONES.length));
+      let idx = Math.min(VISIBLE_MILESTONES.length - 1, Math.floor(frac * VISIBLE_MILESTONES.length));
       if (frac <= 0) idx = 0;
       setFraction(frac);
       setActiveIdx(idx);
@@ -213,7 +224,7 @@ function YearIndicator({ timelineRef }: { timelineRef: React.RefObject<HTMLDivEl
         }}
       >
         <span style={{ fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(246,243,234,0.45)", fontWeight: 700 }}>Year</span>
-        <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 600, color: "#e3c56a", lineHeight: 1, minWidth: 60, textAlign: "center" }}>{MILESTONES[activeIdx].year}</span>
+        <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 600, color: "#e3c56a", lineHeight: 1, minWidth: 60, textAlign: "center" }}>{VISIBLE_MILESTONES[activeIdx]?.year}</span>
         <div style={{ width: 3, height: 120, borderRadius: 999, background: "rgba(201,162,39,0.18)", position: "relative", overflow: "hidden", marginTop: 4 }}>
           <div style={{ position: "absolute", top: 0, left: 0, width: "100%", background: "linear-gradient(180deg, #e3c56a, #c9a227)", borderRadius: 999, transition: "height .2s ease", height: `${pct}%` }} />
         </div>
@@ -241,11 +252,11 @@ export function StoryPage() {
   const { finances } = useSettings();
   const milestones = React.useMemo(
     () =>
-      MILESTONES.map((m) =>
+      VISIBLE_MILESTONES.map((m) =>
         m.key === "today"
           ? {
               ...m,
-              body: `The masjid carries ~$${finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`,
+              body: `The community center carries ~$${finances.monthlyExpenses.toLocaleString()}/month in running costs and a $${(finances.loanRemaining / 1000).toFixed(0)}K community loan. Sixty dollars a family, every month, finishes what we started — a destination for the National Capital Region and Canada at large, insha'Allah.`,
               progressPct: Math.round(repaidFraction(finances) * 100),
             }
           : m,
@@ -262,7 +273,7 @@ export function StoryPage() {
       const total = rect.height;
       const scrolled = Math.min(Math.max(vh * 0.5 - rect.top, 0), total);
       const frac = total > 0 ? scrolled / total : 0;
-      let idx = Math.min(MILESTONES.length - 1, Math.floor(frac * MILESTONES.length));
+      let idx = Math.min(VISIBLE_MILESTONES.length - 1, Math.floor(frac * VISIBLE_MILESTONES.length));
       if (frac <= 0) idx = 0;
       setActiveIdx(idx);
     }

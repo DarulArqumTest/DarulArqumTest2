@@ -127,7 +127,7 @@ export function VolunteerPage() {
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 660, margin: "0 auto", padding: "36px 24px 64px" }}>
         <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "rgba(246,243,234,0.72)", textAlign: "center", margin: "0 0 30px 0" }}>
-          &quot;Whoever loves the masjid, Allah loves him.&quot; The masjid runs on people who
+          &quot;Whoever loves the community center, Allah loves him.&quot; The community center runs on people who
           give their time — teaching, events, maintenance, hospitality. Tell us where
           you&apos;d like to help and the team will find you a place.
         </p>

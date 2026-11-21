@@ -2,7 +2,7 @@ import "server-only";
 import crypto from "node:crypto";
 
 /**
- * Who is allowed to change the masjid's numbers.
+ * Who is allowed to change the community center's numbers.
  *
  * The password is never in this repository and never reaches the browser. It
  * lives in an environment variable, the comparison happens inside a server

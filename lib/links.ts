@@ -5,7 +5,7 @@
  */
 
 export const EXT = {
-  // Prayer (Mawaqit — powers the TV screen at the masjid)
+  // Prayer (Mawaqit — powers the TV screen at the community center)
   mawaqitLive:
     "https://mawaqit.net/en/darul-arqum-ottawa-canada-ottawa-k1v-1g5-canada",
   mawaqitEmbed:
@@ -21,7 +21,7 @@ export const EXT = {
 
   // Giving — live public endpoints (interim source of truth).
   ircMatchingCampaign:
-    "https://donate.islamicreliefcanada.org/campaign/darul-arqum-mosque-922",
+    "https://donate.islamicreliefcanada.org/campaign/darul-arqum-community center-922",
   ircCrowdfunding:
     "https://fundraise.islamicreliefcanada.org/campaign/support-darularqum-2311",
   padFormPdf: "/assets/forms/pad-form.pdf",
@@ -57,7 +57,7 @@ export const ORG = {
     /** Total loan carried across both properties. */
     loanTotal: 600000,
     /**
-     * The repayment, year by year, for the animated masjid on the homepage.
+     * The repayment, year by year, for the animated community center on the homepage.
      *
      * ADMIN NOTE: these two entries are the only figures anyone has
      * confirmed — the loan as taken in 2020, and what is outstanding today.
@@ -86,16 +86,31 @@ export const ORG = {
 } as const;
 
 /**
- * The two masjids. The original Limebank property is now "Darul Arqum East";
- * the newly acquired Old Richmond Rd property is "Darul Arqum West".
+ * The properties. Limebank is "Darul Arqum East"; the Old Richmond Rd
+ * property is "Darul Arqum West".
  *
- * West opened on 2026-09-07.
+ * ── WEST IS UNPUBLISHED (2026-11-21) ──────────────────────────────────
  *
- * ADMIN-ACCESS FOLLOW-UP: West still has no Google Business listing, so its
- * `mapsUrl` is an address search rather than a place link — worth creating,
- * because a masjid that is open and unfindable on Maps is a masjid people
- * drive past. Its prayer timings are also still unstated; see the note on
- * the `west` entry before writing any.
+ * West is withheld from the public site for the time being. Its record
+ * below is complete and correct — nothing about it has been deleted, and
+ * none of the work on it has been thrown away. It is simply marked
+ * `published: false`, and `LOCATION_LIST` — which every page, menu, map
+ * and share card reads from — only ever contains published properties.
+ *
+ * To bring it back: set `published: true` on the `west` entry. That is the
+ * whole change. The locations page, the nav menu, the contact page, the
+ * footer and the structured data all pick it up again on their own, and
+ * the components written for it (west-announce-banner, west-property-art,
+ * its photograph and its story vignette) are still here, unmodified,
+ * waiting for it.
+ *
+ * The pieces that *announced* it — the front-page megaphone and the hero
+ * announcement — are gated on the same flag rather than deleted, because
+ * an announcement is the one thing that must not come back by accident.
+ *
+ * ADMIN-ACCESS FOLLOW-UP, for whenever it is published again: West has no
+ * Google Business listing, so its `mapsUrl` is an address search rather
+ * than a place link. Its prayer timings are also still unstated.
  */
 export type LocationKey = "east" | "west";
 
@@ -114,6 +129,8 @@ export type Location = {
   embedQuery: string;
   status: "open" | "coming-soon";
   statusLabel: string;
+  /** false keeps it out of LOCATION_LIST, and so off the public site */
+  published: boolean;
   blurb: string;
   accent: string;
 };
@@ -132,8 +149,9 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     embedQuery: "Darul Arqum Markaz of Ottawa, 4269 Limebank Rd, Ottawa, ON K1V 1G5",
     status: "open",
     statusLabel: "Open daily",
+    published: true,
     blurb:
-      "The first masjid in Riverside South, acquired by the community in 2020. Five daily prayers in congregation, Jumu'ah, and the full Al-Arif madrasa.",
+      "The first community center in Riverside South, acquired by the community in 2020. Five daily prayers in congregation, Jumu'ah, and the full Al-Arif madrasa.",
     accent: "#c9a227",
   },
   west: {
@@ -149,6 +167,8 @@ export const LOCATIONS: Record<LocationKey, Location> = {
     embedQuery: "6050 Old Richmond Rd, Ottawa, ON K0A 2Z0",
     status: "open",
     statusLabel: "Now open",
+    // withheld from the public site; see the note above the type
+    published: false,
     /**
      * Opened 2026-09-07, confirmed by the board.
      *
@@ -159,12 +179,21 @@ export const LOCATIONS: Record<LocationKey, Location> = {
      * this points at the group where they are actually announced.
      */
     blurb:
-      "Our second masjid, acquired by the community and now open. Prayer timings and programs are announced here and in the WhatsApp group.",
+      "Our second community center, acquired by the community and now open. Prayer timings and programs are announced here and in the WhatsApp group.",
     accent: "#a9e0c0",
   },
 };
 
-export const LOCATION_LIST = [LOCATIONS.east, LOCATIONS.west] as const;
+/**
+ * The properties the public site knows about.
+ *
+ * Everything that renders a location reads this rather than LOCATIONS, so
+ * withholding one is a single boolean rather than an edit in thirty files.
+ */
+export const LOCATION_LIST: Location[] = [LOCATIONS.east, LOCATIONS.west].filter((l) => l.published);
+
+/** true while more than one property is public; some copy depends on it */
+export const HAS_MULTIPLE_LOCATIONS = LOCATION_LIST.length > 1;
 
 /** Internal route map (new IA). Old slugs 301 in next.config.mjs. */
 export const R = {

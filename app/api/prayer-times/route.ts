@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { fetchMawaqitConf, scheduleForDate, MASJID_TZ } from "@/lib/mawaqit";
 
 /**
- * Today's and tomorrow's schedule, read from the masjid's Mawaqit page.
+ * Today's and tomorrow's schedule, read from the community center's Mawaqit page.
  *
  * The route itself is dynamic so "today" is computed per request; the
  * expensive part — the upstream page, which carries the whole year — is

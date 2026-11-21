@@ -6,7 +6,7 @@ import { ImageResponse } from "next/og";
  * Social share card, generated at build time.
  *
  * Composed rather than assembled: a girih lattice runs edge to edge, a gold
- * rule frames it, and the masjid emblem sits inside a struck medallion built
+ * rule frames it, and the community center emblem sits inside a struck medallion built
  * from the same eight-point star as the lattice, so the mark reads as part of
  * the pattern instead of a logo dropped onto a background.
  *
@@ -17,7 +17,7 @@ import { ImageResponse } from "next/og";
  * never break this build.
  */
 
-export const alt = "Darul Arqum, masjid in Riverside South, Ottawa";
+export const alt = "Darul Arqum, community center in Riverside South, Ottawa";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -279,7 +279,7 @@ export default function OpengraphImage() {
               display: "flex",
             }}
           >
-            TWO MASJIDS IN OTTAWA · darularqum.org
+            RIVERSIDE SOUTH · OTTAWA · darularqum.org
           </div>
         </div>
       </div>

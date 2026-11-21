@@ -4,14 +4,14 @@ import * as React from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 
 /**
- * The masjid, filling with gold as the Qard-e-Hasan is repaid.
+ * The community center, filling with gold as the Qard-e-Hasan is repaid.
  *
  * The giving section stated the loan as two flat numbers in two tiles:
  * $600,000 to repay, $200,000 remaining. Both true, neither felt like
  * anything. The difference between them is four hundred thousand dollars
  * that this community has already paid off, and nothing on the page said so.
  *
- * So the numbers are drawn instead. One masjid, in outline; the gold rises
+ * So the numbers are drawn instead. One community center, in outline; the gold rises
  * from the steps to the height the community has actually reached, and stops
  * there. What is left dark above the line is what is left to do. The crescent
  * on the finial stays lit the whole way, because that is the point being
@@ -132,7 +132,7 @@ export function MasjidProgress({
 
       {/* cropped tight to the drawing: the crescent tops out at 24 and the
           bottom step ends at 222, so the full box left dead bands above and
-          below that made the masjid sit small in its own tile */}
+          below that made the community center sit small in its own tile */}
       <svg className="da-mp-art" viewBox={`0 14 ${W} 216`} aria-hidden focusable="false">
         <defs>
           {/* brightest at the waterline, deepest at the steps */}
@@ -203,7 +203,7 @@ export function MasjidProgress({
           <rect x="0" y="-1.2" width={W} height="2.4" fill="#fff8dd" opacity="0.95" />
         </motion.g>
 
-        {/* the outline, over everything, so the whole masjid is always legible */}
+        {/* the outline, over everything, so the whole community center is always legible */}
         <use
           href={`#${id("shapes")}`}
           fill="none"

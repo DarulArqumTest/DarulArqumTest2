@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * Photograph of a masjid property, with the drawn illustration as a fallback.
+ * Photograph of a community center property, with the drawn illustration as a fallback.
  *
  * The photographs are dropped into `public/assets/` by hand (they are the
- * masjid's own images). Until a file is present the request 404s, so rather
+ * community center's own images). Until a file is present the request 404s, so rather
  * than shipping a broken tile we fall back to WestPropertyArt — the page
  * always looks finished either way.
  */

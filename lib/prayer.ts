@@ -1,7 +1,7 @@
 /**
  * Prayer schedule utilities.
  *
- * SOURCE OF TRUTH: the masjid's own Mawaqit schedule, read at request time
+ * SOURCE OF TRUTH: the community center's own Mawaqit schedule, read at request time
  * by lib/mawaqit.ts and served from /api/prayer-times. Components take it
  * through usePrayerTimes().
  *
@@ -19,7 +19,7 @@ export type Prayer = {
 };
 
 export const FALLBACK_DATE_NOTE =
-  "Iqama schedule — confirm live on the masjid screen";
+  "Iqama schedule — confirm live on the community center screen";
 
 export const PRAYERS: Prayer[] = [
   { key: "fajr", name: "Fajr", arabic: "الفجر", adhan: "3:28 AM", iqama: "4:30 AM" },
@@ -41,7 +41,7 @@ export function toMinutes(t: string): number | null {
 }
 
 /**
- * Minutes since midnight *at the masjid*, not in the reader's own zone.
+ * Minutes since midnight *at the community center*, not in the reader's own zone.
  *
  * Without this a visitor in Vancouver sees "NOW" on the wrong prayer and a
  * countdown three hours out, because the board describes a place, not a

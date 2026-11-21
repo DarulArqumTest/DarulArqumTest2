@@ -36,22 +36,22 @@ import { readSettings } from "@/lib/settings-store";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: "Darul Arqum · Masjid in Riverside South, Ottawa", template: "%s · Darul Arqum" },
+  title: { default: "Darul Arqum · Community Center in Riverside South, Ottawa", template: "%s · Darul Arqum" },
   description:
-    "The first masjid in Riverside South, Ottawa. Live prayer times, Jumu'ah, Quran classes, the Aalim program, and community programs. CRA registered charity #709549687RR0001.",
+    "The first community center in Riverside South, Ottawa. Live prayer times, Jumu'ah, Quran classes, the Aalim program, and community programs. CRA registered charity #709549687RR0001.",
   openGraph: {
-    title: "Darul Arqum · Masjid in Riverside South, Ottawa",
+    title: "Darul Arqum · Community Center in Riverside South, Ottawa",
     description:
-      "Prayer times, programs and community across our two masjids in Ottawa.",
+      "Prayer times, programs and community at Darul Arqum in Ottawa.",
     type: "website",
     siteName: "Darul Arqum",
     locale: "en_CA",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Darul Arqum · Masjid in Riverside South, Ottawa",
+    title: "Darul Arqum · Community Center in Riverside South, Ottawa",
     description:
-      "Prayer times, programs and community across our two masjids in Ottawa.",
+      "Prayer times, programs and community at Darul Arqum in Ottawa.",
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
@@ -74,7 +74,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <EdgeMargin side="left" />
           <EdgeMargin side="right" />
           {/* Above the navbar, and above everything else. Renders nothing at
-              all unless the masjid has switched it on, so an ordinary day
+              all unless the community center has switched it on, so an ordinary day
               costs the page one component that returns null. */}
           <ClosureNotice />
           <Navbar />

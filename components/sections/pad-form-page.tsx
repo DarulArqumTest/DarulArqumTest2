@@ -133,7 +133,7 @@ export function PadFormPage() {
             <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
               <span style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 999, background: "rgba(201,162,39,0.18)", border: "1px solid rgba(201,162,39,0.4)", color: "#c9a227", fontSize: 12.5, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>3</span>
               <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "rgba(246,243,234,0.75)", margin: 0 }}>
-                Email the completed form to <a href={ORG.emailHref} style={{ color: "#8fb4c9" }}>{ORG.email}</a>, or drop it off at the masjid — your monthly gift begins the next billing cycle.
+                Email the completed form to <a href={ORG.emailHref} style={{ color: "#8fb4c9" }}>{ORG.email}</a>, or drop it off at the community center — your monthly gift begins the next billing cycle.
               </p>
             </div>
           </div>

@@ -1,23 +1,23 @@
 /**
- * Reads the masjid's real schedule off its own Mawaqit page.
+ * Reads the community center's real schedule off its own Mawaqit page.
  *
  * The times used to live as constants in lib/prayer.ts. Prayer times move
  * every single day, so those constants were wrong within weeks of being
  * written and the site would state a wrong iqama with complete confidence —
- * the worst failure a masjid website can have. The schedule the imam
+ * the worst failure a community center website can have. The schedule the imam
  * actually maintains is the one on the Mawaqit screen, so that is the one
  * the site now reads.
  *
- * Mawaqit has no public read API for a single mosque, but its own page ships
+ * Mawaqit has no public read API for a single community center, but its own page ships
  * the whole year to the browser in a `confData` object, which is what the
- * screen at the masjid renders from. We parse the same object. The
+ * screen at the community center renders from. We parse the same object. The
  * constants stay in place as a fallback for the day Mawaqit is unreachable
  * or changes its page shape.
  */
 
 import { EXT } from "@/lib/links";
 
-/** Mosque-local time zone. Mawaqit reports it; this is the fallback. */
+/** Community Center-local time zone. Mawaqit reports it; this is the fallback. */
 export const MASJID_TZ = "America/Toronto";
 
 /** `[fajr, shuruq, dhuhr, asr, maghrib, isha]` — adhan, "HH:MM" 24h. */
@@ -38,7 +38,7 @@ export type MawaqitConf = {
 };
 
 export type DaySchedule = {
-  /** ISO date in the masjid's own time zone, e.g. "2026-09-06" */
+  /** ISO date in the community center's own time zone, e.g. "2026-09-06" */
   date: string;
   timezone: string;
   shuruq: string;
@@ -95,7 +95,7 @@ export function extractConfData(html: string): MawaqitConf | null {
   return null;
 }
 
-/** Fetch and parse the mosque page. Returns null on any failure. */
+/** Fetch and parse the community center page. Returns null on any failure. */
 export async function fetchMawaqitConf(revalidateSeconds = 21600): Promise<MawaqitConf | null> {
   try {
     const res = await fetch(EXT.mawaqitLive, {
@@ -132,7 +132,7 @@ function addMinutes(hhmm: string, minutes: number): string {
 }
 
 /**
- * Some mosques store iqama as an offset from the adhan ("+10") rather than a
+ * Some community centers store iqama as an offset from the adhan ("+10") rather than a
  * clock time. Darul Arqum stores absolute times, but the offset form is
  * common enough on Mawaqit that not handling it would be a silent wrong
  * answer the day it changed.

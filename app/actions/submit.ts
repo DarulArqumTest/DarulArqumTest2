@@ -3,7 +3,7 @@
 /**
  * Shared form submission action for every form on the site.
  *
- * Two copies, in this order. The submission is emailed through the masjid's
+ * Two copies, in this order. The submission is emailed through the community center's
  * own Google Workspace (see lib/mailer.ts) and written to the store either
  * way — so a form is never lost because a mail server was having a bad
  * afternoon, and the admin panel is always the authoritative record.

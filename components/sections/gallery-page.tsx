@@ -55,19 +55,19 @@ export function GalleryPage() {
           <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>Darul Arqum · Ottawa</div>
           <Breadcrumbs items={[{ label: "Gallery" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.8vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 20px 0" }}>Gallery</h1>
-          <p style={{ fontSize: 15.5, lineHeight: 1.7, color: "rgba(246,243,234,0.68)", margin: "0 auto", maxWidth: 560 }}>Moments from the masjid, our community, and the nights that built it.</p>
+          <p style={{ fontSize: 15.5, lineHeight: 1.7, color: "rgba(246,243,234,0.68)", margin: "0 auto", maxWidth: 560 }}>Moments from the community center, our community, and the nights that built it.</p>
         </div>
       </section>
 
-      {/* MASJID GALLERY */}
+      {/* COMMUNITY CENTER GALLERY */}
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "20px 24px 60px" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-          <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 10 }}>Masjid Gallery</div>
+          <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 10 }}>Community Center Gallery</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 28, color: "#f6f3ea", margin: "0 0 24px 0" }}>Our home at Limebank Road.</h2>
           <div className="da-wall">
             <PhotoFrame
               src={HOUSE_IMG}
-              alt="Darul Arqum masjid house"
+              alt="Darul Arqum community center house"
               caption="4269 Limebank Road, Ottawa"
               aspect="1360 / 900"
               onClick={() => setLightboxSrc(HOUSE_IMG)}
@@ -80,7 +80,7 @@ export function GalleryPage() {
       <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "20px 24px 60px" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 700, marginBottom: 10 }}>March 7th, 2020</div>
-          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 28, color: "#f6f3ea", margin: "0 0 8px 0" }}>Masjid fundraising event</h2>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 600, fontSize: 28, color: "#f6f3ea", margin: "0 0 8px 0" }}>Community Center fundraising event</h2>
           <p style={{ fontSize: 14, color: "rgba(246,243,234,0.6)", margin: "0 0 24px 0" }}>Hellenic Meeting &amp; Receptions Centre, Ottawa</p>
           <div className="da-wall">
             <div className="da-wall-row">

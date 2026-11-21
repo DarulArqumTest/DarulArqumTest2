@@ -2,7 +2,7 @@ import { ORG } from "@/lib/links";
 import { PRAYERS, type Prayer } from "@/lib/prayer";
 
 /**
- * The handful of numbers the masjid changes, and where they live.
+ * The handful of numbers the community center changes, and where they live.
  *
  * Everything here has a default in lib/links.ts or lib/prayer.ts. The admin
  * panel stores only what has actually been overridden, so a value nobody has
@@ -17,7 +17,7 @@ export type FinanceSettings = {
   loanTotal: number;
   /** how much of it is still outstanding */
   loanRemaining: number;
-  /** what the masjid costs to run each month */
+  /** what the community center costs to run each month */
   monthlyExpenses: number;
   /** the parking lot project */
   parkingLot: number;
@@ -28,7 +28,7 @@ export type FinanceSettings = {
 /** an iqama override for one prayer; adhan times stay with Mawaqit */
 export type PrayerOverride = { adhan?: string; iqama?: string };
 
-/** both khutbahs; these do not come from Mawaqit, the masjid sets them */
+/** both khutbahs; these do not come from Mawaqit, the community center sets them */
 export type JumuaSettings = { first: string; second: string };
 
 /**
@@ -61,27 +61,27 @@ export type NoticeSettings = {
   /**
    * What kind of news it is, which decides the colour and the drawing.
    *
-   * "notice" is a change of plan, "urgent" is the masjid being shut. "good"
-   * was added for the first Jumu'ah at the West masjid: the band was built
+   * "notice" is a change of plan, "urgent" is the community center being shut. "good"
+   * was added for the first Jumu'ah at the West community center: the band was built
    * for things going wrong, and announcing a first Jumu'ah in the same amber
    * as a burst pipe reads as a warning. Same slot, same prominence, opposite
    * feeling — gold, and a minbar catching its first light rather than a door
    * with a notice taped to it.
    */
   tone: "notice" | "urgent" | "good";
-  /** one line, the thing itself: "Masjid closed today" */
+  /** one line, the thing itself: "Community Center closed today" */
   title: string;
   /** one sentence of detail; may be empty */
   detail: string;
   /**
    * Somewhere to send people, for a notice that is about something rather
-   * than just warning about it — the West masjid's page, a programme, the
+   * than just warning about it — the West community center's page, a programme, the
    * prayer times. Empty for a notice with nowhere to go.
    */
   href: string;
   /** what the link says; ignored when there is no href */
   linkLabel: string;
-  /** YYYY-MM-DD in the masjid's zone. Empty means no self-expiry. */
+  /** YYYY-MM-DD in the community center's zone. Empty means no self-expiry. */
   until: string;
 };
 
@@ -130,7 +130,7 @@ export function mergeSettings(stored: Partial<SiteSettings> | null | undefined):
     parkingLot: num(f.parkingLot, DEFAULT_SETTINGS.finances.parkingLot),
     perFamily: num(f.perFamily, DEFAULT_SETTINGS.finances.perFamily),
   };
-  // outstanding can never exceed the loan; a typo here would draw a masjid
+  // outstanding can never exceed the loan; a typo here would draw a community center
   // filled past full
   if (finances.loanRemaining > finances.loanTotal) finances.loanRemaining = finances.loanTotal;
 
@@ -221,7 +221,7 @@ export function isDateStamp(v: unknown): v is string {
 }
 
 /**
- * Today's date where the masjid is, as YYYY-MM-DD.
+ * Today's date where the community center is, as YYYY-MM-DD.
  *
  * `en-CA` formats as 2026-03-14 already, which is the one locale that gives
  * this for free. Ottawa, not the reader's machine: a notice that expires
@@ -241,7 +241,7 @@ export function todayInZone(now: Date = new Date(), timeZone = "America/Toronto"
  *
  * Kept out of the component so the server and the browser cannot disagree
  * about it, and so the admin panel can show the same verdict it will get.
- * `todayStamp` is the masjid's local date, not the reader's — someone opening
+ * `todayStamp` is the community center's local date, not the reader's — someone opening
  * the site from another timezone should see what Ottawa sees.
  */
 export function noticeIsLive(n: NoticeSettings, todayStamp: string): boolean {

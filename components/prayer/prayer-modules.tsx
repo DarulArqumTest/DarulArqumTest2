@@ -3,7 +3,7 @@
 /**
  * Prayer feature modules:
  *  - NextPrayerBand: live countdown heartbeat (home + prayer page)
- *  - PrayerScreen: the framed live Mawaqit mirror (the masjid TV screen)
+ *  - PrayerScreen: the framed live Mawaqit mirror (the community center TV screen)
  *  - IqamaCards: native five-prayer cards with active-state highlighting
  * All render safely from the fallback schedule if anything external fails.
  */
@@ -79,7 +79,7 @@ export function PrayerScreen({ tall = false }: { tall?: boolean }) {
       <div className="flex items-center justify-between border-b border-bone/10 px-5 py-3">
         <p className="flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] text-bone/60">
           <span className="live-dot inline-block h-2 w-2 rounded-full bg-red-500" aria-hidden />
-          Live · masjid screen
+          Live · community center screen
         </p>
         <a
           href={EXT.mawaqitLive}
@@ -94,7 +94,7 @@ export function PrayerScreen({ tall = false }: { tall?: boolean }) {
         {!loaded && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-bone/55" aria-hidden>
             <MonitorPlay className="h-7 w-7 animate-pulse" />
-            <p className="text-sm">Connecting to the masjid screen…</p>
+            <p className="text-sm">Connecting to the community center screen…</p>
             <p className="max-w-xs text-center text-xs text-bone/40">
               If it doesn&apos;t load in your browser, use &ldquo;Open full screen&rdquo; above — the timings below stay available either way.
             </p>
@@ -166,7 +166,7 @@ export function IqamaCards() {
         <BellRing className="h-3.5 w-3.5 text-brass" aria-hidden />
         Shurûq {shuruq} ·{" "}
         {live
-          ? "Live from the masjid screen — changes are announced in the WhatsApp group."
+          ? "Live from the community center screen — changes are announced in the WhatsApp group."
           : `${FALLBACK_DATE_NOTE} — iqama changes are announced in the WhatsApp group.`}
       </p>
     </div>

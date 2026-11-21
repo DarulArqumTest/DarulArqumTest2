@@ -33,7 +33,7 @@ import { TIME_LOOK, PrayerSky } from "@/components/prayer/prayer-look";
  *
  * It is meant to feel like getting in somewhere — a terminal waking up, a
  * scanline, a green cursor — without becoming a costume. The people using it
- * are the masjid's organisers, so every screen it actually asks you to work
+ * are the community center's organisers, so every screen it actually asks you to work
  * in is plain, large and unambiguous, and nothing destructive happens
  * without showing you the old value beside the new one first.
  *
@@ -249,7 +249,7 @@ function PrayerEditor({ setDraft, draft }: { draft: SiteSettings; setDraft: (s: 
           <p className="da-adm-eyebrow">Prayer times</p>
           <h2 className="da-adm-h2">The board</h2>
           <p className="da-adm-copy">
-            This is the board as the website shows it. While the switch is on, the masjid&apos;s
+            This is the board as the website shows it. While the switch is on, the community center&apos;s
             Mawaqit schedule is the schedule and nothing here can be typed over.
           </p>
         </div>
@@ -345,7 +345,7 @@ function PrayerEditor({ setDraft, draft }: { draft: SiteSettings; setDraft: (s: 
           <p className="da-adm-eyebrow">Friday</p>
           <h3 className="da-adm-h3">Jumu&apos;ah</h3>
           <p className="da-adm-copy" style={{ marginBottom: 0 }}>
-            Both khutbahs. These are always the masjid&apos;s own — the switch above does not
+            Both khutbahs. These are always the community center&apos;s own — the switch above does not
             touch them.
           </p>
         </div>
@@ -408,7 +408,7 @@ function PrayerEditor({ setDraft, draft }: { draft: SiteSettings; setDraft: (s: 
 const MONEY_FIELDS = [
   { key: "loanTotal", label: "Total loan to repay", note: "The whole Qard-e-Hasan across both properties." },
   { key: "loanRemaining", label: "Qard-e-Hasan remaining", note: "What is still outstanding. Drives the gold." },
-  { key: "monthlyExpenses", label: "Monthly maintenance target", note: "What the masjid costs to run each month." },
+  { key: "monthlyExpenses", label: "Monthly maintenance target", note: "What the community center costs to run each month." },
   { key: "parkingLot", label: "Parking lot renovation", note: "The parking project total." },
   { key: "perFamily", label: "Per family, monthly", note: "The fun-fact figure, the button, and the pledge default." },
 ] as const;
@@ -583,7 +583,7 @@ function ModesEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: S
             <span>
               <b>Moon sighting</b>
               <small>
-                The calendar is arithmetic. If the masjid announced Ramadan a day either side of
+                The calendar is arithmetic. If the community center announced Ramadan a day either side of
                 it, shift it here and every night number follows.
               </small>
             </span>
@@ -860,7 +860,7 @@ function SubmissionsEditor() {
  */
 const NOTICE_LINKS = [
   { href: "", name: "Nowhere — no button", label: "" },
-  { href: R.locations, name: "Both masjids", label: "See the masjid" },
+  { href: R.locations, name: "Where to find us", label: "Find us" },
   { href: R.prayer, name: "Prayer times", label: "Prayer times" },
   { href: R.programs, name: "Programmes", label: "See programmes" },
   { href: R.community, name: "Community & volunteering", label: "Get involved" },
@@ -872,7 +872,7 @@ const NOTICE_LINKS = [
 const TONE_CHOICES = [
   { v: "good" as const, label: "Good news", note: "Something is happening" },
   { v: "notice" as const, label: "Notice", note: "A change of plan" },
-  { v: "urgent" as const, label: "Urgent", note: "The masjid is closed" },
+  { v: "urgent" as const, label: "Urgent", note: "The community center is closed" },
 ];
 
 /** a handful of openings, so nobody has to invent wording in a hurry */
@@ -882,13 +882,13 @@ const NOTICE_PRESETS = [
     title: "First Jumu'ah at Darul Arqum West",
     /* the day and the time are deliberately left as blanks: nobody should
        publish a prayer time the website guessed at */
-    detail: "Our second masjid holds its first Jumu'ah this Friday. Khutbah at —:— PM at 6050 Old Richmond Rd. Everyone is welcome.",
+    detail: "Our second community center holds its first Jumu'ah this Friday. Khutbah at —:— PM at 6050 Old Richmond Rd. Everyone is welcome.",
     href: R.locations,
-    linkLabel: "See the masjid",
+    linkLabel: "See the community center",
   },
   {
     tone: "urgent" as const,
-    title: "Masjid closed today",
+    title: "Community Center closed today",
     detail: "The building is closed due to weather. All jamaat are cancelled. Follow the WhatsApp group for updates.",
   },
   {
@@ -933,7 +933,7 @@ function NoticeEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: 
             type="text"
             maxLength={90}
             value={n.title}
-            placeholder="Masjid closed today"
+            placeholder="Community Center closed today"
             onChange={(e) => set({ title: e.target.value })}
           />
         </div>
@@ -1000,7 +1000,7 @@ function NoticeEditor({ draft, setDraft }: { draft: SiteSettings; setDraft: (s: 
             type="text"
             maxLength={40}
             value={n.linkLabel}
-            placeholder="See the masjid"
+            placeholder="See the community center"
             disabled={!n.href}
             onChange={(e) => set({ linkLabel: e.target.value })}
           />
@@ -1202,7 +1202,7 @@ function NewsletterSender() {
       <p className="da-adm-copy">
         <b>{count === null ? "Counting…" : `${count} ${count === 1 ? "person is" : "people are"} on the list.`}</b>{" "}
         Everyone here typed their address into the signup form themselves. Every message carries
-        the masjid&apos;s address and a working unsubscribe link, which the law requires and
+        the community center&apos;s address and a working unsubscribe link, which the law requires and
         which this sends automatically.
       </p>
 
@@ -1231,7 +1231,7 @@ function NewsletterSender() {
                 rows={3}
                 maxLength={400}
                 value={blurb}
-                placeholder="Ramadan timetable, the new Hifz intake, and an update on the West masjid."
+                placeholder="Ramadan timetable, the new Hifz intake, and an update on the West community center."
                 onChange={(e) => setBlurb(e.target.value)}
               />
             </div>

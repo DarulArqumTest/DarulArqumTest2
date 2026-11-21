@@ -17,7 +17,7 @@ import crypto from "node:crypto";
  * ── Unsubscribing ────────────────────────────────────────────────────────
  *
  * Canada's anti-spam law is not lenient and this is a registered charity, so
- * every message carries a working unsubscribe link and the masjid's postal
+ * every message carries a working unsubscribe link and the community center's postal
  * address. The link is signed rather than stored: the token is an HMAC of the
  * address, which means it cannot be guessed for somebody else's email, it
  * never expires, and there is no table of tokens to keep in step with the

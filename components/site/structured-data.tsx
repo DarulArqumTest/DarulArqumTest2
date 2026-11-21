@@ -3,15 +3,18 @@ import { EXT, LOCATION_LIST, ORG, SITE_URL } from "@/lib/links";
 /**
  * What this place is, in the form search engines read.
  *
- * People do not search "Darul Arqum". They search "mosque near Riverside
- * South" and "jummah time Ottawa", and a page with no structured data is a
- * page Google has to guess about. This says it outright: a place of worship,
- * at these two addresses, with this phone number, these hours for Jumu'ah,
- * and a registered charity number.
+ * A page with no structured data is a page Google has to guess about, so
+ * this says it outright: a community centre at this address, with this
+ * phone number and a registered charity number.
  *
- * Two masjids means two Mosque nodes under one organisation, rather than one
- * node with a second address bolted on, because they are two places a person
- * can drive to.
+ * The node type is deliberate. It was ["Community Center", "PlaceOfWorship"], which
+ * is the single most consequential line on the site for how Google and
+ * every downstream directory classify the building. It is now a civic
+ * structure, matching how the organisation describes itself.
+ *
+ * One node per published property, from LOCATION_LIST — so a property that
+ * is withheld from the site is withheld from search too, rather than
+ * quietly staying in the graph.
  *
  * Everything here reads from lib/links.ts, so an address or a number cannot
  * say one thing on the page and another to Google.
@@ -33,7 +36,7 @@ export function StructuredData() {
       sameAs: [EXT.youtubeChannel, EXT.mawaqitLive],
     },
     ...LOCATION_LIST.map((loc, i) => ({
-      "@type": ["Mosque", "PlaceOfWorship"],
+      "@type": ["CivicStructure", "Place"],
       "@id": `${SITE_URL}/locations#${loc.key}`,
       name: loc.name,
       parentOrganization: { "@id": `${SITE_URL}/#organization` },
@@ -46,7 +49,7 @@ export function StructuredData() {
         addressRegion: "ON",
         addressCountry: "CA",
       },
-      // only the first masjid is confirmed open; the second has no hours yet
+      // only the first property is confirmed open; any other has no hours yet
       ...(i === 0
         ? {
             openingHoursSpecification: [

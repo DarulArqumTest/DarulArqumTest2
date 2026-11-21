@@ -88,7 +88,7 @@ export function ProgramsPage() {
         <Breadcrumbs items={[{ label: "Programs" }]} />
         <p className="da-prog-kicker">Al-Arif Islamic Institute · Darul Arqum</p>
         <h1 className="da-prog-h1">
-          Learning at the masjid, <em>from first surah to Aalim.</em>
+          Learning at the community center, <em>from first surah to Aalim.</em>
         </h1>
         <p className="da-prog-intro">
           Five programmes run out of Darul Arqum: two full-time tracks at the institute, an evening

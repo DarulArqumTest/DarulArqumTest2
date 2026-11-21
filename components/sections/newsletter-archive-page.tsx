@@ -159,7 +159,7 @@ export function NewsletterArchivePage() {
           <img src={`${A}/story.jpg`} alt="The Darul Arqum property sign on Limebank Road" style={imgStyle} />
           <p style={bodyStyle}>
             DarulArqum is a non-profit charitable organization, based in Gloucester South, aiming to seek pleasure of Allah Subhanahu wa Ta&apos;Ala
-            serving the needs of muslim community in Ottawa and Canada at large. Our first project is to establish a Masjid/ islamic place of
+            serving the needs of muslim community in Ottawa and Canada at large. Our first project is to establish a Community Center/ islamic place of
             worship and reformation in Gloucester South, close vicinity of Riverside South, Findlay Creek, and small towns in further south, with
             an islamic institution of learning and a center for community services. We encourage you to sign-up the DarulArqum membership and join
             in this service.
@@ -230,11 +230,11 @@ export function NewsletterArchivePage() {
         {/* VIDEO */}
         <section style={sectionStyle}>
           <div style={eyebrowStyle}>Watch</div>
-          <h2 style={headingStyle}>DarulArqum — Let&apos;s Build A Masjid</h2>
+          <h2 style={headingStyle}>DarulArqum — Let&apos;s Build A Community Center</h2>
           <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", borderRadius: 12, overflow: "hidden", border: "1px solid rgba(246,243,234,0.15)" }}>
             <iframe
               src="https://www.youtube.com/embed/UDvh63xHVa0"
-              title="DarulArqum - Let's Build A Masjid"
+              title="DarulArqum - Let's Build A Community Center"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
@@ -246,7 +246,7 @@ export function NewsletterArchivePage() {
         <section style={sectionStyle}>
           <div style={eyebrowStyle}>The Activities</div>
           <p style={bodyStyle}>
-            Masjid of Rasulullah (Prophet of Allah) Sallallahu alaihi wasallam was always populated with the following a&apos;maal/ activities:
+            Community Center of Rasulullah (Prophet of Allah) Sallallahu alaihi wasallam was always populated with the following a&apos;maal/ activities:
           </p>
           <ul style={{ ...bodyStyle, paddingLeft: 20 }}>
             <li>Da&apos;wat ilallah (Invitation to recognize Allah SWT)</li>
@@ -255,7 +255,7 @@ export function NewsletterArchivePage() {
             <li>Khidma (Helping others i.e. Community services)</li>
           </ul>
           <p style={bodyStyle}>
-            Insha&apos;Allah (Allah willing) we have the intention to populate the masjid with all these a&apos;maal and activities.
+            Insha&apos;Allah (Allah willing) we have the intention to populate the community center with all these a&apos;maal and activities.
           </p>
           <p style={bodyStyle}>Alhamdulillah, all praise to Allah, following activities have been commenced:</p>
           <ol style={{ ...bodyStyle, paddingLeft: 20 }}>
@@ -298,7 +298,7 @@ export function NewsletterArchivePage() {
           <p style={bodyStyle}>
             Supporting projects that really hold importance to you is a great example of being an active member of the community. As an individual,
             I really value the sites where members of the community gather to worship and bond as a society. I like to volunteer and devote my time
-            and effort into projects at Darul Arqum in Riverside-South, as it is my community mosque. Dedicating time and effort may not be
+            and effort into projects at Darul Arqum in Riverside-South, as it is my community community center. Dedicating time and effort may not be
             regularly possible for many people, but even actions that may seem insignificant, can make a difference. There are so many
             possibilities like joining community-building activities, social projects and tuning in on virtual events.
           </p>
@@ -338,7 +338,7 @@ export function NewsletterArchivePage() {
             benefit from and learn about the source of our organic food.
           </p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${A}/donate-flyer.jpg`} alt="Donate to build the masjid flyer" style={imgStyle} />
+          <img src={`${A}/donate-flyer.jpg`} alt="Donate to build the community center flyer" style={imgStyle} />
         </section>
 
         {/* CLOSING HADITH */}
@@ -347,7 +347,7 @@ export function NewsletterArchivePage() {
             عَنْ عُثْمَانَ بْنِ عَفَّانَ قَالَ قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ مَنْ بَنَى مَسْجِدًا لِلَّهِ بَنَى اللَّهُ لَهُ فِي الْجَنَّةِ مِثْلَهُ
           </p>
           <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 18, fontStyle: "italic", lineHeight: 1.6, color: "#f6f3ea", margin: "0 auto 10px", maxWidth: 480 }}>
-            &quot;Whoever builds a mosque for Allah, Allah will build for him a house like it in Paradise.&quot;
+            &quot;Whoever builds a community center for Allah, Allah will build for him a house like it in Paradise.&quot;
           </p>
           <p style={{ fontSize: 11.5, color: "rgba(246,243,234,0.5)", margin: "0 0 24px" }}>
             Uthman ibn Affan RA · Sahih al-Bukhari · Sahih Muslim

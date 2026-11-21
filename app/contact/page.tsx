@@ -4,7 +4,7 @@ import { ORG } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Contact & visit",
-  description: `Reach Darul Arqum in Ottawa: call ${ORG.phone}, email ${ORG.email}, or join the WhatsApp group. Visit either masjid, volunteer, or send the board a message. Everyone is welcome.`,
+  description: `Reach Darul Arqum in Ottawa: call ${ORG.phone}, email ${ORG.email}, or join the WhatsApp group. Visit us, volunteer, or send the board a message. Everyone is welcome.`,
   alternates: { canonical: "/contact" },
 };
 
