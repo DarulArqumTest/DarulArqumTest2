@@ -10,7 +10,7 @@ import * as React from "react";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import Link from "next/link";
 import { motion, useInView } from "motion/react";
-import { LOCATION_LIST, ORG, R, type Location } from "@/lib/links";
+import { HAS_MULTIPLE_LOCATIONS, LOCATION_LIST, ORG, R, type Location } from "@/lib/links";
 import { LocationPhoto } from "@/components/site/location-photo";
 import { Twinkle, CrescentMoon, GeoMedallion } from "@/components/sections/home-literal";
 
@@ -126,7 +126,10 @@ export function LocationsPage() {
 
       <section className="da-section" style={{ position: "relative", zIndex: 2, padding: "clamp(96px,12vw,150px) clamp(16px,4vw,28px) clamp(40px,5vw,60px)" }}>
         <div style={{ maxWidth: 1180, margin: "0 auto", position: "relative" }}>
-          <div aria-hidden style={{ position: "absolute", top: -40, right: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+          {/* Hidden on a phone: the header is full-bleed there, so "right: 0"
+              put the moon half off the viewport and `overflow: hidden` on the
+              page sliced it into a flat-edged half-disc. */}
+          <div className="da-loc-moon" aria-hidden style={{ position: "absolute", top: -40, right: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
             <CrescentMoon size={40} glowSize={110} />
           </div>
           <Twinkle top="6%" left="42%" duration={2.6} />
@@ -134,7 +137,11 @@ export function LocationsPage() {
 
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }} style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
             <span style={{ width: 26, height: 1, background: "rgba(201,162,39,0.6)" }} />
-            <span style={{ fontSize: 12.5, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 600 }}>Our locations</span>
+            {/* singular while one property is published; LOCATION_LIST is
+                the only thing that decides, so this follows it */}
+            <span style={{ fontSize: 12.5, letterSpacing: "0.16em", textTransform: "uppercase", color: "#c9a227", fontWeight: 600 }}>
+              {HAS_MULTIPLE_LOCATIONS ? "Our locations" : "Where to find us"}
+            </span>
           </motion.div>
 
           <Breadcrumbs items={[{ label: "Locations" }]} className="mb-5" />

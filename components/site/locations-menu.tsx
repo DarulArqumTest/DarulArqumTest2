@@ -9,7 +9,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { LOCATION_LIST, R } from "@/lib/links";
+import { HAS_MULTIPLE_LOCATIONS, LOCATION_LIST, R } from "@/lib/links";
 
 function StatusDot({ open }: { open: boolean }) {
   return (
@@ -113,9 +113,14 @@ export function LocationsMenu() {
 export function LocationsMobileList({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div style={{ padding: "6px 12px 10px" }}>
-      <div style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(201,162,39,0.85)", fontWeight: 800, marginBottom: 8 }}>
-        Locations
-      </div>
+      {/* With one property published the heading is a label on a list of one,
+          which costs a sheet-height of nothing useful. It comes back the
+          moment a second location is published. */}
+      {HAS_MULTIPLE_LOCATIONS && (
+        <div style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(201,162,39,0.85)", fontWeight: 800, marginBottom: 8 }}>
+          Locations
+        </div>
+      )}
       <div style={{ display: "grid", gap: 8 }}>
         {LOCATION_LIST.map((loc) => (
           <Link

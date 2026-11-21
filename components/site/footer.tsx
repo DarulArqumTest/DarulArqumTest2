@@ -148,20 +148,26 @@ export function Footer() {
         </Reveal>
 
         <DrawnRule className="mt-14 bg-da-gold/15" />
-        <div className="mt-7 flex flex-col gap-3 text-xs text-da-cream/45 md:flex-row md:items-center md:justify-between">
-          <p>CRA approved charitable organization · Reg. #{ORG.charityReg}</p>
-          <p>
-            E-transfer: {ORG.email}
-          </p>
+        {/* 0.45 cream measured 3.61:1 against the footer green; 0.62 clears
+            4.5:1. Charity registration and the e-transfer address are the
+            two lines on this site a reader most needs to be able to read. */}
+        <div className="mt-7 flex flex-col gap-3 text-xs text-da-cream/[0.62] md:flex-row md:items-center md:justify-between">
+          <p className="da-wrap-any">CRA approved charitable organization · Reg. #{ORG.charityReg}</p>
+          <p className="da-wrap-any">E-transfer: {ORG.email}</p>
         </div>
-        {/* five taps here opens the admin panel; see admin-knock.tsx */}
-        <AdminKnock>© {new Date().getFullYear()} Darul Arqum. All rights reserved.</AdminKnock>
-        {/* and a plain link, because the five-tap knock is unfindable if you
-            do not already know it is there. The panel asks for the password
-            either way, so the link gives nothing away. */}
-        <Link href="/admin" className="text-da-cream/35 transition-colors hover:text-da-goldL">
-          Admin
-        </Link>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          {/* five taps here opens the admin panel; see admin-knock.tsx */}
+          <AdminKnock>© {new Date().getFullYear()} Darul Arqum. All rights reserved.</AdminKnock>
+          {/* and a plain link, because the five-tap knock is unfindable if you
+              do not already know it is there. The panel asks for the password
+              either way, so the link gives nothing away. */}
+          <Link
+            href="/admin"
+            className="mt-3 inline-block px-1 py-2 text-xs text-da-cream/[0.62] transition-colors hover:text-da-goldL"
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );

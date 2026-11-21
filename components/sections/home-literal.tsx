@@ -115,7 +115,13 @@ function ShootingStar({ top, left, delay, duration }: { top: string; left: strin
 
 function CrescentMoon({ size, glowSize, glowOpacity = 0.3 }: { size: number; glowSize: number; glowOpacity?: number }) {
   return (
-    <div style={{ position: "absolute", width: glowSize + size, height: glowSize + size, display: "flex", alignItems: "center", justifyContent: "center" }} aria-hidden>
+    /* `relative`, not `absolute`. Absolute gave this box no size in its
+       wrapper, so a wrapper anchored with `right: 8%` collapsed to zero
+       width and the moon was drawn starting at that right edge — it hung
+       off the side of a phone and the page's overflow:hidden sliced it
+       into a flat-edged half disc. Relative lets the wrapper take the
+       moon's measurements, so `right` means the moon's right edge. */
+    <div style={{ position: "relative", width: glowSize + size, height: glowSize + size, display: "flex", alignItems: "center", justifyContent: "center" }} aria-hidden>
       <div
         className="da-moon-glow absolute rounded-full"
         style={{ width: glowSize, height: glowSize, background: `radial-gradient(circle, rgba(201,162,39,${glowOpacity}), transparent 70%)` }}
@@ -304,7 +310,12 @@ function GreetingSplash({ phase, index }: { phase: IntroPhase; index: number }) 
  */
 function NewsletterEnvelope() {
   return (
-    <Link href={R.newsletters} className="da-env" aria-label="Subscribe to our newsletter">
+    /* No aria-label: it read "Subscribe to our newsletter" while the card
+       says that plus two more lines, so the spoken name was a subset of the
+       visible one — the exact mismatch that stops voice control working
+       ("click Sign me up" matched nothing). The card's own words are the
+       name now. */
+    <Link href={R.newsletters} className="da-env">
       <NewsletterEnvelopeArt className="da-env-art" />
 
       <span className="da-env-words">

@@ -22,10 +22,10 @@ function useNow(intervalMs = 30000) {
   return now;
 }
 
-function CrescentSimple({ size, top, left, right, boxShadow, delay = 0 }: { size: number; top: string; left?: string; right?: string; boxShadow: string; delay?: number }) {
+function CrescentSimple({ size, top, left, right, boxShadow, delay = 0, className = "" }: { size: number; top: string; left?: string; right?: string; boxShadow: string; delay?: number; className?: string }) {
   return (
     <div
-      className="da-moon-glow pointer-events-none absolute"
+      className={`da-moon-glow pointer-events-none absolute ${className}`}
       style={{ top, left, right, width: size, height: size, zIndex: 1, animationDelay: `${delay}s` }}
       aria-hidden
     >
@@ -186,7 +186,20 @@ function Board() {
       <div className="da-board-jumuah">
         <span className="da-live-pulse da-board-dot" aria-hidden />
         <span className="da-board-jumuah-label">Jumu&apos;ah</span>
-        <span className="da-jumuah-text">1st Khutbah {jumua.first} &amp; 2nd Khutbah {jumua.second}</span>
+        {/* Two labelled times, not one sentence. As a single string this
+            ran the full width of a 390px band and the next longer time
+            would have wrapped it onto a second line, stretching the red
+            band around it. Two units wrap as two units. */}
+        <span className="da-jumuah-text">
+          <span className="da-jumuah-slot">
+            <i>1st khutbah</i>
+            {jumua.first}
+          </span>
+          <span className="da-jumuah-slot">
+            <i>2nd khutbah</i>
+            {jumua.second}
+          </span>
+        </span>
       </div>
       <IqamaTable />
     </div>
@@ -196,9 +209,17 @@ function Board() {
 function IqamaPill() {
   const now = useNow();
   const { prayers, tomorrow, timezone } = usePrayerTimes();
-  if (!now) return null;
-  const next = nextPrayer(now, prayers, timezone, tomorrow);
-  if (!next) return null;
+  const next = now ? nextPrayer(now, prayers, timezone, tomorrow) : null;
+
+  /**
+   * The clock only exists after hydration, so this used to render nothing
+   * on the server and then appear. Floating, that cost nothing; in the
+   * phone's flow it shoved the whole page down a notch on arrival (0.08
+   * CLS). The slot is now held open from the first paint and filled when
+   * the time is known. Off-screen on desktop, where the pill floats.
+   */
+  if (!next) return <div className="da-iqama-slot" aria-hidden />;
+
   const h = Math.floor(next.minutesUntil / 60);
   const m = next.minutesUntil % 60;
   return (
@@ -231,7 +252,11 @@ export function PrayerTimesPage() {
       <GeoStar top="56%" left="-70px" size={220} opacity={0.35} twinkle />
       <GeoStar top="70%" right="-90px" size={240} opacity={0.35} />
 
-      <CrescentSimple size={64} top="40px" left="12%" boxShadow="0 0 40px 8px rgba(227,197,106,0.25)" />
+      {/* Pushed right on a phone. At left:12% it landed directly behind the
+          eyebrow and the back link, which is the one patch of this hero that
+          has to stay clean; on a wide screen there is margin there and it
+          sits beside the heading as intended. */}
+      <CrescentSimple className="da-pt-moon" size={64} top="40px" left="12%" boxShadow="0 0 40px 8px rgba(227,197,106,0.25)" />
       <CrescentSimple size={48} top="42%" right="9%" boxShadow="0 0 32px 6px rgba(227,197,106,0.2)" delay={0.8} />
       <CrescentSimple size={40} top="78%" left="10%" boxShadow="0 0 26px 5px rgba(227,197,106,0.18)" delay={1.2} />
 
@@ -262,11 +287,19 @@ export function PrayerTimesPage() {
       </div>
 
       {/* ============ HERO ============ */}
-      <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 46px", background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,162,39,0.10), transparent 70%)" }}>
+      <section className="da-section" style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 46px", background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,162,39,0.10), transparent 70%)" }}>
         <div style={{ maxWidth: 980, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700, marginBottom: 14 }}>Darul Arqum · Ottawa</div>
           <Breadcrumbs items={[{ label: "Prayer times" }]} className="mb-5" />
           <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontWeight: 500, fontSize: "clamp(34px,4.6vw,54px)", lineHeight: 1.08, color: "#f6f3ea", margin: "0 0 26px 0" }}>Prayer times</h1>
+
+          {/* Lives here in the markup so that on a phone, where it is laid
+              out in the flow rather than floated, it lands directly under
+              the heading. On wider screens CSS lifts it back out into the
+              fixed pill. It used to float on phones too, which meant a
+              permanent opaque bar parked across the middle of whatever you
+              had scrolled to. */}
+          <IqamaPill />
 
           {/* It read as one more soft tinted card among many, which is not
               what "special request" should look like. Solid panel, hard edge,
@@ -284,6 +317,7 @@ export function PrayerTimesPage() {
 
       {/* ============ TV HERO ============ */}
       <section
+        className="da-section"
         style={{
           position: "relative",
           zIndex: 2,
@@ -341,7 +375,7 @@ export function PrayerTimesPage() {
       </section>
 
       {/* ============ WHATSAPP HERO ============ */}
-      <section style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 100px", overflow: "hidden", background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(120,190,150,0.10), transparent 72%)" }}>
+      <section className="da-section" style={{ position: "relative", zIndex: 2, width: "100%", padding: "64px 24px 100px", overflow: "hidden", background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(120,190,150,0.10), transparent 72%)" }}>
         <div id="whatsapp-join" style={{ maxWidth: 760, margin: "0 auto", position: "relative", overflow: "hidden", borderRadius: 22, scrollMarginTop: 90 }}>
           <a
             href={EXT.whatsapp}
@@ -365,8 +399,6 @@ export function PrayerTimesPage() {
           </a>
         </div>
       </section>
-
-      <IqamaPill />
     </div>
   );
 }

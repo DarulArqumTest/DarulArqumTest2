@@ -31,6 +31,14 @@
   --da-kids: 124 201 154;
   --da-blue: 143 180 201;
   --da-orange: 217 143 74;
+
+  /* The nav bar's own height. The mobile sheet hangs off the bottom of the
+     bar and sizes itself against what is left of the viewport, so it has to
+     be told, not guessed. Matches `h-16 md:h-[76px]` in navbar.tsx. */
+  --da-bar-h: 64px;
+}
+@media (min-width: 768px) {
+  :root { --da-bar-h: 76px; }
 }
 
 html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -58,7 +66,11 @@ body { overflow-x: hidden; }
   .da-story-spine { left: 7px !important; transform: none !important; }
   .da-story-dot { left: 7px !important; }
   .da-story-card-wrap {
-    width: 100% !important;
+    /* `width: 100%` plus a 34px left margin is 34px wider than the column
+       it sits in: every milestone card ran past the right edge of the
+       phone and had its border, its corner and its badge sliced off by the
+       page's overflow:hidden. Take the margin out of the width. */
+    width: calc(100% - 34px) !important;
     margin-left: 34px !important;
     margin-right: 0 !important;
     text-align: left !important;
@@ -448,6 +460,12 @@ body { overflow-x: hidden; }
     color: #f6f3ea !important;
     white-space: nowrap;
     text-align: right;
+    /* last resort: the label gives way first, but if a future Jumu'ah
+       string is longer than the whole card the value trails off inside it
+       rather than being sliced by the card's overflow:hidden */
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   /* the "Daily prayers" card carries a trailing arrow, which needs a column
      of its own or the value runs straight under it */
@@ -655,7 +673,28 @@ body { overflow-x: hidden; }
   color: rgba(255, 255, 255, 0.68);
   font-weight: 700;
 }
-.da-jumuah-text { font-size: 14.5px; color: #fff; font-weight: 700; text-align: center; }
+.da-jumuah-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px 18px;
+  font-size: 14.5px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+/* each khutbah is one unit: its caption and its time stay together, and
+   the pair breaks between them rather than mid-sentence */
+.da-jumuah-slot { display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+.da-jumuah-slot i {
+  font-style: normal;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
 
 /* the table sits flush inside the board */
 .da-board .da-iqama-grid { border-radius: 0 !important; box-shadow: none !important; }
@@ -897,7 +936,7 @@ body { overflow-x: hidden; }
   .da-board-jumuah-label { font-size: 9.5px; }
 }
 @media (max-width: 400px) {
-  .da-jumuah-text { font-size: 11.5px; }
+  .da-jumuah-text { font-size: 11.5px; gap: 3px 14px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1032,7 +1071,9 @@ body { overflow-x: hidden; }
   .da-contact-label { font-size: 9.5px; letter-spacing: 0.1em; }
   .da-call-number { font-size: 19px; }
   .da-copy-btn, .da-call-btn { min-height: 36px; font-size: 12.5px; }
-  .da-email-value { font-size: 15px; }
+  /* 15px of text is a 23px-tall tap target; the padding goes inside the
+     link and a matching negative margin leaves the card's rhythm alone */
+  .da-email-value { font-size: 15px; display: inline-block; padding: 5px 0; margin: -5px 0; }
   /* Once the card wraps, the actions sit under the text rather than beside
      it, and a vertical rule between them becomes a stub of a line hanging in
      the left margin dividing nothing. Horizontal is the only orientation the
@@ -1062,8 +1103,11 @@ body { overflow-x: hidden; }
   section[id="contact-us"], section[id="west-announcement"] {
     padding-left: 16px !important;
     padding-right: 16px !important;
-    padding-top: 72px !important;
-    padding-bottom: 72px !important;
+    /* 72px top and bottom put ~144px of empty green between every two
+       sections on a 390px screen — about a sixth of the viewport saying
+       nothing. Sections still breathe at 52; they no longer drift apart. */
+    padding-top: 52px !important;
+    padding-bottom: 52px !important;
   }
 }
 @media (max-width: 420px) {
@@ -1071,6 +1115,8 @@ body { overflow-x: hidden; }
   section[id="contact-us"], section[id="west-announcement"] {
     padding-left: 13px !important;
     padding-right: 13px !important;
+    padding-top: 44px !important;
+    padding-bottom: 44px !important;
   }
 }
 
@@ -2061,25 +2107,36 @@ body { overflow-x: hidden; }
 }
 
 /* ── Prayer times "next iqama" pill ──
-   Fixed, centred and `white-space: nowrap`, so its ~430px of content
-   overflowed both edges of a 375px phone and got sliced. Let it wrap
-   inside the viewport instead of spilling out of it. */
+   On a wide screen it floats: there is room either side of the column and
+   it never lands on anything. On a phone there is no "either side", so a
+   fixed bar at top:70 simply parked itself across the middle of the page
+   and hid a line of whatever you had scrolled to — it was sitting on the
+   WhatsApp card's own text. On phones it comes down into the flow instead,
+   directly under the heading, where it covers nothing and is still the
+   first thing you read. */
 @media (max-width: 620px) {
   .da-iqama-pill {
-    left: 8px !important;
-    right: 8px !important;
-    width: auto !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100%;
     max-width: none !important;
     transform: none !important;
+    margin: 0 0 26px !important;
     white-space: normal !important;
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 3px !important;
     column-gap: 7px !important;
-    padding: 9px 14px !important;
+    padding: 10px 14px !important;
     text-align: center;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
   }
   .da-iqama-pill > * { font-size: 11.5px !important; }
+  /* the space the pill will take, held from the first paint */
+  .da-iqama-slot { height: 41px; margin-bottom: 26px; }
 }
 
 /* ── Home WhatsApp card ──
@@ -3593,7 +3650,13 @@ body { overflow-x: hidden; }
 @media (max-width: 760px) {
   .da-pd-head { padding: 92px 16px 34px; }
   .da-pd-lede { font-size: 14.5px; line-height: 1.55; margin-bottom: 20px; }
-  .da-pd-head-actions > .da-btn { flex: 1; justify-content: center; }
+  /* `flex: 1` split a 358px row in two and gave each button 171px for a
+     label that needs 175 — both CTAs on every programme page were being
+     sliced by four pixels. Full width, stacked: the labels fit whole, and
+     two primary actions one above the other is the phone layout anyway. */
+  .da-pd-head-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+  .da-pd-head-actions > .da-btn { flex: none; width: 100%; justify-content: center; }
+  .da-pd-all { display: inline-block; padding: 6px 0; }
   .da-pd-body { padding: 8px 16px 72px; }
   .da-pd-section { margin-top: 36px; }
   .da-pd-copy { font-size: 14px; line-height: 1.62; }
@@ -3606,8 +3669,10 @@ body { overflow-x: hidden; }
   .da-pd-cur-body span { font-size: 12.5px; }
   .da-pd-cta { margin-top: 36px; padding: 20px 18px; gap: 16px; border-radius: 16px; }
   .da-pd-cta-medallion { display: none; }
-  .da-pd-cta-actions { width: 100%; }
-  .da-pd-cta-actions > .da-btn { flex: 1; justify-content: center; }
+  /* same two-up squeeze as the masthead: 314px split in two leaves 143px
+     for a 147px label, so "Register here →" lost its arrow */
+  .da-pd-cta-actions { width: 100%; flex-direction: column; align-items: stretch; }
+  .da-pd-cta-actions > .da-btn { flex: none; width: 100%; justify-content: center; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -3656,7 +3721,19 @@ body { overflow-x: hidden; }
   .da-foot-col > p { font-size: 10px !important; letter-spacing: 0.16em !important; }
   .da-foot-col ul { margin-top: 12px !important; }
   .da-foot-col li { font-size: 13px; line-height: 1.35; }
-  .da-foot-col ul > li + li { margin-top: 9px !important; }
+  .da-foot-col ul > li + li { margin-top: 2px !important; }
+
+  /* Every footer link was a 15px-tall strip of text — under half the 24px
+     WCAG 2.2 minimum and well under a fingertip. The row keeps its old
+     rhythm; the padding that makes it tappable is now inside the link
+     rather than in the gap between links, so nothing moved and
+     everything can be hit. */
+  .da-foot-col a {
+    display: block;
+    padding: 7px 0;
+    min-height: 32px;
+  }
+  .da-foot-contact a { display: inline-block; padding: 5px 0; }
 }
 
 /* ── WhatsApp button ──
@@ -4758,7 +4835,9 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
   gap: 8px;
   margin-top: 12px;
   font-size: 12px;
-  color: rgba(246, 243, 234, 0.35);
+  /* 0.35 measured 2.75:1 on the footer green. Legal and copyright text is
+     still text: 0.62 clears 4.5:1 and still sits quietly under the links. */
+  color: rgba(246, 243, 234, 0.62);
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
@@ -5889,4 +5968,93 @@ textarea.da-input { resize: vertical; min-height: 84px; line-height: 1.5; }
 
 @media (max-width: 640px) {
   .da-zoom-btn { width: 100%; justify-content: center; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Polish pass, 2026-11
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── The charity plate on the pledge page ──
+   Two short lines rather than one long one: the label reads at a glance,
+   the registration number is there to be copied, and neither has to
+   compete for a single row that a 390px screen does not have. */
+.da-charity-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  max-width: 100%;
+  padding: 9px 20px 9px 9px;
+  border-radius: 16px;
+  background: rgba(201, 162, 39, 0.12);
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  margin-bottom: 20px;
+}
+.da-charity-tick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: #c9a227;
+  color: #0e2419;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.da-charity-words { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.da-charity-label {
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e3c56a;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.da-charity-reg {
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: rgba(246, 243, 234, 0.62);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+@media (min-width: 560px) {
+  /* there is room for one line here, so take it */
+  .da-charity-chip { border-radius: 999px; padding-right: 18px; }
+  .da-charity-words { flex-direction: row; align-items: baseline; gap: 9px; }
+  .da-charity-reg::before { content: "· "; }
+}
+
+/* ── Back link ──
+   12.5px of text is a 19px-tall tap target. The padding goes inside the
+   link, and a negative margin keeps the layout exactly where it was. */
+.da-crumbs-back {
+  padding: 7px 10px 7px 0;
+  margin: -7px 0 -7px 0;
+}
+
+/* ── Phone: decorative marks that were being sliced by the page edge ──
+   A crescent hung off the right of the locations header. On a wide screen
+   it sits in the margin beside the heading; at 390px the page is all
+   heading, so half a moon was clipped flat against the viewport edge and
+   read as a rendering fault rather than a decoration. */
+@media (max-width: 760px) {
+  /* !important because the element carries `display: flex` inline */
+  .da-loc-moon { display: none !important; }
+}
+
+/* ── Phone: breadcrumb and eyebrow clear of the hero's ornaments ──
+   On the prayer-times hero the crescent sat directly behind "← Home". */
+@media (max-width: 760px) {
+  .da-pt-moon { left: auto !important; right: 14px !important; top: 26px !important; }
+}
+
+/* ── Headings wrap evenly ──
+   A centred heading that drops one word onto a line of its own ("…straight
+   off the / screen") reads as a mistake. Let the browser even out the
+   lines; where it is unsupported nothing changes. */
+h1, h2, .da-sec-title, .da-section-title { text-wrap: balance; }
+
+@media (max-width: 760px) {
+  .da-pl-lantern-tl { display: none; }
 }

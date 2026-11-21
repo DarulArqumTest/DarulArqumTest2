@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -62,6 +63,43 @@ function NavLink({ item, className, onNavigate }: { item: NavItem; className?: s
   );
 }
 
+/** where the sheet starts: under the closure band, under the bar.
+ *  --da-bar-h is set in globals.css and steps up at the md breakpoint. */
+const SHEET_TOP = "calc(var(--da-notice-h, 0px) + var(--da-bar-h, 64px))";
+
+/**
+ * The dimmed page behind the open sheet.
+ *
+ * Portalled to the body rather than rendered inside the header, because
+ * Motion leaves a `transform` on the header and a transformed ancestor turns
+ * `position: fixed` into `position: absolute` — the scrim would have covered
+ * the header strip and nothing else.
+ */
+function Scrim({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [host, setHost] = React.useState<HTMLElement | null>(null);
+  React.useEffect(() => setHost(document.body), []);
+  if (!host) return null;
+  return createPortal(
+    <AnimatePresence>
+      {open && (
+        <motion.button
+          key="scrim"
+          type="button"
+          aria-label="Close menu"
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.24 }}
+          style={{ top: SHEET_TOP }}
+          className="fixed inset-x-0 bottom-0 z-40 cursor-default bg-da-bg/70 backdrop-blur-[3px] xl:hidden"
+        />
+      )}
+    </AnimatePresence>,
+    host,
+  );
+}
+
 export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
@@ -69,6 +107,31 @@ export function Navbar() {
   const onHome = pathname === "/";
 
   React.useEffect(() => setOpen(false), [pathname]);
+
+  /**
+   * The sheet used to be a content-height panel hanging off the bar with the
+   * page still scrolling and fully legible underneath it, which read as a
+   * menu that had half-opened. It is a real sheet now: capped to what is
+   * left of the viewport, scrollable inside itself on a short phone, over a
+   * scrim, with the page behind it held still and Escape closing it.
+   */
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const { overflow, paddingRight } = document.body.style;
+    // the gutter the hidden scrollbar leaves behind, so the bar does not jump
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`;
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.paddingRight = paddingRight;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
     <motion.header
@@ -132,53 +195,58 @@ export function Navbar() {
         </div>
       </div>
 
+      <Scrim open={open} onClose={() => setOpen(false)} />
+
       <AnimatePresence>
         {open && (
-          <motion.nav
-            key="mobile"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="border-b border-da-gold/20 bg-da-bg xl:hidden"
-            aria-label="Mobile"
-          >
-            <motion.div
-              initial="hidden"
-              animate="show"
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
-              className="space-y-1 px-5 pb-6 pt-2"
+          <>
+            <motion.nav
+              key="mobile"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{ maxHeight: `calc(100dvh - ${SHEET_TOP})` }}
+              className="da-sheet relative z-10 overflow-y-auto overscroll-contain rounded-b-[22px] border-b border-da-gold/25 bg-da-bg shadow-[0_26px_50px_-20px_rgba(0,0,0,0.85)] xl:hidden"
+              aria-label="Mobile"
             >
-              <motion.div variants={{ hidden: { opacity: 0, x: -14 }, show: { opacity: 1, x: 0 } }}>
-                <LocationsMobileList onNavigate={() => setOpen(false)} />
-              </motion.div>
-              {NAV.map((item) => (
-                <motion.div
-                  key={item.label}
-                  variants={{ hidden: { opacity: 0, x: -14 }, show: { opacity: 1, x: 0 } }}
-                >
-                  <NavLink
-                    item={item}
-                    onNavigate={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-3 font-daDisplay text-xl text-da-cream/85 hover:bg-da-gold/10"
-                  />
-                </motion.div>
-              ))}
               <motion.div
-                variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-                className="flex flex-wrap items-center gap-3 pt-3"
+                initial="hidden"
+                animate="show"
+                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
+                className="px-5 pb-[max(20px,env(safe-area-inset-bottom))] pt-1"
               >
-                <DonateMenu align="left" />
-                <a
-                  href={ORG.phoneHref}
-                  className="flex items-center gap-2 rounded-[11px] border border-da-gold/25 px-5 py-3 text-sm text-da-cream"
+                <motion.div variants={{ hidden: { opacity: 0, x: -14 }, show: { opacity: 1, x: 0 } }}>
+                  <LocationsMobileList onNavigate={() => setOpen(false)} />
+                </motion.div>
+                {NAV.map((item) => (
+                  <motion.div
+                    key={item.label}
+                    variants={{ hidden: { opacity: 0, x: -14 }, show: { opacity: 1, x: 0 } }}
+                  >
+                    <NavLink
+                      item={item}
+                      onNavigate={() => setOpen(false)}
+                      className="block rounded-lg px-3 py-[11px] font-daDisplay text-[19px] leading-none text-da-cream/85 transition-colors hover:bg-da-gold/10"
+                    />
+                  </motion.div>
+                ))}
+                <motion.div
+                  variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
+                  className="mt-4 flex flex-wrap items-center gap-3 border-t border-da-gold/15 pt-4"
                 >
-                  <Phone className="h-4 w-4" aria-hidden />
-                  {ORG.phone}
-                </a>
+                  <DonateMenu align="left" />
+                  <a
+                    href={ORG.phoneHref}
+                    className="flex items-center gap-2 rounded-[11px] border border-da-gold/25 px-5 py-3 text-sm text-da-cream"
+                  >
+                    <Phone className="h-4 w-4" aria-hidden />
+                    {ORG.phone}
+                  </a>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          </motion.nav>
+            </motion.nav>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

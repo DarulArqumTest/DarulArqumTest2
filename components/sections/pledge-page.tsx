@@ -39,6 +39,7 @@ function PledgeLantern({
   swingDelay = 0,
   floatDur,
   floatDelay = 0,
+  className = "",
 }: {
   width: number;
   height: number;
@@ -56,12 +57,13 @@ function PledgeLantern({
   swingDelay?: number;
   floatDur?: number;
   floatDelay?: number;
+  className?: string;
 }) {
   const anim = swing
     ? { animation: "da-lantern-sway 6s ease-in-out infinite", animationDuration: `${swing}s`, animationDelay: `${swingDelay}s`, transformOrigin: "top center" as const }
     : { animation: "da-float-slow 8s ease-in-out infinite", animationDuration: `${floatDur}s`, animationDelay: `${floatDelay}s` };
   return (
-    <div style={{ position: "absolute", top, left, right, ...anim }} aria-hidden>
+    <div className={className} style={{ position: "absolute", top, left, right, ...anim }} aria-hidden>
       {stringHeight != null && <div style={{ width: 1, height: stringHeight, background: "rgba(201,162,39,0.35)", margin: "0 auto" }} />}
       <div style={{ position: "relative" }}>
         <div
@@ -268,7 +270,11 @@ export function PledgePage() {
           </svg>
         </div>
 
-        <PledgeLantern width={28} height={36} top="20px" left="12%" stringHeight={46} glowSize={46} glowBlur={5} fillOpacity={0.22} circleR={3.2} swing={6} swingDelay={0} />
+        {/* hidden on a phone: at left 12% it hangs its string straight
+            across the charity plate, and the plate's tint is translucent
+            enough that the lantern reads as printed on top of the
+            registration number */}
+        <PledgeLantern className="da-pl-lantern-tl" width={28} height={36} top="20px" left="12%" stringHeight={46} glowSize={46} glowBlur={5} fillOpacity={0.22} circleR={3.2} swing={6} swingDelay={0} />
         <PledgeLantern width={20} height={26} top="10px" right="16%" stringHeight={30} glowSize={34} glowBlur={4} fillOpacity={0.18} circleR={3} circleOpacity={0.8} svgOpacity={0.85} swing={7.5} swingDelay={0.5} />
 
         <PledgeLantern width={30} height={38} top="42%" left="6%" glowSize={50} glowBlur={6} fillOpacity={0.2} circleR={3.4} floatDur={8} floatDelay={1} />
@@ -285,10 +291,17 @@ export function PledgePage() {
       </div>
 
       <div className="da-page-gutter" style={{ position: "relative", zIndex: 1, maxWidth: 900, margin: "0 auto", padding: "56px 24px 120px" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "8px 18px 8px 8px", borderRadius: 999, background: "rgba(201,162,39,0.12)", border: "1px solid rgba(201,162,39,0.35)", marginBottom: 20 }}>
-          <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: 999, background: "#c9a227", color: "#0e2419", fontSize: 13, fontWeight: 800, flexShrink: 0 }}>✓</span>
-          <span style={{ fontSize: 12.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "#e3c56a", fontWeight: 700 }}>
-            CRA registered charity <span style={{ color: "rgba(246,243,234,0.5)", fontWeight: 500, letterSpacing: "0.02em" }}>· {ORG.charityReg}</span>
+        {/* A pill is a one-line shape. On a phone this held two lines of
+            tracked-out uppercase, so the "rounded end cap" ran down the side
+            of a wrapped paragraph and the registration number sat under the
+            tick with nothing to line up to. The number is now its own line
+            by design, the badge holds the top line, and the shape is a
+            rounded plate rather than a pill that has been stretched. */}
+        <div className="da-charity-chip">
+          <span className="da-charity-tick" aria-hidden>✓</span>
+          <span className="da-charity-words">
+            <span className="da-charity-label">CRA registered charity</span>
+            <span className="da-charity-reg">{ORG.charityReg}</span>
           </span>
         </div>
 
